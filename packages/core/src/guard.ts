@@ -91,7 +91,7 @@ function grew(before: string[], after: string[]): boolean {
   return false;
 }
 
-function changedLines(before: string, after: string): number {
+export function changedLines(before: string, after: string): number {
   const a = before.split('\n');
   const b = after.split('\n');
   let changed = 0;

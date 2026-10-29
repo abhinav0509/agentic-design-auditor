@@ -8,13 +8,6 @@ describe('decisions', () => {
   it.todo('FR-24: an edited revision re-runs guard, verifier and risk');
 });
 
-describe('risk classifier', () => {
-  it.todo('model-reported risk can raise but never lower');
-  it.todo('generated text is never low risk');
-  it.todo('oversized patch is high');
-  it.todo('property: risk is monotonic as patch size grows');
-});
-
 describe('fingerprinting and dedupe', () => {
   it.todo('same violation on many pages yields one finding with many occurrences');
   it.todo('formatting-only differences do not change the fingerprint');
