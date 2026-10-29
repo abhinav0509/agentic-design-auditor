@@ -4,12 +4,7 @@ import { describe, it } from 'vitest';
 
 describe('decisions', () => {
   it.todo('answering a needs_input proposal spawns a superseding attempt');
-  it.todo('FR-13: same idempotency key twice returns the same result');
-  it.todo('FR-13: same key with a different payload is IDEMPOTENCY_KEY_REUSED');
-  it.todo('FR-13: wrong expected_version returns VERSION_CONFLICT');
-  it.todo('FR-13: approving a stale proposal fails with STALE_PROPOSAL');
-  it.todo('approving after expires_at fails with PROPOSAL_EXPIRED (checked at decision time)');
-  it.todo('two concurrent approvals: exactly one wins');
+  it.todo('two concurrent approvals against Postgres: exactly one wins (UPDATE ... WHERE version)');
   it.todo('FR-24: an edited revision re-runs guard, verifier and risk');
 });
 
