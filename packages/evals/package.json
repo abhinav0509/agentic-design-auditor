@@ -1,0 +1,9 @@
+{
+  "name": "@beacon/evals",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@beacon/core": "workspace:*",
+    "parse5": "8.0.1"
+  }
+}

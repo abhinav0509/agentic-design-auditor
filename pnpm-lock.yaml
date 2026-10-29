@@ -45,6 +45,15 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
 
+  packages/evals:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
+      parse5:
+        specifier: 8.0.1
+        version: 8.0.1
+
   tools/trace: {}
 
 packages:

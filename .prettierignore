@@ -3,3 +3,4 @@ reports/
 docs/*.pdf
 **/__snapshots__/
 **/__fixtures__/
+fixtures/
