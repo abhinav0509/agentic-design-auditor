@@ -1,0 +1,5 @@
+{
+  "name": "@beacon/core",
+  "private": true,
+  "type": "module"
+}

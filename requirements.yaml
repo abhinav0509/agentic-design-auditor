@@ -1,0 +1,53 @@
+# Requirement registry. Source: docs (v1.0 §4, §5 and addendum-v1.1).
+# `pnpm trace` fails when a requirement with phase <= current_phase has no passing test
+# whose name contains its ID. Bump current_phase when a phase starts. IDs are never renumbered.
+current_phase: 0
+
+requirements:
+  - { id: FR-01, phase: 1, text: Sign in and create an organisation }
+  - { id: FR-02, phase: 1, text: Connect a GitHub repo via least-privilege GitHub App }
+  - { id: FR-03, phase: 1, text: Register a site (base URL + repo path) }
+  - { id: FR-04, phase: 1, text: Verify site control before scanning }
+  - { id: FR-04a, phase: 1, text: Prove URL ownership via DNS TXT, meta tag or well-known file }
+  - { id: FR-05, phase: 1, text: Scan up to 10 pages and store findings with evidence }
+  - { id: FR-06, phase: 1, text: Map findings to source or mark unmapped; never guess }
+  - { id: FR-07, phase: 1, text: At most one active proposal per finding, structured }
+  - { id: FR-08, phase: 1, text: Proposals pass guard and verifier before ready }
+  - { id: FR-09, phase: 1, text: Agent can return needs_input with a specific question }
+  - { id: FR-10, phase: 1, text: Review UI shows diff, rationale, risk, confidence, previews, rule }
+  - { id: FR-11, phase: 1, text: Approve, reject (optional reason) or edit then approve }
+  - { id: FR-12, phase: 1, text: Bulk approve only for low risk, with summary }
+  - { id: FR-13, phase: 1, text: Decisions idempotent; rejected when stale }
+  - { id: FR-14, phase: 1, text: Export approved proposals as PR on a new branch }
+  - { id: FR-15, phase: 1, text: Undo an applied proposal }
+  - { id: FR-16, phase: 1, text: Append-only audit log for every state change }
+  - { id: FR-17, phase: 2, text: Plain-language report with checked / needs a human }
+  - { id: FR-18, phase: 2, text: Colour contrast and heading rules with own risk handling }
+  - { id: FR-19, phase: 2, text: Batched email/Slack notifications }
+  - { id: FR-20, phase: 2, text: Per-rule autonomy settings }
+  - { id: FR-21, phase: 3, text: Scheduled re-scans detect regressions }
+  - { id: FR-22, phase: 3, text: Billing, plans and usage limits enforced }
+  - { id: FR-23, phase: 5, text: Review Kit publishable as standalone package }
+  - { id: FR-24, phase: 1, text: Reviewer edits re-run guard, verifier and risk }
+  - { id: FR-25, phase: 1, text: Batch verified as a whole; one commit per proposal }
+  - { id: FR-26, phase: 3, text: Audit log export with verifiable hash chain }
+  - { id: FR-27, phase: 2, text: Shareable report links are expiring and revocable }
+  - { id: FR-28, phase: 1, text: Org-level kill switch pauses all agent activity }
+
+  - { id: NFR-01, phase: 1, text: Never write to a repo default branch }
+  - { id: NFR-02, phase: 1, text: Resistant to prompt injection in page content }
+  - { id: NFR-03, phase: 1, text: Runs resumable; crashes never duplicate proposals }
+  - { id: NFR-04, phase: 1, text: 10-page scan to proposals under 8 min p90 }
+  - { id: NFR-05, phase: 1, text: Token and step budget enforced; cost recorded }
+  - { id: NFR-06, phase: 1, text: Beacon review flows meet WCAG 2.2 AA }
+  - { id: NFR-07, phase: 1, text: Secrets stripped before prompts }
+  - { id: NFR-08, phase: 1, text: Every run has a full trace }
+  - { id: NFR-09, phase: 1, text: Scanner blocks private/internal addresses, sandboxed }
+  - { id: NFR-10, phase: 1, text: Audit log append-only and exportable }
+  - { id: NFR-11, phase: 1, text: No real model calls in unit/integration tests }
+  - { id: NFR-12, phase: 1, text: Model provider and name are configuration }
+  - { id: NFR-13, phase: 3, text: Availability 99.5%, RPO 1h, RTO 4h }
+  - { id: NFR-14, phase: 3, text: security.txt, disclosure policy, external pen test }
+  - { id: NFR-15, phase: 3, text: Retention, hard delete and DSAR export }
+  - { id: NFR-16, phase: 1, text: RLS tenant isolation on all tenant tables }
+  - { id: NFR-17, phase: 1, text: Supply chain controls (pinned actions, lockfile, SBOM) }
