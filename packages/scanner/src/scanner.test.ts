@@ -93,6 +93,12 @@ describe('scanPage', { timeout: 60_000 }, () => {
     ]);
   });
 
+  it('keeps the engine impact per rule (a missing lang is serious, not critical)', async () => {
+    expect(await scanPage(context, url('about--html-has-lang'))).toMatchObject([
+      { rule_id: 'html-has-lang', impact: 'serious' },
+    ]);
+  });
+
   it('reports every instance on a page', async () => {
     const findings = await scanPage(context, url('two-images'));
     expect(findings.map((f) => f.rule_id)).toEqual(['image-alt', 'image-alt']);
