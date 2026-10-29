@@ -2,16 +2,8 @@
 // and move it next to the code it covers once that package exists.
 import { describe, it } from 'vitest';
 
-describe('state machine', () => {
-  it.todo('only legal transitions are allowed; illegal throws');
-  it.todo('every transition writes an event');
-  it.todo('approved cannot go back to pending');
-  it.todo('stale and expired are terminal until re-propose (superseded)');
-  it.todo('needs_input goes awaiting_input -> answered and spawns a superseding attempt');
-  it.todo('PR closed without merge moves applied -> closed_unmerged');
-});
-
 describe('decisions', () => {
+  it.todo('answering a needs_input proposal spawns a superseding attempt');
   it.todo('FR-13: same idempotency key twice returns the same result');
   it.todo('FR-13: same key with a different payload is IDEMPOTENCY_KEY_REUSED');
   it.todo('FR-13: wrong expected_version returns VERSION_CONFLICT');
