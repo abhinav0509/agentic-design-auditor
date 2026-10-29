@@ -2,3 +2,4 @@ pnpm-lock.yaml
 reports/
 docs/*.pdf
 **/__snapshots__/
+**/__fixtures__/

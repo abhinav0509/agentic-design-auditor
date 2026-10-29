@@ -15,18 +15,6 @@ describe('risk classifier', () => {
   it.todo('property: risk is monotonic as patch size grows');
 });
 
-describe('patch guard', () => {
-  it.todo('allowed attribute passes');
-  it.todo('script tag rejected');
-  it.todo('event handler attribute rejected');
-  it.todo('multi-file patch rejected unless the rule allows it');
-  it.todo('patch not applying to base hash rejected');
-  it.todo('invalid HTML rejected');
-  it.todo('duplicate id rejected');
-  it.todo('element removal or reorder rejected');
-  it.todo('attribute value with markup, URL, control or bidi characters rejected');
-});
-
 describe('fingerprinting and dedupe', () => {
   it.todo('same violation on many pages yields one finding with many occurrences');
   it.todo('formatting-only differences do not change the fingerprint');
