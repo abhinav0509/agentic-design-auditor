@@ -190,7 +190,11 @@ describe('initialStatus (the "(new)" rows)', () => {
     const seen = new Set<Status>(initial);
     const queue = [...initial];
     for (let s = queue.shift(); s; s = queue.shift()) {
-      for (const to of legalFrom(s)) if (!seen.has(to)) (seen.add(to), queue.push(to));
+      for (const to of legalFrom(s))
+        if (!seen.has(to)) {
+          seen.add(to);
+          queue.push(to);
+        }
     }
     expect([...seen].sort()).toEqual([...STATUSES].sort());
   });
