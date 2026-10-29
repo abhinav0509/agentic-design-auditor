@@ -49,7 +49,8 @@ describe('coveredIds', () => {
     ]);
   });
 
-  it('does not confuse FR-04 with FR-04a', () => {
+  // Titles in this file must not name real requirement IDs, or trace would count them as coverage.
+  it('does not confuse an ID with its lettered variant', () => {
     expect([...coveredIds(report(['FR-04a: dns txt', 'passed']))]).toEqual(['FR-04a']);
   });
 
