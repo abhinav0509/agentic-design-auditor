@@ -5,7 +5,7 @@ import example from './__fixtures__/proposal.example.json' with { type: 'json' }
 import { parseProposal, proposalJsonSchema } from './proposal.ts';
 
 // Deep copy so each test can mutate freely.
-const valid = (): Record<string, unknown> => structuredClone(example) as Record<string, unknown>;
+const valid = (): Record<string, unknown> => structuredClone(example);
 const at = (o: Record<string, unknown>, key: string) => o[key] as Record<string, unknown>;
 
 describe('parseProposal', () => {
