@@ -302,7 +302,7 @@ Every screen in §12.2 has five designed states: empty, loading (skeleton), part
 | Queue              | pg-boss (as v1.0) + outbox (D.2)                                                                                                       |                                                              |
 | Determinism        | Inject `Clock`, `IdGen`, `LlmClient`, `GitProvider`, `BlobStore` everywhere                                                            | Every test becomes deterministic                             |
 | Observability      | OpenTelemetry (GenAI semantic conventions for model spans) + pino with redaction + Sentry                                              | Trace per run (NFR-08) for free, vendor-neutral              |
-| Hosting (proposal) | Web on Vercel; worker + scanner on Fly.io machines (scanner in its own app, egress proxy only); Neon Postgres; Cloudflare R2 for blobs | Answers open question 19.2 #1. Validate cost on Day 6        |
+| Hosting (proposal) | Web on Vercel; worker + scanner on Fly.io machines (scanner in its own app, egress proxy only); Neon Postgres; Cloudflare R2 for blobs | Answers open question 19.2 #1. Scanner part: see D-017       |
 
 Record each choice as `docs/decisions/D-0xx.md` with the versions checked on the day you lock them (§7.4).
 
