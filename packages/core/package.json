@@ -1,5 +1,8 @@
 {
   "name": "@beacon/core",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "zod": "4.6.7"
+  }
 }

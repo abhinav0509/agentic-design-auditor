@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "proposal_id": "018f3c1e-7b2a-7c4d-9e1f-2a3b4c5d6e7f",
+  "run_id": "018f3c1e-0000-7000-8000-000000000001",
+  "agent": { "name": "beacon-fixer", "version": "0.3.1" },
+
+  "kind": "patch",
+  "title": "Add alt text to hero image",
+  "rationale": "The image shows a founder holding a product; it conveys content.",
+  "rule": { "id": "image-alt", "standard_refs": ["WCAG 1.1.1"], "impact": "critical" },
+
+  "target": {
+    "page_url": "https://example.com/about",
+    "selector": "main > section.hero > img",
+    "file": "about.html",
+    "range": { "start_line": 42, "end_line": 42 }
+  },
+
+  "change": {
+    "format": "unified_diff",
+    "diff": "--- a/about.html\n+++ b/about.html\n@@ -42 +42 @@\n-<img src=\"hero.jpg\">\n+<img src=\"hero.jpg\" alt=\"Founder holding the product\">\n",
+    "stats": { "files": 1, "added": 1, "removed": 1 }
+  },
+
+  "risk": {
+    "level": "medium",
+    "reasons": ["generated_text_for_informative_image"],
+    "reversible": true
+  },
+  "confidence": 0.74,
+  "evidence": {
+    "before_screenshot": "blob://runs/018f3c1e/before.png",
+    "after_screenshot": "blob://runs/018f3c1e/after.png",
+    "agent_trace_id": "018f3c1e-0000-7000-8000-0000000000aa"
+  },
+  "verification": {
+    "violation_resolved": true,
+    "new_violations": 0,
+    "visual_diff_ratio": 0.0004
+  },
+
+  "base": {
+    "commit_sha": "abc1234",
+    "content_hash": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+  },
+  "question": null,
+  "created_at": "2026-10-29T08:00:00Z",
+  "expires_at": "2026-11-05T08:00:00Z"
+}

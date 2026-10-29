@@ -94,6 +94,13 @@ requirements:
     ).toThrow(/phase/);
   });
 
+  it('rejects unexpected keys, e.g. from an unquoted comma in a flow mapping', () => {
+    const yaml = `current_phase: 0
+requirements:
+  - { id: FR-11, phase: 1, text: Approve, reject or edit }`;
+    expect(() => parseRegistry(yaml)).toThrow(/FR-11.*unexpected key/i);
+  });
+
   it('accepts the real registry', () => {
     const real = parseRegistry(
       readFileSync(new URL('../../../requirements.yaml', import.meta.url), 'utf8'),
