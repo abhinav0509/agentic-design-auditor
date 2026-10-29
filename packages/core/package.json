@@ -2,6 +2,9 @@
   "name": "@beacon/core",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "dependencies": {
     "parse5": "8.0.1",
     "zod": "4.6.7"
