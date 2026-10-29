@@ -61,6 +61,19 @@ describe('findViolations', () => {
     expect(findViolations(doc(body)).map((v) => v.rule)).toEqual(['label']);
   });
 
+  it('indexes a parent only when it has same-tag siblings, so selectors stay unique', () => {
+    const html = doc(
+      '<figure><img src="a.png" alt="a"></figure>\n<figure><img src="b.png"></figure>',
+    );
+    expect(findViolations(html)).toEqual([
+      {
+        rule: 'image-alt',
+        selector: 'html > body > figure:nth-of-type(2) > img:nth-of-type(1)',
+        line: 6,
+      },
+    ]);
+  });
+
   it('reports violations in document order', () => {
     const html = doc('<img src="a.png">\n<input name="q">', '');
     expect(findViolations(html).map((v) => v.rule)).toEqual([
