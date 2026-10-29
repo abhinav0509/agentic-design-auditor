@@ -19,6 +19,10 @@ export function parseRegistry(text: string): Registry {
     if (typeof id !== 'string' || !ID.test(id)) {
       throw new Error(`malformed requirement id: ${String(id)}`);
     }
+    const extra = Object.keys(entry as object).filter((k) => !['id', 'phase', 'text'].includes(k));
+    if (extra.length > 0) {
+      throw new Error(`${id}: unexpected key(s) ${extra.join(', ')}; quote text containing commas`);
+    }
     if (seen.has(id)) throw new Error(`duplicate requirement id: ${id}`);
     seen.add(id);
     if (!isPhase(phase)) throw new Error(`${id}: phase must be a non-negative integer`);
