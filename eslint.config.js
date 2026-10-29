@@ -12,4 +12,6 @@ export default defineConfig(
     },
   },
   { files: ['**/*.js'], extends: [tseslint.configs.disableTypeChecked] },
+  // Tests build invalid inputs by deleting fields chosen by it.each.
+  { files: ['**/*.test.ts'], rules: { '@typescript-eslint/no-dynamic-delete': 'off' } },
 );
