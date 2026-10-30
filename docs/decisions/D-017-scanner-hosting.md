@@ -36,7 +36,7 @@ Assumption to measure in the spike: about 40 renders (10 scan + about 30 verify 
 3. **Smokescreen** (Stripe, MIT, last commit 2026-10-28):
    - **DNS:** it resolves names itself and connects to the exact IP it checked (`net.DialTimeout(network, d.ResolvedAddr.String(), …)`), so DNS rebinding can't redirect it.
    - **Built-in deny classes:** private ranges, CGNAT, IPv6-embedded IPv4, not-global-unicast (which covers link-local such as `169.254.169.254`) and self-connections.
-   - **Extra:** we add `fdaa::/16` (Fly private network) to its deny list.
+   - **Fly private network:** `fdaa::/16` is inside `fc00::/7`, which the built-in private class already denies (shown by `egress-proxy.test.ts`), so no extra deny range is configured (D-021).
 4. The VM has no Beacon secrets: no GitHub token, model key or DB credentials. It receives a URL list and returns results through a signed callback.
 
 ## Spike: acceptance checks (these become Phase 1 integration tests)
@@ -45,9 +45,9 @@ Run from inside the sandbox against a hostile test page. Every one of these must
 
 - [ ] `fetch('http://169.254.169.254/')`, `http://[fd00::1]/`, `http://10.0.0.1/`, `http://127.0.0.1:4750/` (the proxy itself)
 - [ ] Another Beacon app's `.internal` name on Fly's private network
-- [ ] A 302 redirect to a private address
-- [ ] DNS rebinding (a test domain that answers public, then private)
-- [ ] WebRTC STUN to a private IP
+- [ ] A 302 redirect to a private address (proxy behaviour covered in CI by `egress-proxy.test.ts`, D-021)
+- [ ] DNS rebinding (a test domain that answers public, then private) (proxy behaviour covered in CI, D-021)
+- [ ] WebRTC STUN to a private IP (launch policy covered in CI, D-021)
 - [ ] Decimal, octal and hex IP forms, and `localhost.` with a trailing dot
 - [ ] Direct connection by the `scanner` user that skips the proxy (raw socket to `1.1.1.1:443`)
 

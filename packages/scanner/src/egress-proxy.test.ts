@@ -33,18 +33,25 @@ let rebound = false;
 const html = (body: string) => `<!doctype html><html lang="en"><title>t</title>${body}</html>`;
 
 function pages(path: string, res: import('node:http').ServerResponse): void {
-  const send = (body: string) => res.setHeader('content-type', 'text/html').end(html(body));
+  const send = (body: string): void => {
+    res.setHeader('content-type', 'text/html').end(html(body));
+  };
   switch (path) {
     case '/redirect':
       res.writeHead(302, { location: `http://[::1]:${String(P)}/secret` }).end();
       return;
-    case '/redirect-sub':
-      return send('<img src="/redirect" alt="">');
+    case '/redirect-sub': {
+      send('<img src="/redirect" alt="">');
+      return;
+    }
     case '/rebind':
       rebound = true; // TTL-0 flip: from now on rebind.test answers with ::1
-      return send(`<script>fetch('/data').catch(() => {});</script>`);
-    case '/targets':
-      return send(
+      {
+        send(`<script>fetch('/data').catch(() => {});</script>`);
+        return;
+      }
+    case '/targets': {
+      send(
         [
           'http://169.254.169.254/latest/meta-data/',
           'http://10.0.0.1/',
@@ -55,12 +62,16 @@ function pages(path: string, res: import('node:http').ServerResponse): void {
           .map((u) => `<iframe src="${u}" title="x"></iframe>`)
           .join(''),
       );
-    case '/loopback':
-      return send(
+      return;
+    }
+    case '/loopback': {
+      send(
         `<script>fetch('http://127.0.0.1:${String(privatePortV4)}/secret').catch(() => {});</script>`,
       );
-    case '/webrtc':
-      return send(`<script>
+      return;
+    }
+    case '/webrtc': {
+      send(`<script>
         window.gathered = (async () => {
           const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:127.0.0.1:${String(stun.port)}' }] });
           pc.createDataChannel('x');
@@ -71,6 +82,8 @@ function pages(path: string, res: import('node:http').ServerResponse): void {
           });
         })();
       </script>`);
+      return;
+    }
     default:
       res.end('public data');
   }
