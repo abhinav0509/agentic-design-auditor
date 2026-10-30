@@ -134,8 +134,4 @@ describe('egress guard', { timeout: 60_000 }, () => {
     await context.close();
     expect(code).toBe(1008);
   });
-
-  // Need the egress proxy (D-020): page.route never sees redirect targets or Chromium's DNS.
-  it.todo('NFR-09: redirect to private address rejected');
-  it.todo('NFR-09: DNS rebinding blocked');
 });
