@@ -2,6 +2,9 @@
   "name": "@beacon/evals",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "dependencies": {
     "@beacon/core": "workspace:*",
     "parse5": "8.0.1"

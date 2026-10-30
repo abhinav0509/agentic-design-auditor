@@ -1,7 +1,7 @@
 # D-017: Scanner sandbox hosting and egress control
 
 - **Date:** 2026-10-29
-- **Status:** Proposed. Needs owner sign-off, then the Phase 1 spike checks below.
+- **Status:** Accepted (signed off by the owner on 2026-10-29). The spike checks below are still pending; a failed nftables check switches to the fallback.
 - **Decision:** Run each scan or verify job in its own **ephemeral Fly.io Machine** (a Firecracker microVM, destroyed after the job). All browser traffic goes through **Smokescreen** running inside the same VM, and is enforced at the network layer: only the proxy's user may make outbound connections. **Fallback:** Cloud Run jobs with Direct VPC egress and a deny-all firewall.
 - **Context:** Open question v1.0 §19.2 #1. Requirements: NFR-09 (SSRF protection, sandbox), D-008 (never run customer code), addendum 2.2 (egress allowlisting proxy, DNS pinning, network-layer enforcement).
 
