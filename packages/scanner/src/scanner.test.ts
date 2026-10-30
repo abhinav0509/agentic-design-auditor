@@ -5,6 +5,7 @@ import { buildCorpus, loadCleanPages } from '@beacon/evals';
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { scanPage } from './scanner.ts';
+import { guardContext } from './url-safety.ts';
 
 const ORIGIN = 'https://corpus.test';
 const url = (id: string) => `${ORIGIN}/${id}.html`;
@@ -61,6 +62,8 @@ beforeAll(async () => {
       ? route.fulfill({ contentType: 'text/html', body: page.html, headers: page.headers ?? {} })
       : route.abort();
   });
+  // corpus.test stands in for a public site; the guard itself is tested in egress-guard.test.ts.
+  await guardContext(context, () => Promise.resolve(['93.184.215.14']));
 }, 60_000);
 
 afterAll(async () => {

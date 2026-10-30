@@ -66,6 +66,9 @@ importers:
 
   packages/scanner:
     dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
       axe-core:
         specifier: 4.14.0
         version: 4.14.0

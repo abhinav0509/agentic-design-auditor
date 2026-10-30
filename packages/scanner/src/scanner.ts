@@ -1,8 +1,10 @@
 /// <reference lib="dom" />
 // Scanner (v1.0 §9.1 steps 1-2): render a page and run axe-core for the MVP rules only.
-// The caller owns the BrowserContext, so sandbox and egress-proxy settings (D-017) live there.
+// The caller owns the BrowserContext, so sandbox and egress-proxy settings (D-017) live there; it must
+// carry the in-app egress guard (guardContext) too.
 import axe from 'axe-core';
 import type { BrowserContext } from 'playwright';
+import { checkUrl, guardResolver } from './url-safety.ts';
 
 export type RuleId = 'html-has-lang' | 'image-alt' | 'label';
 
@@ -25,7 +27,8 @@ export type Finding = {
 
 const NAVIGATION_TIMEOUT_MS = 30_000;
 
-export async function scanPage(context: BrowserContext, url: string): Promise<Finding[]> {
+export async function scanPage(context: BrowserContext, rawUrl: string): Promise<Finding[]> {
+  const { url } = await checkUrl(rawUrl, guardResolver(context));
   const page = await context.newPage();
   try {
     await page.goto(url, { waitUntil: 'networkidle', timeout: NAVIGATION_TIMEOUT_MS });

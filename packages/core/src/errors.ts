@@ -6,6 +6,7 @@ export const ERROR_CODES = [
   'INVALID_EDIT',
   'PROPOSAL_EXPIRED',
   'STALE_PROPOSAL',
+  'URL_NOT_ALLOWED',
   'VERSION_CONFLICT',
 ] as const;
 export type ErrorCode = (typeof ERROR_CODES)[number];

@@ -41,9 +41,3 @@ describe('review kit', () => {
   it.todo('bulk button disabled when any item is not low risk');
   it.todo('409 shows the someone-else-decided state');
 });
-
-describe('scanner safety', () => {
-  it.todo('NFR-09: private, loopback, link-local and non-http schemes rejected');
-  it.todo('NFR-09: redirect to private address rejected');
-  it.todo('NFR-09: DNS rebinding blocked');
-});
