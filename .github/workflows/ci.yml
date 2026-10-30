@@ -75,5 +75,6 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm --filter @beacon/scanner exec playwright install --with-deps chromium
+      - run: pnpm smokescreen:install # pinned release, sha256-checked (D-021)
       - run: pnpm test:ci
       - run: pnpm trace
