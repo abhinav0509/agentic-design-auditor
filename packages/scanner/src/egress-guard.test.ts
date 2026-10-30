@@ -27,6 +27,14 @@ const SERVED: Record<string, Served> = {
       </script>`),
   },
   'https://site.test/ok.png': { body: '' },
+  'https://site.test/ws': {
+    body: doc(`<script>
+      window.wsClose = new Promise((done) => {
+        new WebSocket('wss://192.168.1.1/socket').onclose = (e) => done(e.code);
+        setTimeout(() => done(-1), 5000);
+      });
+    </script>`),
+  },
 };
 
 const PRIVATE = /169\.254\.169\.254|10\.0\.0\.1|\[::1\]|192\.168\.1\.1/;
@@ -113,6 +121,18 @@ describe('egress guard', { timeout: 60_000 }, () => {
     await context.close();
     expect(reached).toContain('https://site.test/ok.png');
     expect(reached.filter((u) => PRIVATE.test(u))).toEqual([]);
+  });
+
+  it('NFR-09: the guard closes a private websocket itself (policy violation), never connects it', async () => {
+    // reached can't see a websocket the guard connects to the real network; the page's close code can.
+    const context = await newContext(true);
+    const page = await context.newPage();
+    await page.goto('https://site.test/ws');
+    const code = await page.evaluate(
+      () => (window as unknown as { wsClose: Promise<number> }).wsClose,
+    );
+    await context.close();
+    expect(code).toBe(1008);
   });
 
   // Need the egress proxy (D-020): page.route never sees redirect targets or Chromium's DNS.
