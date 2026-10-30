@@ -8,11 +8,6 @@ describe('decisions', () => {
   it.todo('FR-24: an edited revision re-runs guard, verifier and risk');
 });
 
-describe('fingerprinting and dedupe', () => {
-  it.todo('same violation on many pages yields one finding with many occurrences');
-  it.todo('formatting-only differences do not change the fingerprint');
-});
-
 describe('mapper', () => {
   it.todo('FR-06: unique match maps');
   it.todo('FR-06: ambiguous match returns unmapped, never a guess');
