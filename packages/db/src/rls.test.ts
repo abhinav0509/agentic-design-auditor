@@ -2,6 +2,7 @@
 // app role can neither read nor write another org's rows. Tables are read from the catalog, so a new
 // table without isolation fails here instead of shipping.
 import { STATUSES } from '@beacon/core';
+import postgres from 'postgres';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
@@ -187,7 +188,7 @@ describe('fails closed', () => {
   });
 
   it('NFR-16: a pooled connection whose previous transaction set app.org_id reads 0 rows', async () => {
-    const conn = await db.sql.reserve();
+    const conn = postgres(db.url, { max: 1 }); // one connection, so the second tx reuses it
     try {
       await asApp(conn, ORG_A, () => Promise.resolve());
       // set_config(..., true) left '' behind for the session; the policy must treat it as unset.
@@ -198,7 +199,7 @@ describe('fails closed', () => {
       );
       expect(r?.n).toBe(0);
     } finally {
-      conn.release();
+      await conn.end();
     }
   });
 });

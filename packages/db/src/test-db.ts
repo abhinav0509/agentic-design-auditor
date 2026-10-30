@@ -5,7 +5,7 @@ import { migrate } from './migrate.ts';
 
 const ADMIN_URL = process.env['BEACON_TEST_DATABASE_URL'] ?? 'postgres://localhost/postgres';
 
-export type TestDb = { sql: Sql; drop: () => Promise<void> };
+export type TestDb = { sql: Sql; url: string; drop: () => Promise<void> };
 
 /** Creates beacon_test_<tag>_<pid>, migrated. The admin URL must be a superuser (CI service / local). */
 export async function createTestDb(tag: string): Promise<TestDb> {
@@ -20,6 +20,7 @@ export async function createTestDb(tag: string): Promise<TestDb> {
   await migrate(sql);
   return {
     sql,
+    url: url.href,
     drop: async () => {
       await sql.end();
       await admin.unsafe(`drop database ${name} with (force)`);
@@ -49,7 +50,7 @@ export async function seedOrg(sql: Sql, org: string): Promise<Record<string, str
     if (id === undefined) throw new Error(`seed returned no id: ${q}`);
     return id;
   };
-  await sql.unsafe(`insert into organizations (id, name) values ($1, $1)`, [org]);
+  await sql.unsafe(`insert into organizations (id, name) values ($1, $2)`, [org, org]);
   const user = await one(`insert into users (email) values ($1 || '@example.test') returning id`, [
     org,
   ]);
