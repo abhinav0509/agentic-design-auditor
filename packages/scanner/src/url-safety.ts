@@ -112,7 +112,7 @@ export async function guardContext(context: BrowserContext, resolve: Resolver): 
   );
   await context.routeWebSocket('**', async (ws) => {
     if (await allowed(ws.url().replace(/^ws/, 'http'))) ws.connectToServer();
-    else await ws.close();
+    else await ws.close({ code: 1008, reason: 'blocked by egress guard' }); // 1008: policy violation
   });
   guarded.set(context, resolve);
 }
