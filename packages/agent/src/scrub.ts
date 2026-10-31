@@ -67,9 +67,7 @@ function shannon(s: string): number {
   return h;
 }
 
-/** Replaces every secret gitleaks would report with a marker; the text around it is kept. */
-export function scrubSecrets(text: string): string {
-  const spans: [number, number][] = [];
+function secretSpans(text: string, spans: [number, number][]): void {
   for (const rule of RULES) {
     for (const m of text.matchAll(rule.re)) {
       // gitleaks: the configured group, else the first non-empty group, else the whole match
@@ -83,6 +81,15 @@ export function scrubSecrets(text: string): string {
       spans.push(span);
     }
   }
+}
+
+/** Replaces every secret gitleaks would report with a marker; the text around it is kept. */
+export function scrubSecrets(text: string): string {
+  const spans: [number, number][] = [];
+  secretSpans(text, spans);
+  // Gitleaks rules end a token at a quote, space or line end, so `key</p>` in HTML is missed. A
+  // second pass with tag brackets as spaces finds it; same length, so spans map onto the original.
+  if (/[<>]/.test(text)) secretSpans(text.replace(/[<>]/g, ' '), spans);
   spans.sort((a, b) => a[0] - b[0]);
   let out = '';
   let at = 0;
