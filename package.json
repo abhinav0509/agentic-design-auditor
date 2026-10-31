@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "test:ci": "vitest run --reporter=default --reporter=json --outputFile.json=reports/vitest.json",
     "trace": "node tools/trace/src/cli.ts reports/vitest.json requirements.yaml",
-    "smokescreen:install": "node tools/smokescreen/src/install.ts"
+    "smokescreen:install": "node tools/smokescreen/src/install.ts",
+    "demo": "node tools/demo/src/server.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

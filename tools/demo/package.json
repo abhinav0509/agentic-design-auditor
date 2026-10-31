@@ -1,0 +1,12 @@
+{
+  "name": "@beacon/demo",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@beacon/agent": "workspace:*",
+    "@beacon/core": "workspace:*",
+    "@beacon/evals": "workspace:*",
+    "@beacon/scanner": "workspace:*",
+    "playwright": "1.64.1"
+  }
+}
