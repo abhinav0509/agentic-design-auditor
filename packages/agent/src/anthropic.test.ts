@@ -2,7 +2,7 @@
 // request and returns canned responses. Real calls only happen in the recorded eval runs.
 import type {
   BetaMessage,
-  BetaMessageCreateParamsNonStreaming,
+  MessageCreateParamsNonStreaming as BetaMessageCreateParamsNonStreaming,
 } from '@anthropic-ai/sdk/resources/beta/messages/messages';
 import { describe, expect, it } from 'vitest';
 import { AnthropicLlm, type MessagesApi } from './anthropic.ts';
@@ -33,7 +33,10 @@ const reply = (over: Partial<BetaMessage> = {}): BetaMessage =>
 
 class FakeApi implements MessagesApi {
   readonly params: BetaMessageCreateParamsNonStreaming[] = [];
-  constructor(private readonly response: BetaMessage | Error = reply()) {}
+  private readonly response: BetaMessage | Error;
+  constructor(response: BetaMessage | Error = reply()) {
+    this.response = response;
+  }
   create(p: BetaMessageCreateParamsNonStreaming): Promise<BetaMessage> {
     this.params.push(structuredClone(p));
     return this.response instanceof Error

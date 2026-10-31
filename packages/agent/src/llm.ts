@@ -9,14 +9,15 @@ export type ToolResult = { id: string; content: ToolContent; isError: boolean };
 
 export type Message =
   | { role: 'user'; content: string }
-  | { role: 'assistant'; toolCalls: ToolCall[]; text?: string }
+  // raw: the provider's own content for this turn, echoed back unchanged (thinking blocks)
+  | { role: 'assistant'; toolCalls: ToolCall[]; text?: string; raw?: unknown }
   | { role: 'tool'; results: ToolResult[] };
 
 export type ToolSpec = { name: string; description: string; inputSchema: Record<string, unknown> };
 
 export type LlmRequest = { system: string; messages: Message[]; tools: ToolSpec[] };
 
-export type LlmTurn = { toolCalls: ToolCall[]; text?: string; usage: Usage };
+export type LlmTurn = { toolCalls: ToolCall[]; text?: string; usage: Usage; raw?: unknown };
 
 export interface LlmClient {
   complete(request: LlmRequest): Promise<LlmTurn>;
