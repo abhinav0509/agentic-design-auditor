@@ -322,6 +322,7 @@ describe('runFixer: untrusted content (NFR-02)', () => {
       toolUse(['submit_proposal', validDraft()]),
     ]);
     await runFixer({ llm, job: aJob(), tools });
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string -- an image block would fail the checks below anyway
     const content = String(toolResults(llm.calls[1])[0]?.content);
     expect(content.startsWith('<untrusted_page_text>')).toBe(true);
     expect(content.match(/<\/untrusted_page_text>/g)).toHaveLength(1);

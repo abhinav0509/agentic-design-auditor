@@ -8,8 +8,11 @@ import type { LlmClient, LlmRequest, LlmTurn, ToolCall } from './llm.ts';
 export class FakeLlm implements LlmClient {
   readonly calls: LlmRequest[] = [];
   private next = 0;
+  private readonly turns: (LlmTurn | Error)[];
 
-  constructor(private readonly turns: (LlmTurn | Error)[]) {}
+  constructor(turns: (LlmTurn | Error)[]) {
+    this.turns = turns;
+  }
 
   complete(request: LlmRequest): Promise<LlmTurn> {
     this.calls.push(structuredClone(request));
