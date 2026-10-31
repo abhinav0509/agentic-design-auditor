@@ -53,6 +53,15 @@ describe('scrubSecrets', () => {
     );
   });
 
+  it('NFR-07: a secret directly followed by a tag is still found (HTML source)', () => {
+    const stripe = PLANTED.find((p) => p.rule === 'stripe-access-token');
+    if (!stripe) throw new Error('fixture missing stripe-access-token');
+    // gitleaks rules end a token at a quote, space or line end, not at "<"
+    expect(scrubSecrets(`<p>Debug: payments key ${stripe.secret}</p>`)).toBe(
+      '<p>Debug: payments key [REDACTED_SECRET]</p>',
+    );
+  });
+
   it('leaves ordinary page markup alone, including words like key and password', () => {
     const markup = `<label for="api-key">API key</label>
 <input id="api-key" name="password" type="password" autocomplete="current-password">
