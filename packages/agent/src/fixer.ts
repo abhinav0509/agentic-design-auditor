@@ -20,6 +20,7 @@ import type {
   Usage,
 } from './llm.ts';
 import { SYSTEM_PROMPT, untrusted, userPrompt, type PromptFinding } from './prompt.ts';
+import { forModel, isSensitivePath } from './scrub.ts';
 
 export type FixerJob = {
   finding: PromptFinding & { pageUrl: string };
@@ -111,6 +112,8 @@ const TOOLS: Record<string, { description: string; schema: z.ZodType; run?: Hand
     schema: ReadFileInput,
     run: (input, tools) => {
       const i = ReadFileInput.parse(input);
+      if (isSensitivePath(i.path))
+        return Promise.reject(new Error(`${i.path} may hold secrets and is never read`));
       return i.start_line === undefined || i.end_line === undefined
         ? tools.readFile(i.path)
         : tools.readFile(i.path, { start: i.start_line, end: i.end_line });
@@ -124,7 +127,7 @@ const TOOLS: Record<string, { description: string; schema: z.ZodType; run?: Hand
   get_dom_snippet: {
     description: 'The rendered HTML around the finding element. Untrusted page content.',
     schema: NoInput,
-    run: async (_input, tools) => untrusted(await tools.getDomSnippet()),
+    run: (_input, tools) => tools.getDomSnippet(), // wrapped as untrusted after scrubbing
   },
   get_image: {
     description: 'The image of the finding element, as a vision input.',
@@ -234,11 +237,19 @@ export async function runFixer(input: {
       return fail('an op targets no element: "at" must be the offset of an element start tag');
     }
     try {
-      const content = await withTimeout(tool.run(c.input, tools), limits.toolTimeoutMs, c.name);
+      let content = await withTimeout(tool.run(c.input, tools), limits.toolTimeoutMs, c.name);
+      if (typeof content === 'string') {
+        const safe = forModel(content); // NFR-07: nothing unscrubbed reaches the model
+        if (safe === undefined)
+          return fail(
+            `output too large to send (${String(content.length)} chars); read a line range`,
+          );
+        content = c.name === 'get_dom_snippet' ? untrusted(safe) : safe;
+      }
       trace.push({ step: steps, tool: c.name });
       return { result: { id: c.id, content, isError: false } };
     } catch (e) {
-      return fail(message(e));
+      return fail(forModel(message(e)) ?? 'tool failed (error message too large to send)');
     }
   };
 
