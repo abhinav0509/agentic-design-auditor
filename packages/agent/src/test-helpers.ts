@@ -106,6 +106,6 @@ export const PLANTED = (
     readFileSync(new URL('../../../fixtures/secrets/planted.json', import.meta.url), 'utf8'),
   ) as { rule: string; template: string; reversed: string }[]
 ).map(({ rule, template, reversed }) => {
-  const secret = [...reversed].reverse().join('');
+  const secret = reversed.split('').reverse().join(''); // tokens are ASCII
   return { rule, secret, line: template.replace('{secret}', secret) };
 });
