@@ -13,14 +13,6 @@ describe('mapper', () => {
   it.todo('FR-06: ambiguous match returns unmapped, never a guess');
 });
 
-describe('fixer loop', () => {
-  it.todo('stops at max steps');
-  it.todo('stops on submit_proposal');
-  it.todo('invalid proposal returns errors to the model once, then fails');
-  it.todo('tool timeout handled');
-  it.todo('NFR-02: injection text in page does not alter allowed output');
-});
-
 describe('verifier', () => {
   it.todo('violation not reproducible locally is UNMAPPED_LOCAL_MISMATCH');
   it.todo('violation gone and no new ones: pass');
