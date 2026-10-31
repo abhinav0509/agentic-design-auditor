@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Beacon demo</title>
+    <style>
+      :root {
+        --bg: #f6f5f1;
+        --panel: #ffffff;
+        --ink: #1b1b18;
+        --muted: #5d5b54;
+        --line: #dedbd2;
+        --accent: #2b4acb;
+        --accent-ink: #ffffff;
+        --ok: #1d6b3a;
+        --ok-bg: #e3f3e8;
+        --warn: #7a4b00;
+        --warn-bg: #fdf0d5;
+        --bad: #a3221b;
+        --bad-bg: #fbe3e1;
+        --info-bg: #e6ebfb;
+        --del-bg: #fbe3e1;
+        --add-bg: #e3f3e8;
+        --code-bg: #f0eee8;
+        --focus: #2b4acb;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141412;
+          --panel: #1d1d1a;
+          --ink: #ecebe6;
+          --muted: #a9a79f;
+          --line: #34332e;
+          --accent: #8ea2ff;
+          --accent-ink: #10132a;
+          --ok: #8fd6a6;
+          --ok-bg: #173323;
+          --warn: #f2c66d;
+          --warn-bg: #3a2c10;
+          --bad: #ff9c94;
+          --bad-bg: #3d1a17;
+          --info-bg: #1e2547;
+          --del-bg: #3d1a17;
+          --add-bg: #173323;
+          --code-bg: #262622;
+          --focus: #8ea2ff;
+          color-scheme: dark;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          15px/1.5 system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+      }
+      code,
+      pre,
+      .mono {
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 13px;
+      }
+      :focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 2px;
+      }
+      header {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+      }
+      header p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 24px;
+        padding: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+          padding: 16px;
+        }
+      }
+      aside,
+      section.card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 18px;
+      }
+      aside {
+        align-self: start;
+        position: sticky;
+        top: 16px;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 0 0 12px;
+      }
+      h3 {
+        font-size: 14px;
+        margin: 16px 0 8px;
+      }
+      label,
+      legend {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 6px;
+      }
+      select,
+      input[type='text'] {
+        width: 100%;
+        font: inherit;
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--panel);
+        color: var(--ink);
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 18px 0 0;
+      }
+      .choice {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2px 8px;
+        padding: 8px;
+        border-radius: 6px;
+      }
+      .choice:has(input:checked) {
+        background: var(--info-bg);
+      }
+      .choice label {
+        margin: 0;
+      }
+      .choice small {
+        grid-column: 2;
+        color: var(--muted);
+      }
+      button {
+        font: inherit;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink);
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .run {
+        width: 100%;
+        margin-top: 18px;
+        padding: 10px;
+      }
+      .real {
+        margin: 18px 0 0;
+        padding: 12px 0 0;
+        border-top: 1px solid var(--line);
+        list-style: none;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .real li {
+        display: flex;
+        justify-content: space-between;
+        padding: 2px 0;
+      }
+      .real b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      main {
+        display: grid;
+        gap: 18px;
+        min-width: 0;
+      }
+      .empty {
+        color: var(--muted);
+        padding: 48px 18px;
+        text-align: center;
+      }
+      .steps {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .steps li {
+        flex: 1 1 140px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 10px 12px;
+      }
+      .steps .k {
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .steps .v {
+        font-weight: 600;
+      }
+      .pill {
+        display: inline-block;
+        padding: 1px 9px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--code-bg);
+        color: var(--ink);
+      }
+      .pill.ok {
+        background: var(--ok-bg);
+        color: var(--ok);
+      }
+      .pill.warn {
+        background: var(--warn-bg);
+        color: var(--warn);
+      }
+      .pill.bad {
+        background: var(--bad-bg);
+        color: var(--bad);
+      }
+      .pill.info {
+        background: var(--info-bg);
+        color: var(--accent);
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      td code {
+        word-break: break-all;
+      }
+      .meta {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      ol.trace {
+        margin: 0;
+        padding-left: 22px;
+      }
+      ol.trace li {
+        padding: 2px 0;
+      }
+      .err {
+        color: var(--bad);
+      }
+      details {
+        margin-top: 12px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      pre {
+        background: var(--code-bg);
+        border-radius: 6px;
+        padding: 12px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 420px;
+        margin: 8px 0 0;
+      }
+      mark {
+        background: var(--warn-bg);
+        color: var(--warn);
+        border-radius: 3px;
+        padding: 0 2px;
+      }
+      .head {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .head h2 {
+        margin: 0;
+        margin-right: auto;
+      }
+      .diff {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 12px;
+      }
+      .diff div {
+        display: grid;
+        grid-template-columns: 3.5em 1.5em 1fr;
+        padding: 2px 8px;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      .diff .del {
+        background: var(--del-bg);
+      }
+      .diff .add {
+        background: var(--add-bg);
+      }
+      .diff .n {
+        color: var(--muted);
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        align-items: end;
+      }
+      .edit {
+        display: flex;
+        gap: 8px;
+        align-items: end;
+        margin-top: 16px;
+      }
+      .edit div {
+        flex: 1;
+      }
+      .note {
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-top: 12px;
+      }
+      .note.bad {
+        background: var(--bad-bg);
+        color: var(--bad);
+      }
+      .note.info {
+        background: var(--info-bg);
+      }
+      .previews {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 700px) {
+        .previews {
+          grid-template-columns: 1fr;
+        }
+      }
+      iframe {
+        width: 100%;
+        height: 320px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Beacon</h1>
+      <p>
+        Local engine demo. Real scanner, fix loop, guard, risk and review logic. Scripted model,
+        nothing saved.
+      </p>
+    </header>
+    <div class="layout">
+      <aside aria-labelledby="setup-h">
+        <h2 id="setup-h">Set up a run</h2>
+        <form id="form">
+          <label for="case">Page and seeded bug</label>
+          <select id="case" required></select>
+          <fieldset>
+            <legend>What the model does</legend>
+            <div id="scenarios"></div>
+          </fieldset>
+          <button class="primary run" id="run" type="submit">Scan and fix</button>
+        </form>
+        <ul class="real" aria-label="Which parts are real">
+          <li><span>Scanner (Chromium + axe)</span><b>real</b></li>
+          <li><span>Fix loop, budgets, scrubbing</span><b>real</b></li>
+          <li><span>Model</span><b>scripted</b></li>
+          <li><span>Guard and risk</span><b>real</b></li>
+          <li><span>Approve, reject, edit</span><b>real, in memory</b></li>
+          <li><span>Verification, GitHub PR</span><b>not built</b></li>
+        </ul>
+      </aside>
+      <main id="main" aria-live="polite" aria-busy="false">
+        <section class="card empty">
+          Pick a page and a scenario, then choose “Scan and fix”.
+        </section>
+      </main>
+    </div>
+    <p class="sr-only" id="status" role="status"></p>
+
+    <script>
+      const $ = (s) => document.querySelector(s);
+      /** Builds DOM nodes. All data goes in as text, never as HTML: page content is untrusted. */
+      function h(tag, attrs = {}, ...kids) {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (v === false || v == null) continue;
+          if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+          else el.setAttribute(k, v === true ? '' : v);
+        }
+        for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid);
+        return el;
+      }
+      const say = (text) => ($('#status').textContent = text);
+      async function api(path, body) {
+        const res = await fetch(path, body ? { method: 'POST', body: JSON.stringify(body) } : {});
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? res.statusText);
+        return data;
+      }
+
+      const RULE_NAMES = {
+        'image-alt': 'Image without alt text',
+        label: 'Form field without a label',
+        'html-has-lang': 'Page without a language',
+      };
+      const STATUS_TONE = {
+        pending: 'info',
+        approved: 'ok',
+        rejected: 'bad',
+        blocked: 'bad',
+        awaiting_input: 'warn',
+        answered: 'ok',
+        declined: 'warn',
+      };
+      const RISK_TONE = { low: 'ok', medium: 'warn', high: 'bad' };
+      const RISK_WHY = {
+        decorative_not_confirmed: 'nobody has confirmed the image is decorative',
+        generated_text: 'the model wrote text a person should read',
+        inside_form: 'the element is inside a form',
+        low_model_confidence: 'the model was not confident',
+        patch_size: 'the change is large',
+        sensitive_flow: 'the page is a sensitive flow (checkout, login, account)',
+        unverified_rule: 'this rule has no automatic verification yet',
+        visual_change: 'the page looks different after the change',
+      };
+      let current = null;
+
+      async function init() {
+        const { cases, scenarios } = await api('/api/cases');
+        const byRule = {};
+        for (const c of cases) (byRule[c.rule] ??= []).push(c);
+        for (const [rule, list] of Object.entries(byRule))
+          $('#case').append(
+            h(
+              'optgroup',
+              { label: RULE_NAMES[rule] ?? rule },
+              list.map((c) => h('option', { value: c.id }, `${c.page}.html`)),
+            ),
+          );
+        Object.entries(scenarios).forEach(([id, text], i) =>
+          $('#scenarios').append(
+            h(
+              'div',
+              { class: 'choice' },
+              h('input', {
+                type: 'radio',
+                name: 'scenario',
+                id: `s-${id}`,
+                value: id,
+                checked: i === 0,
+              }),
+              h('label', { for: `s-${id}` }, id[0].toUpperCase() + id.slice(1)),
+              h('small', {}, text),
+            ),
+          ),
+        );
+      }
+
+      $('#form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const scenario = new FormData(e.target).get('scenario');
+        $('#run').disabled = true;
+        $('#main').setAttribute('aria-busy', 'true');
+        say('Scanning the page in Chromium and running the fix loop…');
+        $('#main').replaceChildren(
+          h(
+            'section',
+            { class: 'card empty' },
+            'Scanning the page in Chromium and running the fix loop…',
+          ),
+        );
+        try {
+          current = await api('/api/run', { caseId: $('#case').value, scenario });
+          render();
+          say(`Run finished: ${current.result.kind}.`);
+        } catch (err) {
+          $('#main').replaceChildren(
+            h('section', { class: 'card note bad', role: 'alert' }, String(err.message)),
+          );
+        } finally {
+          $('#run').disabled = false;
+          $('#main').setAttribute('aria-busy', 'false');
+        }
+      });
+
+      function highlightRedactions(text) {
+        return text
+          .split(/(\[REDACTED_SECRET\]|<untrusted_page_text>|<\/untrusted_page_text>)/)
+          .map((part, i) => (i % 2 ? h('mark', {}, part) : part));
+      }
+
+      function render() {
+        const r = current.result;
+        const p = current.proposal;
+        const f = current.findings[0];
+        const outcome =
+          r.kind === 'failed'
+            ? `failed: ${r.reason}`
+            : r.kind === 'blocked'
+              ? `blocked by guard`
+              : r.kind;
+        $('#main').replaceChildren(
+          h(
+            'ol',
+            { class: 'steps', 'aria-label': 'Pipeline' },
+            step(
+              '1 · Scan',
+              `${current.findings.length} finding${current.findings.length === 1 ? '' : 's'}`,
+            ),
+            step('2 · Agent', `${r.steps} model turn${r.steps === 1 ? '' : 's'}`),
+            step(
+              '3 · Guard + risk',
+              r.kind === 'blocked'
+                ? 'blocked'
+                : r.kind === 'patch'
+                  ? `passed · ${r.risk.level} risk`
+                  : 'not needed',
+            ),
+            step('4 · Review', p ? p.state.status.replace('_', ' ') : 'nothing to review'),
+          ),
+          proposalCard(r, p),
+          h(
+            'section',
+            { class: 'card', 'aria-labelledby': 'scan-h' },
+            h('h2', { id: 'scan-h' }, 'Scan findings'),
+            h(
+              'table',
+              {},
+              h(
+                'thead',
+                {},
+                h(
+                  'tr',
+                  {},
+                  ['Rule', 'Impact', 'Element', 'Snippet'].map((t) => h('th', { scope: 'col' }, t)),
+                ),
+              ),
+              h(
+                'tbody',
+                {},
+                current.findings.map((x) =>
+                  h(
+                    'tr',
+                    {},
+                    h('td', {}, RULE_NAMES[x.rule_id] ?? x.rule_id),
+                    h('td', {}, x.impact),
+                    h('td', {}, h('code', {}, x.target)),
+                    h('td', {}, h('code', {}, x.html)),
+                  ),
+                ),
+              ),
+            ),
+            f && h('p', { class: 'meta' }, `The agent works on the first finding: ${f.target}`),
+          ),
+          h(
+            'section',
+            { class: 'card', 'aria-labelledby': 'agent-h' },
+            h('h2', { id: 'agent-h' }, 'Agent run'),
+            h(
+              'div',
+              { class: 'meta' },
+              h('span', {}, `Outcome: ${outcome}`),
+              h('span', {}, `Steps: ${r.steps} of 8`),
+              h('span', {}, `Tokens in/out: ${r.usage.inputTokens} / ${r.usage.outputTokens}`),
+              h('span', {}, `Cost: $${(r.usage.costMicros / 1e6).toFixed(4)} (scripted)`),
+            ),
+            h('h3', {}, 'Tool calls'),
+            h(
+              'ol',
+              { class: 'trace' },
+              r.trace.map((t) =>
+                h(
+                  'li',
+                  {},
+                  h('code', {}, t.tool),
+                  ` (turn ${t.step})`,
+                  t.error
+                    ? h('span', { class: 'err' }, ` error: ${t.error.replace(/\n\s*/g, ' ')}`)
+                    : '',
+                ),
+              ),
+            ),
+            h(
+              'details',
+              { open: current.scenario === 'secret' || current.scenario === 'injection' },
+              h('summary', {}, 'What the model was sent'),
+              h(
+                'p',
+                { class: 'meta' },
+                'Page and file content is HTML-escaped so it cannot close or fake the tags around it. Highlighted: the untrusted-data wrapper and any scrubbed secret.',
+              ),
+              h('pre', {}, highlightRedactions(current.prompt)),
+            ),
+          ),
+          h(
+            'section',
+            { class: 'card', 'aria-labelledby': 'prev-h' },
+            h('h2', { id: 'prev-h' }, 'Page preview'),
+            h(
+              'p',
+              { class: 'meta' },
+              'Rendered without scripts or network. Images are not loaded, so their alt text shows instead.',
+            ),
+            h(
+              'div',
+              { class: 'previews' },
+              preview(
+                'Before',
+                `/preview?case=${encodeURIComponent(current.caseId)}&scenario=${current.scenario}`,
+              ),
+              r.kind === 'patch'
+                ? preview('After the fix', `/preview?run=${current.id}&v=${Date.now()}`)
+                : '',
+            ),
+          ),
+        );
+      }
+
+      const step = (k, v) => h('li', {}, h('div', { class: 'k' }, k), h('div', { class: 'v' }, v));
+      const preview = (title, src) =>
+        h(
+          'div',
+          {},
+          h('h3', {}, title),
+          h('iframe', { title: `${title} preview`, src, sandbox: '' }),
+        );
+
+      function proposalCard(r, p) {
+        const card = h('section', { class: 'card', 'aria-labelledby': 'prop-h' });
+        const status =
+          p &&
+          h(
+            'span',
+            { class: `pill ${STATUS_TONE[p.state.status] ?? ''}` },
+            p.state.status.replace('_', ' '),
+          );
+        const risk =
+          r.kind === 'patch' &&
+          h('span', { class: `pill ${RISK_TONE[r.risk.level]}` }, `${r.risk.level} risk`);
+        card.append(
+          h(
+            'div',
+            { class: 'head' },
+            h('h2', { id: 'prop-h' }, 'Proposal'),
+            risk,
+            status,
+            p && h('span', { class: 'pill' }, `v${p.state.version}`),
+          ),
+        );
+        if (r.kind === 'failed') {
+          card.append(
+            h(
+              'p',
+              { class: 'note bad' },
+              `The run failed (${r.reason}), so there is nothing to review.`,
+            ),
+          );
+          return card;
+        }
+        if (r.kind === 'blocked') {
+          card.append(
+            h(
+              'div',
+              { class: 'note bad', role: 'alert' },
+              h('strong', {}, 'Blocked by the patch guard. '),
+              `Reasons: ${r.reasons.join(', ')}. A guard block is final: it is not retried and never reaches a reviewer.`,
+            ),
+          );
+          return card;
+        }
+        card.append(
+          h('p', {}, h('strong', {}, r.title)),
+          h('p', {}, r.rationale),
+          h('p', { class: 'meta' }, `Model confidence: ${r.confidence}`),
+        );
+        if (r.kind === 'patch') {
+          card.append(
+            r.risk.reasons.length
+              ? h(
+                  'p',
+                  { class: 'meta' },
+                  `Why ${r.risk.level} risk: ${r.risk.reasons.map((x) => RISK_WHY[x] ?? x).join('; ')}`,
+                )
+              : '',
+            h(
+              'div',
+              { class: 'diff mono', role: 'group', 'aria-label': 'Change' },
+              current.diff.flatMap((d) => [
+                h(
+                  'div',
+                  { class: 'del' },
+                  h('span', { class: 'n' }, d.line),
+                  h('span', { 'aria-label': 'removed' }, '−'),
+                  d.before,
+                ),
+                h(
+                  'div',
+                  { class: 'add' },
+                  h('span', { class: 'n' }, d.line),
+                  h('span', { 'aria-label': 'added' }, '+'),
+                  d.after,
+                ),
+              ]),
+            ),
+          );
+          if (p.state.status === 'pending') card.append(editForm(r), decisionButtons(p));
+        }
+        if (r.kind === 'needs_input') {
+          card.append(
+            h(
+              'div',
+              { class: 'note info' },
+              h('strong', {}, r.question.text),
+              p.answer ? h('div', {}, `Reviewer answered: ${p.answer}`) : '',
+            ),
+          );
+          if (p.state.status === 'awaiting_input')
+            card.append(
+              h(
+                'div',
+                { class: 'actions' },
+                r.question.options.map((o) =>
+                  h(
+                    'button',
+                    {
+                      type: 'button',
+                      onclick: () => decideAction({ action: 'answer', answer: o }),
+                    },
+                    o,
+                  ),
+                ),
+              ),
+            );
+        }
+        if (p && p.events.length)
+          card.append(
+            h('h3', {}, 'History'),
+            h(
+              'ol',
+              { class: 'trace' },
+              p.events.map((e) =>
+                h(
+                  'li',
+                  {},
+                  `${e.from_status} → ${e.to_status} by ${e.actor_type}${e.reason ? ` (“${e.reason}”)` : ''}`,
+                ),
+              ),
+            ),
+          );
+        return card;
+      }
+
+      function editForm(r) {
+        const op = r.ops[0];
+        if (!op || op.op !== 'set_attr') return '';
+        const input = h('input', { type: 'text', id: 'edit', value: op.value });
+        const msg = h('div', { role: 'status' });
+        return h(
+          'form',
+          {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              const res = await api('/api/revise', { runId: current.id, value: input.value });
+              if (!res.ok) {
+                msg.replaceChildren(
+                  h(
+                    'p',
+                    { class: 'note bad' },
+                    `Your edit was refused by the guard: ${res.reasons.join(', ')}.`,
+                  ),
+                );
+                return;
+              }
+              current = res.run;
+              render();
+              say('Edit applied and re-checked.');
+            },
+          },
+          h(
+            'div',
+            { class: 'edit' },
+            h('div', {}, h('label', { for: 'edit' }, `Edit the ${op.name} value`), input),
+            h('button', { type: 'submit' }, 'Re-check edit'),
+          ),
+          msg,
+        );
+      }
+
+      function decisionButtons(p) {
+        return h(
+          'div',
+          { class: 'actions' },
+          h(
+            'button',
+            {
+              class: 'primary',
+              type: 'button',
+              onclick: () => decideAction({ action: 'approve' }),
+            },
+            'Approve',
+          ),
+          h(
+            'button',
+            {
+              type: 'button',
+              onclick: () => {
+                const reason = prompt('Why reject this fix? (optional)') ?? undefined;
+                decideAction({ action: 'reject', reason: reason || undefined });
+              },
+            },
+            'Reject',
+          ),
+        );
+      }
+
+      async function decideAction(input) {
+        try {
+          const res = await api('/api/decide', {
+            runId: current.id,
+            key: crypto.randomUUID(),
+            expectedVersion: current.proposal.state.version,
+            ...input,
+          });
+          current = res;
+          render();
+          say(`Proposal is now ${res.proposal.state.status}.`);
+        } catch (err) {
+          say(err.message);
+          alert(err.message);
+        }
+      }
+
+      init().catch((err) =>
+        $('#main').replaceChildren(h('section', { class: 'card note bad' }, String(err.message))),
+      );
+    </script>
+  </body>
+</html>
