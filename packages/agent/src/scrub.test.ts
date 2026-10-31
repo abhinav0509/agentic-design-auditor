@@ -44,6 +44,15 @@ describe('scrubSecrets', () => {
     );
   });
 
+  it('a secret found inside a longer one leaves no piece of the longer one', () => {
+    const aws = PLANTED.find((p) => p.rule === 'aws-access-token');
+    if (!aws) throw new Error('fixture missing aws-access-token');
+    // generic-api-key matches the whole value; aws-access-token matches the middle of it
+    expect(scrubSecrets(`api_key = "Xk3s9Qp-${aws.secret}-Zz9qW"`)).toBe(
+      'api_key = "[REDACTED_SECRET]"',
+    );
+  });
+
   it('leaves ordinary page markup alone, including words like key and password', () => {
     const markup = `<label for="api-key">API key</label>
 <input id="api-key" name="password" type="password" autocomplete="current-password">
