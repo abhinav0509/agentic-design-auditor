@@ -105,6 +105,18 @@ describe('runFixer: finishing', () => {
   });
 });
 
+describe('runFixer: provider turns', () => {
+  it('keeps the provider raw content of each assistant turn, to echo it back unchanged', async () => {
+    const raw = [{ type: 'thinking', thinking: '', signature: 'sig' }];
+    const llm = new FakeLlm([
+      { ...toolUse(['get_image', {}]), raw },
+      toolUse(['submit_proposal', validDraft()]),
+    ]);
+    await runFixer({ llm, job: aJob(), tools: fakeTools() });
+    expect(llm.calls[1]?.messages[1]).toMatchObject({ role: 'assistant', raw });
+  });
+});
+
 describe('runFixer: bounds', () => {
   it('stops at max steps', async () => {
     const llm = new FakeLlm(Array.from({ length: 12 }, () => toolUse(['get_dom_snippet', {}])));
