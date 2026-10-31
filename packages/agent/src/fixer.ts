@@ -270,6 +270,7 @@ export async function runFixer(input: {
       role: 'assistant',
       toolCalls: turn.toolCalls,
       ...(turn.text === undefined ? {} : { text: turn.text }),
+      ...(turn.raw === undefined ? {} : { raw: turn.raw }),
     });
     if (turn.toolCalls.length === 0) {
       messages.push({
