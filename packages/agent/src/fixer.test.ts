@@ -2,13 +2,39 @@
 import { describe, expect, it } from 'vitest';
 import { runFixer } from './fixer.ts';
 import type { LlmRequest, Message } from './llm.ts';
-import { aJob, FakeLlm, fakeTools, IMG_AT, textOnly, toolUse, validDraft } from './test-helpers.ts';
+import { MAX_UNTRUSTED_CHARS } from './scrub.ts';
+import {
+  aJob,
+  FakeLlm,
+  fakeTools,
+  IMG_AT,
+  PLANTED,
+  SOURCE,
+  textOnly,
+  toolUse,
+  validDraft,
+} from './test-helpers.ts';
 
 const lastMessage = (r: LlmRequest | undefined): Message | undefined => r?.messages.at(-1);
 const toolResults = (r: LlmRequest | undefined) => {
   const m = lastMessage(r);
   return m?.role === 'tool' ? m.results : [];
 };
+/** Every string the model was sent, as sent (JSON would hide strings that contain newlines). */
+const sentText = (calls: LlmRequest[]) =>
+  calls
+    .flatMap((c) => [
+      c.system,
+      ...c.messages.flatMap((m) =>
+        m.role === 'user'
+          ? [m.content]
+          : m.role === 'tool'
+            ? m.results.flatMap((r) => (typeof r.content === 'string' ? [r.content] : []))
+            : [],
+      ),
+    ])
+    .join('\n');
+const decline = { kind: 'decline', title: 'Decline', rationale: 'Test.', confidence: 0.1 };
 const userText = (r: LlmRequest | undefined) =>
   r?.messages.flatMap((m) => (m.role === 'user' ? [m.content] : [])).join('\n') ?? '';
 
@@ -326,5 +352,85 @@ describe('runFixer: untrusted content (NFR-02)', () => {
     const content = String(toolResults(llm.calls[1])[0]?.content);
     expect(content.startsWith('<untrusted_page_text>')).toBe(true);
     expect(content.match(/<\/untrusted_page_text>/g)).toHaveLength(1);
+  });
+});
+
+describe('runFixer: secrets (NFR-07)', () => {
+  it('NFR-07: none of the 50 planted secrets reaches the model by any channel', async () => {
+    for (const { rule, secret, line } of PLANTED) {
+      const job = aJob({ pageText: `page: ${line}` });
+      job.finding.snippet = `snip: ${line}`;
+      job.file.source = SOURCE.replace(
+        '<img src="team.jpg">\n',
+        `<img src="team.jpg">\n<!-- source: ${line} -->\n`,
+      );
+      const tools = fakeTools({
+        readFile: () => Promise.resolve(`file: ${line}`),
+        searchSource: () => Promise.resolve(`search: ${line}`),
+        getDomSnippet: () => Promise.resolve(`dom: ${line}`),
+        getImage: () => Promise.reject(new Error(`err: ${line}`)),
+      });
+      const llm = new FakeLlm([
+        toolUse(
+          ['read_file', { path: 'about.html' }],
+          ['search_source', { query: 'team' }],
+          ['get_dom_snippet', {}],
+          ['get_image', {}],
+        ),
+        toolUse(['submit_proposal', decline]),
+      ]);
+      await runFixer({ llm, job, tools });
+      const sent = sentText(llm.calls);
+      expect(sent, rule).not.toContain(secret);
+      // each channel did deliver its line, minus the secret
+      for (const marker of ['page:', 'snip:', 'source:', 'file:', 'search:', 'dom:', 'err:'])
+        expect(sent, `${rule} ${marker}`).toContain(marker);
+    }
+  });
+
+  it('NFR-07: read_file refuses env, key and private-key files without reading them', async () => {
+    const read: string[] = [];
+    const tools = fakeTools({
+      readFile: (path) => {
+        read.push(path);
+        return Promise.resolve('x');
+      },
+    });
+    const llm = new FakeLlm([
+      toolUse(
+        ['read_file', { path: '.env' }],
+        ['read_file', { path: 'certs/server.pem' }],
+        ['read_file', { path: '.ssh/id_rsa' }],
+      ),
+      toolUse(['submit_proposal', validDraft()]),
+    ]);
+    await runFixer({ llm, job: aJob(), tools });
+    expect(read).toEqual([]);
+    expect(toolResults(llm.calls[1]).map((r) => r.isError)).toEqual([true, true, true]);
+  });
+
+  it('a tool output too large to scrub is not sent; the model is told to narrow it', async () => {
+    const tools = fakeTools({
+      readFile: () => Promise.resolve('q'.repeat(MAX_UNTRUSTED_CHARS + 1)),
+    });
+    const llm = new FakeLlm([
+      toolUse(['read_file', { path: 'about.html' }]),
+      toolUse(['submit_proposal', validDraft()]),
+    ]);
+    await runFixer({ llm, job: aJob(), tools });
+    expect(toolResults(llm.calls[1])[0]).toMatchObject({ isError: true });
+    expect(JSON.stringify(toolResults(llm.calls[1]))).toMatch(/too large/);
+    expect(sentText(llm.calls)).not.toContain('q'.repeat(100));
+  });
+
+  it('page text too large to scrub is left out of the prompt', async () => {
+    const llm = new FakeLlm([toolUse(['submit_proposal', validDraft()])]);
+    await runFixer({
+      llm,
+      job: aJob({ pageText: 'q'.repeat(MAX_UNTRUSTED_CHARS + 1) }),
+      tools: fakeTools(),
+    });
+    expect(userText(llm.calls[0])).not.toContain('q'.repeat(100));
+    expect(userText(llm.calls[0])).toMatch(/omitted/);
   });
 });

@@ -1,6 +1,7 @@
 // Test doubles and builders for the fixer (D-015: helpers live next to their package until a second
 // package needs them). Not imported by production code.
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import type { FixerJob, FixerTools } from './fixer.ts';
 import type { LlmClient, LlmRequest, LlmTurn, ToolCall } from './llm.ts';
 
@@ -95,3 +96,16 @@ export function fakeTools(overrides: Partial<FixerTools> = {}): FixerTools {
     ...overrides,
   };
 }
+
+/**
+ * 50 fake secrets in gitleaks rule formats, each inside a realistic line (fixtures/secrets). Stored
+ * reversed so no secret scanner (GitHub push protection, gitleaks in CI) sees a token in the repo.
+ */
+export const PLANTED = (
+  JSON.parse(
+    readFileSync(new URL('../../../fixtures/secrets/planted.json', import.meta.url), 'utf8'),
+  ) as { rule: string; template: string; reversed: string }[]
+).map(({ rule, template, reversed }) => {
+  const secret = [...reversed].reverse().join('');
+  return { rule, secret, line: template.replace('{secret}', secret) };
+});
