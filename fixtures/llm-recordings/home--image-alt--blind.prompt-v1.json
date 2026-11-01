@@ -1,0 +1,135 @@
+{
+  "scenario": "home--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "343df40fc780a77d9668edafcea561b39bb46865655483bbb35516756e88e765",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Y2of2AK2LJBvhfiw2bGayh",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Let me look at the image to describe it accurately.",
+        "usage": {
+          "inputTokens": 2397,
+          "outputTokens": 42,
+          "costMicros": 4059.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Let me look at the image to describe it accurately."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Y2of2AK2LJBvhfiw2bGayh",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "f0f9f54dc459fba0c4fcc3e44888936986855dddc2a10db57509f0ec3dfba185",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01ThTne1bx59zHn2JhfK5iRc",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2458,
+          "outputTokens": 102,
+          "costMicros": 5503.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShgYKEAgTGAI4AUIIdGhpbmtpbmcSDFsj8v+1sTkZCrCX7xoMu7KT6hmI2hMTmISPIjBkkrJTHZ7+v/Wu3lLJooAM1i0b/2n2/u2SZYWoypYnffw+Pc2igkFLxEaSh5Yrgo8qowWI6dNhiT4Nr/PwPha72l5/wGVlXsWOBffF4HKq/abIKjjZHj9U4pIAG5zox9shs/dzV8k6O/iVKT4t36e6/6rId0P944XGXx2Gu2x4+eRmha2jqGlt4rQOoSNXdCK7TNtcxBMDC90jFRxEgzS9rIHRuAk8y1lik/p799+2N1Zham5mCjPFJlke/r1EbGEqvwmwCS7E+oIMpOs9oD3lQAraTCyRufMfV7F+uRnmkGQdUAOEHEbBxK/JB0bGltZdnnIgktAI8cq+gB9vfgQOLr0E7WljGKZL/Nfqd3VZdWkHWUEZAz7zLxtKy1neauuZg66QFbrDFTTQsOkgcgckcDuehiyi/aAQgQ7H3TYFgSnXFA1BxuifN3gAGVQN33ScMIBl+qwU9FrFKyCiR6qcj4GSKEQiGot8L3Mfh9xaw4U6LLvYG+jV+DSFIXkLE6WH+2U0xwb/DoXnLmqHAnuMKjQN40azHmAtKWy04aFZoUSqGj/KqxZea1TRzeLjq6WBSLTQ0PAG1f5wF3qZlae0F1uVFlNfnVD5hapNAbwchdUPms3kcCFObAU5bMhntxPf7rpUlRnA+zW0nsNoGoyCLR6+MdR2O2neHsFSUJa1xe2sO0q9/H0R0X50Q2UpySxVOfB72/F2M2LshwypRwBGJJmM5P9BpQjCLai7LLxE+fgizvWQeRKqiwnVb7fQXnmDNjDFIIaR3iDnBDMf9usiz2yu5+Qzdb3CRzSScT32G3JexjX/ku7Ks4VwOgmGkMNDnf4xexr/FPQXx9UDfrZUfU9VbyKZh5OgW6o+yGtetuFd1RRlkbF2xOLDkI7Qk4KtvggHdA7h9y3X4HfbIXmHabPwCFBnfKcVwm4S1QhP29hdcGua1p+bogdSC9Uk0ITlWNRWIpwYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01ThTne1bx59zHn2JhfK5iRc",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ee65cccf150a4b40652a1eed30ced6837d141c5cea0ef4dc69b9ca49cb1cad44",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_0117uPgTmGEGNcbZ8H1hzpYF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image details to write alt text for hero-mugs.jpg",
+              "rationale": "The hero image has no alt attribute. The image wouldn't load and the DOM has no caption or nearby description, so I can't confirm what it shows. All I have is the filename (\"hero-mugs\") and the heading just above it (\"Handmade pottery for everyday use\"). The image might add information, like showing the studio's mugs, or it might be decorative, since the h1 already says what the section is about. I'd rather not write alt text from a filename guess, so please confirm what it shows or pick an option.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/hero-mugs.jpg show, and should screen reader users hear about it?",
+                "options": [
+                  "Informative: use alt=\"Handmade glazed mugs from our Leeds studio\"",
+                  "Informative, but I'll provide my own description of the image",
+                  "Decorative (the heading already covers it): use alt=\"\""
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2612,
+          "outputTokens": 481,
+          "costMicros": 13699.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSsQYKEAgTGAI4AUIIdGhpbmtpbmcSDKV7Q5JJVxIl/VI6sxoM0pptT0C9qvGUoTFEIjCyWIbnqQ87DTRx9lR3PLNkUY5YeS11d++3Dg4nAyTgZkvsTRdRPXh1ajfHJvfqd+sqzgXMYhH6sTdJG4ooFet6VaBw5WejYooz9Msy2Kk8YlSWU2OpJ348Bruh+8NtPYPxzJU/DmYsx60Qd9KQKGTKbBp2AiZ+z5lyNxpNbbtltaYkcnOwg6wnY2zq1yGL7FyixXO4ZfPVd3oIBWMCJCATQlWhj0iNWyDE9xcSfTIHn0pSkpZEXX0mHJVCfWZoFgWwBKgOn5Z1YFrZyjJRFOk/Qv01ZxyP+Cw3S2TVe53TDvUL7WRSTbiGXG21RHCVt7sG47/2OSvhD59+ywyFIlLJK3e8Sk3j5KFVOVUuraxNbWbcu6SkPGESgMhZsAWS8xTKSP5YMn26SwtPTB8hJIiJk2WmZB3E6/0zsmqVfczqEJWBi+ir0aMCWFENR8hYWqp8yzdedziaY6HP/NQsVsIvpGp4XFS3xOmRMWkFB30EMO7vX5/FZtMefQzne25shFD7p6aS2wxzZ3+3kbKKO+dSRn2iIgj45+csx/PRzQ/A+evX7JhgwQRKs0paqYCz1WxvgyMKvJley+cpuR3nhJIOSlsMtPEaJApoMm5Z+WKPvIkOG1B8hSy4AiTwiqChBzn8vrbHyME0PpHgTVbFGR/1aCXJcwNfxgcA6l3tK+h7w1xO9dg0h+iR61EFCXlr22bZlAt31TwX8Lj+VHNLndZqf1lFvHHzKEJVhA3k7oi65NigkueuvXrWtmXeFkPmhmIIlD0N1vMcHo8osFWu5CJiLvG2+2rW/O8nmvkmwokXDmcDVtC0qX0ElaXouGkc5iZ+FoJN/yUQGUk2ioAKzol5raZVLBGXiqwRytJ4TvJBoVFOku8sYPSSHiztneLAGe3TxWomhECRWMdCWSGD5GJ3iHK9ShgMHTrB2uTl2yU1BKLUVW+QNfVGmtOHWUnLiDjtG6tEw67FTq4oDJFXp7kWt+EY2masH49rt+JJ/fAslQXkMLpbfyijBbe2lxfawQDYGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_0117uPgTmGEGNcbZ8H1hzpYF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image details to write alt text for hero-mugs.jpg",
+              "rationale": "The hero image has no alt attribute. The image wouldn't load and the DOM has no caption or nearby description, so I can't confirm what it shows. All I have is the filename (\"hero-mugs\") and the heading just above it (\"Handmade pottery for everyday use\"). The image might add information, like showing the studio's mugs, or it might be decorative, since the h1 already says what the section is about. I'd rather not write alt text from a filename guess, so please confirm what it shows or pick an option.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/hero-mugs.jpg show, and should screen reader users hear about it?",
+                "options": [
+                  "Informative: use alt=\"Handmade glazed mugs from our Leeds studio\"",
+                  "Informative, but I'll provide my own description of the image",
+                  "Decorative (the heading already covers it): use alt=\"\""
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

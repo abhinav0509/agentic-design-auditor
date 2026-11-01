@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_015kTZNev2Ph89f3HfChAzMc",
+            "id": "toolu_01WaoMmm4gBAHBbuEFmsEhYf",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -17,18 +17,18 @@
         ],
         "usage": {
           "inputTokens": 2294,
-          "outputTokens": 128,
-          "costMicros": 5367.2
+          "outputTokens": 136,
+          "costMicros": 5527.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSmgYKEAgTGAI4AUIIdGhpbmtpbmcSDO7RuaGWC7BwGh0BUxoM6N68lJaGayk68i87IjCWZFV17MYGf0F9rAi4fPtKReuwK0gKrF9H7FXHSSCL/c+pG6PKF/WetcJDs+vpiO8qtwXS+L+PT7V9sjc7HZk+WtteZeAvTpvnG0U4u6HLKSftqQzLXVASpACbXMVnaXIVRoS5NrI1up8Lx3VrmGBazvuwPZMEt4AU/aW6wWJUSRbRSKjSLXkJg5llP9sinprPu5W03tvjqt9pbZDBLlwjGMdMBfM441HZVF6Lu/48Wuu6r7YIFucD2dnBLVl+A8Vjb3cTA8oAb4uLuS1klzBO73So0r7IMlXjHPQS2XWGkQyeGc5V4FS/A2EjTIouVIZOV/UL1aTrExPyUs88YAh8/9CXW47s4qJmRDpDEIkgA5ZHmKZgPEsKz0j/FfpU/Wb1of8Rzjy1sozaFhNqiMagQNAUFB95CcyChwkQz9BdNZcDXbWs88Z5zmrQULOyo03OiTZHK+XBanIWwQOrqwbsyRiYzr5k0cF3merg8bRi8xrkedenpy0amB957qnKFV5WqdUAL6JWC3nmrtChDSYMKaQaIXuxx7KmjaJnJmMf5pjn/NUtckro7bbu4zYY4PPJyslA9kF9xoikJnM6el9sO2QH2TmIrneZ0LMG3FI8is8605nSOuz448U2ANU338JURZK9iYL4PEufJ50kJPZF63khvXjPdSqOvXw2173mMGBOa5BXKGnyI0LO4ATY+mME3h6p+z9g69T4Npv88/926fY4UcBeo0nKW9aZE33vLmF1BU0amTBK/0fvNGv1zO3RSoPrTGNXKpdXIl1mxKs8GaYZy2NfAHrP4Ev+ZgrdNtdnIQbbsGUWOh57HcqKXC0y+Pe2SYF4WwPHkwCOqtUvpyEyTYM+wcaZmrsQyl1dStP+0omDBiwQZyMiBFWiHqXUE8qzn2YQ20vGS2dXCsV5rSwXpsbCi+DZyJSAwwRO9YfBBIBc4Zk0C11HQi8O1+sCLfeomDm69QACODtQFRpVKyqvmBCr+jstTRgB"
+            "signature": "CAQStQYKEAgTGAI4AUIIdGhpbmtpbmcSDI3MkvUI2hCLsYMeKRoMvK/QurIEzZAfXgECIjA7mW862H8UG6chng5WVQWK1GorHMxLchN8SALHRxt3BVW6xO6p/umeWw6aHsMIQ2Uq0gV90YT2epxtYBY/XWqsK1XpOkeTKJddb0RxuQp9o1NWhalyZtLHBTu0TiOtKPtMd7aRHUyL2KfLBDGyagL0zxHe9ypIsa49vx0cOYSnIF3ZfmwKNxtH1j5Qo9y9DvSkGceFxcLbpE65mhKBhCUFnV8hBuOThDbgJch4LGNVXugHRmFDQai2b7GFJaqqJBrfh6kI8Ci+Tw9yyy8A0W5Umg5jYoVJwngX64wnX9di3sZto7K3QHHo2LZNoEZwA3YpJYGM67+HWvk3FRze5BenmfiLHYr4SF7D24Gkrk3cADn7itBnAbAW8Fy8RIrDkTMD3s5Oh3oVsMZDGZnK6wbrth3js3fB0O/7Bc55PVmd+EGoBv5Jx8Gsr+HGLpgPmG1+oxr+kroxxVcH6+r6MSpL4LN1UZxYUYojFKAo1Gd1CVmUZZIAhDrlJIWIOQVzHSXKSZOxQuXqCUrCFZEEIUPXa6Pj35cx9HB70IVhzCkuVR0u6MigbJa8PW283v8Y41OsZ4LNfbqJ1K6/C36q1lNnEZ597ufDlCGijjySG01TYo2Lq1L77/8UIQ57Wd9BQKrMMLTXycP3+RGYjPIjVaAGtfL7V8ir9jZhJSa+uy3wc/o2+mgAPQYMQNkDBOdYTNfc/tyadZ4CWiw2LUCf+S5dwIk27Mtib0/oExpSNuhPM/VE6URPxXG2mclYO4c02jLtUWJhnB8pLVeo11zvRKHES1mRZhGSugdhS+bpxdNDIZI+I8PgWQrM+nAA1cGFz8oMckrEeve6l/FEOPURUByUtEaJj7dr5FRP8T7089ZMAwRKNinta8K16Icp67r8xnO1qOhgWT8B4sFw1BKAnmanPDt7jLTQvY5xY3/DLpEKO2ihU5DZIga8aAWumHViKpZzxRkxgeCmb/l74vani13tH/hnKjz0IKyv+qDQwqOeGflnYkRzvqwyNWIKMqZqJaahGJlZzxgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_015kTZNev2Ph89f3HfChAzMc",
+            "id": "toolu_01WaoMmm4gBAHBbuEFmsEhYf",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -42,16 +42,16 @@
       }
     },
     {
-      "requestHash": "31065f4a6516e84b31a44b497daed55dc0c32ac03b3e151ab20ff093077d6b90",
+      "requestHash": "3c9cbf13244d98d3e6f9dff109221771393c3b969b1cb78272de9f53f30a889c",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01CpvCWfwVu5UHRjDHA81V1Y",
+            "id": "toolu_01SonVR5BKGW46mmuKFFJUHE",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add lang=\"en-GB\" to the <html> element on pricing.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The page text is in English (\"Workshop prices\", \"Taster evening\", \"Six-week course\"), and prices are in pounds (£45, £240), which points to British English. So I'm proposing lang=\"en-GB\". No other page in the repo sets a lang attribute, so there's no existing convention to follow. If the site isn't aimed at a UK audience, plain \"en\" also works. Please check the language before accepting.",
+              "title": "Add lang=\"en-GB\" to the <html> element in pricing.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page aloud. All the visible text is English (\"Workshop prices\", \"Taster evening\", \"Check availability\"), and prices are in pounds (£45, £240), which suggests British English. That's why I chose \"en-GB\". If the site isn't aimed at a UK audience, plain \"en\" also works. I searched the repo and found no other lang attributes to match. This fixes the flagged html-has-lang issue. It doesn't confirm the page meets any wider accessibility standard.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -65,24 +65,24 @@
           }
         ],
         "usage": {
-          "inputTokens": 2445,
-          "outputTokens": 436,
-          "costMicros": 12131.2
+          "inputTokens": 2453,
+          "outputTokens": 457,
+          "costMicros": 12583.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS3QYKEAgTGAI4AUIIdGhpbmtpbmcSDIXhYt0EusPHW0LQJxoMO21tiudNJdUx4StEIjBAwWjZAE/jCYSgEFjS47r9kDNIq80bCuENwoFsnKFtr/96242qAZJgTdBKMEpMQCIq+gWNz4+1OXr1U+YcGapO9nbdrgdFlLIX1Eve+fYrxBi5Z6PnQDDrt1Wu8POruE9DbCMfXZZYQuJK4Mr7plCbx6/8UjcVaIagx1yX/QaUlMyF/jDP1bJsK6aiTJgax71YI/xVF6G3J6ajnRM2PNk+lbGd9SmC625ETdxBpj8tA82ZTHlDglmOyn4m4PH5J7SDc84ysLmGYmRSW9ioilKycC2iAQ8QQn7ha7aWieZOf1vy2mq8NEABCN/MXE2PUZmq61T+Zspu+EJx5JoPTY3z/frzDo60kmlDX94kuX+87CTpn7mVG3j0fmYPZLeCO3Vj7CpZNKfaeSra2KK7q/qy3P75Bd4wjPXpvP/DuGpeg1TZp14Z/+eNgRf9fiXJBg+BOwEqGR/eK7SvkviB0+cDO0xOcawwDIKsrtZGHK472bgPQo1kz9GspHQBuLKaWhWjDpddjaIc45Vs866Jn3RZrL8ZhBYmpzYn1yoM1rBSdmGiO1K7C3kjPSxBeBOEjNuyEVMDVL+z6tQkpUsxsfC7xpp9NT/QYknLMAMv65fi2jJ2Tx48ZP0WTncYDYfGFM6vCZjo76jqSQHFlnDLgQOig1mnpoSprUaqT9GrlVBtEarOEqb/sbofWxgnazXKikv1QHwAvjuTRGeMpJr5mXgGP0T1tuA9spRiWJvoqLNQiKqo33wfJJjQ1jAphYUM7omtnMrjaJ188kcTbdoREKLa2o+PcB3OSOG3aWguUiIP/j8mbiJp/4Etra1NZVCDlUXnW5RpPYRRrnRpS5ASTT/I+9zDD7PiOT41oep/c/S1OEBROmjFPJHAKnMOzMu1GC+PLvhUkLUjSbM3lT3qh2puH+svZUbYi9M2CgolTpw22QiqUJnbBPTQYbIxw3f0XnApEvVmrnaUbng7hD1PTdm9kBR52CjKA5EIXT3jDutFJYFSysZ9VI/ALePEz2zcAujmCxUOUDytAeiGVD9dIoNJ32ekzBAQZBI6MsH58vI7UVSpRVXYa6B8QILWquoYAQ=="
+            "signature": "CAQS3AYKEAgTGAI4AUIIdGhpbmtpbmcSDGftqvuJA+Hk9eMjDBoMtflSKIq+RAX6Bm5+IjCHhWI36pLAcm0Ccsuy9U1OcO0QEEORHCZq9QKugO4BQPngr1HWAP3TInufUBD5nacq+QXz7iUYK3s+xFkMQa1QGuUqdf2VBiCG8otH9E2tPvLQlLsEadwxVyUBYeltrVPxX7hcUX2RFn+r93i8C3ShgQfDCthXpBtIHMKXuryR4Hb67tzty25ak3XLB+HUBBQT5438Ns29fvT2W/0X9fCQw5HsseHBmOInYFqUtsUNdhKqrBGMHmOOXn1oP0tCfdGcS0aY1bBmBoz+9ltQFy5puivS1HrDoaE8wNaZhjTMP2sclhAoDs1bjzWtnr4Ku9hNJLQfzj//vfO+LC1FUq1yScXBmHs/t8E9a0B1NgkhFan6jFme+9ZHbBycwQTGLWYpXTaN2cdalmRCUTe0CE5Asz+o03gd6ywzGH9lkpL8LgDLLhw7u6AbVBFrshMCISHTvHbsAoq7hUv8trWs3rVwpUY4+S6H3QgCEPibhvYBWVYioZPzLLe6gEGbmNsM1JzA93edpLkWE7skLZ4r+Xpg3W7hkKHMwPWi2wWAKbrzVPj60feEFfJqz0C8JcEB/2Ubu4lm6BXhIqciHkdSVzYHak1TPJ64jFgt7otoNqVDCc7lsNGKpXXVkJ3FIYOU6nv13FdvZRLejQaUvG9Ir5Yn7nolhd5WiwIJ1bhqSPlmcMWcp2TRjrpj8HWYja42Kf76QDYByB9nDrw18ABJOiVXJgivcfMZvcRm7GiaGO2nZo/QHC62AwGIBo9f3kOw9pwJgHUzaDj4fiLcPoPrtCYwevs9r/8W69kzV31BA7BdNc0sjlCYY0nqKRHK1wTTOuCwz0dbsEm+YmFFmFsARz8mwDqWfPv3lzB00ctwozTPE4GvIvu3on66IlVAbB0o0co+cWCnbJq7iLJFkuOWT1m3PsRoOvA2iU03cZjaHdy4nAYkDBWpBjka6F4DeHwiMMpqaMucrw1WqSOZ9kRrR8sAQlUWWao8Ry70JkeUrtf+DdkHrA/JdYNtaJKDgPEDFQcz6Lqrp8pRAezZ6DxP+A5nPEhnHHiIV4mq2gW1CXdcq3o2mkYFQKpxCmU8KxgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01CpvCWfwVu5UHRjDHA81V1Y",
+            "id": "toolu_01SonVR5BKGW46mmuKFFJUHE",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add lang=\"en-GB\" to the <html> element on pricing.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The page text is in English (\"Workshop prices\", \"Taster evening\", \"Six-week course\"), and prices are in pounds (£45, £240), which points to British English. So I'm proposing lang=\"en-GB\". No other page in the repo sets a lang attribute, so there's no existing convention to follow. If the site isn't aimed at a UK audience, plain \"en\" also works. Please check the language before accepting.",
+              "title": "Add lang=\"en-GB\" to the <html> element in pricing.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page aloud. All the visible text is English (\"Workshop prices\", \"Taster evening\", \"Check availability\"), and prices are in pounds (£45, £240), which suggests British English. That's why I chose \"en-GB\". If the site isn't aimed at a UK audience, plain \"en\" also works. I searched the repo and found no other lang attributes to match. This fixes the flagged html-has-lang issue. It doesn't confirm the page meets any wider accessibility standard.",
               "confidence": 0.85,
               "ops": [
                 {

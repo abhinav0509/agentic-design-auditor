@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01LFY7YgXDyZoWmE48AAhaGV",
+            "id": "toolu_01Eff9cLFdospPh76tjM5C34",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Label the comment textarea with the visible \"Leave a comment\" heading",
-              "rationale": "The comment textarea has no accessible name, so screen readers announce it only as an unnamed edit field. The heading just above the form (\"Leave a comment\", id=\"comment-heading\") already describes this field. Pointing aria-labelledby at that heading reuses the visible text, so the spoken name matches what sighted users see. A visible <label> element would be a better long-term fix, but it means adding markup, which this edit can't do.",
+              "title": "Label the comment textarea with the \"Leave a comment\" heading",
+              "rationale": "The comment textarea has no accessible name, so screen readers announce only \"edit text\". The heading just above the form, h2#comment-heading (\"Leave a comment\"), already describes what the field is for. Pointing aria-labelledby at that heading gives the field the same name that sighted users see, and if the heading text changes, the label changes with it. A visible <label> element would be even better, but this fix only changes attributes, so adding one is out of scope.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2304,
-          "outputTokens": 445,
-          "costMicros": 11747.2
+          "outputTokens": 432,
+          "costMicros": 11487.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS6AYKEAgTGAI4AUIIdGhpbmtpbmcSDOtX+pc5s3AYjj4eOBoMPRKWWudItdDl4n3sIjAdSsiHzqrsOarFa7EwBEYnocsxOlpTljA3dCvYP+sVbtoXK6qXjyfHx6lOvQK8ZXMqhQZ+sdyJ7zHA58OVkFm6kBYQQhaoQm7XBUFsr2M1B0QI5fFp4aVXGhcCzh9CGrTrMqsoTGG/Aoy6GLIoaI+4XUFw7g5v6stPDkDCQw8OoO0sXRRD/s6wXa7IjFgeZWt+lFjTW153w4o7/CQD5NkXbVhW0DprgLX51DIKcmezmRjwB6L5Y0AxEhWGrFPJPsuZ+ONBFPNhzVJAhl/FNcVlAaV1tnqu6vPiH6WHb/7JbAJHeUHzmwSBm2yiVBLllP/YsID58YPW2Vjw8p1d8Pv27Iy5UoG/uMT/Xa1bSEqQrERBxz33zUPYNnc8JmiruvcalY4iEk1SNmXbqMe4ID7yNnBnyalA4z9znSlLpmEUW1cvVA+TkGMX2FN1ef6zVduhGaGHEwdnes3QTnSdtd7+VCdWbnOpZdRxzugP67PR6mv6tMyci+6yB0kkv7/boA4KSri5gxSfivyxWKCuIUHYBJtChm2tBZHnQaKdBu80WBWWKmkHEwFCN2TNWhazt5HgSSwxLrzcYiG9mZmVAPDeQJ01inpQK35N+mBIZ5b2LYm8R8PK9+Fs2WLNtxSAqcllA6RmqUilg9bAArUDZkJ1LZgZE6U+LmXJJSZoW6gUSGftodwKj0eEI5Sn7hdOAsXZWB/kOhQDKiqFHz1Y8TCeLDor2eB7csta9DY0n5NqfsoAWhekEDrK9+sMmpWFHz3QBPNnb0+ZCVCEC9ZjmyIEOHs1aS8WDabEET6LkuOMiuUHxtY+SzymWGtijysDADzbUcWcglgDavCg7eiR7IqmRNqaOo2N2VzjmhM6r9FIDcUoTVULjIl+yjFJBnMw+5qWkBYYag3eG3UsXALmCoQwhZn6Prm2/5RxSvnWiYI37Gi2R6+avlW4jXizBB4VvfxJWpzD6+ZJzNG8g23s0wUx1MyBnYk3LV5GdH31mE/a80D4fVXIzU/RgM8LLwbrTpyCmT2Zr5IB5bwaZ137iP1m2nYoKwdT0x3YRptDkhBGCUZelDT9v78DDGBFuaKmCsNjpLbzrjqr7hgB"
+            "signature": "CAQSsgYKEAgTGAI4AUIIdGhpbmtpbmcSDAoseM74LRlI/VUIxRoM3CU5LlwroF7XGyYQIjAkKokUTCiMKVRB0XY96KbxUO8rZkCse1+J3kHtp5TQ1C2Nr5GwTWIaSxRBMB6YWjwqzwURNv4MbVdnYN4oi3LvfISWIev7ZitO4fh0mfPxKg6QRWHkLS0hprJy3Sr+X5A24m+WgQIs0BJStGn2sK/tK5sMzgYaBOdN/9LtFfn1gPeIlNttXfBOQZ93UIr1Ud7sm1JxwuQdXrGln7QJFrmRFy4eq/5loW/pdjZKruqoPTGZg/gbZPi6m/rNJrJ/en1AR3BgdhIa6B6pzFZLs9FNeL4veu2Cpmx5VdwdQHK0qN2qsfSJtwflIY8cnPjXs9OOuY81RlIR8YBrpApcQEFQZaiOvukR7SAzP8SIQk9teMPJrQFYHPNx4hh+lnfSWDhxT/lO5K2r6f9RK0KyvvhPW0w84FtVcHjZ/I9pj+EdZFQGnQ0peQv9dg4ABEDd2xpr068rhXkJ9K+WKdiBeWnoPMxBR4WCBd5Mo8tjOP/6D6bgzv9kMEXtBEZffZSa5VaMGJILsXpoJEIypNAS6dePssRfGJ0McSu7kI0y/QhbLLiX0tJeW5kHW3Oamasi6Kt0zSX0lAhcJBDT33enfBndqj8hJnwJbH7lQt4LS39khOMHjnmd2n8k6cDtFzpmcFW8ZN7ow/FUIp0mRVSbFue83OhM/Awlhub4/GioBd3vUPyYbXPwvP+j/iuOHg89o2t2HdjPUQoCLGMm6Ui6R77PhbxBKh3bqCiWvxHEHgmou+I+PflQu9Pbfm5RNENWg3ParID/jM9nNbA/jUunpLLCeLaiAh74lVqmL1hWpBz4ddyBfsf5F5m2GwhbqLt6+wT2EN/c2Cb9JQ0ZrP1M0U/7hKUPKIUxle3POq2LDh2UwuRP0M4L0bwA1nZ+GIPY74m10guuC/D4QzFlapiHflsTcw3zS7Xco8qTQ5nLU3cMpo34z8LbUPlmF1Ash4MxZ/dlDvPyRCjKiiHd5glstZWH/wptRfKdNj1MhUz90HgvkelqDABvkQRhnFBFXZjcNt7ZKhgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01LFY7YgXDyZoWmE48AAhaGV",
+            "id": "toolu_01Eff9cLFdospPh76tjM5C34",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Label the comment textarea with the visible \"Leave a comment\" heading",
-              "rationale": "The comment textarea has no accessible name, so screen readers announce it only as an unnamed edit field. The heading just above the form (\"Leave a comment\", id=\"comment-heading\") already describes this field. Pointing aria-labelledby at that heading reuses the visible text, so the spoken name matches what sighted users see. A visible <label> element would be a better long-term fix, but it means adding markup, which this edit can't do.",
+              "title": "Label the comment textarea with the \"Leave a comment\" heading",
+              "rationale": "The comment textarea has no accessible name, so screen readers announce only \"edit text\". The heading just above the form, h2#comment-heading (\"Leave a comment\"), already describes what the field is for. Pointing aria-labelledby at that heading gives the field the same name that sighted users see, and if the heading text changes, the label changes with it. A visible <label> element would be even better, but this fix only changes attributes, so adding one is out of scope.",
               "confidence": 0.85,
               "ops": [
                 {

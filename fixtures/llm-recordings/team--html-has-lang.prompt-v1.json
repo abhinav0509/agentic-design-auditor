@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01W1GFpKqXn5Ftpt9N8Jgbop",
+            "id": "toolu_01BfpSCqqN6NbDX7h1BixF27",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -17,18 +17,18 @@
         ],
         "usage": {
           "inputTokens": 2333,
-          "outputTokens": 109,
-          "costMicros": 5143.2
+          "outputTokens": 120,
+          "costMicros": 5363.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS9wUKEAgTGAI4AUIIdGhpbmtpbmcSDEorx+YE4cyw5ex1ZRoM6PRQ0kSSKslEcpBPIjD4XLWn/vC3dquo5BW+3SiTK0cJ+kHKa+vTe0rjrZuEiPkPUZvkM6qNFJa2DR/j/y4qlAXKPIk6F3nmJmxuN3ooBBBMMN8FXjEpv4WQbclzD5mj0S+WVs82dX0MpxzrIGsCcHkbMyPRURQHtvETraKI467eTinw85IebNAkgdurBroeg6tfKrTdf+YUJ7DjXUFI3P/jQ64Rs1CR6GqTPP0zXhjDtjRPKoP6UeZURc4CQdWW0iH3HYywRLVhuaFiAL0rz/lVOwTwJRFagU2/sT41IjRkhbKfpGX6Uc8qkO4UZWQUJI7YczAQfV4K+nSSE9Mgbe9i3PClT6nnzRm+d5jW5DbRDyIxgNeOcZzpcsv7t+qzH5lpy1nANjoFR7u7AzsM5GZ2ByPmpWdTIeUch2Hh4yS3prxC2zmBe+ouetz2czx3dU8uCSSOmhHZ2tgK7JrAjFGxVPsliqUB6sYCU+Raznjg1Fp2iYvAZMLGD1Z//hH1VPtmZbDNyYd251tyKyujnFSypFnilYnRYYcMNMiqs9gDU5A6H4zLHBkf/oV1woZf/M5C843dLd3UKSJ+Phe+L2AYeMw364OovHGV6YPdl3gDggNzU0d7Tw0sW7bA8V/FfPUtQdY/QYwgcMBur7yAmuImv3MNh57jSF5nxRgwKux8t3GKn6r/KBqreVm7wztSDv6yscasaOBg79MFzCMlWJzxv+26zrxtxVL9OF/hcYRYnde9LU3QyauA9YGeHMqCa/m1mlN6f/zI4X1C2ZxNc78xNGXElolKEJ6Hw4tGBVdPETAQUn4wj1sK2SIJPbUJ6W8091M2Ng4eL0+1bbnxmK+7pYG12q6CjLdV3XIz31YjmzOcty0MYe+Ka5wyC0042fN1yHLmZBGB9IjwroLtbUyF09AZDupuN1QgHv7KyrEXMOvYI0UMxigyd4m1hXwcR2JoObQYAQ=="
+            "signature": "CAQSpQYKEAgTGAI4AUIIdGhpbmtpbmcSDI2y7BzL05EsaSxdXxoMtrItQP6aTDUDacXfIjBW2Nuyfer85lJYZ7gwxJJF/flIjuVwKwh4gLVda8EVSqeL2roA421i3anL8hSpG9YqwgXpb1IcA1HcHXUFSgZ91vyWBHXXpRFO6n3QvYhBOoQ/rmTGPikbv/sFxW38JczSo1TG6SuKp3i4D/15VNoBYXjkly6AEWGusfL6IF+VFUUXuTdSboUNjxWIBzlM5h8avoMAdQqa7WQnYr+tLmvS2RgC3iZkF2exXEGIhnPJ7coW3MYdjJpSXk7F+kbMGkaH2puNPlVzN0oI5yBsPuABEFAvvtGxshIT9A6NqLpDE5q/8F9xze6eKksKZFuChd808KH4FiE3jd8GvLDTPTbdXW/ym2jarW5AlkRB8NxAPv+28xSiqwIo/9MDMPVZXZ4EV9abHWBuLDOjbHb3EDWlEvXnX6GF8+XIPgBIsw58TKrXQx6I+scmly6w4O4/RhQ2FU9IHAZP79ajC7+mJl6N8VoiBBkbjyzdGxsDrxGa36eotAjgQVT/CuiKYmwz/zMOo40rPTDaAvxeVs+NSkx9NPi/wHIen5gdwAVvqObDgPXVpQfRWarNXSqO7zQDJL8f58USodzQ+nkjufXOXIu4daYfzeHAQVKokQjV0xrKR+KQBU/NlBo5Ak+LJQX6NCpvMMW2qn+3in5R5XqnePPR1hxSRGOItF4uhzChdpeVaLrBnMiIF7omw7/pkBJYEw+P99zGgYnPmIn1kYAuGkAKNLFFFK+92qDMAuaeVLyi67bs4gM8OuEjfpEF8HzTjuNC0yaUOKygovHeQ6pId1cr4yVyBkYy41o9KEh/zQuzZx4G6bVJ9VFplg5XIRwb4XPnmXWl3mtMiitmDphoEMk7XUVt7xnPGb2+FPR3kil8QST5ZTcZskZn/zAusnP7Sg7QWwGH9flU8W1NVsIp6jqIy1r4aDQwaKJZmsOSj5Ylv1xgcD+g3TFUfZcioT+ne5Wyrdx1+L3Y/2yxRmu0RXVUtaQdxXvn3CuwFhXnqgOOciRlGjprGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01W1GFpKqXn5Ftpt9N8Jgbop",
+            "id": "toolu_01BfpSCqqN6NbDX7h1BixF27",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -42,16 +42,16 @@
       }
     },
     {
-      "requestHash": "562064d7766e00de68e705e580edea8fbc243ccd024f412134c2fa8208d1e89d",
+      "requestHash": "5d04891009216069b538dcb50c683e21be46dd9787c4d81fe2111ebd1a65b345",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_015BuEAxRXxN83VMmTqizFG8",
+            "id": "toolu_01C7AzkVUxXTcjjQ14bjzKFn",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element on team.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers and other assistive technology can't tell what language the page is in. All the visible text is in English (\"Meet the team\", \"Want to work with us? Tell us your email.\") and so is the title (\"Our team\"), so lang=\"en\" fits. No other file in the repository sets a lang attribute, so there's no regional variant to match. If you want one, the reviewer can change it to something like en-US or en-GB. This change addresses this one finding only and doesn't make the page compliant on its own.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The title, heading, captions and form label are all in English, so lang=\"en\" is the right value. I searched the repo for other lang= attributes and found none, so there's no site-wide regional variant (like en-GB or en-US) to match. If the site uses one, the value can be made more specific. This fixes the html-has-lang finding for this element only. It doesn't mean the page passes every check.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -65,19 +65,19 @@
           }
         ],
         "usage": {
-          "inputTokens": 2465,
-          "outputTokens": 352,
-          "costMicros": 10531.2
+          "inputTokens": 2476,
+          "outputTokens": 338,
+          "costMicros": 10295.2
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_015BuEAxRXxN83VMmTqizFG8",
+            "id": "toolu_01C7AzkVUxXTcjjQ14bjzKFn",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element on team.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers and other assistive technology can't tell what language the page is in. All the visible text is in English (\"Meet the team\", \"Want to work with us? Tell us your email.\") and so is the title (\"Our team\"), so lang=\"en\" fits. No other file in the repository sets a lang attribute, so there's no regional variant to match. If you want one, the reviewer can change it to something like en-US or en-GB. This change addresses this one finding only and doesn't make the page compliant on its own.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The title, heading, captions and form label are all in English, so lang=\"en\" is the right value. I searched the repo for other lang= attributes and found none, so there's no site-wide regional variant (like en-GB or en-US) to match. If the site uses one, the value can be made more specific. This fixes the html-has-lang finding for this element only. It doesn't mean the page passes every check.",
               "confidence": 0.9,
               "ops": [
                 {

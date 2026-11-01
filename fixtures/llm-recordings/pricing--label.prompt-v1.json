@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01MqRj1CYHPcTFRh8TccrGeJ",
+            "id": "toolu_01TkCsYq9QJFibz3kCLwa82t",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add an accessible name to the voucher text input",
-              "rationale": "The text input at line 14 has no label, aria-label, aria-labelledby or title, so screen readers only announce it as an unnamed \"edit text\" field. Its name attribute, \"voucher\", and its place in the workshop booking form suggest it's for a voucher code. I've added aria-label=\"Voucher code\" to give it a name. A reviewer should check that this matches what the field is for, and whether it's optional, for example \"Voucher code (optional)\". Sighted users still won't see a label. Ideally, add a visible <label> in the source, like the \"Preferred day\" field has, which would also meet WCAG 2.5.3 (Label in Name). This change fixes the missing name but doesn't guarantee the form is fully accessible.",
+              "rationale": "The text input at line 14 (name=\"voucher\") has no label, aria-label, aria-labelledby, title or placeholder. Screen reader users would hear only \"edit text\" with no clue what to type. The field's name and the workshop pricing form suggest it's for a voucher or discount code, so I've added aria-label=\"Voucher code\". Please check this wording matches what the field is for. A visible <label> would be better for sighted users too, but that means changing the markup, which goes beyond attribute edits.",
               "confidence": 0.8,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2414,
-          "outputTokens": 520,
-          "costMicros": 13687.2
+          "outputTokens": 435,
+          "costMicros": 11987.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS0QYKEAgTGAI4AUIIdGhpbmtpbmcSDOVMaCTQ5lfCFREXOhoMy6CMjAKnFMqUp4bdIjAuTomwWQ8mhPAei1qL6f5EubwSb8yUCPsfgoyj1RByOiVyPPmsYIX6ntZvVDzJwREq7gUxArr7aTpml1BY051oMCR2OZ/8wFgio1kzXj2IY4Wua2SG/UeXzL5ceMbzJdkFkmaFldugg8LtsdQLN3kqNPaDn2UjLymppeiZ2QWxgg2qH0PWnba7yjObCSxLuE5K+jPVMotX2J3YINPypaTbF5vjEYKE4Pd24yCxh6O9PbfByN94yKK3wOpO6hYwcysfwyVgMSfamvjjulBblTVg+0UHk3xIJ3mTDzxTgdRWBkUJO3CiHAXfoPd5/9wwfcsqi+RCb/CIT7yXsgx3xiN9ANSHnNbiuVKozzcBxEahOxzEPJ9olJBkvnx2TOzq6GO7htmesdeT6q+oTZ4RC9PEF4JucX1FUmzXW+qTohZGlHLJpp0+h16smCwrxqSxAbzPeoILB9oqDDnRh/0DTeSEPuZXKB8nPoeydwiWOgjynLxL2zNTGwxm2zSHCinv9yNWYJ54QI3sao/o5zlcLOWyOO889AF2sGmPnJ7s0PZRcNyuzvzg23AYiKdm6GN7rUYMnvPwJYAjqLT5NLRROD9vsLEOnzK6qRQXJ8uDMp6i/YyGShftljiUwRwxdq+2GS6Lh0FgF8eQ7tOFj3mPnz/emhRsvaTGMlEtDgZ3L8THj295C9Sy6nTzJMaXEnp6nZlCBqzASKixOc3hPnQrSGOkikLuELwpfJo/4ipzKd070P/xF/JiP3B5JN5YE4r8aKjjyOL+e8RwvyPXnjZQtKpXH4/dR77Wu6r7T45GrMF8Gc20MouNjuz29eOljRiSA3wCkDQ9mkhyCL4taEbJqMQ60TSw994jbMvg7i1kieI0RxJsDb0txGeSS6uzsAOYzX/uuPyU6LVnWWG/pREMVjvfDPAZMjGvrrOrYNi9JQY6ygmBoO0nnaV5O1qnoQXyfFTrvylWe7lhHCqeYZJz9rsop+CYuzfJsl5M1rA7Xp0eyHVUkyCN+ePuM6bTxp1h40Rv018m+xMJH6+52hfDWCllCHv/43UTfthydFj7/zJEC3IYAQ=="
+            "signature": "CAQSvQYKEAgTGAI4AUIIdGhpbmtpbmcSDMGFxbXIrY4/wsO/fRoM2yiCSSoMCpSprfQaIjC//lU9MchgpcCHESCuvU/UvJUTkSOueTianuQE+l1Gymq3/d20nOMQT4MIN6NGtkoq2gUem/Wa+vhx/kyLIe36QTtsoL8vC3htRqWEftfQj+rgGXScAIVSTjwAXQltEovJ89C5n1vizPDpkTi/Oy5ykEFTKTrpKx4Rn+n3A4ddMLFDkSe6VEhuumM0b4sP6DsmieeHe7NOnzt/GqECnQZjPDq2OgFF/+2u0NfgCcEHZJj4SFYDT2JUj1RwJYzik8c51El5PtrCZkTf+XfPDZVZFK8BRbRjjTMtN1sUxA4qT7x972yztApR8Gg5xaYQb3amH+B4PvLuRSbmvg70q04l3o03GCQrAlzqTVq6E97lHyXEbJBX3Lax6T+o3VEy1yrJPWvfG3eKnyO+ZZeaqQWwRQa6ijCZgxstuaYK7m/ZVTm4QHRSOSo0TuLCHhjzoLsqQa7POm1AnxVVZA3U4jZxbc1RAIoWskegVdOm7zSwFkc74HgBUqeXUdFpwMdd8dVBF9Ij6iCpApR/SGpH9iAQx/Qdb05ZSpIDS6De2lvOJJdJgEWBU5ZyqqUqO7/qkX6dzoJrnp8vckPxzfgTFATBmVvvk8J5QEY5W/ZyZkOAlbgET78LoqporMZPm/K+rrKuv5Tpi/jW8eyalsgYFobIbOrEUfPlkQQ+7cWsUZbdM3s6HUGnAFIGqOUh5h6+odio+jn8DjaZHHZA2cxfnYqieZ1SfAvEhLthR9SMR8M24+LtOM+oqBMJSNtFReaUoSg+4XVQeh0d+v0kwSUTRSCqwLcnbkMwCFOxxoJMV/AFAFfOB39iKfxwpaPhVdZzX746Bu/nnnyntX/XEfO+cVU/F5bftc/7zNgU0TbFpew63DcC/Tz7IejDon9foof18VDb0gx8UjhJfRnNHouC0hQfjwnNPTOr72sbYfWYoe/EjZ6b/EHnLT4ysjjG0VYUrhwKT3i3aeWe7VjOEeAKmexuZIGZnak4IQY2WnRlncuONckz6Htq3DwR9ogooV8FC4B059CI7/pgxz1SniwNGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01MqRj1CYHPcTFRh8TccrGeJ",
+            "id": "toolu_01TkCsYq9QJFibz3kCLwa82t",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add an accessible name to the voucher text input",
-              "rationale": "The text input at line 14 has no label, aria-label, aria-labelledby or title, so screen readers only announce it as an unnamed \"edit text\" field. Its name attribute, \"voucher\", and its place in the workshop booking form suggest it's for a voucher code. I've added aria-label=\"Voucher code\" to give it a name. A reviewer should check that this matches what the field is for, and whether it's optional, for example \"Voucher code (optional)\". Sighted users still won't see a label. Ideally, add a visible <label> in the source, like the \"Preferred day\" field has, which would also meet WCAG 2.5.3 (Label in Name). This change fixes the missing name but doesn't guarantee the form is fully accessible.",
+              "rationale": "The text input at line 14 (name=\"voucher\") has no label, aria-label, aria-labelledby, title or placeholder. Screen reader users would hear only \"edit text\" with no clue what to type. The field's name and the workshop pricing form suggest it's for a voucher or discount code, so I've added aria-label=\"Voucher code\". Please check this wording matches what the field is for. A visible <label> would be better for sighted users too, but that means changing the markup, which goes beyond attribute edits.",
               "confidence": 0.8,
               "ops": [
                 {

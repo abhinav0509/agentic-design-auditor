@@ -8,97 +8,41 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_0154YGGyjUEkd5PaNRERUEaN",
+            "id": "toolu_0183yToGTKRZCitPoWa5HvZB",
             "name": "get_image",
             "input": {}
           },
           {
-            "id": "toolu_01TnxDNg5LNueaTKCgSRh25S",
+            "id": "toolu_0196vKihruE51H7LdCxk4rKn",
             "name": "get_dom_snippet",
             "input": {}
-          }
-        ],
-        "text": "I need to see the image to describe the map's purpose.",
-        "usage": {
-          "inputTokens": 2371,
-          "outputTokens": 71,
-          "costMicros": 4535.2
-        },
-        "raw": [
-          {
-            "type": "text",
-            "text": "I need to see the image to describe the map's purpose."
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_0154YGGyjUEkd5PaNRERUEaN",
-            "name": "get_image",
-            "input": {},
-            "caller": {
-              "type": "direct"
-            }
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_01TnxDNg5LNueaTKCgSRh25S",
-            "name": "get_dom_snippet",
-            "input": {},
-            "caller": {
-              "type": "direct"
-            }
-          }
-        ],
-        "model": "claude-opus-5-5"
-      }
-    },
-    {
-      "requestHash": "0bddad5521d69d246cd5b82c81da754ac52c5fd4c01c58391f6b4a34e0fc98c7",
-      "turn": {
-        "toolCalls": [
-          {
-            "id": "toolu_01LYLPRb5DycSaS2LCQmXpY3",
-            "name": "search_source",
-            "input": {
-              "query": "map.png"
-            }
-          },
-          {
-            "id": "toolu_01XLhCJf9Ua5henwmDN8NsMq",
-            "name": "search_source",
-            "input": {
-              "query": "address"
-            }
           }
         ],
         "usage": {
-          "inputTokens": 2548,
-          "outputTokens": 131,
-          "costMicros": 6443.2
+          "inputTokens": 2371,
+          "outputTokens": 70,
+          "costMicros": 4515.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS1AUKEAgTGAI4AUIIdGhpbmtpbmcSDFZnkFm2g/6VJEO98RoMP29L5g+6T1AnSKXIIjA1T/Opuvl3pXbLnXsrg8yjWsQggAEHcrScavnAnNoiiQsdKdJj+YVQ/S4uAkTB/ucq8QRTjIvD+JIozFpLYodg8K6E8YxzF0Yf0Oa6WXLYdDFDX4aeu6A/oZ26GRRtI9/2qKns0CQZfINRVuvVN6GeWt5Lgb6SC9lUMdw0n9xniirsxTtf1kw1lkLkv82zwrhHAuxulgbSpCQ2w4OccCkJE7XIgIx0mlAoJ4TgXav407TCj+fepZpitqGKpE2IX5mzSmGKZCtijAlyA1MhucwUZpX4x8r/eenqGfjlap8Pf8h3VokMV65Vcsb5iF/MXh1KPFWO+z/NXs+vkcJSMVWUqgsX+nKHXFf2kYLwLz5Z2Ik4rP4GiZyakSeUthUE1SOF5jElJjLIaJqUfTMeCtfYQWDChPXGCIDhMuGUZA0QRV7RlCB4i69yyPGwQswIO+iEldiiWEVCnLP4abAbFLN+vHIQK0Ov9DUuGfNwiIFCLKnfhBkvFILcOG5H9Op3XQjN/tfohM6eFN7ilXrULjmM6a4HtaIvIf1Q4QN/n+eh1d4atedHWpRRJbWpYmiFiXEbPwYrEDxLIgqwpCVd59mS1UqfLvLNukuj2uib0AYX2BGDppAFbXkx7xwSbNRYXygAWIC0sFODBHx5Ukc3TTfxz9cZo5yhO3R4x7pI8q/DYChv7x0p0qpviNv5YW5iSeEBFLXfzL77gEW0xMNZw91gZ8+q7fRkey6NoF0aSAin+jq/Uc5wc9CEWcbZ4QstSLWbGl0leAbLcfJQhs1KvyzPNXOsMVa8UlQVYQ/O29OLeAzmswOr4prtD5/2J1inQsX20Ror3vuYoNE8TiwFDESRkpX6eDVS1Uinq7OrVwguaHWClAG8rE2VoDkOupjTcAfmwZoZGAE="
+            "signature": "CAQSgwUKEAgTGAI4AUIIdGhpbmtpbmcSDMBMKhnzxpziA0CbWhoM8juXZKAFxUlQQwOCIjAq8245bN5TfjyKQfTN6e5Bo01N+0tzHOINgFstuqzJiJR5vt/Bn9tKwG6RVc/gpfEqoARC3AfKV0o62NWL8sGr8vPifa2+NyDBaaCaVgPQyIaqX7vCXN0xZ/vfZHUfSDZwMGUUArUX4HnK4iVOmN612fyUBd4QiaTkV23bkd45GptyGlIurdAo89SruW16EBi3PSFqK8IBQd27MOSaUldyQSVKBRyBQhXT6jQlUPj0WcnNtlI1Bhekgfku1+Z6B4hLP/hoQ4xggdTTTBgKcFlNU81dep67UZig8AGKNXWNjkWayJQUG6+RO10DG17kgQvxB6mzJiKHz9TmRziAIAbDfY78VDf0Qs3TFclCmfBTDFQzI9d8EUDTGm6sNHW9TCfCTOh9Ri9a1hXbrBFL+SAOrUMfh6rFV/M8HuBal9BTt3bVimsm258nF70N+pv4i1+RKYIi8bKo8x61anAvdazBTrpgFMdZdo1V+T+JIo9e6dDJ0wFS5a+6BIyHdWVrfaukaZaN1Al5/djjPlxleG1SgYGhi0EHWaw5WnvMPi7AbYZ3LRMpJ9UuutoZq2liQxaVVvgB4q+y6KAkTs9AOOCYVIMxXzEWf5XYW0yEKI0goTheFtXfHnPg1FsG9jHT3ZD9cCDJjtBiiDzlMp7xCd0QEHuwTgIFKOXgkP1Cs7VADbV250LFKbMqz4v4G2WpSoW2jT9J+USlsl7k4HIwUg3sR4vufOkskckJnQKfCtllsNJrUdmJWPqt3ygysXqOu/TjUJ9GTJ4+4zSu9X8+iMjD942kGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01LYLPRb5DycSaS2LCQmXpY3",
-            "name": "search_source",
-            "input": {
-              "query": "map.png"
-            },
+            "id": "toolu_0183yToGTKRZCitPoWa5HvZB",
+            "name": "get_image",
+            "input": {},
             "caller": {
               "type": "direct"
             }
           },
           {
             "type": "tool_use",
-            "id": "toolu_01XLhCJf9Ua5henwmDN8NsMq",
-            "name": "search_source",
-            "input": {
-              "query": "address"
-            },
+            "id": "toolu_0196vKihruE51H7LdCxk4rKn",
+            "name": "get_dom_snippet",
+            "input": {},
             "caller": {
               "type": "direct"
             }
@@ -108,51 +52,56 @@
       }
     },
     {
-      "requestHash": "2eb0768a6b8a6a91258d631aa57b6d407ac7d140d215f52e7d74d40eb4d11ed3",
+      "requestHash": "8e3a3b24fbc55c26e6af906e7dd09f17a45caa6cf2c0b04b6635f7286211bd55",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_012U9WaqvBZDJSWxeCHaykNF",
+            "id": "toolu_01Ci3jSojsUyV5EesQ6g1HEw",
             "name": "submit_proposal",
             "input": {
-              "kind": "needs_input",
-              "title": "Need the map's location to write alt text for the contact page map",
-              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. Based on the file name and where it sits under \"Contact us\", it's probably a location map, and that would usually carry information. But the rendered image is just a small solid pink square with no visible map, text or address. Nothing else in the repo mentions the address either: a search for \"map.png\" only finds this line, and a search for \"address\" finds nothing. I can't write accurate alt text without knowing what location the map shows, and I can't confirm whether the image is decorative. So I'm not guessing.",
-              "confidence": 0.4,
-              "question": {
-                "text": "What does /img/map.png on the Contact page show? If it's a location map, please give the address or place it marks, which will become alt text like 'Map showing our location at <address>'. If it's only decorative, say so and I'll set alt=\"\".",
-                "options": [
-                  "It's a location map. I'll provide the address or place name",
-                  "It's decorative. Use alt=\"\"",
-                  "It's a placeholder or broken image. It should be removed or replaced (outside attribute fixes)"
-                ]
-              }
+              "kind": "patch",
+              "title": "Add alt text to the contact page location map",
+              "rationale": "The map image at /img/map.png has no alt attribute. It's the only place on the Contact page that shows where the studio is, so the alt text needs to give that location. The image shows a red \"Studio\" marker on the north–south road between Kiln Lane and Mill Street, with the Station further south on the same road. The proposed alt text says this in under 125 characters and doesn't start with \"image of\". The road the studio is on has no name on the map, so a reviewer may want to add a street address, either here or in visible text near the map.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 125,
+                  "name": "alt",
+                  "value": "Map: the studio is between Kiln Lane and Mill Street, on the road that leads south to the station"
+                }
+              ]
             }
           }
         ],
         "usage": {
-          "inputTokens": 2763,
-          "outputTokens": 485,
-          "costMicros": 14383.2
+          "inputTokens": 2960,
+          "outputTokens": 443,
+          "costMicros": 14331.2
         },
         "raw": [
           {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS4AYKEAgTGAI4AUIIdGhpbmtpbmcSDFuxj2O96OCwJOu/dxoMPBqNmq0PWl4Z5SmWIjCEjOqdvfbN0G0ZKMTOV1CVxkyTKaZ9xLg5NodubxZLGOzNeqHZByQVUJPJ/LKzJ7Eq/QXxER70T0wis/gVsRXcYYj3q+d+t1l6bIkAIc517iY49qNL3I+ccC5FIYBApPq0aPpznGKJAecxZGdYRXO1c0hfk5s7822O2I67GP/eqhouSVBvuRss1fBf8+pdCll88GcuLvYm0P2d5wSBFTHmGVztxaD5rgOOHMqRFAK8dSBosKCbLkiTPxFh2ECSF2WjQ0baoxEAShYnct6E9QBOKlOsnRL3TiwLRor4lXUApy7cYz4VV/N2vF2YEy1kRlR+5NOI/O8kawML8QGTwHxMfFTI9iEyhsND2sXIBRFdugRyKrNU3JugU3cdstF6EPSFNdl3Ot6x9wq9q9ZS4j6QupFPoqt/M+byaaKGhDCWElkHlJxeXJDQ1dP6L6/MSDXaCIgh5VP1D/MEi5nrKhPmHnEyY+TmRKKq0w6DdCfuRngtofAeO9fmy7Fq5feAzIe3eqGHLdv/WkThEHeKcDUT0TzJzfzqxQiHk1k+cLqJd2J5vKN9gQt8TGOOtvfwp7nK3NO+HWDOHJJCQ0b+h9KdZ4oX3n8M/sjC/UXJK8ko2IJOjkgfMDC+7H5tkCHftfjAa/yDWHm1br8qWiQ56adtqly+HL08PBPQW+S0/OHPvXEwYPeFJJMiih5+vPQGdvzyqHbZ3Uc1eEmPx6mupID9Dfkg+SRXdtBmcmBBwnCHWB74nX26/hn9gzLOKWDpd/dQLocPaFAOOR9YTC/XHUpJ0HjzMxmsldqcZh1pni5G8r+86sAz1eWeE2sCxMRJy237XyiphEaPdxQm6bUhJgPX1gWQby9rrl1b5/mKLGOg+Jjo0Hyj5X2xk5HBeSlLP/mUAAkEjFgkcuHp/lFklKJg62TMlBaqTJB1KnnV68ZnT4ruNkhv7qI0lHBErYv/aZDvGX5gru1EfuFfHwO2enzWD9LugQwmQ1Vh8BqZg6V7dsb2422AlFe1hNXyOGAqFsPgVAaAeijcOsxUFz6G6k67DOft2NeahANtix1L6f5iU0nsc8FvJ2CJzFH+ab6nOkgYAQ=="
+          },
+          {
             "type": "tool_use",
-            "id": "toolu_012U9WaqvBZDJSWxeCHaykNF",
+            "id": "toolu_01Ci3jSojsUyV5EesQ6g1HEw",
             "name": "submit_proposal",
             "input": {
-              "kind": "needs_input",
-              "title": "Need the map's location to write alt text for the contact page map",
-              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. Based on the file name and where it sits under \"Contact us\", it's probably a location map, and that would usually carry information. But the rendered image is just a small solid pink square with no visible map, text or address. Nothing else in the repo mentions the address either: a search for \"map.png\" only finds this line, and a search for \"address\" finds nothing. I can't write accurate alt text without knowing what location the map shows, and I can't confirm whether the image is decorative. So I'm not guessing.",
-              "confidence": 0.4,
-              "question": {
-                "text": "What does /img/map.png on the Contact page show? If it's a location map, please give the address or place it marks, which will become alt text like 'Map showing our location at <address>'. If it's only decorative, say so and I'll set alt=\"\".",
-                "options": [
-                  "It's a location map. I'll provide the address or place name",
-                  "It's decorative. Use alt=\"\"",
-                  "It's a placeholder or broken image. It should be removed or replaced (outside attribute fixes)"
-                ]
-              }
+              "kind": "patch",
+              "title": "Add alt text to the contact page location map",
+              "rationale": "The map image at /img/map.png has no alt attribute. It's the only place on the Contact page that shows where the studio is, so the alt text needs to give that location. The image shows a red \"Studio\" marker on the north–south road between Kiln Lane and Mill Street, with the Station further south on the same road. The proposed alt text says this in under 125 characters and doesn't start with \"image of\". The road the studio is on has no name on the map, so a reviewer may want to add a street address, either here or in visible text near the map.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 125,
+                  "name": "alt",
+                  "value": "Map: the studio is between Kiln Lane and Mill Street, on the road that leads south to the station"
+                }
+              ]
             },
             "caller": {
               "type": "direct"

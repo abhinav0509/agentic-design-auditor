@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_018gy2oBQncZocqNXe75Do2v",
+            "id": "toolu_01Dvqx8D4NztPxXdF73FvYtT",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the colour filter select an accessible name",
-              "rationale": "The visible <label>Filter by colour</label> on line 13 has no for=\"g-filter\" attribute and doesn't wrap the select, so it isn't linked to the control. That leaves the select with no accessible name. I can only edit the element at offset 529 (the select), so I'm adding aria-label=\"Filter by colour\". This uses the same words as the visible label, so voice-control users can say what they see. A better fix, which needs an edit outside this element, would be to add for=\"g-filter\" to the existing <label>. Once that's done, the aria-label could be removed. Please check the result with a screen reader.",
+              "title": "Give the colour filter select an accessible name that matches its visible label",
+              "rationale": "The select #g-filter has no accessible name. The visible text \"Filter by colour\" sits in a <label> just before it, but that label has no for attribute and doesn't wrap the select, so the two aren't linked. I can only edit the select itself, so this patch adds aria-label=\"Filter by colour\". It uses the exact visible wording, so screen reader users and voice control users hear and say the same name sighted users see. A better fix in source is to add for=\"g-filter\" to the <label> on line 13. That gives the same name and also lets users click the label to focus the select. If you make that change, remove this aria-label so the name isn't set in two places. I haven't re-run the check after this change.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2397,
-          "outputTokens": 494,
-          "costMicros": 13099.2
+          "outputTokens": 515,
+          "costMicros": 13519.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSmgcKEAgTGAI4AUIIdGhpbmtpbmcSDLXCjjHJUEg5G01E6hoM8ULdz8ADJLSB5IyGIjDRoTRSO/coIKEKHl6SUxk2KR/HFjhT6oQTYzlLYsz2U/tBvMUGEEdSpnlHLxVyQrQqtwZwVblPkc14XDUBdM2c/wA25L+ps0hyM0YcWRE7keFzexefm5E9n4V9tmhAk0GZkppMRl7DtgEQNw9QgJV8wgd5NF56EV5TN15Rc3ukfVhRah4+lUoRh9P1lmdSWQ80fL4wYhb8wsRbpy2DtsrocglrUkVLXgAqCpFQPkMQMFXbApJoY8tVpzoFyXJoOZ2n/c5Zw2VfhBfGwDryEhy06NeeV6Y/ZmyKX2UTAsLGyKJMukJU0TDOV+1Ivtdp9thlap1MGGjWu3t5g35R88CcSZ+wCBUoP9YEt4T1mfV6FGXdKdS9/L+4dQJVVcWOab52meag8k+ncU1Fj0jIp507g0tYaNFnNhSdoVve7LEXKw1gKDMlFU3uFLydcbHgxYPsESbGBsIQu3A42moqYbWfshAo88SCMFsJXI30/seDROSHdiCoQJFC/tksb3YFV+EhsSHddC51JO2eNckhHH0rBECDvteoy0ZSnVBnKY7AHRRW2TyloL9Rlx+PyNwZDSCZQ1sEkuXJOvQ8nIHvQOOH70Z7yPAJV0MpbXa+JdRU1sXTedoL/UrGFH1goHHlPzcq+poYXLoDCWyGJKmrQooGuikJVs4iEHPSzvCCic5OL8tCPdQNpZggUu/w8W5MzO7rmHQDrTWY7jpTNKfWK62PXjAdmwHp9F994wWNqUrLijX2SWOMBURkxf+uJZJFnaI1V2LnwrzT1/CjGhHUhaXKEyeiw0F3LtlEp+o753CUcoENRQydaroMxSwbLekoI6ZTj7mezlA7QJwm4kHhllqYQXO4J5nU3uFgxo1n7+fYQ5p9AyInRo3rP/EsnI/5KQQXFmVmBcyrgV4v+FlqAi3fjKEJTkyl4uVhC8vXmB8o9nGBGf/aIYF7+kwpLAimKnDq+1dW+VJPMQRd55qpyreUD/GYp3Nf/kPnQUvHbVXwVZbzRB/sfACEYymIXYBF7gt28ORFWPpOLQmtvUyOHNdYkgWbn8UJ/Mci+4YZKt0SnUsqIwgjDNM9aQ7R7B+tRuRZG3nUyBkfJQYO1TfbsY7QpX2mo7qsiQyzBnro6dsoijlgacpXLX6ChBNqD7YYfJF92rf8mQp4/pSgGAE="
+            "signature": "CAQSmgcKEAgTGAI4AUIIdGhpbmtpbmcSDIIx2pE7Mr6ZiP6/xBoML9FMZUrkQRLrjNyZIjD03ZDgdxcpfTgqpEnJseZqghGdGm3q/uIzXChHBar5mOEKiZzcGr9ynXEy+zxln0YqtwYN9R3Dw+2iH84T8QIuXvkZJ0no2PtmnpNO6sY6rDBoR5O0Th4RIbJA7y/DNyMdhc2bw0UM3Pp1MaL30cTdXRZ7Y+0ylG79iIubCEsbu1Z1nPeoiyVBcQ/akn/PJdSHSBgaMLbz0ojsQdiKnt8+SNO95riWpVi5vEROVlggJ/vVHVKeaTtdjXwJM5QuMF0JkoUkcWPAtU2y9iaBSFR37TmSSyeP742xW0LCkxG+FYRXvi/8RNzEydMvcV4Vf8JLSq9GH9JkeIJQe+dCWvSq3RwKwCGFIzKzvUTubMlHYsgtcZwYhnlryYnkbGICJn94PqLjVkkYpaEZPyl3nKvGo93dd0SqY3pgYo1qTDzxUdctOBpxh+EN3ZKCoHGgteizqo0i9UdeZUo0JIRvlhrGS0Af7V8zv5B7kWX0QEZfxBH5u+tp1Ap86tRxJCGQ9LPi/NKFueJWluL2spMHPLPC7ObmFWlhywf97n06DwZ8Nj7DfV0ocT88kgDzZuTfAq4ySaTOc5lX1AinKOeqyX3DQl52DxjKjHNLH21R/I1rusXTegPuEWgCXyAE5iV7UzQzk9ogoa/GpACqpPEW8GCYQU6WM+V2qdl4RVGokzDuTWIkk+CXlxwIUm8JgheT+Awl2H3/axua2dX1CT5+rr9FGpKqPgzo7YFY/2knGt1I0PKMxVnAI5tIVPnUVOPOk5sRXgj6e0KQJhx6fR3tr+uuP7Z+FV0fHLwWdBpnzNkfJrmgDNrLyiVGyCszTeLKi4BeRXPy4YpncMF/w1JbvMFwVXmieQL4JPEYnsqowFSyGaS3lpT93HpbwCyqjvix/nS9ZF5mHVxSbjseaSxhf3/Lc7DkURk82GsAOnFWxfndnbfKL/Xo6cjwjeNKGZtFwdMYpH8rPkkje9ZsB+NZjAeW5lvJD9CDXggpItGmeQsitXFdct8XMMk+AmGi87ujtBMnw8zTCS+GWty/i4++zN5fAEmFUh3uVOIHLy9MgQDsqz8TC257lrNySVcqaieeAAgFn2mfzRlrs1O+2RM1CFzE1cSCfBwNZBIdxj6fh5TrHXNWpCM7vOVvF7Kcgqgeg5E1nEM8rPHrbowhGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_018gy2oBQncZocqNXe75Do2v",
+            "id": "toolu_01Dvqx8D4NztPxXdF73FvYtT",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the colour filter select an accessible name",
-              "rationale": "The visible <label>Filter by colour</label> on line 13 has no for=\"g-filter\" attribute and doesn't wrap the select, so it isn't linked to the control. That leaves the select with no accessible name. I can only edit the element at offset 529 (the select), so I'm adding aria-label=\"Filter by colour\". This uses the same words as the visible label, so voice-control users can say what they see. A better fix, which needs an edit outside this element, would be to add for=\"g-filter\" to the existing <label>. Once that's done, the aria-label could be removed. Please check the result with a screen reader.",
+              "title": "Give the colour filter select an accessible name that matches its visible label",
+              "rationale": "The select #g-filter has no accessible name. The visible text \"Filter by colour\" sits in a <label> just before it, but that label has no for attribute and doesn't wrap the select, so the two aren't linked. I can only edit the select itself, so this patch adds aria-label=\"Filter by colour\". It uses the exact visible wording, so screen reader users and voice control users hear and say the same name sighted users see. A better fix in source is to add for=\"g-filter\" to the <label> on line 13. That gives the same name and also lets users click the label to focus the select. If you make that change, remove this aria-label so the name isn't set in two places. I haven't re-run the check after this change.",
               "confidence": 0.85,
               "ops": [
                 {
