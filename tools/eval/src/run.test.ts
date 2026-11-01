@@ -1,5 +1,11 @@
 // The eval runner end to end, with a scripted model: real scan, real fixer loop, real re-scan.
-import type { FixerJob, LlmClient, LlmRequest, LlmTurn } from '@beacon/agent';
+import {
+  PROMPT_VERSION,
+  type FixerJob,
+  type LlmClient,
+  type LlmRequest,
+  type LlmTurn,
+} from '@beacon/agent';
 import { buildCorpus, loadCleanPages } from '@beacon/evals';
 import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -125,7 +131,7 @@ describe('runEval', { timeout: 120_000 }, () => {
       budget: { totalMicros: 5_000_000, perCaseEstimateMicros: 62_000 },
       record: { dir, model: 'claude-opus-5-5' },
     });
-    expect(existsSync(join(dir, 'about--image-alt.prompt-v1.json'))).toBe(true);
+    expect(existsSync(join(dir, `about--image-alt.prompt-v${PROMPT_VERSION}.json`))).toBe(true);
   });
 });
 
@@ -199,6 +205,6 @@ describe('runEval: images', { timeout: 120_000 }, () => {
       record: { dir, model: 'claude-opus-5-5' },
     });
     const run = JSON.parse(readFileSync(join(dir, 'run.json'), 'utf8')) as Record<string, unknown>;
-    expect(run).toMatchObject({ model: 'claude-opus-5-5', promptVersion: '1', scores });
+    expect(run).toMatchObject({ model: 'claude-opus-5-5', promptVersion: PROMPT_VERSION, scores });
   });
 });
