@@ -92,6 +92,18 @@ importers:
         specifier: workspace:*
         version: link:../evals
 
+  packages/verifier:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
+      axe-core:
+        specifier: 4.14.0
+        version: 4.14.0
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+
   tools/corpus-images:
     dependencies:
       playwright:

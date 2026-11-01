@@ -13,13 +13,6 @@ describe('mapper', () => {
   it.todo('FR-06: ambiguous match returns unmapped, never a guess');
 });
 
-describe('verifier', () => {
-  it.todo('violation not reproducible locally is UNMAPPED_LOCAL_MISMATCH');
-  it.todo('violation gone and no new ones: pass');
-  it.todo('new violation: fail');
-  it.todo('visual diff over threshold raises risk');
-});
-
 describe('exporter', () => {
   it.todo('FR-14: creates branch and PR once for repeated calls');
   it.todo('NFR-01: never targets the default branch (live lookup) or non beacon/* branches');
