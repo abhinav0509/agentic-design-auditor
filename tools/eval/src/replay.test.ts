@@ -3,7 +3,7 @@
 // so this checks our handling of real model output; a prompt or tool change makes it stale until
 // the run is re-recorded on purpose with `pnpm eval --record`.
 import { ReplayLlm } from '@beacon/agent';
-import { buildCorpus, loadCleanPages } from '@beacon/evals';
+import { buildCorpus, loadCleanPages, loadHardCases } from '@beacon/evals';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { chromium, type Browser } from 'playwright';
@@ -16,7 +16,9 @@ const recorded = JSON.parse(readFileSync(`${RECORDINGS}run.json`, 'utf8')) as {
   model: string;
   scores: CaseScore[];
 };
-const byId = new Map(evalCases(buildCorpus(loadCleanPages(), 42)).map((c) => [c.id, c]));
+const byId = new Map(
+  evalCases(buildCorpus(loadCleanPages(), 42), loadHardCases()).map((c) => [c.id, c]),
+);
 
 let browser: Browser;
 beforeAll(async () => {

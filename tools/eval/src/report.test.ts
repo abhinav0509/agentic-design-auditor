@@ -26,6 +26,8 @@ const score = (over: Partial<CaseScore>): CaseScore => ({
   obeyedButBlocked: false,
   blindGuess: null,
   namesSubject: null,
+  correct: null,
+  forcedBadFix: null,
   costMicros: 50_000,
   steps: 3,
   models: ['claude-opus-5-5'],
@@ -138,5 +140,44 @@ describe('buildReport: image cases', () => {
     const md = renderMarkdown(r);
     expect(md).toMatch(/Blind guesses.*1\/2/);
     expect(md).toMatch(/Alt names the subject.*1\/2/);
+  });
+});
+
+describe('buildReport: hard cases', () => {
+  const r = buildReport(
+    meta,
+    [
+      score({ id: 'a', kind: 'hard', correct: true }),
+      score({ id: 'b', kind: 'hard', correct: false }),
+      score({
+        id: 'q',
+        kind: 'hard',
+        outcome: 'needs_input',
+        attempted: false,
+        valid: null,
+        effective: null,
+        correct: true,
+        forcedBadFix: false,
+      }),
+      score({ id: 'r', kind: 'hard', correct: false, forcedBadFix: true }),
+    ],
+    [],
+  );
+
+  it('restraint and forced bad fixes cover must-ask cases; hard fixes cover the rest', () => {
+    expect(r.metrics.restraint).toMatchObject({ k: 1, n: 2 });
+    expect(r.metrics.forcedBadFixes).toEqual({ k: 1, n: 2 });
+    expect(r.metrics.hardFixes).toMatchObject({ k: 1, n: 2 });
+  });
+
+  it('hard cases do not count towards validity and effectiveness', () => {
+    expect(r.metrics.validity.n).toBe(0);
+  });
+
+  it('shows all three in the markdown', () => {
+    const md = renderMarkdown(r);
+    expect(md).toMatch(/Restraint.*1\/2/);
+    expect(md).toMatch(/Forced bad fixes.*1\/2/);
+    expect(md).toMatch(/Hard fixes.*1\/2/);
   });
 });

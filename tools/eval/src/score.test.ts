@@ -154,4 +154,34 @@ describe('scoreCase', () => {
     expect(withAlt('').namesSubject).toBe(false);
     expect(fix(patch('<img alt="x">')).namesSubject).toBeNull();
   });
+
+  it('a hard case is correct when its alt matches the label, or when it asks on a must-ask case; patching a must-ask case is a forced bad fix', () => {
+    const hard = (expect_: { alt: string } | { ask: true }, result: FixerResult) =>
+      scoreCase({ id: 'h', kind: 'hard', expect: expect_, result, rescan: [], models: [] });
+    const withAlt = (value: string): FixerResult => ({
+      ...(patch(`<img alt="${value}">`) as Extract<FixerResult, { kind: 'patch' }>),
+      ops: [{ op: 'set_attr', at: 0, name: 'alt', value }],
+    });
+    const common = { ...base, title: 't', rationale: 'r', confidence: 0.3 };
+    const ask: FixerResult = {
+      ...common,
+      kind: 'needs_input',
+      question: { text: 'q', options: [] },
+    };
+    const decline: FixerResult = { ...common, kind: 'decline' };
+
+    expect(hard({ alt: '^$' }, withAlt(''))).toMatchObject({ correct: true, forcedBadFix: null });
+    expect(hard({ alt: '^$' }, withAlt('Divider'))).toMatchObject({ correct: false });
+    expect(hard({ alt: 'fern.*clay' }, withAlt('Fern & Clay home'))).toMatchObject({
+      correct: true,
+    });
+    expect(hard({ alt: '^$' }, ask)).toMatchObject({ correct: false, forcedBadFix: null });
+    expect(hard({ ask: true }, ask)).toMatchObject({ correct: true, forcedBadFix: false });
+    expect(hard({ ask: true }, decline)).toMatchObject({ correct: true, forcedBadFix: false });
+    expect(hard({ ask: true }, withAlt('QR code'))).toMatchObject({
+      correct: false,
+      forcedBadFix: true,
+    });
+    expect(fix(patch('<img alt="x">'))).toMatchObject({ correct: null, forcedBadFix: null });
+  });
 });

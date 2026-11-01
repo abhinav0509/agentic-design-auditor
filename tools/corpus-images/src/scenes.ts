@@ -45,7 +45,37 @@ const wheel = (cx: number, cy: number) =>
 const table = (y: number) =>
   `<rect x="0" y="${y}" width="${W}" height="${H - y}" fill="#a87b52"/><rect x="0" y="${y}" width="${W}" height="8" fill="#8a6240"/>`;
 
-export type Scene = { src: string; file: string; svg: string; subject: string[] };
+/** `hard`: drawn for the hard-case pages (fixtures/corpus/hard), listed in hard-manifest.json. */
+export type Scene = { src: string; file: string; svg: string; subject: string[]; hard?: true };
+
+const text = (x: number, y: number, size: number, body: string, fill = '#2f2a24', weight = 400) =>
+  `<text x="${x}" y="${y}" font-family="Helvetica, Arial, sans-serif" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="middle">${body}</text>`;
+
+let qrSeed = 11;
+const qrBit = () => ((qrSeed = (qrSeed * 48271) % 2147483647) & 4) === 0;
+const finder = (x: number, y: number, m: number) =>
+  `<rect x="${x}" y="${y}" width="${7 * m}" height="${7 * m}" fill="#000"/><rect x="${x + m}" y="${y + m}" width="${5 * m}" height="${5 * m}" fill="#fff"/><rect x="${x + 2 * m}" y="${y + 2 * m}" width="${3 * m}" height="${3 * m}" fill="#000"/>`;
+function qr() {
+  const n = 25,
+    m = 14,
+    x0 = (W - n * m) / 2,
+    y0 = (H - n * m) / 2;
+  const inFinder = (i: number, j: number) =>
+    (i < 8 && j < 8) || (i < 8 && j >= n - 8) || (i >= n - 8 && j < 8);
+  let cells = '';
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < n; j++)
+      if (!inFinder(i, j) && qrBit())
+        cells += `<rect x="${x0 + j * m}" y="${y0 + i * m}" width="${m}" height="${m}" fill="#000"/>`;
+  return svg(
+    `<rect x="${x0 - 28}" y="${y0 - 28}" width="${n * m + 56}" height="${n * m + 56}" fill="#fff"/>` +
+      cells +
+      finder(x0, y0, m) +
+      finder(x0 + (n - 7) * m, y0, m) +
+      finder(x0, y0 + (n - 7) * m, m),
+    '#ffffff',
+  );
+}
 
 export const SCENES: Scene[] = [
   {
@@ -247,6 +277,47 @@ export const SCENES: Scene[] = [
         )
         .join(''),
       '#2f3440',
+    ),
+  },
+  {
+    src: '/img/hours.png',
+    file: 'hours.png',
+    subject: ['saturday'],
+    hard: true,
+    svg: svg(
+      `<rect x="120" y="50" width="400" height="380" rx="12" fill="#2f4a3a"/>` +
+        text(320, 170, 84, 'OPEN', '#f4efe6', 700) +
+        text(320, 260, 40, 'Saturdays', '#f4efe6') +
+        text(320, 330, 48, '10am – 4pm', '#f4efe6', 700),
+    ),
+  },
+  {
+    src: '/img/icon-basket.svg',
+    file: 'icon-basket.png',
+    subject: ['basket'],
+    hard: true,
+    svg: svg(
+      `<path d="M190 200 L320 110 L450 200" fill="none" stroke="#2f2a24" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M150 200 H490 L450 380 H190 Z" fill="#2f2a24"/>
+<path d="M240 240 V340 M320 240 V340 M400 240 V340" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>`,
+      '#ffffff',
+    ),
+  },
+  { src: '/img/qr.png', file: 'qr.png', subject: [], hard: true, svg: qr() },
+  {
+    src: '/img/chart.png',
+    file: 'chart.png',
+    subject: [],
+    hard: true,
+    svg: svg(
+      `<path d="M80 60 V420 H580" fill="none" stroke="#2f2a24" stroke-width="4"/>` +
+        [220, 160, 250, 300, 120, 340]
+          .map(
+            (h, i) =>
+              `<rect x="${110 + i * 78}" y="${420 - h}" width="52" height="${h}" fill="#6d8b74"/>`,
+          )
+          .join(''),
+      '#ffffff',
     ),
   },
 ];

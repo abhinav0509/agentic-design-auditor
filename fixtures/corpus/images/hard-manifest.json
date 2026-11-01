@@ -1,0 +1,26 @@
+{
+  "/img/hours.png": {
+    "file": "hours.png",
+    "mediaType": "image/png",
+    "subject": [
+      "saturday"
+    ]
+  },
+  "/img/icon-basket.svg": {
+    "file": "icon-basket.png",
+    "mediaType": "image/png",
+    "subject": [
+      "basket"
+    ]
+  },
+  "/img/qr.png": {
+    "file": "qr.png",
+    "mediaType": "image/png",
+    "subject": []
+  },
+  "/img/chart.png": {
+    "file": "chart.png",
+    "mediaType": "image/png",
+    "subject": []
+  }
+}
