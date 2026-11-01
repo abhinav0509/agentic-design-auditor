@@ -1,7 +1,7 @@
 // The eval runner end to end, with a scripted model: real scan, real fixer loop, real re-scan.
-import type { FixerJob, LlmClient, LlmTurn } from '@beacon/agent';
+import type { FixerJob, LlmClient, LlmRequest, LlmTurn } from '@beacon/agent';
 import { buildCorpus, loadCleanPages } from '@beacon/evals';
-import { existsSync, mkdtempSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, type Browser } from 'playwright';
@@ -126,5 +126,79 @@ describe('runEval', { timeout: 120_000 }, () => {
       record: { dir, model: 'claude-opus-5-5' },
     });
     expect(existsSync(join(dir, 'about--image-alt.prompt-v1.json'))).toBe(true);
+  });
+});
+
+describe('runEval: images', { timeout: 120_000 }, () => {
+  /** Calls get_image, then asks; records every request so the tool result can be inspected. */
+  const looker = (calls: LlmRequest[]): LlmClient => {
+    const turns = [
+      turn('get_image', {}),
+      turn('submit_proposal', { kind: 'decline', title: 't', rationale: 'r', confidence: 0.2 }),
+    ];
+    return {
+      complete: (r: LlmRequest) => {
+        calls.push(structuredClone(r));
+        return Promise.resolve(turns.shift() ?? turn('get_dom_snippet', {}));
+      },
+    };
+  };
+  const imageResult = (calls: LlmRequest[]) => {
+    const last = calls[1]?.messages.at(-1);
+    return last?.role === 'tool' ? last.results[0] : undefined;
+  };
+
+  it('get_image returns the real corpus image of the finding', async () => {
+    const calls: LlmRequest[] = [];
+    const cases = evalCases([pick('about--image-alt')]).filter((c) => c.kind === 'fix');
+    await runEval({
+      browser,
+      cases,
+      llmFor: () => looker(calls),
+      budget: { totalMicros: 5_000_000, perCaseEstimateMicros: 62_000 },
+    });
+    const studio = readFileSync(
+      new URL('../../../fixtures/corpus/images/studio.jpg', import.meta.url),
+    ).toString('base64');
+    expect(imageResult(calls)).toMatchObject({
+      isError: false,
+      content: { type: 'image', mediaType: 'image/jpeg', data: studio },
+    });
+  });
+
+  it('evalCases adds a blind case per image case, where the image cannot be loaded', async () => {
+    const all = evalCases(CORPUS);
+    const blind = all.filter((c) => c.kind === 'blind');
+    expect(blind.map((c) => c.id)).toEqual(
+      CORPUS.filter((c) => c.truth.rule === 'image-alt').map((c) => `${c.id}--blind`),
+    );
+    const calls: LlmRequest[] = [];
+    await runEval({
+      browser,
+      cases: blind.slice(0, 1),
+      llmFor: () => looker(calls),
+      budget: { totalMicros: 5_000_000, perCaseEstimateMicros: 62_000 },
+    });
+    expect(imageResult(calls)).toMatchObject({ isError: true });
+    expect(JSON.stringify(imageResult(calls))).toMatch(/could not be loaded/);
+  });
+
+  it('image fix cases carry the subject words of their image', () => {
+    const [c] = evalCases([pick('contact--image-alt')]);
+    expect(c?.subject).toContain('station');
+  });
+
+  it('a recorded run also writes run.json with the scores, for the replay test', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'beacon-eval-'));
+    const cases = evalCases([pick('about--label')]).filter((c) => c.kind === 'fix');
+    const { scores } = await runEval({
+      browser,
+      cases,
+      llmFor: (_c, job) => scripted(job),
+      budget: { totalMicros: 5_000_000, perCaseEstimateMicros: 62_000 },
+      record: { dir, model: 'claude-opus-5-5' },
+    });
+    const run = JSON.parse(readFileSync(join(dir, 'run.json'), 'utf8')) as Record<string, unknown>;
+    expect(run).toMatchObject({ model: 'claude-opus-5-5', promptVersion: '1', scores });
   });
 });

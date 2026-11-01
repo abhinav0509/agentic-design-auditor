@@ -17,7 +17,8 @@
     "trace": "node tools/trace/src/cli.ts reports/vitest.json requirements.yaml",
     "smokescreen:install": "node tools/smokescreen/src/install.ts",
     "demo": "node tools/demo/src/server.ts",
-    "eval": "node tools/eval/src/cli.ts"
+    "eval": "node tools/eval/src/cli.ts",
+    "corpus:images": "node tools/corpus-images/src/render.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

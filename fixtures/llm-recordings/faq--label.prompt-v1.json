@@ -8,13 +8,13 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01Q3wdUx8L7J8rcSP2ooxXLF",
+            "id": "toolu_013ERwj94oZZHDK7gy75Ct6f",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the FAQ search field an accessible name that matches its visible label",
-              "rationale": "The visible text \"Search questions\" sits in a <label> on line 10, but that label isn't linked to the input. It has no for=\"faq-search\" and doesn't wrap the field, so screen readers announce the search box with no name.\n\nI can only edit the flagged element at offset 432, so I'm adding aria-label=\"Search questions\" to the input. It uses the same words as the visible label, so speech-input users can say what they see.\n\nA better fix in the source would be to add for=\"faq-search\" to the <label> on line 10. That links the label properly, and clicking the label text would then move focus to the field. If you make that change, you can drop the aria-label. Please check this with a screen reader before closing the finding.",
-              "confidence": 0.88,
+              "title": "Give the FAQ search input an accessible name that matches its visible label",
+              "rationale": "The search box has a visible \"Search questions\" label right before it, but the label isn't linked to the input. It has no `for` attribute and doesn't wrap the input, so the input has no accessible name. I can only edit the input itself. The `<label>` has no id, so `aria-labelledby` won't work. Adding `aria-label=\"Search questions\"` gives the input a name that matches the visible text exactly, so screen reader and voice control users hear and say the same words they see.\n\nA better fix would be in the source: add `for=\"faq-search\"` to the `<label>` on line 10. That links the two natively, and clicking the label then focuses the input. If the reviewer makes that change, this `aria-label` can be dropped. This patch fixes the missing name for this rule. It doesn't make the page compliant overall.",
+              "confidence": 0.85,
               "ops": [
                 {
                   "op": "set_attr",
@@ -28,24 +28,24 @@
         ],
         "usage": {
           "inputTokens": 2377,
-          "outputTokens": 548,
-          "costMicros": 14099.2
+          "outputTokens": 562,
+          "costMicros": 14379.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS7AcKEAgTGAI4AUIIdGhpbmtpbmcSDHmgD8aIoOB72zvDlhoM9MVLdOxLD07yt1NaIjAIzDgnS3OSdBpORrWDz0qBVXrf8wjVtgIlKH03uS7ZF5oPiqNiTC29rXokXF/csS4qiQctIcguXav7sc3TgAhPnnid714j82DgXolI23KIYuONJdml1CLe2XbobwQkxh7rfkgYwwQm2x2SxvhrO3lSW/sOVaHd1tbwhcMMqRF2XNmb9WbZCyFV/LyH73zSJOQ54cmXoyzEdlleU/ukI2/FVATPepNyAemCBgC++Ht2/MhZlGZZl3cF2d94P336+Y/xSPau1uudc01/nNC0AJlWM8WLz327Jl3c0wX0iuiv9V59voRFEvffgNr1Ytq5tX6kLYl4NOw+ZHb7bSm1AAWdpENA0yVWeNU1173qwaXwkKzhv4chtQ4yHkdv9ZEZCLmpbm11soVYgpTKZAQf9p+ll8DWXuh0nKd9B184MLiR2RlM6dINbFlX03PhUoLUgpkEQ4onveVga2iTrxisnvj5xz5hQT/MCEyVOT0Xre15ze2xtN/E/EnSA98A3TGb1uCpxuwmoDuHdx/lzp9Lf1BMkFvaRK90J3Bo8T1LuGhuVR2P/+i+J0VfVxiHVio4FOmG/GJdJAwztjDpMA/M1VoZPWHprl9YHzfFcx1Y7fF2/WwDRFXlriEArW5Ct+k+qPXShYNLk0fF32XfjK0ViBeWJv4mQq9qVJFIMfaXzhPjfxkJQ3BJuKfBl/TsH2IxMSbGwF/W+WAt9bjnLtaW0IjTMD2K1TioBBCC4XPn/UWu0D7o8XolqWICtYzsjB4H1uX9G/lmA7OzY2jbVA32aW2D6WNlrWSjIL+3OARnrCyRd5DOFE6c7FnMsH/3JuVgyOuzpmY1t6qQp+Pnu2Os3oiOC1ij5HlVXg+ON5k2HM/dA06FlZTmehk3ch24pNPDtZ0rXUK1Pwa7zVGA+tllN0/Q1UtkxINZIgrVXuN75VEQvVxpvebyQ04WHJOrU+H7mmR2CpvFjm2SHWKxZZIC2XrQHg84DKlatMd14NXaQvwijohSw8WMEqyHcWtE+A/UEBFImue2YMAoN1W9TLJvinrflY940vv+d8z4anLcXIWXXDyCEWe3hP6wrb9iqZ4pG4G3F41r6rtRBhXtQXx0/47NWYj08QxnJpX+MI2wiDCqKkKUicWqL26hoozTY3qc3bIszRwoukaoPYfp2AHgCPODqUrQL88fmmTJjytzLMSqkwQcBqSdcYC5Gow6+nXEBRchlIDj+t2G3knRakFnhaJ+VVdB1krouslXu7E54MojmEQCZ+xLW8GQ7ZYe6RgB"
+            "signature": "CAQSrQcKEAgTGAI4AUIIdGhpbmtpbmcSDHldNdcGpFDsxN4w5xoMhr4YTZAWrW3WJlSGIjA0sMfXt11pCyxWqVkxfsxnzp/44/F50iD6Ms1WMphrc/wSlnHcY2IRCRhyVzJYzpQqygaqPvWppoUEwEBNtWhMH3D+sRPmjW3xQ/ZzgXTWUw2mHb4ALArkQNOqaeAklzphyBdtsPcdepot+EMixch4GGP5uf4QRYqipFk+cuB7Xt96iC2jXuRoaICmJLp/FBiYht+HIoU05s5QdWEi6wu9cxMGBwIvSJ4ZIZynqj+6zbtTvz0eUC9jvT1dyThEpt+Ci5UcUDfzqAvC8pmCBdI/JVhikWjoVnbNziy8TAHui1eEUfksxb+hTu56W+gdHCG7kenzUfsqbuXlP4LE9EAzKDeQ0MkZdyibboK7qs7ZxC7JqRfOJLUbvOISvZAktXM4MqbHiIB+jX0E+GLDFA+coPVaLaGiEZZB64QkeNa7d5oJmlO7Dh871rBgPreUUj/+9cNNfyOnnB7zhOQTZcotqMh/H5YYruCeuRJ99dVwO7m0jvHd33qtvyMFDlpRKe1X0kxXQ3wW20h1kP6xe+bMNeUcbYEiqAl0aGjpNcqD7BCE6A2I0tsStYZmXl/WycyeJAMeqpKAK8Eun0AkvDjUHvbr3g8tuCZ3HxL0hsRj0d8KPU8t5IO1wy9sB/BvUSuCT0AQodvv16sFqV9wXRKFvitKTZnO0ZafMl4xcHv8bAV/3D2dgL8j0oDirR+izBIbP1HnNxjPnz5hQN4AQ62q1ZEUN9RFVuI+/1P8kUzi4PeV6Vj3mMh9Jdr2Q+o8nGVDmabAeMPXYlX+UbA0lY2IvbRZ6EOsTtJPHkvFWGpBfi3VJNdj4XIT43i9nB2aZjE4dlHqPlPWdgG6riTRyTjNGQ/OybEdn55Gr2aRDwtWuGL+WduZwKPNZUj4fY6rzdP0JSji2uqCdaNHgK2j9S8Tvt7RIdP/pxhbBXDDXHqGhzdf32B9cnBIa3QyUkLFG2cgPo28c7S+4XRFEcTT1D1NrruGi5I5M9D819lmvId2KGCiCcciQKkUh6nXXMdRmxj/OBtzO6hg8aKaZwjxaZPEbulitLxyxZEq0vlSeCSnex1u8w9uAEppF8Ob5uVhphLHC8S5cl1ZRy5O/N1oDJ9YvwQ6cskv9Muk9NL9eySGYMB/S00MhRYvaxCuOeefSMhPga5Ib2Hii/adqzkkcpSBx8yy3yFrupUMiZKr8BgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01Q3wdUx8L7J8rcSP2ooxXLF",
+            "id": "toolu_013ERwj94oZZHDK7gy75Ct6f",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the FAQ search field an accessible name that matches its visible label",
-              "rationale": "The visible text \"Search questions\" sits in a <label> on line 10, but that label isn't linked to the input. It has no for=\"faq-search\" and doesn't wrap the field, so screen readers announce the search box with no name.\n\nI can only edit the flagged element at offset 432, so I'm adding aria-label=\"Search questions\" to the input. It uses the same words as the visible label, so speech-input users can say what they see.\n\nA better fix in the source would be to add for=\"faq-search\" to the <label> on line 10. That links the label properly, and clicking the label text would then move focus to the field. If you make that change, you can drop the aria-label. Please check this with a screen reader before closing the finding.",
-              "confidence": 0.88,
+              "title": "Give the FAQ search input an accessible name that matches its visible label",
+              "rationale": "The search box has a visible \"Search questions\" label right before it, but the label isn't linked to the input. It has no `for` attribute and doesn't wrap the input, so the input has no accessible name. I can only edit the input itself. The `<label>` has no id, so `aria-labelledby` won't work. Adding `aria-label=\"Search questions\"` gives the input a name that matches the visible text exactly, so screen reader and voice control users hear and say the same words they see.\n\nA better fix would be in the source: add `for=\"faq-search\"` to the `<label>` on line 10. That links the two natively, and clicking the label then focuses the input. If the reviewer makes that change, this `aria-label` can be dropped. This patch fixes the missing name for this rule. It doesn't make the page compliant overall.",
+              "confidence": 0.85,
               "ops": [
                 {
                   "op": "set_attr",

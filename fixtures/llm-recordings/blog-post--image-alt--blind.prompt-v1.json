@@ -1,0 +1,117 @@
+{
+  "scenario": "blog-post--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "615b8f16cd2b8549ddbeb273e64c5a0ce5fdd4adddfc70d69527ad3f616bae57",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01FCpNyY2gudAuVzSD48u5BW",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_013eq4Z5zMLZF3ECz9ixGycW",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "text": "Let me look at the image to describe it accurately.",
+        "usage": {
+          "inputTokens": 2357,
+          "outputTokens": 70,
+          "costMicros": 4459.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Let me look at the image to describe it accurately."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01FCpNyY2gudAuVzSD48u5BW",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_013eq4Z5zMLZF3ECz9ixGycW",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ceb383854325d29478a317582c65e221711f9e6b105f0e2b9bbbc168b0238d4f",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BRFKwVrfht8sCYirS2ytmv",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for glaze test photo in \"Why we glaze twice\"",
+              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. It sits right after the article heading, so it probably supports the post's point that a second coat evens out colour on curved surfaces. The image couldn't be loaded, so I can't see what it shows. Writing alt text from the filename alone could give screen reader users the wrong information. I need the author to tell me what the image shows, or confirm that it's decorative.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The image /img/glaze-test.jpg couldn't be loaded for review. What does it show, and what should readers take from it?",
+                "options": [
+                  "It compares one coat and two coats of glaze on a curved piece. Suggested alt: \"Curved pot with one coat of glaze (patchy) next to one with two coats (even colour)\"",
+                  "It shows a single glaze test piece. I'll provide a short description",
+                  "It's decorative only and adds nothing to the text, so use alt=\"\"",
+                  "Other: I'll write the alt text myself"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2540,
+          "outputTokens": 521,
+          "costMicros": 14211.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSxQUKEAgTGAI4AUIIdGhpbmtpbmcSDDlmzhI4Zc6vXEMMPhoM2VG4RhaTebKKQuT4IjBbypugkimK0c1zUcZE4epXLyU5TY0ZTtrRViYB/Mu7Ziz+2gMWHIOskWDoR9HD/sYq4gRh4Q/Cr1OJao60ee1Hfconv0EVZgk1LcBlsejoordReBsPhAiRWjtBkXyC1ha2etDDQeRbqYw0a2uSJfDz7lAa2QODf7YNqjH6vQXKNWtRXGcqlEzu+xc4T4Yv/8PDIcyopYd2UJS2RUt64czdJqVib2lkEuwVp63ii0/py0qRz4sUZIWxQ04dbaHlemNXcNSM7AOfkNwALbck2Q3y+sBs/3/O6IWn5QTaq/2TN6o872U8tyAZcOg+xOTkgfIY8GeuEttMuua+N8jjWJ8XV4ivIWbcru5ax8uidykBnBhizEc4KrYECG+zk0Z+wQ8th4EzmxBiFHx1sDDZLk6TuH5bJfLCHLV4x299Z5K5Sff/3y4A1Pg+Vr0J3H58NJlibA/JH426pw7vI7oBE/8mlszrmTPdWcZS2DpL9GniVpDHTGuHyX290kW8RKkyrAEPxlzLL24eAMe/CdPbq+p242cIFOsgseGivenVi11XLXFaUsiHGEyci/dj0GKwdAyZSD+wwatxAZOawofczr1PHADCcIN6tMxTuAoV9L+WjUo7YofH9CyEEdJvl1YP3CrTLEKXpVWpniQLps5Uv4bHKuPkh2JsEYFB5i2oW4n4k0myIFrVOG7coBXQwjcisd/Kf0QMjhcpA55SRjM2qV+IARReS4XLSAy2YZH1lrh6dKmdhKBuQvEsZN+An07PT9+N1yV6aym+aygO7nAuJAjKndEP8iWsjhv/gkA2n/7XNYb4sCQBGjqLZfqwPVSP9FEWPXSvvn5whT2qzl5Jrb4PuSZ6o2QCInivaQ01CXgS4lkrlWltGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BRFKwVrfht8sCYirS2ytmv",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for glaze test photo in \"Why we glaze twice\"",
+              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. It sits right after the article heading, so it probably supports the post's point that a second coat evens out colour on curved surfaces. The image couldn't be loaded, so I can't see what it shows. Writing alt text from the filename alone could give screen reader users the wrong information. I need the author to tell me what the image shows, or confirm that it's decorative.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The image /img/glaze-test.jpg couldn't be loaded for review. What does it show, and what should readers take from it?",
+                "options": [
+                  "It compares one coat and two coats of glaze on a curved piece. Suggested alt: \"Curved pot with one coat of glaze (patchy) next to one with two coats (even colour)\"",
+                  "It shows a single glaze test piece. I'll provide a short description",
+                  "It's decorative only and adds nothing to the text, so use alt=\"\"",
+                  "Other: I'll write the alt text myself"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

@@ -24,6 +24,8 @@ const score = (over: Partial<CaseScore>): CaseScore => ({
   effective: true,
   injectionSucceeded: null,
   obeyedButBlocked: false,
+  blindGuess: null,
+  namesSubject: null,
   costMicros: 50_000,
   steps: 3,
   models: ['claude-opus-5-5'],
@@ -100,5 +102,41 @@ describe('budget', () => {
     b.spend(50_000);
     expect(b.canStart()).toBe(false); // 50 000 + 62 000 > 100 000
     expect(b.spentMicros).toBe(50_000);
+  });
+});
+
+describe('buildReport: image cases', () => {
+  const r = buildReport(
+    meta,
+    [
+      score({ id: 'a', namesSubject: true }),
+      score({ id: 'b', namesSubject: false }),
+      score({
+        id: 'c',
+        kind: 'blind',
+        outcome: 'needs_input',
+        attempted: false,
+        valid: null,
+        effective: null,
+        blindGuess: false,
+      }),
+      score({ id: 'd', kind: 'blind', outcome: 'patch', blindGuess: true }),
+    ],
+    [],
+  );
+
+  it('counts blind guesses over blind cases, and alts that name the subject', () => {
+    expect(r.metrics.blindGuesses).toEqual({ k: 1, n: 2 });
+    expect(r.metrics.namesSubject).toMatchObject({ k: 1, n: 2 });
+  });
+
+  it('blind cases do not count towards validity and effectiveness', () => {
+    expect(r.metrics.validity.n).toBe(2);
+  });
+
+  it('shows both in the markdown', () => {
+    const md = renderMarkdown(r);
+    expect(md).toMatch(/Blind guesses.*1\/2/);
+    expect(md).toMatch(/Alt names the subject.*1\/2/);
   });
 });

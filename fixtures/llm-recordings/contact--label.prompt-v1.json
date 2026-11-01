@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01BjBitm1NMEwTM591RXF886",
+            "id": "toolu_01Q8h14mJ12vpsApBDHZaGXz",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the Topic select an accessible name",
-              "rationale": "The <select id=\"topic\"> has no accessible name. A visible <label>Topic</label> sits just before it (line 11), but it has no for attribute, so it isn't linked to the select. Setting aria-label=\"Topic\" on the select gives it a name that matches the visible label text. A better fix in the source would be to add for=\"topic\" to that <label>. That way clicking the label also focuses the select, and the name can't fall out of sync with the visible text. I can only edit the select element, so I'm flagging that change for the reviewer. Please check this with assistive technology. This change doesn't confirm the page is compliant.",
+              "title": "Give the Topic select an accessible name that matches its visible label",
+              "rationale": "The <select id=\"topic\"> has no accessible name. The visible \"Topic\" label on line 11 has no for attribute, so it isn't linked to the select. I can only edit the select itself, so this adds aria-label=\"Topic\", which matches the visible label text so speech-input users can say it. A better fix is to add for=\"topic\" to the <label> on line 11. That would also let users click the label to focus the select. The reviewer may want to make that change instead of this one, or as well. This change should clear the label rule, but it doesn't mean the page is fully accessible.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2452,
-          "outputTokens": 494,
-          "costMicros": 13319.2
+          "outputTokens": 485,
+          "costMicros": 13139.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSmwcKEAgTGAI4AUIIdGhpbmtpbmcSDHjGPPfPfRTxDzz53RoMkeO+iRgj/UQChbtMIjDHM3YW+wiqBZYlTyShGqZ0BG6n1wZsaD0e9n1a+TKINveWL6Uer1rP34YyUObVVasquAYi2als8Q7eQp70a3zAgyRh/OGz90F31kkTz6zVKYPnN8Q7it9pqCsFAgY7NXhOGlJph6FR7vUFrvtrOedlG7bW/HACc0vC5A0LoSRgx9MEqZjAUJI4/lPhbZc0YVbA/gUOKMWRhbcZquiRM29NpjdbXrlQ+aSJATNPxbU6oZkUCas1yb42vDYD9wopxqopM7070JurqYmtGaCRhpaix+GxuVbZdaST5hxSrCegiT5fUgfNnHUgBxh0RMbI3avI8OKZGmZRg+jTc1TpmBQ7uLDVcBpkHTEsiRB/a6EP5i3zPfYDzCvby+SMDzASXC8kdrA9R5KGW403InbfpBUZasaFS0TxucM+Y0tjN8K33Fovp3duRKJPGMwPulkVJQISqRlEdopinNL81yDRBfc2uTRLCkHOiuJy45DD7r1FNDGZGBkf26fIddoQvMRynLi05/z304lIGZ+nxYpOb3HmOnp1ELW7q2PJ0QjSTPEOXY6TfZxdehdVjWlWZgj2q8QqQXA1CHQdy3k1W2xYY2d5tYxnpa8ovG3QPkK+SDBW1n/KCExsBg8APrXLcRYj4SNZr44vjjqbrdvjoS9kLUlt9fzwmHbagOK+PSQl37hKm5DdmTxP2OQy3WPjjdyKzs4LnUfx7B6PUV9P7D8qnRnqnhYDFtvsIWZAQLpccMpQXzvYH3PrjeD66k/NZSXdqdGcyykvzclDqd4kYaBHcr6YyCFJ3nKRHjGt2kE8IFIXaFhs33+spj3zhNPZon2+l3SuiyV+g4sok92v5C/5dU28+gFDa2UIm7RPUSXbKoanLCr+FwdZIFKgy6k6Nja2TEirVkqi5XhgV1v6BVQl/MFfJgF087bWDC22DTQs5L/SszkHamPUp9Pzq6j8cSlEuiC92jKv/y5briGTtnjdR8fzaDuYWEd9u/pm+P02zrPzmH1teteVRPIQ0fmXj2q94Zz49tbyStuHpbD/t2X8dtO6KoyB9aOSm+K2WEViOyRu60mk+noPbN0jUfGvkg1BTGiFwFtJ5ItYXjW2bO7rTyTSGIPzZcgGDAZyVQj+lYIQOJDk/U0XEC0gDOHOpTJ6VZjRZBbt4ee+C3XEnRgB"
+            "signature": "CAQStwcKEAgTGAI4AUIIdGhpbmtpbmcSDLENrKOSjwZFKMJyRBoMuAPjkRQxowymVn+zIjCnWUfptTATA7cqCcfSAAxKJ2cm5vyG9fcPgyIddaw92tKFdQ1Jmc/kzuta+Fjkcwgq1Ab5PEXCJug9+B4wzePtIcTgjydcgDxuSKNo3ptnu7Bs/6JssIQiIPfm+pIipyPGK95SAgt5Tzi/sez3V9oLJKvRNj8M0CtQR57wZJWEOs24k0q299iZ44QmzXNw1eNnnECJP42OE1soKTP8m6BsDvawTJglAY84coLzOZH4qsumaAFJ1ZxvEXiOJxSTwCPApkVCF/qR6oDIvBwJPHNxqrGcROgOAKpX/6gqsSM4irspwni9a9DfD/xgA4dz5uT4erBAuVy6RNqfS3v2CtA/8zoi4QuE91rzhZxMYQBasxfH1VOmdKZhNjmgX0/hfZ0GS3DQYZjlh8WcVgHOIhECVgLTToOcHITphKovg78PYykSlAFwckgj3KFoSNq2esK4uelE1I8O6D0JwWnAx1izyLlWlFXtxkTsqa0oRxHFDQkq0IurODkV+7fCO3OJ+YqbwWG704nyce4ZJGVdo2ryjNYvdqEPFFtn/KLWvmQZLH3iTNxakxx0Mvb+1MXsZUdY2rENDtF8t4g2bDfOSAwatzsREox9+NIMd2TS2TMUi7+fhC+c8k+6fizqxcerHMRsJhKo9HHkkXEfOuR0B4w+BxVub8deFIu9KVyQOxEnSE0iGegH7PWt4QR9fh8BFK+CtG6u8xFl+Yptru8hroEMzGYc46MbVeVzgzWTXurKpnDKEaZsMx/C/DiBMb1d2lVpQSgaxz15zpYZyy0XTDaZsgJpL1eiEShR+noNMO8vdzZLf+PqvUjtxhkNF1DV83ZcKkv2ty2Ui4z6UpFXwuTuznqO0odPAGuf/xMuIciGKShrZRhV7mrpi/fuf42AJwkLx6vLOHefLgtEYFFtnHJFYNJYflhvsJ+uZK4BAziSDt8XTqvyKMaRoVkKovglJ1e5ZQR9qlyROkieqG+6uixb/IWBfC4+gTuE/Ojn8r1jYSG8tiWVGgIqmLXeKNCFF5kEtha14TvMU3+gfyaKSkxk27aOnBPpmJHW9tasEalepHe+G+dRvmDr8yPy1nx0KK1ZfOZngFPmQmgIL9T/cVnLjJbsD7/+3h9AqzKNEF8U6svUgXaid1dvNYBZXNCURLnVWU8FNI9VtoAhs1t060MvzzcRoE1bOshTyn15XrtC3ddUNSoS5JUYAQ=="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01BjBitm1NMEwTM591RXF886",
+            "id": "toolu_01Q8h14mJ12vpsApBDHZaGXz",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the Topic select an accessible name",
-              "rationale": "The <select id=\"topic\"> has no accessible name. A visible <label>Topic</label> sits just before it (line 11), but it has no for attribute, so it isn't linked to the select. Setting aria-label=\"Topic\" on the select gives it a name that matches the visible label text. A better fix in the source would be to add for=\"topic\" to that <label>. That way clicking the label also focuses the select, and the name can't fall out of sync with the visible text. I can only edit the select element, so I'm flagging that change for the reviewer. Please check this with assistive technology. This change doesn't confirm the page is compliant.",
+              "title": "Give the Topic select an accessible name that matches its visible label",
+              "rationale": "The <select id=\"topic\"> has no accessible name. The visible \"Topic\" label on line 11 has no for attribute, so it isn't linked to the select. I can only edit the select itself, so this adds aria-label=\"Topic\", which matches the visible label text so speech-input users can say it. A better fix is to add for=\"topic\" to the <label> on line 11. That would also let users click the label to focus the select. The reviewer may want to make that change instead of this one, or as well. This change should clear the label rule, but it doesn't mean the page is fully accessible.",
               "confidence": 0.85,
               "ops": [
                 {

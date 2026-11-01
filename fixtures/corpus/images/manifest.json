@@ -1,0 +1,145 @@
+{
+  "/img/ana.jpg": {
+    "file": "ana.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "bowl"
+    ]
+  },
+  "/img/tom.jpg": {
+    "file": "tom.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "kiln"
+    ]
+  },
+  "/img/divider.png": {
+    "file": "divider.png",
+    "mediaType": "image/png",
+    "subject": []
+  },
+  "/img/g1.jpg": {
+    "file": "g1.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "plate"
+    ]
+  },
+  "/img/g2.jpg": {
+    "file": "g2.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "vase"
+    ]
+  },
+  "/img/g3.jpg": {
+    "file": "g3.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "cup",
+      "espresso"
+    ]
+  },
+  "/img/g4.jpg": {
+    "file": "g4.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "bowl"
+    ]
+  },
+  "/img/g5.jpg": {
+    "file": "g5.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "jug",
+      "milk"
+    ]
+  },
+  "/img/g6.jpg": {
+    "file": "g6.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "teapot"
+    ]
+  },
+  "/img/glaze-test.jpg": {
+    "file": "glaze-test.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "tile"
+    ]
+  },
+  "/img/hero-mugs.jpg": {
+    "file": "hero-mugs.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "mug"
+    ]
+  },
+  "/img/logo.svg": {
+    "file": "logo.png",
+    "mediaType": "image/png",
+    "subject": [
+      "fern",
+      "clay"
+    ]
+  },
+  "/img/map.png": {
+    "file": "map.png",
+    "mediaType": "image/png",
+    "subject": [
+      "station",
+      "map"
+    ]
+  },
+  "/img/mug-front.jpg": {
+    "file": "mug-front.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "mug"
+    ]
+  },
+  "/img/mug-handle.jpg": {
+    "file": "mug-handle.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "handle"
+    ]
+  },
+  "/img/packing.jpg": {
+    "file": "packing.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "box",
+      "mug",
+      "wrapped"
+    ]
+  },
+  "/img/studio.jpg": {
+    "file": "studio.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "wheel",
+      "bowl",
+      "potter"
+    ]
+  },
+  "/img/welcome.jpg": {
+    "file": "welcome.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "cup",
+      "hands",
+      "hand"
+    ]
+  },
+  "/img/workshop.jpg": {
+    "file": "workshop.jpg",
+    "mediaType": "image/jpeg",
+    "subject": [
+      "wheel",
+      "class",
+      "people"
+    ]
+  }
+}

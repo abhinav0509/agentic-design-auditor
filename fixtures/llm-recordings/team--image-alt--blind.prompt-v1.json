@@ -1,0 +1,115 @@
+{
+  "scenario": "team--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "70ea25c4a3a217a3916f0e90fc6c0887995c3148d3db6856d6614018ff3bc686",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01J6SCetAMCHJeSHdMK3EHHc",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_0126y8YcrLU3cnsNorTC4jUA",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2352,
+          "outputTokens": 75,
+          "costMicros": 4539.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSjwUKEAgTGAI4AUIIdGhpbmtpbmcSDJlc6q6BFsh0y/dSshoM0tZG/YVc9IbGflWYIjAOSKwapyzMCtjUdha22mqd1nMgc/oLIdXXRep31RgOu3MVMvjAjhC8iE5XxdNHopwqrARWZKtkk/u+4yjAV66cIJQsWU61dmINHJoowc5mL9dutBW8/rKVCmfDPAGzZbdLhwcLeOinzJ1IoTbU3CQvjo7fEg8oJIJFfodfZz6cWcR8hncf+v8YnAW78AMZA+n8gOGPxc3r7klDRvppEeOsq9E4DJTplriq/YVqdY9AA3YvZADWJk7vuc9mCOQe7+keknoK81Pyh+HW/UGmrv7bWbr3fT4Zkd1auOMkZusmcRDwT0aym27AbBOcAbVafxyUXAO5WVc1ydDwqNaaWxeT5ewKe8lkFCxwKAHFZT9AzcUqU3eS4zB7wbt4wVEmCH6Lv8Lcwks7n8xDClNUyS/s1OVPfjf/5E08wWciFHDQGFZ1HqDmXASUA8gWyLh6YtX/Lqv/iZCcrv0YKxR66eS5jPXjrMunbDZWAnWcPcxKQJBdYjIAoQjDq/1dESbh94D0B4F/E+pcTcWZeAtydq3c1cBkNLwBjyd3X91hkI38qD2FdLyDjDiokIf/pgR7lbVF9lm9fokwmpjDbf8zaBsv6FYeuMBQjJmzVFRLL6ArHdKziGfaCT2bgm905eM2bJMb3ckCTKLYtI5sn63WAimB1cPiZcJWck1Upjtm0860X1r4eWafKEnS/ZSyvFQnQmoTMU0RiNrFiEcXlhuqMjnVG7k/tCrwWH3IzQYUcx3j4RLYwzXOxU1+E+WUSOQ5Ic0+fjz7k/x5kkKNAIaCT9I/4FOX0joNK7oCGsfjKlBdGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01J6SCetAMCHJeSHdMK3EHHc",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_0126y8YcrLU3cnsNorTC4jUA",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "cbd72bd9a4f1ca316598403ecfdd9af33c7334deba1f121c894a3bb48ff22cff",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_019kTrDtCnNmPRKtzLCbirNK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description for Ana's team photo (/img/ana.jpg)",
+              "rationale": "This img has no alt attribute. I couldn't load the image, and the page only gives a figcaption reading \"Ana\", so I can't write an accurate description. The other team photo has a descriptive alt (\"Tom Hale loading the kiln\") that includes his full name and what he's doing. For consistency, Ana's alt should probably follow the same pattern. I'd rather ask than guess her surname or what the photo shows. If you just want a quick fix, alt=\"Ana\" works, though it repeats the caption. An empty alt isn't a good fit, because the photo shows a team member and carries content.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does the photo at /img/ana.jpg show? I'll use your answer as the alt text, similar to 'Tom Hale loading the kiln'. Please include Ana's full name if it should appear.",
+                "options": [
+                  "Use a description I'll provide (e.g. 'Ana [Surname] at the pottery wheel')",
+                  "Use alt=\"Ana\" (just her name, matching the caption)",
+                  "Use a generic alt: \"Portrait of Ana\""
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2537,
+          "outputTokens": 589,
+          "costMicros": 15559.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS/AYKEAgTGAI4AUIIdGhpbmtpbmcSDKTRPC4B1WjpEyYTMhoMMh9kzf3xEOMx2ZSfIjB/JF7FJHEMFekCZ+2fZBGHHNLRrL+bEEHV5cPlN7O/pbB8hbPdYge+OWnBBhNA8aEqmQaN0N/FNdSmRwfLuethuqfexWd1QnS8sWxnxbtOdHQE+9fzzrQL+vB+LK2JW/GHdZnQUvl7uh/mQw5w4BKPOWeCWWNsGjNP+FFnZMy4dZ0ttiYD1NpFPjHv8M3fel2lYsspQrfoHBUm3kO1fot4Haty8BzQxEk0GRT5LU8PYcKRJfBV1gnx9kfOrXkyG0KZZHbE37cy9a5nWrdhRLHBAWiT6UVzVWzGHIHw8tUCL0GIpzUY45OaXNOX6GYk3wmyWzELBbLVxb9z7/b9YX0kuxejdrAdAfdYfPr/wlrsotqtsoVhFNfBXr7YCWavA7u7Yc4nUxM1SnqQmuSFnTA/OE2U+RV7rolBXeuKpBUReAQj3uAtfqIoprgOx7boU4xELgpWm37hYg9Ub0X54tyY5bfmNuPdjtuLBxjEHffam6+1DBg+fBZp+gPbS3789KbCmZMImwREyJDcyp6FjyPa++pr9LuzA6uUgv9QngHkZHqgiF5RNm6nAjgpGrutN7UQ4/wixmmIUyQYNADeq4X8TsEktoneRFT04+d1tBI5v76+uPscYrPpR4l2puVlpe8sNehO6ij6O05sIYy9WNK3Q3uFPPWYULyjHH09lVUt0TJX+CTXybRldgqR3P+mYsB/pIdpeekrKSUs5Om7MQvCH1pvVuv8zJbys1INqq7LzbjdzJq8/0dhjwMClFHm2dj577I/bZlzCq6+1aLjXIBcEhn1Myb7AvfR+x9c4+6F1nACf8WCYmf1kmLV3cf6o5Xq87ZCi59NGnWbcDWl4NmCXvQ5pJ49lyAtZ2SaJpR8wa4yU8dznbxQfqsjcdL90fijnS5SlW4Fef6mbelzlduVUCQhxwtsx2WyTmRriYaHK1rSaghDrtdvpo3KLTEX9mUatjX70aUaFIPwLPFr4i2L6aahCK87xMPXVSkJVNT0fCjIh1xwygaLteUZzKT0SYRRvOec7l50IIz1zpHva7DorMybESPCS+2ooq3sFoiDvGRF9rdQpfQJ7QYjhRoBT+XrFEk2MH289D9MDcqD/b64pX3m9948B1+8l2ySGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_019kTrDtCnNmPRKtzLCbirNK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description for Ana's team photo (/img/ana.jpg)",
+              "rationale": "This img has no alt attribute. I couldn't load the image, and the page only gives a figcaption reading \"Ana\", so I can't write an accurate description. The other team photo has a descriptive alt (\"Tom Hale loading the kiln\") that includes his full name and what he's doing. For consistency, Ana's alt should probably follow the same pattern. I'd rather ask than guess her surname or what the photo shows. If you just want a quick fix, alt=\"Ana\" works, though it repeats the caption. An empty alt isn't a good fit, because the photo shows a team member and carries content.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does the photo at /img/ana.jpg show? I'll use your answer as the alt text, similar to 'Tom Hale loading the kiln'. Please include Ana's full name if it should appear.",
+                "options": [
+                  "Use a description I'll provide (e.g. 'Ana [Surname] at the pottery wheel')",
+                  "Use alt=\"Ana\" (just her name, matching the caption)",
+                  "Use a generic alt: \"Portrait of Ana\""
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

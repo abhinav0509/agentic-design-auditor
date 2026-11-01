@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_012QVKyaoajtJTC2zvVEEbhk",
+            "id": "toolu_018eCQ1GbmrQ9zEME7Yk4WAY",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add an accessible name to the site search input",
-              "rationale": "The search input (type=\"search\", name=\"q\") in the header's role=\"search\" form has no label, aria-label or aria-labelledby, so screen readers announce it without a name. The form's only visible text is the \"Search\" submit button, and there's no visible label element to point aria-labelledby at. Adding aria-label=\"Search the site\" names the field without changing the layout. A reviewer could also consider adding a visible <label>, which would help sighted users too, but that means changing markup and isn't possible with attribute-only edits.",
+              "rationale": "The search input (type=\"search\", name=\"q\") is in a role=\"search\" form, but it has no label, aria-label or aria-labelledby. That means screen readers announce it with no name. The page shows no visible label text, and the \"Search\" button comes after the input, so it can't serve as the input's label. Adding aria-label=\"Search the site\" gives the input a short name that says what it's for. Another option would be a visible <label> element, but that means changing the markup, and this patch can only edit attributes. A reviewer should check that the wording fits the site and look at adding a visible label later.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -28,18 +28,18 @@
         ],
         "usage": {
           "inputTokens": 2458,
-          "outputTokens": 344,
-          "costMicros": 10343.2
+          "outputTokens": 361,
+          "costMicros": 10683.2
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_012QVKyaoajtJTC2zvVEEbhk",
+            "id": "toolu_018eCQ1GbmrQ9zEME7Yk4WAY",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add an accessible name to the site search input",
-              "rationale": "The search input (type=\"search\", name=\"q\") in the header's role=\"search\" form has no label, aria-label or aria-labelledby, so screen readers announce it without a name. The form's only visible text is the \"Search\" submit button, and there's no visible label element to point aria-labelledby at. Adding aria-label=\"Search the site\" names the field without changing the layout. A reviewer could also consider adding a visible <label>, which would help sighted users too, but that means changing markup and isn't possible with attribute-only edits.",
+              "rationale": "The search input (type=\"search\", name=\"q\") is in a role=\"search\" form, but it has no label, aria-label or aria-labelledby. That means screen readers announce it with no name. The page shows no visible label text, and the \"Search\" button comes after the input, so it can't serve as the input's label. Adding aria-label=\"Search the site\" gives the input a short name that says what it's for. Another option would be a visible <label> element, but that means changing the markup, and this patch can only edit attributes. A reviewer should check that the wording fits the site and look at adding a visible label later.",
               "confidence": 0.9,
               "ops": [
                 {

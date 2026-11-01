@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01Wf3y2Zs4PSZxSTneYHQfzx",
+            "id": "toolu_01LvPA23Su36AkqJE8ZgE6xb",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Link the jobs email input to its visible prompt with aria-labelledby",
-              "rationale": "The email input (name=\"jobs\") has no accessible name. Right before it is a visible prompt, <p id=\"jobs-label\">Want to work with us? Tell us your email.</p>, which already has an id and clearly describes this field. Setting aria-labelledby=\"jobs-label\" names the input from that text. Screen reader users will hear the same prompt sighted users see, and no new text is needed. A real <label> element would also add a click target, but that needs a markup change rather than an attribute edit, so the reviewer may want to do that separately. A reviewer should confirm the fix with assistive technology.",
+              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, with id=\"jobs-label\", reads \"Want to work with us? Tell us your email.\" It is clearly meant to label this field. Setting aria-labelledby=\"jobs-label\" gives the input that visible text as its name, so what screen readers announce matches what sighted users see. A reviewer could also turn the <p> into a real <label for> element. That's a markup change outside the attribute edits allowed here. This fix still needs a check with assistive technology.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2346,
-          "outputTokens": 467,
-          "costMicros": 12355.2
+          "outputTokens": 451,
+          "costMicros": 12035.2
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSjwYKEAgTGAI4AUIIdGhpbmtpbmcSDFTkfFpI9PpKbxgx3BoMWkI5uTSoxz0BOc5yIjAD9BWGAszK1QdL2ijcloIh8VNOmzsETX8/4ForUc0KO/HeFJzr/iYUbxJSGF3tIHgqrAVBk9zlgAG5Fxyxs/ChuhwhTTjN6if3SVLwzPwINUQ0ntrPtf/bwcYrNimkGNvZNN8gnE5W7tbct5n7bbPvsY5WbIEumj69V27K1lX02ngLVgFyBrmnkbqm6LIvd0v4TsaJRM31RTuuUeuZ9zweNA5AJi9EtWzpG0AvxZhRggGRk/WLqBj1C+BYndJBRMdjeE43n8aLDnyyybWBLu6FwhUA2u1rTy6HaLqFJ0+Za+jvIRfn6dAk/6/cj9PlIOjo8LeR6heR/YUtrm+xlzDiaCBnKv3/4QjH5IhiVVQPioG4p2wpn+JwqYXMIJQJOQjY7ncOdAlgXfSfDQ8hogp04CJaDngpAN0QPFyKK9Gj2f2t/J/9RDgPT7mEC2PvJRgqg6YgrfKEBuKnNlkn9DFt4wJCOra/cOWYM5a1lKsgRxi7gEA7jQj7fWtJD7xaLpxhsPVChTPS+dgz3T9NPSCladcLkXhNDR6ZP3oNgHS/wALrZWm1KE8tcNlqs3/NrCLi30XqRYBODAp/+5GxLCUbIk+3X1KjbSKkDJj9ZgKPV3b80Cl67llk4/lnaGddGk+mcTYj+xQQf0ItLIsXCtnksPlWq8rjZ0J9IkpqbDPrWt0uT0xMKf3QwIgOtDDko+6StlXxU91IPukKeINgAX168c5YnFbv9muYoEM/s8qHCKtSaBO6Djgb0A8ZT8mMm6yGMECiVYRYjEe1d5mZLJfDiSBJn/6BBXLU0azHDvihrUMRwKdx9fWsWZKl1rPIYKee0QQDGdbf1omIRUtuvfMWHFb59oz1sb6M2E8W4lPH6OSlqeBMD2RHjV7HO7+n6dEZpzgiAExVj7JwQJvoLhK+RwXtvaPBhREjWq2+UGVm5HNiuFqxtzZ2dJgdRnySb973d20ukwWTukwa39jHJ18YAQ=="
+            "signature": "CAQSrAYKEAgTGAI4AUIIdGhpbmtpbmcSDNhhegiy1t5lUb5ffxoMU2GwKiSb7bi5PRw3IjDjToW3JA01F8b0Nxi3RoQmyWtC4J2f2d6U1VaMVUr48w9/qVLtQeJk2u5/DNcSUD8qyQXOzxWGUCYndT13ueDrq0MnmTO7iqu935gnIZV3VmRp+Sts3sSQlfPMSHQDt9mzxtfRjV6i9x6XsGo8wrMFsch+2EoUtHoyoUzY7vG099fNvt+mXO3cwkhob16Po5aL4ZpdxBIOge4V5sXE3ic6wdD0nBpK/F4EqIJIRCL35Y5TRCp3qYJAnHgisIN5/zXG76Tal0GkYcPTdOhOSk6Ub9FJ91DH6wl4/Qx+WsUw85Cioc8xkrEr7F9jjH71ALZiMcKiJjtE5UCYd9AXCd7ksFaDkSXwvPWV2M/Y7j97/6nLruTQWuTKdmIxw9CCdJqaIdXpCoTYkoZj0C+hQsl8Ygq1GVNNLx52tdLjz78079KIQV8BSjBhjssmTbEgucBeAdyrPfA2131KbtmGqSGh8TgHxGvaJw32pdcW803uQJOer2dGZZAPwuKWKLQrVrfN4ZYSwY6B/9bgoGmS32jsVqXE983yqkIB4ZFFLqCUf3GVE0jBiI2NtRT4GJof+bi39e3lweTT8Scv7MHugt6IvgfE/NWuLPHXWbCQAXBTfYjrRb3uEunEateTDaZpITTv328z8HdhXpz/d4sGtOhwT57/T9xLiVBXUsTVYApTlTJLT5AVw2gqBtf+wH64Gl9b5OZgZ2Fj/LOs1tcQT7ylg6x7ZQuQujPr4V0yCtKCQEISdqN5A27EaEgWCtlnaJ5IOieEr3azZhZY5J29wTeo7VPR3cobm9ybAOh8URtuOT3q4cW4ehhJ4etauzjbFSdYaDRyNDfF+UYYJQhQpgCmFbgRKXfuCBr6L5OeDkgRxLRGm70v8eX6tRSs2+FYonQwblvD5KivBi83Q9i3UwvHCDdeGbDGFOhkmljd/eUuoFNS7vyLsngdJNl8MR0czpMjzZiyzzFMjrAWqc4ZQ//rl6o0oRa5H5AwDLOV5w3+HHlOEjly3T/kgkO7JRgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01Wf3y2Zs4PSZxSTneYHQfzx",
+            "id": "toolu_01LvPA23Su36AkqJE8ZgE6xb",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Link the jobs email input to its visible prompt with aria-labelledby",
-              "rationale": "The email input (name=\"jobs\") has no accessible name. Right before it is a visible prompt, <p id=\"jobs-label\">Want to work with us? Tell us your email.</p>, which already has an id and clearly describes this field. Setting aria-labelledby=\"jobs-label\" names the input from that text. Screen reader users will hear the same prompt sighted users see, and no new text is needed. A real <label> element would also add a click target, but that needs a markup change rather than an attribute edit, so the reviewer may want to do that separately. A reviewer should confirm the fix with assistive technology.",
+              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, with id=\"jobs-label\", reads \"Want to work with us? Tell us your email.\" It is clearly meant to label this field. Setting aria-labelledby=\"jobs-label\" gives the input that visible text as its name, so what screen readers announce matches what sighted users see. A reviewer could also turn the <p> into a real <label for> element. That's a markup change outside the attribute edits allowed here. This fix still needs a check with assistive technology.",
               "confidence": 0.9,
               "ops": [
                 {
