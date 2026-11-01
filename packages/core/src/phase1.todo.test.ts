@@ -8,11 +8,6 @@ describe('decisions', () => {
   it.todo('FR-24: an edited revision re-runs guard, verifier and risk');
 });
 
-describe('mapper', () => {
-  it.todo('FR-06: unique match maps');
-  it.todo('FR-06: ambiguous match returns unmapped, never a guess');
-});
-
 describe('exporter', () => {
   it.todo('FR-14: creates branch and PR once for repeated calls');
   it.todo('NFR-01: never targets the default branch (live lookup) or non beacon/* branches');

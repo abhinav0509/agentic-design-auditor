@@ -76,6 +76,25 @@ importers:
         specifier: 8.0.1
         version: 8.0.1
 
+  packages/mapper:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
+      parse5:
+        specifier: 8.0.1
+        version: 8.0.1
+    devDependencies:
+      '@beacon/evals':
+        specifier: workspace:*
+        version: link:../evals
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../scanner
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+
   packages/scanner:
     dependencies:
       '@beacon/core':
