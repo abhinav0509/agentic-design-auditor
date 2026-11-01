@@ -4,3 +4,4 @@ export * from './fixer.ts';
 export * from './llm.ts';
 export * from './models.ts';
 export * from './prompt.ts';
+export * from './recording.ts';
