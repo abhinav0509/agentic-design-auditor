@@ -86,8 +86,12 @@ describe('budget', () => {
   });
 
   it('NFR-05: refuses a run whose estimate is over budget, before any call', () => {
-    expect(() => checkBudget(100, 62_000, 5_000_000)).toThrow(/over budget.*\$6\.20.*\$5\.00/);
-    expect(() => checkBudget(30, 62_000, 5_000_000)).not.toThrow();
+    expect(() => {
+      checkBudget(100, 62_000, 5_000_000);
+    }).toThrow(/over budget.*\$6\.20.*\$5\.00/);
+    expect(() => {
+      checkBudget(30, 62_000, 5_000_000);
+    }).not.toThrow();
   });
 
   it('NFR-05: stops starting cases once the next one could cross the budget', () => {

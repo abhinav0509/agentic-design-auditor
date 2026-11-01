@@ -111,6 +111,7 @@ export class AnthropicLlm implements LlmClient {
           u.output_tokens * p.outputPerMTok,
       },
       raw: reply.content,
+      model: reply.model,
     };
   }
 }

@@ -9,6 +9,7 @@ import {
   type Risk,
   type RiskContext,
 } from '@beacon/core';
+import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import type {
   LlmClient,
@@ -146,6 +147,12 @@ const TOOL_SPECS: ToolSpec[] = Object.entries(TOOLS).map(([name, t]) => ({
   description: t.description,
   inputSchema: z.toJSONSchema(t.schema),
 }));
+
+/** Identifies the prompt the model sees (system prompt and tool schemas), for eval reports. */
+export const promptHash = () =>
+  createHash('sha256')
+    .update(SYSTEM_PROMPT + JSON.stringify(TOOL_SPECS))
+    .digest('hex');
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 

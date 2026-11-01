@@ -17,7 +17,14 @@ export type ToolSpec = { name: string; description: string; inputSchema: Record<
 
 export type LlmRequest = { system: string; messages: Message[]; tools: ToolSpec[] };
 
-export type LlmTurn = { toolCalls: ToolCall[]; text?: string; usage: Usage; raw?: unknown };
+/** model: which model actually answered (a server-side fallback can serve a refused turn). */
+export type LlmTurn = {
+  toolCalls: ToolCall[];
+  text?: string;
+  usage: Usage;
+  raw?: unknown;
+  model?: string;
+};
 
 export interface LlmClient {
   complete(request: LlmRequest): Promise<LlmTurn>;

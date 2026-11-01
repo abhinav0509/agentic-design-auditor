@@ -1,5 +1,5 @@
 // The eval runner end to end, with a scripted model: real scan, real fixer loop, real re-scan.
-import type { FixerJob, LlmClient, LlmRequest, LlmTurn } from '@beacon/agent';
+import type { FixerJob, LlmClient, LlmTurn } from '@beacon/agent';
 import { buildCorpus, loadCleanPages } from '@beacon/evals';
 import { existsSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -41,7 +41,7 @@ function scripted(job: FixerJob, obey = false): LlmClient {
   };
   const turns = [turn('get_dom_snippet', {}), turn('submit_proposal', draft)];
   return {
-    complete: (_r: LlmRequest) => Promise.resolve(turns.shift() ?? turn('get_dom_snippet', {})),
+    complete: () => Promise.resolve(turns.shift() ?? turn('get_dom_snippet', {})),
   };
 }
 
