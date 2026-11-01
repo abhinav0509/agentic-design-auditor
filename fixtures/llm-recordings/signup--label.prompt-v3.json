@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_017SS6KUVHT5uX1f52FhdmgF",
+            "id": "toolu_01KSaMqrRcWrnsCveb4Egrdm",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Give the password field the accessible name \"Password\"",
-              "rationale": "The password input (#su-pass) has no accessible name. The visible text \"Password\" on line 11 is in a <label> that has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the input itself, so this adds aria-label=\"Password\". That matches the visible label word for word, so screen reader and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the <label> on line 11, which also makes clicking the label focus the field. If you make that change, remove this aria-label so the name isn't set in two places. This fixes this one finding only. It doesn't make the page compliant.",
+              "rationale": "The password input (#su-pass) has no accessible name. A visible <label>Password</label> sits right before it on line 11, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit this input, so this patch sets aria-label=\"Password\" on it. That matches the visible label, so screen reader users and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the label on line 11. Then clicking the label would also put focus in the field. If you make that change, you can drop the aria-label.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2473,
-          "outputTokens": 523,
-          "costMicros": 13569
+          "outputTokens": 492,
+          "costMicros": 12949
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS5QcKEAgTGAI4AUIIdGhpbmtpbmcSDOJH+sGM/TR8wFrCORoMXbXH3/xy+EDHliciIjBDRnBJwa3Cn3wOQ7S/hjhs2yGQoGe6JLzTcepqyny2NhhJP75EKsmEKz0AkKl8n9Yqggdj/mlMmGsQVlpMvcjKI3emLveM/hrhnz4dLwbyfeqBdDNEmjw/0PadjmGa2/bxr5CoPHgCAzh7qwuR+B0e2YTN2yvsc09ZiXx70/pTUkBoyvlYn0oU0Jj70uuZrUu13ElR2DmrzYiHfj/YaXf+bKcTveg4GxLJyx4Bs48kJgXpfGad3qby3lavIPrJ3j5N8Kesjur6xavAaPT7Zw9S40d3Rzzi4dTrYIZDkDVj+BnNxt1+7VoicgUPEv2eh48Lt8Ivf6cMHWfD8p0uIcdjuFAangpdpDwQlo1ZMJvup8mgQJ7sFV4H/W4tHNgIIRuuOhQmfpxe096GLOGhzevNzI4TfNeAJrFubD+D+F6K9Iaq8Uz7IaCnu4cADCmgdkUdk5/h/YeunoYN/1roGi6fbyeVbYUWbz8gq1gUBiRIsgfzHxfpPrrFneE7+IizJ8OY+GPJZP1djVH6djy5DCVu+AbHqHEP3QfmLtGm+XaRpmmy/ZyNCpSH4R65TroOg99/EBLlXU9QmrNAcGm5v/hcw7xVDh4XXlS8gh0EHOb+p7yA04CuKmucVjX/u8CZ+nc5am3jCpqizRhQH16ymwirfxI8Lzl6Z2F4knafh2wJJOZy8tdEWPg7hkSqd3+kHfXTZiofAK7Jqv8KseIJmEu9t2GQjCu2i+/+kFsQD5AloN1BayanpwkpsL8c9C80fbLTga1QnSfXc/HaBvBRTlgYkjAbqjMmdb//rWBg/zEzpFVw+74Yi3bWcaXGMIPH23wTwkBsKM7Rlsaw1vT6pz7dNc3hMhHhltJUjosrsHman0a3TeF00x4dAnV/slw0753IGpe8zUDv+CvgcGcldOv+CL/o/zC5cb4A02hJB3yqoLvlBiBbGtCRBOI5uAhQhPEiOSWdz/QYb24424R4xAwhsfFXxCtrb52Z5ttZpvaWQvKhgKYKcDtMSTuHIPh6w0JHVzlMjHp8L+ZQeGsWhgNHvsgxQZxUxp0XRFJPOKtV3oVj5Du/gvbsrGq2DtC4XiDmGzyKrJCEA3+GjeonfiohNTc6b5G8zJNautvCZ3mgI0A7OtJQmPw7bXT1xQ0iKT5OiqSkfMyzPL1Z1tw7ndWq5d02oIz44zOmy0LzZ8x+fQn0deLen6KtTAE+moWwCuRTHT6Xx5x42Zh2uhp8AF1i4wUKpSfDLrhsIoEIni2fUh8I1yo/GAE="
+            "signature": "CAQSzwcKEAgTGAI4AUIIdGhpbmtpbmcSDKTUPJ1tKALgiXDIsBoMKdsvWiE9RJGZYR3IIjBzYhAqgPT2c3v2BqPGNWkgA8lWXg9JE4/bmpE9DQL9fBzM3iiHNk0wwcfxKI5TmHwq7Ab1cvkdb/Kt0GwxpAldytAovSIbLRx0UnDv+7CfZJoGygeVXgPNl0NwcsD+TMOMJNdLWiFgnVxz9kU728WIduZXFzDjA+KgmcPTqddCIsRT3V2aeRi+aLEi+LGcbKcpcCXbedoUt5ZOaRULj32vTBju1t807/mmf7tKh0mn2btVE9s+u1vfoF57+2i13jx5lo26rugSt5HcgAS5Nl+r+c9NwdGeFmjg0PcfvLN5PATjLVLOr7ci24sHpA8T0Bj+xo36mj8vYoNrFFQkELSw8H7wastX2hSqc0+BafPKTK61izjeFwiZ4bbc5MpLzKNGBV/rhjaoy61e4WuYtbbs/lJROwuUe5Opo06KanDmGplNEsi38QlKhWwIMRjBYKY3nDWKRo8p1akUHBev/tXD6N8s/WcjHjuyxp8tbSYw+UXnaBW6Xp8rQqG1zey1Dt/VJXxizjV/O27U71ClJLmdRIkNAyLfO5uXOVQefl7Idg4BC4Hv4l3qKrA4mgW6HX2xj6LWqfASKqKeAGKFFvoFdZEwASqYfEimj8ROAgC7Z6cwj1pvydqvQMv0LHjtxyajmbnGs7l/9pzTZrxRbRDVlyVu7qFR5Bt39I9US2RHLCv394gkVVIXdOQygeuxp9wasc46C0BrF7MASE4smoGF4N1tbmWWgTzz+lRFKG/acOCyaYkvmvXSdsqfyq27OfyV+OCO5lct+zAxynZts9k8Dq3c+yGOjKEmZLRS947qWVy1C/NXEz7xY1APUmc+ypSqlUx470+wxh2lK6i43SI11zYxVRJO83hthIbSgDOVccqUOoBpMnbFLZ0N3R1pU3QL3Xgv34QXODgmIUPzDvuPQjUEvDeWXv2bt5igs775Oe3D2WsdVgTewYK7wYMXbx6I5TCiqLULLtdmSmQkyMmGHvBnjYX/S2guAq12VYCWryNvSoHh7diEaQvlLJB4pV/xoAC5H7s0aAK+vDGigWakDg4+ujakUOB7QP5PT+o3KcwCVU2UkD7ENE0LNWGm4+vX5IKOiX+kJkJwZD3ll8RDGJ5mu8zZzTwEJA0/gDv1eescbyPZbyhTOlH2t9rr3X8QzEZu8S85brL2dqaamoZ7J4p03SRPYMzVRoByfFG8Kf+QXxmhm0pIkQJ6v0NvXPpiLSU/I8gasfL/tyRtdLEYAQ=="
           },
           {
             "type": "tool_use",
-            "id": "toolu_017SS6KUVHT5uX1f52FhdmgF",
+            "id": "toolu_01KSaMqrRcWrnsCveb4Egrdm",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Give the password field the accessible name \"Password\"",
-              "rationale": "The password input (#su-pass) has no accessible name. The visible text \"Password\" on line 11 is in a <label> that has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the input itself, so this adds aria-label=\"Password\". That matches the visible label word for word, so screen reader and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the <label> on line 11, which also makes clicking the label focus the field. If you make that change, remove this aria-label so the name isn't set in two places. This fixes this one finding only. It doesn't make the page compliant.",
+              "rationale": "The password input (#su-pass) has no accessible name. A visible <label>Password</label> sits right before it on line 11, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit this input, so this patch sets aria-label=\"Password\" on it. That matches the visible label, so screen reader users and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the label on line 11. Then clicking the label would also put focus in the field. If you make that change, you can drop the aria-label.",
               "confidence": 0.9,
               "ops": [
                 {

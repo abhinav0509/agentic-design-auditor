@@ -8,31 +8,27 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01YKn43ugPtr5MpDncG3ACMm",
-            "name": "search_source",
-            "input": {
-              "query": "voucher"
-            }
+            "id": "toolu_01CwScB33Nu1FjjLGujtCUf1",
+            "name": "get_dom_snippet",
+            "input": {}
           }
         ],
         "usage": {
           "inputTokens": 2523,
-          "outputTokens": 219,
-          "costMicros": 7689
+          "outputTokens": 146,
+          "costMicros": 6229
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSuwgKEAgTGAI4AUIIdGhpbmtpbmcSDDRAKlm/ateW0F9KzBoMzSk3DNAYP5Rdu+nyIjD0QIisuUeIy5YlyUGEoqeSZtAAiXvQkIfuF9lEr3Q5HNZMh/RABeDqnKf+VAkeliYq2AeIp0riK/V7vsVUAyHajwR1JMpyD/FIkdflwF9SBmctmNsFOwt0xcLl+9G4s1D+QcZp0s6GJzu6q/JeSJ/pdsJ+nIwU2nF/XSTkOp4VOEVePS5EKWjzMGhWqqlJ0MESR5ISvCTZfC00hJdvrntuNnJyQJ915DOiM0USLWQC3UhIGmk3Pqb4aBYaO6KFNbDENuZIx1xBjQGnLIrp20nDJ+sXcg4rEo5kc3VLVpJcVv64NxWBUl1OziLl74E14kWuMeFcj6Se7EIUBbnXZb05HnzO9JS1TqbZH6VfXXjAJJmEfmo1IzQiGvaW0+HVeDDqTJ8gFcGCsXZUtxPxvHe8S/rReDWCJFy6P1IJ3LQojfFsQl4G4UKpxE9D9df/KahDu5+QpQcRYsyzSt7uKfnTgpvAzBltiyBD+ApitUaWmwaaUWaOEWbfP5MV2fSZOz+Dx4N+XwcFpd5auO0DtaN9OpdtgaH+k4dYFQn/JS2lpxr2/yMqRBJjc2Ad5DbTZip8gt4EZKi0J/bqJ+jKiZBop+pGC1a9m74GkTmGWrClVPsJnVL7ZmMhrN9MeKkHrSKDgIJznW+CI88/0b7Z9c1t/gd8rJu3gAL4aKtboQaPhqFDDA/+2w7vCZwq4YFYGJGOnwtfaOAO2oHpcP1L2TtN7JdUk3NHniD6sFWCve/AKWVeZQ7wshK94vYZh2xfd9cxKpdSkdLctU5U0K6B8bmZV9CRm7S8TMbnw7thbhKro7PQJuzOSxpqlfV7a5vaV1MPAcGS1zOUYH2kUQTZq0qv1ak11jYVNnre0cDLBBMEi5O4d+dVR2phHzOSSop9CXChymf0SmA6mHe05wt6VUQe1mYp9PGONGfgXN0p8au/DIrqW88uwasB8XyT0IvnRCuVAeFV2b967hzH6fLJap/zcJ9kGVAPAgZkJdXtxwJ5Z5igMrEE7HWQ6qGpgRgPgA4TSpuFuJSdROw4r9Fw/TaPM0YdyfWM8fcWe4dlauIo+bPCed56Hm1bP+SIy9V8258qJBUbQ2SZHrQXWdZLv1XMEMPzDjHWVr7rosJhayPpqWq8LsgOBNfPHbAVV4oyAY5vMXWk3ilfckx60LULWFIH9KIFb9rVrAf84cwsdJHsH18U3VtLBJsxk46qJ58Z52YWd4bj+X3FLm+rBGiRhP623iTp93Xj+ZB6LzUTCyqAgfoAgsoiCCpp36iIkWaiGBVPDFM+KP0oODO3lHHfevuqDlRwbBuHrIBgmBr4W2UwdHjnLzlckZsnQTIro4da5qKcDkCpy3alCYCL9sjJESRdvaZJYuypoqNPwhwYAQ=="
+            "signature": "CAQS8QYKEAgTGAI4AUIIdGhpbmtpbmcSDG+s6XW5/BEa1poZzRoMEzsZ4xYO6FnuPbJyIjB9SrwI6HFC3MtwSBfqQjEjKCyeEoN5+Zc04I/Tm6PqskDhLRNwuXbyPdqhdt67gCQqjgaDevfMRdBZdh6k4uFip022QR2KFMIBtBGkNnNetwczuL1b2f4yLouCHBTYCv+vheVh86rfJ5TKKuAkex++7IIv7YkNcjQNq82dWOIVufhze9Yre30JRLTifFrThMo5xmlk+NeH4d6/tuJ25ebs1CyN1sO4Vyxd8dSmp4fLZxiVImQkOhEMrRjVog0ICDYr0zmXYrV88sZOmHS01Ct7MX5UVUsTkX28Q16yosEGS5aDzlBgLXQXGzZn5Re1e1qu2eloDzPEJLfaNQCx217lXd8PKZhRfREG4yovDXDQHk4vJtfx5e1alqCYXXhWIpSsOTZk+PDLvVBwbar9Wemu/ET7430O47ZCDoE6aWSln1hdXCLSBDzDB1wbF/BaTaFSnmMe5ZqE4+cXmfizgvViM5W81dGUX8iPTnFNMUVMHUEbNhZj5NwbPUxOdAKPL9PYk0qAhKSTbZKbC8unb3C9qNxYQkHCQx6GBNbXxWrPh3N7lP3Ry8ECcEdetZnCZmN22vM2uDXZqgvBECrVqfZK0sVoyTp9yIKx4MJ1oyz27e/l+xVLN22KuPdBydxbPzmByGlQZ0cusjLPN2c4YxgnKx3tZ5xe3CmWaYBrW783+64khPRgn+mdmT9/+GDxRDtoXRVhStlgjDQ8zmC5FxyKYrCFMZUczbDg8EIyNJ0dDaH2bZ7b4oQZivJPiB6wqlodIHjLfrz+hzBelXdDEfgjX0JFB8ycEFUwkOiG9dujZq4lNHfAO/+C6ll//WC+DykVW6YvF58c/du8kq12vDxxxna20yJlB54lQu2CYEIDE08Swhkjr9EeNxRl4V1+kYpq5INO5WxD3OfD2WpCdnjOuub5de6/qiyD3LYDvoGhJqdJ+tuZQ8rrC1pSywm1N9cChwx3eg7mBKCqQRyqUVXPsauERHaFWfOF2W7WpvKrYHFGTp5y0+r3v6TKQZJhTVyGklJmDBxexxJZ3h+HJauHADZacB/QJr8WNL1ElydrgTVDmhdjunM+/Ri/Cx60/JZz7ooUm1KwUYQi9yAkneLygBgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01YKn43ugPtr5MpDncG3ACMm",
-            "name": "search_source",
-            "input": {
-              "query": "voucher"
-            },
+            "id": "toolu_01CwScB33Nu1FjjLGujtCUf1",
+            "name": "get_dom_snippet",
+            "input": {},
             "caller": {
               "type": "direct"
             }
@@ -42,17 +38,17 @@
       }
     },
     {
-      "requestHash": "f842aa819e93a1bb47f874925cf39f3fc014c8854a636883d61ef7ff620b4999",
+      "requestHash": "fa777bbd5403b188c52cfe73ecaf4dfb0037b0d98eb0a8ab05bd53e891514912",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01Gt4RvzqyW5gNffSLitPzZU",
+            "id": "toolu_01AXkvvHr4sd6dxT97nvZ7df",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add an accessible name to the voucher text input",
-              "rationale": "The text input at line 14 (name=\"voucher\") has no label, aria-label, aria-labelledby or title, so screen readers announce it only as \"edit text\". The field's name and its place in the workshop booking form suggest it's for a voucher code, so I'm proposing aria-label=\"Voucher code\". The word \"voucher\" appears only in the name attribute, so please check that the wording matches what the field is for (for example \"Gift voucher code\"). This fix also doesn't give sighted users a label they can see. A better long-term fix is a visible <label>, like the one on \"Preferred day\", but adding one means editing the markup, which is outside what I'm allowed to change. This edit doesn't make the form fully compliant.",
-              "confidence": 0.7,
+              "title": "Add accessible name to voucher text input",
+              "rationale": "The text input name=\"voucher\" has no label, aria-label, aria-labelledby, title or placeholder, so screen readers announce it only as \"edit text\". The field name and the workshop booking form around it show that it collects a voucher code. Adding aria-label=\"Voucher code\" gives it an accessible name. There is no visible label either, so sighted users don't know what the field is for. A visible <label> element would be a better fix, but this tool can only change attributes, so the reviewer should consider adding one in the source.",
+              "confidence": 0.8,
               "ops": [
                 {
                   "op": "set_attr",
@@ -65,25 +61,25 @@
           }
         ],
         "usage": {
-          "inputTokens": 2767,
-          "outputTokens": 457,
-          "costMicros": 13425
+          "inputTokens": 2715,
+          "outputTokens": 400,
+          "costMicros": 12077
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSkwYKEAgTGAI4AUIIdGhpbmtpbmcSDEgtBoNZEEAmEwfKyBoMCqmouB7iY8UsoBSnIjBWmT12pzGIjJ6sakGB75LoMdpttH2wZXrfVPH9sXoT/0TcsNS1Py1sw/I/rrd7ukkqsAXnySC0O7ZBRGjAS2SIlE1cq7ILkPAvVXY/bepT3bKlVbKklrge74+mCbzg6Fb0ubCY9ecSaw8QnbMDcBOB1IXPNQ5xXaMFsA5ff19JuB8UCXd3AsD9UGKTvlobl52/jL0KQcPZ5rqyBMVmk1TaslyIHCHHcYMvqYUzFpk6GrvWaxU3Nl/kww/7qtDNWKpOUAsg/pABqpQH/vlgzchg8iUTpM1IvQWm+eAp9aZotd31GMwQI28Y/qaBtxvLtpCJJsn4lPmUF/Dcdd/2Lbpzk/8OjvkIyaik+5BDim2husoB+ZX0RyI7wBMKXv8tCbMNMk7lTRnYhpAcTmo2rIbXa8NBa1/cg3G76v2g0PCZirRUR2opHh8wA7YNUC8JJTdV+XIK+UpYe5Jda47TIrz9SUfO3OodUcSRmxwQMfcCWvnJU/5q1ZWQQrIZkAkjhWuDQ2OpcsbTIL3ToiEK9maOkVrmOkWCZHCGxbnMT87HrN7mTtaYDPx+9NhU4uFwoNvx/cK0RWOiIvSvx8QganhmGZ/3OtQpwodykPaHwSCn/XQ3DcITlZ4cFNNJQlZPLE0QajxrJbxEK5qttJsYGd6ErZUCBP3erY2LRJqXEQX1Ic7srlM6mb5nashrkc3Y8Ajwaz+ZgPVhk4m9tMbcTD+QfAsUTmdnhPpzfeSG5DyxUSkdb5ki7ZYHOvcR9umI9WWT/3HCn13WG7astUFdBOtjkhiQWHG0dxC/Jae8gsqygTeTByfRv8oTcwu9t0Xq433TmEesAgBzg/aW4AAW3bMAF2ec00ziDovOA8l6ycF5AORZ8k8qItD5b2odOOYaU8kacP4IX/qUdPxveQaAtBnvoPYympl+m6XfnYnVdyNoMZJ6/siR03mP/s5dINrSHi+s0rhnjV0KtY7P8U/J07lBeZkAGAE="
+            "signature": "CAQSwAYKEAgTGAI4AUIIdGhpbmtpbmcSDGbavcSM39pe4FQB9RoMjr34726KwrEy1Fi5IjDmM0Qo+VOkk1fZKG7La29OQSP1JgSptHXc10Y5ZO2hxjNTb7/aPKvTvim0PtalhAoq3QXr5UmV1rqdZUDTf0ssWeLSs2WJhVPowI0X3xddom8xaFjwCmTzMsgibjSq872WSKejIoHWawoxoQxrvQKqiv5ZgI317sL7omTDbfSxIDwH43YZXxU4atecsiR8Qd6OJZc1UN4Ao8mtsvmV8ePiwc260zUUQzIH6RMQUVOwgX68HYB77DWSflI6GvQHx/b0f04Sg2t1AttnSQxqBzvYguLJSUioHW5Ift1crD722Jrb20Gbe5g6z56gT42SJauhyZ2YbehVJjSeUubMxZa2h84y0NYSj+Om7oC9N1EBUktasUCn98HD6d2nF9CBi6gcjXq7qlF6sDAYoPxQj3hA2himE0onVOsrM5NIWPzlBpnsnESuBw2yxSC9G1B1Te3JuTDvcqNK1FMLX7UmeT9G6e6kp7Vx8CYDG1ks8+OMce6nE0BZ5G7OkSgdAf8YQJPYrGaUnljuwlcsuLoa4N3N6zXfZDuL7gykaidF4wQvFCRTBEg/VJb9zhnDkh103clnuWuPL433daEUxEBxjpfriQZbRRHKKcovd01N6M+fp4MrrEqA0lI2UIgjM5a/k1QpGmTlusl8loHENvNgfSFqFOtJIUSnycsqh8Oq1y1EoqB3YlEmMGQXccEBs5prkwyajX6GypDuCANboHIixxXmkeuGgwybYuUt7QEQa1hq8twJeoVe31lUyZf8z3ppGK/HnfFDOeXIMMrpHvrcFxTD/8HnNq4l9skl23YEBe3UWHM8cKREofX92wgotXhDEDjicgqBMtfy/J3AVPQdGatuxogGZZ/yvOgrWoRayrx+BT5Lc0jFHc2mJn3BXm5svkMGFwODii5Wo8bEMXs/djFAPOvY8+bTVUw4O8VnvOxvre22P27Qw09R7wL6jjN4K60uwtVvEWgcmbfPOh+TR6NXXrgCIw2u+LdWQEikFyiyXsyD18FF+xNrwzYfbyxPawE0xHJ4QaxvYcxndoMdKghYGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01Gt4RvzqyW5gNffSLitPzZU",
+            "id": "toolu_01AXkvvHr4sd6dxT97nvZ7df",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add an accessible name to the voucher text input",
-              "rationale": "The text input at line 14 (name=\"voucher\") has no label, aria-label, aria-labelledby or title, so screen readers announce it only as \"edit text\". The field's name and its place in the workshop booking form suggest it's for a voucher code, so I'm proposing aria-label=\"Voucher code\". The word \"voucher\" appears only in the name attribute, so please check that the wording matches what the field is for (for example \"Gift voucher code\"). This fix also doesn't give sighted users a label they can see. A better long-term fix is a visible <label>, like the one on \"Preferred day\", but adding one means editing the markup, which is outside what I'm allowed to change. This edit doesn't make the form fully compliant.",
-              "confidence": 0.7,
+              "title": "Add accessible name to voucher text input",
+              "rationale": "The text input name=\"voucher\" has no label, aria-label, aria-labelledby, title or placeholder, so screen readers announce it only as \"edit text\". The field name and the workshop booking form around it show that it collects a voucher code. Adding aria-label=\"Voucher code\" gives it an accessible name. There is no visible label either, so sighted users don't know what the field is for. A visible <label> element would be a better fix, but this tool can only change attributes, so the reviewer should consider adding one in the source.",
+              "confidence": 0.8,
               "ops": [
                 {
                   "op": "set_attr",

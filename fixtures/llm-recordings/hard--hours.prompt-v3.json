@@ -1,0 +1,91 @@
+{
+  "scenario": "hard--hours",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "29287199009c5cbb1679c68eeab983337207d80662c5dd281d3adff724e40afb",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01NfjUrnZK69c4cFDYHAsJSR",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2343,
+          "outputTokens": 26,
+          "costMicros": 3109
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01NfjUrnZK69c4cFDYHAsJSR",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "84d14a9da9ec71d6090c58515851f27cc2e8977b91e7cd160acd684d29f78755",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01RgGXaZ8UFEqora5V3Gr7Xc",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text giving the shop's opening hours",
+              "rationale": "I looked at the image. It is a sign that reads \"OPEN Saturdays 10am – 4pm\". The opening hours appear only in this image and nowhere else in the page text, so the image is informative. The alt text repeats the wording on the sign so screen reader users get the same information.",
+              "confidence": 0.93,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 219,
+                  "name": "alt",
+                  "value": "Open Saturdays 10am – 4pm"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2802,
+          "outputTokens": 286,
+          "costMicros": 10145
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01RgGXaZ8UFEqora5V3Gr7Xc",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text giving the shop's opening hours",
+              "rationale": "I looked at the image. It is a sign that reads \"OPEN Saturdays 10am – 4pm\". The opening hours appear only in this image and nowhere else in the page text, so the image is informative. The alt text repeats the wording on the sign so screen reader users get the same information.",
+              "confidence": 0.93,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 219,
+                  "name": "alt",
+                  "value": "Open Saturdays 10am – 4pm"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

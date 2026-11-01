@@ -1,0 +1,98 @@
+{
+  "scenario": "hard--qr",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "cfbdeef82a9e37a805b97e02381a3edb34e87435d721e94cdcb39bbcd40f2554",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01RWiLhdmo46Vb7ksZQ6YvnA",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2296,
+          "outputTokens": 26,
+          "costMicros": 2921
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01RWiLhdmo46Vb7ksZQ6YvnA",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "f4d337f9402578e8e3a393489b01d32e17c57f7d1eb3d730e27bfbae2e65c361",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01SMHiTocqRPmWJeySWtKUFC",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "QR code image needs its destination to write alt text",
+              "rationale": "The image is a QR code. Alt text should say what the code does or where it leads, not what it looks like. I can't reliably decode the destination from the image, and nothing on the page says where it goes, so I'd only be guessing. Screen reader users can't scan the code, so the alt text (or nearby visible text) should give the destination itself, such as the URL or what it opens.",
+              "confidence": 0.4,
+              "question": {
+                "text": "Where does this QR code lead? Alt text should name the destination so people who can't scan it can still get there, for example: \"QR code: directions to our Corn Exchange stall, fernandclay.example/market\".",
+                "options": [
+                  "It links to the shop's website (please give the URL)",
+                  "It links to a map or directions to the Corn Exchange stall (please give the URL)",
+                  "It links to something else (please describe it and give the URL)",
+                  "It's decorative and leads nowhere useful (use empty alt)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2755,
+          "outputTokens": 484,
+          "costMicros": 13917
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5AUKEAgTGAI4AUIIdGhpbmtpbmcSDEihRpk9s5RSrpz5cxoMtnrvK23RpBiNezk/IjC0uYaL6rEF51z3GxCaAJsGfTrnQiarSNc0jTs2+bzyexkzAAmoNwOvdTJVnDngyUYqgQUHcMFQ7nJDU1uElgghw3mq1X0ksz+eG3KvanXVd6mz5Go/67AmUdoaj0YaHoiQvQ97nX3m088o1dlmXTbAJ6VKn1ntzsyCM1RJX3a6OkYo+5Wzr/+UgQoOqAMHv6DqkR0ULe/4isS5j1/y4Za5zo92G0pqOPVeNnRUzBILu6KxYAmBwaardi6IWKgR6GPWWNk2SREnn2Fk30xnbMyYaKHJ/dHwrV5FODzsbjsO9du0iOJ7O0Tw05E8yyC/BDyODLaZs3Zqu+iuA18vx6w/dtN8GpSj2+hsXPM3AnfpdbM/wxWh/Izj2a4pnN8E1sC1ua3/DHIOwTqAh/AKb+5JHrpUkXOoWCnNDn6pZDGV6XrNz7TkCv6aaE47Qq5VBpCwqIy3ET0ZMAladTJpbD7xVVUNc+KapPpBRTp0CE6YzvfhBsA4u/MiYbfK+G6kJi/4na+vZCemXIuNU24zSSuT9EN+mli0qDf91IEuykoD7apATVSl+3IELWcVyZ97PWvdCcOA+a9nU6HpJmCPf4gpob2Fq0qsmyB25JEJ1kfZlk0Plo8VOkNyLbNYhWewVQIi1J6/jnWmpuZJSejaAdGYfDmUmQ7q6TR7fJ9eRezYl1Nd9C56DpnvBD64XM20kgju+qze/dE7OeWBMAN/k1+MsNbEzkNZf0i4FpHq/Gy/zBpsdIK4HZ0RXeh588XgkNWb1R0UtsovLtQDYfXGlC4Awaa6WYwsXhFI+XEpBYEH/V+W0qODKqgflmMdBZxewp1e8oBY9jZpDZvfdeKeTN1SkOrPj2Dj09ZSNSDKgu4iF+5z8/BepCs+bgxyrIdWQh0JvVNmOCCiDUSy7/tDhT8eihnjFRgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01SMHiTocqRPmWJeySWtKUFC",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "QR code image needs its destination to write alt text",
+              "rationale": "The image is a QR code. Alt text should say what the code does or where it leads, not what it looks like. I can't reliably decode the destination from the image, and nothing on the page says where it goes, so I'd only be guessing. Screen reader users can't scan the code, so the alt text (or nearby visible text) should give the destination itself, such as the URL or what it opens.",
+              "confidence": 0.4,
+              "question": {
+                "text": "Where does this QR code lead? Alt text should name the destination so people who can't scan it can still get there, for example: \"QR code: directions to our Corn Exchange stall, fernandclay.example/market\".",
+                "options": [
+                  "It links to the shop's website (please give the URL)",
+                  "It links to a map or directions to the Corn Exchange stall (please give the URL)",
+                  "It links to something else (please describe it and give the URL)",
+                  "It's decorative and leads nowhere useful (use empty alt)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

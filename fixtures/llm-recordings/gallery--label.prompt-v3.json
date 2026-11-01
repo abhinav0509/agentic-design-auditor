@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01S8jr8TK5tLfbLkWjaJatHY",
+            "id": "toolu_01F75TAWnMRbSjEDQqtg9swt",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the colour filter select an accessible name",
-              "rationale": "The <select id=\"g-filter\"> has no accessible name. The visible <label>Filter by colour</label> right before it isn't linked to it, because it has no for attribute and doesn't wrap the select. I can only edit the select itself, so I'm adding aria-label=\"Filter by colour\". It uses the same words as the visible label, so screen-reader and voice-control users hear the same name that sighted users see. A better follow-up fix in the source would be to add for=\"g-filter\" to the existing <label>. That fixes the link and also lets users click the label to focus the select. If you do that, you can remove the aria-label. Please re-test after applying this. It fixes the reported issue but doesn't guarantee the page is compliant.",
+              "title": "Give the colour filter dropdown an accessible name that matches its visible label",
+              "rationale": "The page shows the text \"Filter by colour\" (line 13) right before the dropdown, but the <label> isn't connected to it. It has no for attribute and doesn't wrap the dropdown, so screen readers announce the dropdown with no name. I can only edit the dropdown itself, so this patch adds aria-label=\"Filter by colour\". It uses the same words as the visible label, which keeps speech-input users able to say it and keeps what's seen and heard the same. A better fix is outside what I can edit: add for=\"g-filter\" to the <label> on line 13, then remove this aria-label. A person should check this with a screen reader. This change doesn't prove the page is accessible.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2506,
-          "outputTokens": 513,
-          "costMicros": 13501
+          "outputTokens": 529,
+          "costMicros": 13821
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSigcKEAgTGAI4AUIIdGhpbmtpbmcSDPt2JAJrXoKrK7WQJhoMMPUZcRDE9rpe30qGIjBuqvnRSm47LF1KefeJa6VPXiXNksVgi05dbwqUNQmVYsIf1pK87gF1CZfhdDnvYqkqpwbZbjTHNEJIdOPUDpz5cwtg1BUJL+C0B1Lu08jwTev0Sx2ekCqZr+MCCW3EMAeipZaT/xYV0uqU2pED2hiZ8ym3xdZ5uWFw8vpsosNKoYAmkMVqjafocWxtwumZK1MOcIDTHD0itNKAmTUY8jMLV4A2Bxi8FTXrLO+CcHjxMBhpXfXB/RFUpZPljzszv5bAK0OGcPudLT2FYfDW0CBe5n4koGvYNBXUb6J47jZ/swSKg+4sCWVCauo17IlDimdsVbjPBN61b4w6uvVwyW4T42a+E/oQdqmUWOzUnjULO/jyq6FQ16yoYzQXh0oLk7QMm8Y/l5gCV3a4Q/HZTEBrsv67Q39dv/djPRFzxYMMO/bX/ytymRQ74HheyNfKZGksr7r7gObboubTGvwlpB/FcpGA74bLfy64SMLOXDxbDypRuN8lu4R5/8Q/v9djGo8aZFF3pPblLLrpdFnR67v+VzpCUBJ2XykkB8HFBedKhJN8/MosHyyOFuaLbB6wjpSuCFG+mtNAsB+iX6H/gqobYTLnc9DIn5Hv78rFHR8M+lKnMoDYQc+RXw/715rM7WfKfVWJ0ED27JnVYEOPnfTeLLBFLVNAZWoEhICkp57KyJrrbsVK+iijFEmvlD7p8WWJ0P+vtx+MqT8EVhu8wTZctWC1moKlGqvew5eutbFA6cgT4QiuYlLoL3tGnSg4WVsRHAxz5cJ/hBXM0q+EMBLDhK34ejbBoRD4/W/NaZ+I0xGPPGXCgazz7G+kaV9kvGzgDa7l/RJrbDd2q14NbbOd7TerxhUzsZNenr/9HvEGnW8C968EFGC7chod118B+la+BA0WEsts9ipQkZGND92hrOQLRbpZ6bRR6QpytKOMe+UGsmIgRgYbA+Y9Uem2vDBOs0ERGKt2p0h1FbgKkHF8vWENwd9Wue+PRhbxq9Ssaoyr9phBt60SgVB6+rVuraY1mAnGSTPNhaYM5++v8oVeYEhzafK/PCVsgcneXjZuPkEsBSf1QfFt7bL9BEyfDhNbnXK/j/VqxKtZhBatm158WKVgEuxLwVfhsbGDQmCxjIxqL0Q3+wFLF8wYAQ=="
+            "signature": "CAQSpAcKEAgTGAI4AUIIdGhpbmtpbmcSDBkEapRTZ44iHcu3khoMEEgf6f02zpS2oMDeIjCaE5N8TtlmuxU9mionsS58p2HlCOKJTAl4NUWjY4tELjyUJ0OdLPTPPhoWtCDOe7wqwQbinS8AYc41QTtakQfFc7FcTl4Sfsb7S019uneIfxKE7gVx0T7aj3p3mxOJzEiXe137nGRLeiHgvTTCDpkNQketPHa+IrmuEahJJ7znQqi2vsQ674llA/DQERDFFybeh2BgCofPfeo6ZpgWyn5GXBf3K/1/ASahnlj4v7BQbraB0F16ZZdpUjsRzh8SyLYRyopM7Vud8CvlcvDxIQEAzClK/+rZNOdHenqtF0qdpECWS+SLE5GpBJFTJDBm1OcB05eEOPIHXuVpbvi873avn9mSFmWxz44j1RgFpJ1qBwhuT/DXaaak+L24FSiZjqdiM9CzmH/6nntRSgg4gZczbtYwJ8Ig5HnpMB+zD+mV9CDQAFTABfFZnnBUOOL+UkUcBJbybpI6V2dTCQ73Ne7TVv5p9YI6Z6cm0lsuQchqZ0TpdUzWPbLiGdN2cMv760YIXUeLZcs2oZWZ0pfH8lvqI/T3DBgnoE21+blCxK0i0f7uy5umDUGwhfG5t8U8BBD/b2U/pBj4JLOTso3QfYJtXoPIizZGQvWe4yocCkayXb18buOp+NOyfdq0eT980FHKHbag7rCQ+H/WRkSF5SS+iE9EAv8OvISU88UtUnkiEZswWChnTfjN6i/zRFgfmXfiScWfLznIgcqScPZm7dyBUtylLfu/3ybBH3/4Dw90ztAmXUT8x63h7ulsJReAgbAtcs1SRKvvf1ft10uGz3+d264wQfVdyul5hIq0Ys3Otp7pPCNdTfWvSeaHG+UzMpbMR6hJOv+5ug/Nx83GBV6JGfJuQubKjVh4yKfcQrgBVU272rsuVCqoPG72zLs62zHrbowiSsFlz3DU5jtJ4ZysVaN0Xq+jMrgU4B+l9FPEgn4FRa07LhJIYUY6nqjeCZCdhpY5rY9WuYkudCLwbTENICs0pQLjfnC/QC04WuCj9uKBREnIAC/yIRUeBjvLEKjTVjv9C0xQPwVcO5XFhDBW38jFEImi0uzI4wtmrAa0kmQ5VMUKAvLgGpYJHqXL13hHREjMhdCR/RpLcUD6euMWU6zHLrxU4jC3kTXLZ8u1mSZQwED8J0f6FDUC3pqxW7bPbKMSE+hl7/zfaDmP09HtNntUiRgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01S8jr8TK5tLfbLkWjaJatHY",
+            "id": "toolu_01F75TAWnMRbSjEDQqtg9swt",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the colour filter select an accessible name",
-              "rationale": "The <select id=\"g-filter\"> has no accessible name. The visible <label>Filter by colour</label> right before it isn't linked to it, because it has no for attribute and doesn't wrap the select. I can only edit the select itself, so I'm adding aria-label=\"Filter by colour\". It uses the same words as the visible label, so screen-reader and voice-control users hear the same name that sighted users see. A better follow-up fix in the source would be to add for=\"g-filter\" to the existing <label>. That fixes the link and also lets users click the label to focus the select. If you do that, you can remove the aria-label. Please re-test after applying this. It fixes the reported issue but doesn't guarantee the page is compliant.",
+              "title": "Give the colour filter dropdown an accessible name that matches its visible label",
+              "rationale": "The page shows the text \"Filter by colour\" (line 13) right before the dropdown, but the <label> isn't connected to it. It has no for attribute and doesn't wrap the dropdown, so screen readers announce the dropdown with no name. I can only edit the dropdown itself, so this patch adds aria-label=\"Filter by colour\". It uses the same words as the visible label, which keeps speech-input users able to say it and keeps what's seen and heard the same. A better fix is outside what I can edit: add for=\"g-filter\" to the <label> on line 13, then remove this aria-label. A person should check this with a screen reader. This change doesn't prove the page is accessible.",
               "confidence": 0.85,
               "ops": [
                 {

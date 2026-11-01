@@ -1,0 +1,96 @@
+{
+  "scenario": "hard--icon",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "f26faed4a3b4fdf4d95a55dff5b34712014171339471f26c4cc03dbf767ab3a7",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01WipBv9k3sKQdZSR7aHc2dU",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Rule 6 says I have to look at the image before proposing alt text.",
+        "usage": {
+          "inputTokens": 2425,
+          "outputTokens": 49,
+          "costMicros": 3897
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Rule 6 says I have to look at the image before proposing alt text."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01WipBv9k3sKQdZSR7aHc2dU",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "b276e5cccffdc43fc895704b5f05bb62a7c196a5f1d6402c3dc0e491f2c1f731",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01DxM47LGqqMDHnkG8NRRey3",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt=\"Basket\" to the basket icon link",
+              "rationale": "The image shows a shopping basket icon. It is the only content inside the link to /basket, so its alt text becomes the link's name. Without alt text the link has no accessible name. alt=\"Basket\" says where the link goes instead of describing what the icon looks like, and it matches the 'Home' and 'Shop' nav links.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 190,
+                  "name": "alt",
+                  "value": "Basket"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2907,
+          "outputTokens": 288,
+          "costMicros": 10605
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01DxM47LGqqMDHnkG8NRRey3",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt=\"Basket\" to the basket icon link",
+              "rationale": "The image shows a shopping basket icon. It is the only content inside the link to /basket, so its alt text becomes the link's name. Without alt text the link has no accessible name. alt=\"Basket\" says where the link goes instead of describing what the icon looks like, and it matches the 'Home' and 'Shop' nav links.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 190,
+                  "name": "alt",
+                  "value": "Basket"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

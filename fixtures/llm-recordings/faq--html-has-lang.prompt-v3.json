@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01LZLMw9sekdW4ptEJrKwsAv",
+            "id": "toolu_01LCVxdbwVuR5ZhLerrxvdu1",
             "name": "search_source",
             "input": {
               "query": "<html lang="
@@ -17,18 +17,18 @@
         ],
         "usage": {
           "inputTokens": 2444,
-          "outputTokens": 97,
-          "costMicros": 4933
+          "outputTokens": 105,
+          "costMicros": 5093
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS3AUKEAgTGAI4AUIIdGhpbmtpbmcSDNYQsWwRO1cqWBWtIhoMwjoQzYAS2XBGPfkxIjDedkcH6C8kYQcxmsfv1gKxnFzHmz/lDyqgsg7uWOTfHKgx5hngyX+U6fOAuMYed9Eq+QTRDEI/mROswJzMTQckAQyCB/nhR82lHINmlp2L6rozN+0o/rLQiQa+0W6SJA6uGSGCpgDaBj5246BYB8L2o/9aIc/GYzRjtipIPwbxK6Ne58jBTx5hqNk70KLFpzyOi/B6AT+PoWcKbUTE8QHHzDYvgpigFSFYjU2WbOnRhEzHuIKk+mxS/8UlSHDroMUXuPZ6onm6xB2EKRbNum71qJHWGPqEQb3Yv3p46ujt5LV3l0/1ELqEtVT2f18LaeJfHcWr8dhDKi9yRMLoQbo934K9Awdc9EHI5PAGkyQ78qgt7/5VGraBdAhgpU7oFfmlVtNwp77VpoM5xtQaFGUMDT14xf3Rwyem8yC1sTDK4NltiFhstkjZnkyLEEWEzrIyslBgrq+f7TRhCkdzLJI9LA0Y9t6Kw2XwuRJUkvsEaWcPLxjGbaLv7owxz73AC2Eo8iw3w4W+nVImofhLOBXQnQVma5M8Gw3B+0nd9+CFrAnpnHwhB0+8YueWKbSoyJoBtlOGg91juoemDPzrFVfNCQt87yiB1YxCVUlxd8cxt5ESmmGnhLoraudRxQK+xfikBEQLvi7cyt212bo19W73VtFml4ERH5eon6AAg4Rcf0mQhlAfyLvHe8FRGZwxY0VeBGqKVpa6SRpRW5Ene178hSUiNZQ05H/mW6YwF1auS2oLof4qFHAcQVt8jMziKhf6V+Z25ivRLUoytMd8rLNF2c5Uh+W9GcIP6fwiyJlexCnZ6mrzwA/pVkcogiorRjKJiJ2NiW9anHx5WtPur98ZJiIoE7Ja9VXPuWSAqvSfP/SviBVu2MlxPP4hvzFHwKRTCbWsglLd5gVoLDcYAQ=="
+            "signature": "CAQS3AUKEAgTGAI4AUIIdGhpbmtpbmcSDJU9+33ortWqZ6xoTxoMs51MnBiNV9EuPli5IjBvEWiROJQpIRgTBO2zQG/IuWIe8uDbviqeMPc1WCHJsGiDpoVysPzDtNb39HV3eFoq+QR1P25/VEv2Kpt6hSzlrC9xzS924IkHYf9PalpeecIMvIkc0G9V8vSZgLhU0SEosaibqF2wNzvCTr953qzmbT9AF/b/WlXAZMMzKR+ynwu2e2tYfPGGkrSzMO3ZNVnNCEil3rwU0nbukasv6J+aq5Q4BnCaCE1I1h4tCP3yuiWD1tYbB9FbB/nvFHnWkJ7H8UrHWvkWxUvLzHe0aQoY+2rnf+WIChAzu1Ay+tVLh6wM7vrdFRzOknD2DZ9bH+DiKez7Ks7TgQuvf8ladUl7zLO35yZ0pQIAXIH/wJjKk72FMnClga84lZwnv5cy82o0+jsEFhmuBxqPAk2mPSyFWP3KtSW9NBv73Fj8WPKikhOkAsvEafO6hYV9ZIxub6Tpu8HH7+KOcGh+JxqCye+m8HQG876CWYyGrz8XdD0kCoqV+Tx03BeUJtgV42VgFnBv2UAXjXhrz5iyYLGK7xT3aNBanvm3Xe+t6OAB5a7xvKZsZgY3IoJUpJ45Zg2R10fdoFcpYrIS4SrrbTCXG1S+pQO8pyz/lZgCTzSBdSe4Tuv6rX65af61uoFBtov00XqAmnRKVbrznjrPkZfK+Ztd4MZazZMr5m5XxxCD68835uLcqdJrFFseAhJau9AjAFp/IOTFJ3ryyfkheruo06+zMmrbD+npD/DwEozIxhC/20RH9sDZhzPgwbPLFQOMYgYbVwh8o2KAeii0RVFiymvsywGmpwCxTczWA0Px8982USVLJr4eLXub8LrubaJm049qihQQoiIFjCi1nr7PkLZEB46d+s+DTpz2Rr1PeySau2pBP3EaUobRr8ErRXE+/8sYVe4ljW37jp1/KB4YAQ=="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01LZLMw9sekdW4ptEJrKwsAv",
+            "id": "toolu_01LCVxdbwVuR5ZhLerrxvdu1",
             "name": "search_source",
             "input": {
               "query": "<html lang="
@@ -42,16 +42,16 @@
       }
     },
     {
-      "requestHash": "3f74f3358a9fd607acf51e6221a11ca4330a7b06cc74c7c24057706ca319346e",
+      "requestHash": "a53966db2f89514843d8d4ca391090141d87be4b34a12457a8c9d9b5a28c110f",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01H3kyUWvNPsCVnX6reaZci1",
+            "id": "toolu_01MDcnUtywT1TYBxP1CJdtPE",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element in faq.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to read the page in. The visible text (\"Frequently asked questions\", \"Do you ship abroad?\", \"Are glazes food safe?\", \"Search questions\") is all in English, so I've set lang=\"en\". I didn't add a region subtag like en-GB or en-US because nothing on the page shows which one applies. A reviewer can add one if the site has a convention. I searched the repo and found no other page that sets lang, so there's no existing pattern to follow.",
+              "rationale": "The <html> element in faq.html has no lang attribute. Screen readers use this attribute to choose how to pronounce the page. Everything on the page is in English: the heading, the questions and answers, the search label and the image alt text. So this patch sets lang=\"en\". No other pages in the repository set lang, so I couldn't check for a site convention. If the site uses a regional variant such as \"en-GB\" or \"en-US\", the reviewer can change the value. This fixes the html-has-lang finding. It doesn't mean the page meets accessibility standards overall.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -65,24 +65,19 @@
           }
         ],
         "usage": {
-          "inputTokens": 2564,
-          "outputTokens": 379,
-          "costMicros": 11053
+          "inputTokens": 2572,
+          "outputTokens": 362,
+          "costMicros": 10745
         },
         "raw": [
           {
-            "type": "thinking",
-            "thinking": "",
-            "signature": "CAQS4gUKEAgTGAI4AUIIdGhpbmtpbmcSDJ37GbikYtEWzVYdAhoMzVhMYRl+rKl+k9xSIjCrgDj99s2umBSzkHzJRMv+P60tjJE9xCyZJRLFmA12RP1rf5oR0gkZYYLuhiYsV3Uq/wRAqVxYBOLWiuSHxDei+IwYZtyrxJ2cjlenp7CpFdqMRR3qkXVjUFPHXVpSaeAmnMJ86QKFUuMNgO2Y9bjs9P914SpHbfbXAiXVtuonPsS3kXo1+n6ezQqrlTn69KDY6NspQLVnKMq6qEhFjBoSOLFQGaNv/bOATrDqagEca89YRoCeZCt7C1gcBAnPmnhRmsZiFFSSrn6khDoMcXQkRII/EqcKLIJYCPgVWx3XMW4EHwbWcCG6KO+D11Ji5IgNtlSGh3v2SVRfhMtd3vyIvgLnsSYAcyufLSC/4J9aAxu7UQrYMFp+EOmhy09LwgrDeynNizQMFvGyy06QruezAs0gCsN/JiDE1Yhlq4F/RZtXs0EQ0NBy7Tnf1AVlC67h83OgY8xVnp98dO1lkZlzbEyk9dunH0nWjoqdETL0TFkrGFWlOBhq9OKXqHJ+Jxfuc3RuXksaMOiIx6A/MvrCY1yALIQw4+7FPcPOQPenv//JIC5W2syLW23F+L44t75vAeNKTyMsfMv6ZNJDGRpfR+mLAJfZ1CsaJr9DLXgULON1xy5MFHo0dKXrEiIpcW7ASDhqER2soWVG7ECgu9vlxjDrLkNLDLr8PPPveI9Wx+Fx6+Ol9p0Ppz/rLIHQMhJWNEN+dGXxTg/D/W3wlAkH5/zhSc1MnB4/A/3XyQOp8U/ngG3NX2T9+gPmPH7lzEyYSizsPEMJo9GNzbpy5sDnvBhPYIc6k4uTlptuWr/RcECnHo0APcJr9sN9jHfMeTmi4zb+06scGii6CZCEsj5b1jQSPEMwnR6unisgGKDArWgOhYf4/c2riYPZ+0j6J9aVQcQZZR8VrUyGEx8IPOdR5RMYAQ=="
-          },
-          {
             "type": "tool_use",
-            "id": "toolu_01H3kyUWvNPsCVnX6reaZci1",
+            "id": "toolu_01MDcnUtywT1TYBxP1CJdtPE",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element in faq.html",
-              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to read the page in. The visible text (\"Frequently asked questions\", \"Do you ship abroad?\", \"Are glazes food safe?\", \"Search questions\") is all in English, so I've set lang=\"en\". I didn't add a region subtag like en-GB or en-US because nothing on the page shows which one applies. A reviewer can add one if the site has a convention. I searched the repo and found no other page that sets lang, so there's no existing pattern to follow.",
+              "rationale": "The <html> element in faq.html has no lang attribute. Screen readers use this attribute to choose how to pronounce the page. Everything on the page is in English: the heading, the questions and answers, the search label and the image alt text. So this patch sets lang=\"en\". No other pages in the repository set lang, so I couldn't check for a site convention. If the site uses a regional variant such as \"en-GB\" or \"en-US\", the reviewer can change the value. This fixes the html-has-lang finding. It doesn't mean the page meets accessibility standards overall.",
               "confidence": 0.9,
               "ops": [
                 {
