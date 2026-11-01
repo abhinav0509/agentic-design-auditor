@@ -133,6 +133,7 @@ export async function runEval(input: {
       id: c.id,
       kind: c.kind,
       ...(c.payload === undefined ? {} : { payload: c.payload }),
+      source: c.html,
       result,
       rescan,
       models: [...models],

@@ -1,6 +1,7 @@
-// `pnpm eval [--record] [--limit N]`: the eval against the configured real model (D-027). Refuses to
-// start over budget. The API key comes from the shell (ANTHROPIC_API_KEY); it is never read here.
-import { anthropicFromEnv, fixerModel, PROMPT_VERSION, promptHash } from '@beacon/agent';
+// `pnpm eval [--record | --replay] [--limit N]`: the eval against the configured real model (D-027),
+// or against the recordings (no calls, no cost). Refuses to start over budget. The API key comes from
+// the shell (ANTHROPIC_API_KEY); it is never read here.
+import { anthropicFromEnv, fixerModel, PROMPT_VERSION, promptHash, ReplayLlm } from '@beacon/agent';
 import { buildCorpus, loadCleanPages } from '@beacon/evals';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -13,7 +14,11 @@ import { evalCases, runEval } from './run.ts';
 
 const root = new URL('../../../', import.meta.url);
 const { values: args } = parseArgs({
-  options: { record: { type: 'boolean', default: false }, limit: { type: 'string' } },
+  options: {
+    record: { type: 'boolean', default: false },
+    replay: { type: 'boolean', default: false },
+    limit: { type: 'string' },
+  },
 });
 
 const model = fixerModel(process.env);
@@ -22,7 +27,9 @@ let cases = evalCases(buildCorpus(loadCleanPages(), 42));
 if (args.limit) cases = cases.slice(0, Number(args.limit));
 const perCase = estimateCaseMicros(model);
 checkBudget(cases.length, perCase, budgetMicros);
-if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN)
+const recordings = new URL('fixtures/llm-recordings/', root).pathname;
+if (args.record && args.replay) throw new Error('--record and --replay cannot be combined');
+if (!args.replay && !process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN)
   throw new Error('no API credentials: run `export ANTHROPIC_API_KEY=...` in your shell first');
 
 const git = (...a: string[]) => execFileSync('git', a, { cwd: root, encoding: 'utf8' }).trim();
@@ -32,17 +39,15 @@ console.log(
   `eval: ${String(cases.length)} cases on ${model.id} (${model.effort}), estimate $${((cases.length * perCase) / 1e6).toFixed(2)}, budget $${(budgetMicros / 1e6).toFixed(2)}`,
 );
 
-const llm = anthropicFromEnv(model);
+const llm = args.replay ? undefined : anthropicFromEnv(model);
 const browser = await chromium.launch();
 try {
   const { scores, skipped } = await runEval({
     browser,
     cases,
-    llmFor: () => llm,
+    llmFor: (c) => llm ?? ReplayLlm.load(recordings, c.id),
     budget: { totalMicros: budgetMicros, perCaseEstimateMicros: perCase },
-    ...(args.record
-      ? { record: { dir: new URL('fixtures/llm-recordings/', root).pathname, model: model.id } }
-      : {}),
+    ...(args.record ? { record: { dir: recordings, model: model.id } } : {}),
     onCase: (s) => {
       console.log(
         `${s.id}: ${s.outcome} ($${(s.costMicros / 1e6).toFixed(4)}, ${String(s.steps)} steps)`,
@@ -66,7 +71,7 @@ try {
   );
   const dir = new URL('reports/evals/', root);
   mkdirSync(dir, { recursive: true });
-  const name = `${startedAt.replace(/[:.]/g, '-')}-${model.id}`;
+  const name = `${startedAt.replace(/[:.]/g, '-')}-${model.id}${args.replay ? '-replay' : ''}`;
   writeFileSync(new URL(`${name}.json`, dir), `${JSON.stringify(report, null, 2)}\n`);
   writeFileSync(new URL(`${name}.md`, dir), renderMarkdown(report));
   console.log(`\nreport: reports/evals/${name}.md`);
