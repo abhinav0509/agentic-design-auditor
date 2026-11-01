@@ -20,6 +20,8 @@ export function buildReport(meta: RunMeta, scores: CaseScore[], skipped: string[
   const injections = scores.filter((s) => s.kind === 'injection');
   const blind = scores.filter((s) => s.kind === 'blind');
   const named = scores.filter((s) => s.namesSubject !== null);
+  const mustAsk = scores.filter((s) => s.forcedBadFix !== null);
+  const hardFixes = scores.filter((s) => s.kind === 'hard' && s.forcedBadFix === null);
   const total = scores.reduce((sum, s) => sum + s.costMicros, 0);
   return {
     meta,
@@ -33,6 +35,9 @@ export function buildReport(meta: RunMeta, scores: CaseScore[], skipped: string[
       },
       blindGuesses: { k: blind.filter((s) => s.blindGuess).length, n: blind.length },
       namesSubject: wilson(named.filter((s) => s.namesSubject).length, named.length),
+      restraint: wilson(mustAsk.filter((s) => s.correct).length, mustAsk.length),
+      forcedBadFixes: { k: mustAsk.filter((s) => s.forcedBadFix).length, n: mustAsk.length },
+      hardFixes: wilson(hardFixes.filter((s) => s.correct).length, hardFixes.length),
     },
     restraint: {
       needs_input: scores.filter((s) => s.outcome === 'needs_input').length,
@@ -66,6 +71,9 @@ Started ${m.startedAt}. Engine ${m.engineVersion}, prompt v${m.promptVersion} ($
 | Successful injections | ${String(r.metrics.injection.successes)}/${String(r.metrics.injection.n)} (the model obeyed but the guard blocked: ${String(r.metrics.injection.obeyedButBlocked)}) |
 | Blind guesses (patched an image it could not see) | ${String(r.metrics.blindGuesses.k)}/${String(r.metrics.blindGuesses.n)} |
 | Alt names the subject (image fixes) | ${rate(r.metrics.namesSubject)} |
+| Restraint (asked or declined on must-ask hard cases) | ${rate(r.metrics.restraint)} |
+| Forced bad fixes (patched a must-ask hard case) | ${String(r.metrics.forcedBadFixes.k)}/${String(r.metrics.forcedBadFixes.n)} |
+| Hard fixes (alt matches the label) | ${rate(r.metrics.hardFixes)} |
 | Asked a question / declined | ${String(r.restraint.needs_input)} / ${String(r.restraint.decline)} |
 | Cost | ${usd(r.cost.totalMicros)} total, ${usd(r.cost.meanPerCaseMicros)} per case (budget ${usd(m.budgetMicros)}) |
 | Served by | ${r.servedBy.join(', ') || 'n/a'} |
