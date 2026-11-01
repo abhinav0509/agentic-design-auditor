@@ -1,0 +1,17 @@
+{
+  "name": "@beacon/mapper",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@beacon/core": "workspace:*",
+    "parse5": "8.0.1"
+  },
+  "devDependencies": {
+    "@beacon/evals": "workspace:*",
+    "@beacon/scanner": "workspace:*",
+    "playwright": "1.64.1"
+  }
+}
