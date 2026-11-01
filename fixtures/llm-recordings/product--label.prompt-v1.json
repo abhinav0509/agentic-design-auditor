@@ -1,0 +1,67 @@
+{
+  "scenario": "product--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "d410f17abb427caf01b1e4ad4e16b3fcef19a8144a8c8cb0c72664a967edcb68",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Aq8SeRrC8Ded2vffTxXUJr",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the quantity field the accessible name \"Quantity\"",
+              "rationale": "The input #qty has no accessible name. A visible <label>Quantity</label> sits just before it on line 11, but it has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the flagged element, so this patch adds aria-label=\"Quantity\" to the input. That matches the visible label text, so the spoken name and the on-screen text stay the same. A better source fix, outside what I can edit here, is to add for=\"qty\" to the <label> on line 11. That also lets users click the label to focus the field. If you make that change, you can remove the aria-label. After applying, please check with a screen reader.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 399,
+                  "name": "aria-label",
+                  "value": "Quantity"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2367,
+          "outputTokens": 519,
+          "costMicros": 13479.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSzwcKEAgTGAI4AUIIdGhpbmtpbmcSDPSHref/3ntZTHX4QBoMbrWmyEvR2HAxp2KwIjCCiIyy4X44LBjkhlbJbGebll1DQdoGCb5QcLQQhgpKGdj++Feq9e/kw4Rwba7x2Y0q7AanGTG/1/aAy0V+fGfdGWEPleQZ78qoCVD/0oNaALhhWHd0QLC8rJt1mWdM4wbwPK78QDYG41EYQcEft46q7y1h3cnvBxIFOaPCmeogGgmo5yYyc6BypWM89e7d/X0TZFBaUvtmZDIYrEkOB/ie2EpYm/drekUvG13ft9GEjE7wkTecLEgCyPHNF05xYgaGuqKTFC1D0gwAkhWzj1TinvvJ4ItQtjHLWiiZHEPFVyc5L30qc3rUrAw+mM4s48zZzKvAsN39WIhL46tTaSNLcA2dAVwA+sLojIArwfGB9TrOk8NVci9dD6x+5SBkQs/ZYIzTRXNlzHZJ0f1K2Vv1Nah9QANEINIjfQ18968OPlNegDkyioimYxIzzBsi3aOOStB2kujv/aSQROCTLU1+1Jj23wrekwIK/7zibfvT3/dP6MaSO1YdUb82JXYB4/RkfFaHrY/2aL399+3D48C06/WlJJE5b1HOTnn4rlqnlVjmnJG1JaU5z8Wdgo/f86pJcOUDGpWndlMAzlDBtMdMzB/WdE2V/7u8EIDH2HT7jBkO8m4020WiZFtadfsjxCNUj9HGP67qDQfOi3V/wnzjGCH1XepK99n/rqlSiC/MEFmw84uOxKUpMFB8s0KygkN4G72TaWSQun8uOvOGZ8ZdB9vdJ2lycBQXccWQUUiYVqvZIJQvzVANj0ozvXuMjQc9Xp4FoZwSbPAsknga0cFfX2Q36SDqSIi4g0xtlx5k6v7D63vxafsVdnrdyu605H3k1SnucVDko44dKQlgyweeoVjVsPU7oI9giHsEeRdMihG/1N9TuisldPrEA++bjCZ2tTux+Cs9bsv38xxfRfGUa1UxCuDDmhmGA22+4bmLoev4ZhawM1/78JzRUJWe0HS7yMLGsmzLpO+Nzc0PnRZA0C2zegHpMqnv8pdnE0baGQO7GzQJPXa4MNWOcvNKOOAjBEdQAXDJAY4TcMC0Q/bczqS9fToBokCCv6r51O/g7SbjsMJl0+YtCkLHH9NjraEoUkZvbsflBxbV9Hd2y3a6YOv5XWPktjalHJVHpYoIHS1RxR4eIbjVbls665NTdjDLu7bs85pugg3QYZFgpriHqfU6JTMf1sGVfJe9zwuyDHeCThiNLFJcS45a+S92f1g1JL12HcNAmhLd5iPyLIEYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Aq8SeRrC8Ded2vffTxXUJr",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the quantity field the accessible name \"Quantity\"",
+              "rationale": "The input #qty has no accessible name. A visible <label>Quantity</label> sits just before it on line 11, but it has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the flagged element, so this patch adds aria-label=\"Quantity\" to the input. That matches the visible label text, so the spoken name and the on-screen text stay the same. A better source fix, outside what I can edit here, is to add for=\"qty\" to the <label> on line 11. That also lets users click the label to focus the field. If you make that change, you can remove the aria-label. After applying, please check with a screen reader.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 399,
+                  "name": "aria-label",
+                  "value": "Quantity"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

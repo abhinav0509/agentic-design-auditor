@@ -1,0 +1,105 @@
+{
+  "scenario": "faq--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "0fd06e8c7e0829c0e46648501802d447426872159ae1f0baff26ef2807e54322",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01VFAwPugeHFivRMjmq39L2i",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2335,
+          "outputTokens": 114,
+          "costMicros": 5251.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSlAYKEAgTGAI4AUIIdGhpbmtpbmcSDBWhGiSwX2MN8+1N8hoMtA+SVbLoUoCF78MpIjA3k1Q0byAMUW07UAM0HliHQkO7FPjns6KowYjcRo59J887vYpO2jJh8Rp9VLK8CywqsQVzKF5fJTgRXER1xj21LQ1eF8O1h1qNEqjoWoT9w9iFUMdS3prBYBR4U3rAbAq1lAOQtvkRp2yz5h2zQntEdXA3OLgFHQz0xT8/VJ1C4KTTCJCLWBZTwRjgNsyiOCY3N/T6J2Uiirmz0ox+GboLOis8HdeOtkuTJnwT+UDabKXSXNxuCnC3dnWITVF9RM6sTgJ82mOmR/rQQxVn1hHislCStpuRcWLz4lXqAdzeMN7PprRjJF7HeVVYA87uq49Idamuf9QI1SmwG9s4kfh9ntz51JCJTQ6yyfWk7QmDtuBSNsbOXQz8LjvMyYK/NQzUMaSNs6pFG5mhvhUeXtn4OWuyQAwAhZPHepq3bkinXcGdYLnfj3klOsCA/MOUzpA7e/nI7RYc1n46DLpygbIeKNFhO5138qWcUwvQxfbrk0Ja0peK44DcNMG7Rfzi+ylUwYIlU5pTGez7+4cd7hh25cBWEavFLRUIRdnHGHL0TwgFaLPwSCcoxAyjW6Ty1ST5aiUi+0fz1YY+0OLzF1MJLH8hQDG649IqUa5b/YFapaHDPwBMAZbZyMiTEZrKVK/Ox0pR5744Fp1GQLvJzoNVyvCmY9dnqK+YEhoChKoWHdpf8LkvvYC1xHtW47OeHnnBdv+7w0tJKZv1tFF/qGGKCjyfh5xnO2/mN0aD1OPxgx296ysaaFjbr5QdEEbOt4J5z2aV2igU5HcJCL3LYNuDe/bfqXY0WMwfpuLh1U3GmWxsuFkYYgIZ4MEJvOZrcxVnXab3ee+tN/cOrU904X+QsKb9ratrInuvge6t/vCF6fwLlY6iCbxLd0vUwzAp9aIZ3caRyd97o+2BHO9Ufkit/BZUck8B0lSuKQswQcUAYMUvb3x9kr1bCijjeKyfv4/iCVO/BnkEZ2OStCFvgvDmB3H/7xgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01VFAwPugeHFivRMjmq39L2i",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "8ca7f99a0af2395acd54b7ad26888efdf274291a0915d203d0a7bfd4e1ced4a2",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XBrAFuWL66BZyRxg9iitu1",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in faq.html",
+              "rationale": "The <html> element has no lang attribute. Without it, screen readers may read the page with the wrong language rules. All the visible text is English (the heading, the FAQ questions and answers, the search label), so lang=\"en\" fits. I searched the repo for an existing lang convention, such as a regional code like en-GB or en-US, and found none, so I used the plain \"en\" code. A reviewer can change it to a regional code if the site prefers one. This addresses the html-has-lang finding. It doesn't mean the page is fully accessible.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2472,
+          "outputTokens": 382,
+          "costMicros": 11159.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS4AUKEAgTGAI4AUIIdGhpbmtpbmcSDKywVBZ3k706xT37SBoMclbqK/6rqOLHvGIpIjAx0fis3MBsfwR6PpQqoScWFSfRKgKT5/yPz1ZK+wyEv++a2M01PUsC3ZPxs2a+Vkcq/QTO75ofaEYd4GwUSixuRdHHhCRYmBW7ScS3WXIoTySzkJOjTeKw3B1INLXXmcYYz2EuyLRI558lbg80x4zKgDkH3z+Ij9x5/0y8IvdWZ9mgsSUz9XpQnzbTo1MjhajOQs/OodrKgfrsxPr5rM5DuncpEYhqlsSjp/UD24kx3WEvu9YSs0vqSasIQn70V4vC8qSKCx6CVEZ7TnV0N8ZUaxuOmtZ0qVTehd+eWwcO0ZSUEFWCo8TIek3bez/35wGp/wPJyNf+GcZThdUln996rKNOBprQELIgmo1hI686Q67y5DXINKxkasRpG3pRtHT/dG3HhiDiLpllG5jZ8LMBCB0unAd5beq9J40Us9jls9u7coCCME69wqpx/7vaWOdfJC3l3q2JJN8Nz4wshaGRspckEiXOGuqLLgyCFr/pNimVWeWWp32PtXPE56b9umOYO22kfG+7IeiOULuGKIkFrnY5Nj37scWiL5tn27orCaItCh0zz8cwAUSkj6/jDfBtw9UyOJiBgUGrWlaIb4VctFG/7fFQOsyZ2FkUHTKN16I43EjQi1bfBmsexS6EuIxLL/tCUOWqIFJ207+icsEt91uVLYKfzfdzw70B3y44c+PFCPNbZyC4I1mR7IKQ8SnV9PQbjx5axDM3G/+SarTRiC04YpOHcVOTbmz5Ip/4g4AcQsDnvCL8J7ecoNikjgiuchW9Ych07wAysBZZ0rvko9J+h2fMF3Al42/Q28J6T/CYVcUMsUjKzdGO51Az9DV0c3V0gLzlbMuseCqQxcfvfBS6xB0wFkMyY2LVHb00OTDeVwxy1Ce/6mixgYUopwz+CNOsbqBxYHdwtr2Ye1u+GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XBrAFuWL66BZyRxg9iitu1",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in faq.html",
+              "rationale": "The <html> element has no lang attribute. Without it, screen readers may read the page with the wrong language rules. All the visible text is English (the heading, the FAQ questions and answers, the search label), so lang=\"en\" fits. I searched the repo for an existing lang convention, such as a regional code like en-GB or en-US, and found none, so I used the plain \"en\" code. A reviewer can change it to a regional code if the site prefers one. This addresses the html-has-lang finding. It doesn't mean the page is fully accessible.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

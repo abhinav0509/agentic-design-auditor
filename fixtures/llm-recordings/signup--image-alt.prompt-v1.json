@@ -1,0 +1,115 @@
+{
+  "scenario": "signup--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "4345f810f22399108a1025dd0a939a7d2d743df8428bc0af99a98a9df3d22004",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01H9PcCZmMWxEzDYUPrbpRs1",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_01KjMEUQwxYxWE6kf4pEohJ7",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "text": "I'll look at the image to determine its purpose.",
+        "usage": {
+          "inputTokens": 2339,
+          "outputTokens": 70,
+          "costMicros": 4387.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I'll look at the image to determine its purpose."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01H9PcCZmMWxEzDYUPrbpRs1",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KjMEUQwxYxWE6kf4pEohJ7",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "4c2033f04d2fceb0860c704794805b58dbce4db2aca2b2db0f52a30e190d4da6",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01QicoQZXaNJ69jsKYgTFmbh",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Mark decorative welcome image with empty alt",
+              "rationale": "The image at /img/welcome.jpg sits between the \"Create an account\" heading and the signup form. Its preview shows only a plain pink area, with no text, people, or other content. The heading and form labels already tell users everything they need to sign up, so the image looks decorative. Adding alt=\"\" tells screen readers to skip it instead of reading out the file name. Reviewer: the preview may be a placeholder or may not have loaded properly. If the real image has text or a meaningful message (like a welcome offer), use a short description of that instead of an empty alt.",
+              "confidence": 0.6,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 142,
+                  "name": "alt",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2519,
+          "outputTokens": 530,
+          "costMicros": 14307.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS2wgKEAgTGAI4AUIIdGhpbmtpbmcSDLkQ0uckhsS87xOeVRoMU8OfMkFyWleah5JRIjBAWaPdsdKN5+CxH9caDOUnwjrjciwB/9a9yfNDA6GrvCr1Lnh1wOkj/O2mSKQD+x4q+AdC1OhwlsB93sExT8LnCufHV0TW9X/cIzWsaZVbmkuxnhnyDnQd6TOUpbhF6VyQuWycLnZqGQTGUfJz7GXiz0IBvWTbjS4M+eDoW9gUlckZoUxjkj25qMI4hgYzGDPD5VsbuUTqUuKgl0o6CLJoNsrhvqyZn07Au0fBSvvjf8Q/iWkQck7dRKfOqga7LebYQ4z8LUrqbQGU5B3azmz3nLfeA/wyeFQHt2lx4Vtbd5SsRgmXRf9csywWmAIBGL8+093B/55ClFcoY/YLCdlM0GvTjUbVSwaKB1Tg+ql49gzVveCzjuKL7I+kTTxBJ3DWqjVpj2POpTi05fUzEfbbogYcYI+TUnopOtDOJZSqw8nMfJhuiDbSyF/BHszyvX+/kPCVaXcOOP/Yf0o88mza4qu6PEYQmvQKQlUft2ptqRKxfZOhmU0CEVMOlBduzqse1FRlw6F1t7baObz2I5wCBwgC7QsSrkTWZSfiHv8Kc6OI1nyEv9yYc5eeY7Hdw/Ng1PQ1Yoqtt1+R1Dvc9K40WuprRrAsGEJrOOy1M7SXsbr9UffVgIsVKWyNVKs80yK41qeCNuY7XjXqFQFhFdJX4Z0XVPYYUSMTNQKzcte19H8oNq7OFDXKVTCu1VmDbwI0VMmgSrkyl8qERkeXJ+fS4Jjud8sUBlqrp7JyDJVQXw5Bem1K8SWFfoR0KGMCJpXyB8J4XgbElRHhLaBA2V2URn3H9uX+JjMZNcJ5ZCSieQmkfUQbeuBWbJE8UH+ERjVGKy7KrtYamvlekPIVUIpUopBkGk12c8Ct07EIAjVEodc+uPjjrfp4atBFovGuACaN5hxBhnh6ku07sK2kRFzP4CfqBCy1T2np5hKKUiSmg6dXMonBTi/8349yYda3LnekYKxgDXewVtfVTb3H2/dOYgQH4LLFWEqtrDvB0RJSN0J21Fh+KYaZaIeOeTN8qaMuY78TxpRmKRyFG+3okV0NoHHeTbL625QNebSZ6fBqSbemIBd2gB7ZT10LIEPSUpvLJxQvcW3HYDFMM4eRpK+4O656FNFcQaIpyl5XI6+K2zQesAtJ1UDE+GARDMI3anV5KOtUeSEWi/jsrvEFJQM7b5OvgX/JMJ5zUZsp0rC72FLWcODqUjDrl5ZWokJZm/2n8W7IqXbWRFJWO+sW08M4azivrr/+YDmTqQMvp965DIc2Ovjg7y3z1nhICJGtgR4Aq8fcx1Jp+NbvVL4SA90cEglXWIXO6JMrZzBCRo44lbM1/tvYd1psoczbEmhCuzB4kMdYzWSLw4C53E0m8e8q+vVXqRsuV5dC4BlbTb7vk7bwnFrxd+w+25ndq9kR58g0bJQxFLckCRwFcxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01QicoQZXaNJ69jsKYgTFmbh",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Mark decorative welcome image with empty alt",
+              "rationale": "The image at /img/welcome.jpg sits between the \"Create an account\" heading and the signup form. Its preview shows only a plain pink area, with no text, people, or other content. The heading and form labels already tell users everything they need to sign up, so the image looks decorative. Adding alt=\"\" tells screen readers to skip it instead of reading out the file name. Reviewer: the preview may be a placeholder or may not have loaded properly. If the real image has text or a meaningful message (like a welcome offer), use a short description of that instead of an empty alt.",
+              "confidence": 0.6,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 142,
+                  "name": "alt",
+                  "value": ""
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

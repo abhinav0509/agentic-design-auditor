@@ -1,0 +1,67 @@
+{
+  "scenario": "faq--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "20eccfb2134bc7f958bb61c92430a4d6beb175d76ddd76d8d6b04cd711c0f70d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Q3wdUx8L7J8rcSP2ooxXLF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the FAQ search field an accessible name that matches its visible label",
+              "rationale": "The visible text \"Search questions\" sits in a <label> on line 10, but that label isn't linked to the input. It has no for=\"faq-search\" and doesn't wrap the field, so screen readers announce the search box with no name.\n\nI can only edit the flagged element at offset 432, so I'm adding aria-label=\"Search questions\" to the input. It uses the same words as the visible label, so speech-input users can say what they see.\n\nA better fix in the source would be to add for=\"faq-search\" to the <label> on line 10. That links the label properly, and clicking the label text would then move focus to the field. If you make that change, you can drop the aria-label. Please check this with a screen reader before closing the finding.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 432,
+                  "name": "aria-label",
+                  "value": "Search questions"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2377,
+          "outputTokens": 548,
+          "costMicros": 14099.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS7AcKEAgTGAI4AUIIdGhpbmtpbmcSDHmgD8aIoOB72zvDlhoM9MVLdOxLD07yt1NaIjAIzDgnS3OSdBpORrWDz0qBVXrf8wjVtgIlKH03uS7ZF5oPiqNiTC29rXokXF/csS4qiQctIcguXav7sc3TgAhPnnid714j82DgXolI23KIYuONJdml1CLe2XbobwQkxh7rfkgYwwQm2x2SxvhrO3lSW/sOVaHd1tbwhcMMqRF2XNmb9WbZCyFV/LyH73zSJOQ54cmXoyzEdlleU/ukI2/FVATPepNyAemCBgC++Ht2/MhZlGZZl3cF2d94P336+Y/xSPau1uudc01/nNC0AJlWM8WLz327Jl3c0wX0iuiv9V59voRFEvffgNr1Ytq5tX6kLYl4NOw+ZHb7bSm1AAWdpENA0yVWeNU1173qwaXwkKzhv4chtQ4yHkdv9ZEZCLmpbm11soVYgpTKZAQf9p+ll8DWXuh0nKd9B184MLiR2RlM6dINbFlX03PhUoLUgpkEQ4onveVga2iTrxisnvj5xz5hQT/MCEyVOT0Xre15ze2xtN/E/EnSA98A3TGb1uCpxuwmoDuHdx/lzp9Lf1BMkFvaRK90J3Bo8T1LuGhuVR2P/+i+J0VfVxiHVio4FOmG/GJdJAwztjDpMA/M1VoZPWHprl9YHzfFcx1Y7fF2/WwDRFXlriEArW5Ct+k+qPXShYNLk0fF32XfjK0ViBeWJv4mQq9qVJFIMfaXzhPjfxkJQ3BJuKfBl/TsH2IxMSbGwF/W+WAt9bjnLtaW0IjTMD2K1TioBBCC4XPn/UWu0D7o8XolqWICtYzsjB4H1uX9G/lmA7OzY2jbVA32aW2D6WNlrWSjIL+3OARnrCyRd5DOFE6c7FnMsH/3JuVgyOuzpmY1t6qQp+Pnu2Os3oiOC1ij5HlVXg+ON5k2HM/dA06FlZTmehk3ch24pNPDtZ0rXUK1Pwa7zVGA+tllN0/Q1UtkxINZIgrVXuN75VEQvVxpvebyQ04WHJOrU+H7mmR2CpvFjm2SHWKxZZIC2XrQHg84DKlatMd14NXaQvwijohSw8WMEqyHcWtE+A/UEBFImue2YMAoN1W9TLJvinrflY940vv+d8z4anLcXIWXXDyCEWe3hP6wrb9iqZ4pG4G3F41r6rtRBhXtQXx0/47NWYj08QxnJpX+MI2wiDCqKkKUicWqL26hoozTY3qc3bIszRwoukaoPYfp2AHgCPODqUrQL88fmmTJjytzLMSqkwQcBqSdcYC5Gow6+nXEBRchlIDj+t2G3knRakFnhaJ+VVdB1krouslXu7E54MojmEQCZ+xLW8GQ7ZYe6RgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Q3wdUx8L7J8rcSP2ooxXLF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the FAQ search field an accessible name that matches its visible label",
+              "rationale": "The visible text \"Search questions\" sits in a <label> on line 10, but that label isn't linked to the input. It has no for=\"faq-search\" and doesn't wrap the field, so screen readers announce the search box with no name.\n\nI can only edit the flagged element at offset 432, so I'm adding aria-label=\"Search questions\" to the input. It uses the same words as the visible label, so speech-input users can say what they see.\n\nA better fix in the source would be to add for=\"faq-search\" to the <label> on line 10. That links the label properly, and clicking the label text would then move focus to the field. If you make that change, you can drop the aria-label. Please check this with a screen reader before closing the finding.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 432,
+                  "name": "aria-label",
+                  "value": "Search questions"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

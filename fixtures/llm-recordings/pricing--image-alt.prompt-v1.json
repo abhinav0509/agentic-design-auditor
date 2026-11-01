@@ -1,0 +1,117 @@
+{
+  "scenario": "pricing--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "59061166e9d71662a27bbcacce3fae6d442c71ed2aca8d24fc4fbf50ef3efba6",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Skk3xpiCdLH8R92xbZqPGx",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_01BwB9m19DsWaroDCB1e6PX7",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "text": "I'll look at the image to decide whether it carries information or is decorative.",
+        "usage": {
+          "inputTokens": 2480,
+          "outputTokens": 77,
+          "costMicros": 5091.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I'll look at the image to decide whether it carries information or is decorative."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Skk3xpiCdLH8R92xbZqPGx",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BwB9m19DsWaroDCB1e6PX7",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "9e212a04ccaa6523e97b097efa17a8fe5d5ff4ce155661f09387569401ca1c16",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01T8s78vutWgdriXV8fe19uk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/workshop.jpg",
+              "rationale": "The img on pricing.html (offset 132) has no alt attribute. The captured image is just a small solid pink area with nothing recognizable in it, so I can't tell what it shows or whether it's decorative. The file name and the \"Workshop prices\" heading suggest a workshop photo. Before I add alt text, a reviewer needs to confirm what the image is for. If it's decoration next to the heading and table, alt=\"\" is right. If it shows something useful, like the workshop setting or text with prices or dates, it needs a short description.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/workshop.jpg show, and does it add anything beyond the heading and price table?",
+                "options": [
+                  "Decorative mood photo: use alt=\"\"",
+                  "Photo of people at a workshop: use alt=\"Participants working together at a workshop\"",
+                  "It has text (e.g. prices or dates) that must go in the alt: I'll provide the text",
+                  "Other: I'll describe it"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2667,
+          "outputTokens": 508,
+          "costMicros": 14459.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS2AUKEAgTGAI4AUIIdGhpbmtpbmcSDPX1cVghnLuBVAL8PxoMuL1PFooNQOBxK573IjDHe2csT/cxnl94Jc2gALhQjtfg16iUBRq17wVCj3OoifrgMtFP1kppzntYy9hFDFAq9QRPcZZipmhKPNcEDfvwkYrIgDw8mdQq/sd8Mv9dnbzh/db3WgPH6qPMXVa0swkyF/gTMVZhEn6es37oF45+5/ikPpeZjT+LzpvvqbYeuB4gkfMbbjzgd0ZfIG3StcI3sByd1mroXa3aP7tbjkC4cyaAJy75HDOLzJCuQJWyfenmyxstMI+ip2cBx2D3Ynm4BlWu8BPGjcAKncMHb5jJjhkoYldHj9uIR0+NbN4Wu03m2wcECcsSaBrYj6SyR32xJPaqPbPIBB4aO+uqsfMOCLJY/+7F80IEFGRzpTL9wRf8B+OZnbH4ckT3hu4JkoM81mXMMB2zT6GZm50x4l2q4O1Ix9OxEKtpwkUc67aCEjF6C8DUb6j+qo/sGIHvrtLWQXRLuW594QSRHcDkAL566Es+mgoNHnGWzk8Ro9SV/EdgeJKdq7KY8plTvjZOnY7F/tMaitJ/a0jA+NGmdRJznfeniv53pIVJGuon71gtWmU5A+xV1BwqlIp3p+G/+HVDLHUURpnbufrtXgQ+qt/dYWDWqXWYZzEWtPmI35DobOCYfbhs47yLS765A5d1ST6UJohhB5sWr29LJcw2+fQmfYZDaQRfoDGT4ux5Aq7cva6qYvT0W1mNayMpihxfjHVBLX66NtzaltTjTRu3SrT7iei7qNLapwB9Zd7NY78tF8XNI5hQPUpIQqVsb1AiIdZddE/bq9Tr1pSt7NAK9CpeP2I06dD87yC5j+4CmVve5W17YKzBIcx8rpEEyssLsrMnK5Bt/N+jdSQnw+1XVsAtWsbEKOxv2zAQ3i8v6YVGvkUnB22SZ/4bKGsywuTB3uvSFu5nvEN73RgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01T8s78vutWgdriXV8fe19uk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/workshop.jpg",
+              "rationale": "The img on pricing.html (offset 132) has no alt attribute. The captured image is just a small solid pink area with nothing recognizable in it, so I can't tell what it shows or whether it's decorative. The file name and the \"Workshop prices\" heading suggest a workshop photo. Before I add alt text, a reviewer needs to confirm what the image is for. If it's decoration next to the heading and table, alt=\"\" is right. If it shows something useful, like the workshop setting or text with prices or dates, it needs a short description.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/workshop.jpg show, and does it add anything beyond the heading and price table?",
+                "options": [
+                  "Decorative mood photo: use alt=\"\"",
+                  "Photo of people at a workshop: use alt=\"Participants working together at a workshop\"",
+                  "It has text (e.g. prices or dates) that must go in the alt: I'll provide the text",
+                  "Other: I'll describe it"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

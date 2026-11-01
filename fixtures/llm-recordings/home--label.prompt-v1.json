@@ -1,0 +1,62 @@
+{
+  "scenario": "home--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "ddb6b24f4527e653e8511a4a400658d6c66f75700798477fbe91af3a98aed3e0",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_012QVKyaoajtJTC2zvVEEbhk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add an accessible name to the site search input",
+              "rationale": "The search input (type=\"search\", name=\"q\") in the header's role=\"search\" form has no label, aria-label or aria-labelledby, so screen readers announce it without a name. The form's only visible text is the \"Search\" submit button, and there's no visible label element to point aria-labelledby at. Adding aria-label=\"Search the site\" names the field without changing the layout. A reviewer could also consider adding a visible <label>, which would help sighted users too, but that means changing markup and isn't possible with attribute-only edits.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 225,
+                  "name": "aria-label",
+                  "value": "Search the site"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2458,
+          "outputTokens": 344,
+          "costMicros": 10343.2
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_012QVKyaoajtJTC2zvVEEbhk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add an accessible name to the site search input",
+              "rationale": "The search input (type=\"search\", name=\"q\") in the header's role=\"search\" form has no label, aria-label or aria-labelledby, so screen readers announce it without a name. The form's only visible text is the \"Search\" submit button, and there's no visible label element to point aria-labelledby at. Adding aria-label=\"Search the site\" names the field without changing the layout. A reviewer could also consider adding a visible <label>, which would help sighted users too, but that means changing markup and isn't possible with attribute-only edits.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 225,
+                  "name": "aria-label",
+                  "value": "Search the site"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

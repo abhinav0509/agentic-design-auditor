@@ -1,0 +1,105 @@
+{
+  "scenario": "blog-post--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "db9e1a7d894f9066745c182871343f4342f2b5bb265e20f475a174b5d102c078",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_0162kaWLSFgPJtuVJT5nVg4k",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2232,
+          "outputTokens": 136,
+          "costMicros": 5279.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSwQYKEAgTGAI4AUIIdGhpbmtpbmcSDNCmM7mBUhz0Ud61ARoMY2ngs6rGz+AWfIbGIjBvHdJlXROFR2SbB1/rmajdSq3GutjtZLEv5QhA1Ycwg8/CSJ3TRKCcTR1d0M0OrtQq3gVy7R8AeVYusliZT/s0ayfiWOAECEBBL89K67CCyiH+gna6ULppSosweJSkDH+oHbnb4s/vAqy+igAsnxHAgkN61+kxmGax/RbmtcqoPL9LDjSSkCv6uPNoPKjMe8f8XCekrYHz45kEWhPTdvTTzyJmeV4ME+u1cwJH7f7ne6R5CZoLQHcmbOhrzlp5fBE4jnRDno3YXlRDaFdWW4h1FbmLhwkKG7V+uzTm7gBhelVQ6l8tffDSLqUQu7jCt35mPlO5S3b7NTYtfpKFBR/XVq4wx0BHVUqOlKBRm2RenzkJgGDk4+zkP8h5M/xtSQP64uzhlK7rv9QEKtN4aFu7LGlkNg1okg+TbDhqjeaCox30LZHMgrYbTt1R6ql3v+zeoq73bQGV/IzCXdUqWFSmW6Dq27vVANt3ruXac5P25KOWr9ibdJLyyMfHgYiyMTyA7uxcZs0WuZ4hxFLKBbMWgfmqgPAbBX2eMyPb1UnQKhQqFqruY3WQAQo7PbIVTW5lOEM2/qIurSd5jzSPARdzeypFsnfEk21UZFAMEefeXS+gd2ADwA6/P17AOsnABPFUFb5lYrBZf9vPCpnpExY057LFBmJbNvDXOhNXQnkGYwPgLbssqWGPxqPdrwK4EtnlcaRLdOMRTF0XylAoZYIWyzNrG4uNMUnkvSSKiYtCa5UJPcYdkMkJGRPX47j8iZe33wudtnKahc2RXQq61SKxdpuYj9C2xmPk9Q31ECwyB6SUmKUwldAsHTgU1AjIGAESQHlCnb+GH4S1Y77/Yhytemx2SE8DNPzhgGU+VuRAEXAjjmm1H7CqT5JVQcrHRGT0zKL0G2/oKPQCqqPFHgIrPQfPzcqrpC2e7pV2cqqUYWg5GA7WtDL4y1yIvAh+dvP9AOFaLFDD6fRmYs5aLNRxSBQXrqV31+tiwzgNEYV3F6tnJLy08IqbXBbVwBh3ShuhJBtHxq+rmF8lQw2XszFbZxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_0162kaWLSFgPJtuVJT5nVg4k",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "8078eef703f821e87f8e55cbcd4d65bea3d36bab68e947dcaba7885f24611806",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01JCHaqvC69FGNhEszkm9UyB",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element in blog-post.html has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is English: the title, heading, paragraph, image alt text and comment section. I'm proposing the general tag \"en\". The British spellings (\"colour\") suggest \"en-GB\" could be more exact, and the reviewer can switch to it if that matches the site's locale. I searched the repo for other <html lang=...> declarations to copy a convention from and found none.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2391,
+          "outputTokens": 376,
+          "costMicros": 10715.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSiAYKEAgTGAI4AUIIdGhpbmtpbmcSDAVs9Bh1tL7U/rIXphoMewU2oYmHk7iHsV/GIjC0TEbV5pUtKS/bjULcgmofkhkTKvtDxFoGA28BQhhzXb3fpmt/vWaDP3a5htJLKXwqpQU+bDYOTgK+s4+RRxIV49T/V7OBVVV3O7zR8zDkogxh87lrIyLscR7kHlMkcEGcbbOu84yJKfRjFXJsWKeP17JXWSNDc+QB0iAGzFzD4wx7vmFwxdv3nelNW4mcM0a8o+KaMuCldOkuz36hR8Pk+r4LttKAT3ioUDS7/Ejk+XMRnaSxiIjk5ijVIt/pP41dEPp6zybSmOghCO2BEws8arHjDOwqFb/XNerQYIjdARuf1mSoqhfpFo6MRn/FfCw4q44qQwIHilNf0NvNhKsI8Tbmzdp+2/u4xcSwevcVYESkNhwJnnD2bVPVjQxFB74GnPxh8dEWBO8S6gfv3Ga0V9ITMQDnAn7l4YZ/xev9NSyrh8tKsq6Gd7lp4BygzlNFEFtJ/0QJ/KpDGPRn7W7fdpk9+kdEeSU0SI4c6qgXnjf+z0vtCZuaJBTgqbVLTnb46gHxMmW2DmP+jrH9CAx1jteno48729PVEL77KLJUvAvKBiemkuyaQLGXcsMf5oVLX0chCs0UVWCXqcYW0kxutlrV4cOi/pXKubs9V76OidbfwgFQlQg/Wzms5/2sBCmTdxYBQWzZqAT66bpSxk2NhcGLGxuaWVA8275T7Jr/Yb9TjX+0jsE5dWuM6UY9AFvzNoQipe1irtr9l/Nj3ShNdRlZ6lpSzPv62tWoa383wnh1Xd4doTpNdBOmpe3o2TSDfnUA+Ko4MfpHRzXFzevkDVWbxWSYCSkF4JZ+WCGOY2B8hIP8YNAU9c2i1FL1JglgJO061ccMacyuxv4yPZlQA/YjVrWYBk7hoLjg0YbdSw1nKtWz2ps7WeBqGF2BQKg2g/A3s5lnMau1/uBv4F5C6pc1MllkhuM2aVCCH1QRyukgMXYLiVABIKVwJ+HzDSESl3M1MF3BcBgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01JCHaqvC69FGNhEszkm9UyB",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element in blog-post.html has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is English: the title, heading, paragraph, image alt text and comment section. I'm proposing the general tag \"en\". The British spellings (\"colour\") suggest \"en-GB\" could be more exact, and the reviewer can switch to it if that matches the site's locale. I searched the repo for other <html lang=...> declarations to copy a convention from and found none.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
