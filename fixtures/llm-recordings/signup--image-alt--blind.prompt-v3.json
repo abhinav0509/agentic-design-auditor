@@ -8,20 +8,25 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01JoeTy3nG2KLJxpk3am8brT",
+            "id": "toolu_01NgQ4hPEtruXsgkmWsQNtiU",
             "name": "get_image",
             "input": {}
           }
         ],
+        "text": "I need to see the image first.",
         "usage": {
           "inputTokens": 2448,
-          "outputTokens": 26,
-          "costMicros": 3529
+          "outputTokens": 35,
+          "costMicros": 3709
         },
         "raw": [
           {
+            "type": "text",
+            "text": "I need to see the image first."
+          },
+          {
             "type": "tool_use",
-            "id": "toolu_01JoeTy3nG2KLJxpk3am8brT",
+            "id": "toolu_01NgQ4hPEtruXsgkmWsQNtiU",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -33,49 +38,51 @@
       }
     },
     {
-      "requestHash": "993c97a2eb6306e21e9e1a14816830a725bc39e16464caf65bba1132c47e07fb",
+      "requestHash": "65695f57d43228e4774f068f381914b5429f386ead793258b1d79f7c89aa8c79",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01BhAjF71NUjDvdZutYMNL6m",
+            "id": "toolu_011hgmADeSzA5ejF7JntA4Jb",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
               "title": "Need image content to write alt text for /img/welcome.jpg",
-              "rationale": "The img at offset 142 on signup.html has no alt attribute. I tried to load the image, but it could not be loaded, so I can't tell what it shows. The file name and the text around it aren't enough to write alt text, and they aren't enough to decide that the image is decorative. A reviewer needs to describe the image or confirm that it's purely decorative.",
+              "rationale": "The <img src=\"/img/welcome.jpg\"> on the signup page has no alt attribute. I tried to load the image, but it failed, so I can't tell what it shows. I won't guess alt text from the file name or nearby text. A reviewer needs to say whether the image carries information or is only decoration.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/welcome.jpg on the 'Create an account' page could not be loaded for review. What does it show, and does it convey information (e.g., product, people, place, or text) or is it purely decorative?",
+                "text": "The image /img/welcome.jpg could not be loaded for review. What does it show, and does it add information to the signup page?",
                 "options": [
-                  "It is purely decorative (use alt=\"\")",
-                  "It is informative — I will provide a short description of what it shows",
-                  "It contains text that should be included in the alt"
+                  "It's decorative only (generic welcome graphic, no information): use alt=\"\"",
+                  "It's informative: I'll provide a short description of what it shows",
+                  "It contains text that matters: I'll provide that text",
+                  "Not sure: leave for manual review"
                 ]
               }
             }
           }
         ],
         "usage": {
-          "inputTokens": 2493,
-          "outputTokens": 400,
-          "costMicros": 11189
+          "inputTokens": 2502,
+          "outputTokens": 384,
+          "costMicros": 10905
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_01BhAjF71NUjDvdZutYMNL6m",
+            "id": "toolu_011hgmADeSzA5ejF7JntA4Jb",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
               "title": "Need image content to write alt text for /img/welcome.jpg",
-              "rationale": "The img at offset 142 on signup.html has no alt attribute. I tried to load the image, but it could not be loaded, so I can't tell what it shows. The file name and the text around it aren't enough to write alt text, and they aren't enough to decide that the image is decorative. A reviewer needs to describe the image or confirm that it's purely decorative.",
+              "rationale": "The <img src=\"/img/welcome.jpg\"> on the signup page has no alt attribute. I tried to load the image, but it failed, so I can't tell what it shows. I won't guess alt text from the file name or nearby text. A reviewer needs to say whether the image carries information or is only decoration.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/welcome.jpg on the 'Create an account' page could not be loaded for review. What does it show, and does it convey information (e.g., product, people, place, or text) or is it purely decorative?",
+                "text": "The image /img/welcome.jpg could not be loaded for review. What does it show, and does it add information to the signup page?",
                 "options": [
-                  "It is purely decorative (use alt=\"\")",
-                  "It is informative — I will provide a short description of what it shows",
-                  "It contains text that should be included in the alt"
+                  "It's decorative only (generic welcome graphic, no information): use alt=\"\"",
+                  "It's informative: I'll provide a short description of what it shows",
+                  "It contains text that matters: I'll provide that text",
+                  "Not sure: leave for manual review"
                 ]
               }
             },

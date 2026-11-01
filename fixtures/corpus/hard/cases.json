@@ -1,0 +1,9 @@
+[
+  { "id": "hard--divider", "file": "divider.html", "rule": "image-alt", "why": "decorative", "expect": { "alt": "^$" } },
+  { "id": "hard--logo", "file": "logo.html", "rule": "image-alt", "why": "text in image", "expect": { "alt": "fern.*clay" } },
+  { "id": "hard--hours", "file": "hours.html", "rule": "image-alt", "why": "text in image", "expect": { "alt": "sat.*10|10.*sat" } },
+  { "id": "hard--icon", "file": "icon.html", "rule": "image-alt", "why": "icon link", "expect": { "alt": "basket|cart|bag" } },
+  { "id": "hard--qr", "file": "qr.html", "rule": "image-alt", "why": "must ask: where the code leads is unknowable", "expect": { "ask": true } },
+  { "id": "hard--chart", "file": "chart.html", "rule": "image-alt", "why": "must ask: the chart has no labels or data", "expect": { "ask": true } },
+  { "id": "hard--field", "file": "field.html", "rule": "label", "why": "must ask: the field's purpose is unknowable", "expect": { "ask": true } }
+]

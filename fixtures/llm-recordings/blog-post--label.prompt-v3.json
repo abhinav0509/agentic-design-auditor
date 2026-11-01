@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01BPAHY2EL6fZJ2Ydrfh81xV",
+            "id": "toolu_01EhnuSi1c8bgUSG9dG2voRz",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Label the comment textarea with the \"Leave a comment\" heading",
-              "rationale": "The textarea has no accessible name, so screen reader users hear only \"edit text\" with no hint of its purpose. The heading just above it, <h2 id=\"comment-heading\">Leave a comment</h2>, already describes the field. Adding aria-labelledby=\"comment-heading\" names the textarea \"Leave a comment\" from text that's already on the page, so nothing new needs to be written or kept in sync. A visible <label> element would be a good addition later, but it can't be done with an attribute-only edit.",
+              "rationale": "The textarea at offset 430 has no accessible name, so screen reader users hear only \"edit text\" with no purpose. The section heading directly above it (h2 id=\"comment-heading\", \"Leave a comment\") already names the field on screen. Pointing aria-labelledby at that heading gives the textarea the same name sighted users see, and it doesn't change the layout. A visible <label> element would be a good addition later, but that needs a markup change that edit ops can't make here. Please check the result with a screen reader. This fixes this one finding; it doesn't mean the page is compliant.",
               "confidence": 0.88,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2413,
-          "outputTokens": 484,
-          "costMicros": 12549
+          "outputTokens": 489,
+          "costMicros": 12649
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSoAcKEAgTGAI4AUIIdGhpbmtpbmcSDKYjdmFYnsXsNAHIYRoM3V0PyUl5adr3ZiFPIjC4qQohtzqFctibMlKhrFKbfYFxAJZ9PIj/pX9Vihfel8cEOmH/QnHf8LWrqiAmVO4qvQaENtGERHs5YXcKXfuLCVxHwgtBEqYDfKXOvLCEMYz2r7DFePzoQN7aJcmIUgs9EUaYKLEpCMbZpt2NdjLRm+Bwvp3ksPMyqZmNL3rTzAnwwttp7SPHrITqFZdrMFQGjbb+nmjD3QxGEUxu9EhDimJp1j1ZxLYoPSLVzA6qxP/YMN+ZOZlrAKQCWc8nNcflbWtVwIp8EY5vlPJk2omZRJM2Z7lRcaeco6os0pp9WIb1EYCrPPL0rZXmDlrCBldp+m1Nv6t/fBTiu2I/GWCZf0BsxRviL9REbm2AmfGqLVZ4Iz7Ec6KaLrHcUS2VwGoyfFxA88xmIYevO7qhm+iSCYVwIsk9a+XJ+WP1bfKRqmrottqaMxXS7ZjcSMiOMx7XFe7gTkxutLgGaqm111waSACLuxrEDTvJ+ChGYqt3rWEZ8Odk18fS/HxmzEzqrHat6HK25bHa7ruyRSOtSz/VFht/o5OuXLgYYFnJtsfuid3pFM5vtRlK1DtE1qDsjGQDiQc6iRcNwMeOKisjH5ZBgqSuBHIY1QIoMZszJpbWSe2DfyLbuo0EhYDfjm4mnJuwgr1Va1WV3GIV1vzoeqq7ev6jx1R1ejE1fhrVOq9PI6iCWttp2yZcvHuylBUasUVEQ7pkRXMF9IsPCn7P+3xYpSLFTty+EkKPQnGffoqMy78ZcAaTCuHuL5UzZjbKFMrfZVoOtpil5WcUC0ZizqjLykbbnyVwbrv6oHr4FIc/swiTEMn4Ty88wzWRrHPvkml4puFm7354cAFY5XzyuGkHUVcVs3HxKCTcjBm5aGc0tVczGKkMCN9H0BYNz9p4Ym7pdrHHONpn/TEBG8tRrbM5NcX5M4kMUpDEAsUxIRg4wL2/guU7tiy1ARtIg8mm734bqhoEsNKVOSh6r0+RyruEBIns+UVlhGpnENQo/NMsYtsGiyJK+Nq8PBGs1spLqyW1IcFzHC9L4psqEq1HAKdqYBSVKIkRUkxl//rwwIiGuhvGMKYhYn34FsfyoPnyX+Vrq1jywe9odnD3IT0Mq0JA3kIn9jq5R26018suE9yuqj8+k2xffF7/LjvMzsAickHQOiw/KXFbJOPZW5BJsjoEGAE="
+            "signature": "CAQS5QYKEAgTGAI4AUIIdGhpbmtpbmcSDDQfH4/Gj1337hAF/hoMj3o5xE23oMkvErc5IjADlhc4/fDFSMDOuzz3nANvsT370YbNVTQIV7cQz8EKj39Y5DQt63LJePnUDAefJsUqggYKh+j7cKObIIYaz93lvyxYZiPgGZtq8Wndw1twOYVlpFLA2bxocGxM3Rm316vsXzN2e34LBXzEjAyivJPJLa07zwBVUM1WBJELGGJ2PloBGcpU7Jqlwo8B3ySFGzCns+2YQJ0bCLiruzjtokAOnC3yknvQpv25WZSLVylwrN0LoVGe73yfxbHYnXaMUOat/CrI/2GD55ocbqi569s0JDXiG744I9eVoVPGqEcjxmp4XQeqShTRSDMNqGCiyZ+gVBkfIGAVa2JkiDQ25udEKdt1UBYT/FmLmTk1GSgFmDawzkPfsyEg6oGoMmqtG76f1rDBHw+OvCG+v1EZevQ7F+Nz1+bsGENlaZogXWEKf/bH9ZZKxYkQWC8eJTKP92HAtbqcrl4DX6IE30ezf99wCcy4jY+q7aqCGtpPvyrXWYVfkjRxfQegqkeYUmbt8b6RTN8pNhGXpeEnWUML4Fno2KwyxD/QmhKM/5eA7WbF2YMbF5Zp3HW76v6X8DcO1JmzEkCs6lGZvB/+ev9/SlLU91CHzTpx0suNOi6TFyzEZ03ud8EbDxQ4PCQpb/IK4ftiBXghT/3hGmn2+cxMlHv1C3hXPxX9kxpsj/aY06pukCyNqun1FugG0x7sRA5aykRnn8qWCJTpyUIUKPMG5l535p5F8f+z75h86RdITrgxs01ev0iIHU4r3FDG15B22LSyi3ywpjSzPRFkaF19BPO+Hmv5qDwQQ/dk5YhN0r4BYBsxpH9MhUAinx066Og0FqU9mzFEPusoTEjSFEkVwWjuJRKqmDN37sVzLEVIWq445XwulIFhR+j2iy5e06LfXCb5DqB2fZMM+XtYxeBljp5/gdH0RMxhtmZOAeeJGI3b2Mg2JGJ5ZhxuBzM9feFd/gsIJTy4/dmqeSs9oYbgIvN69csuMkucnZTOhCahIJMiPuu7Jq7Id2DyZHIPaUg+opX9AOjRSvrcySACILsi/UnxSTDEdzUuI1M8esTS1cFC0JkpczzOnjzu2SFx5qyUyvG6vJOXrBgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01BPAHY2EL6fZJ2Ydrfh81xV",
+            "id": "toolu_01EhnuSi1c8bgUSG9dG2voRz",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Label the comment textarea with the \"Leave a comment\" heading",
-              "rationale": "The textarea has no accessible name, so screen reader users hear only \"edit text\" with no hint of its purpose. The heading just above it, <h2 id=\"comment-heading\">Leave a comment</h2>, already describes the field. Adding aria-labelledby=\"comment-heading\" names the textarea \"Leave a comment\" from text that's already on the page, so nothing new needs to be written or kept in sync. A visible <label> element would be a good addition later, but it can't be done with an attribute-only edit.",
+              "rationale": "The textarea at offset 430 has no accessible name, so screen reader users hear only \"edit text\" with no purpose. The section heading directly above it (h2 id=\"comment-heading\", \"Leave a comment\") already names the field on screen. Pointing aria-labelledby at that heading gives the textarea the same name sighted users see, and it doesn't change the layout. A visible <label> element would be a good addition later, but that needs a markup change that edit ops can't make here. Please check the result with a screen reader. This fixes this one finding; it doesn't mean the page is compliant.",
               "confidence": 0.88,
               "ops": [
                 {

@@ -1,0 +1,96 @@
+{
+  "scenario": "hard--divider",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "4f5a39e3b270238f4729b04ea753ed5b4f464039a8dff405cf78472f7fd961f4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01MPN2oMk7yM3L95DFHHJmc3",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Need to call get_image first.",
+        "usage": {
+          "inputTokens": 2365,
+          "outputTokens": 36,
+          "costMicros": 3397
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Need to call get_image first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01MPN2oMk7yM3L95DFHHJmc3",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ae715ab9803582cba6a77250933f10fbb88549d3709a94e826f33e37297b6ff2",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_011wwhtfdXkwommiN5Zojjou",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Mark decorative divider image with empty alt",
+              "rationale": "I looked at the image. It shows only a thin wavy tan line with a dot in the middle: a decorative divider between two paragraphs. It has no text and adds no information. An empty alt=\"\" tells screen readers to skip it.",
+              "confidence": 0.93,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 238,
+                  "name": "alt",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2834,
+          "outputTokens": 252,
+          "costMicros": 9593
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_011wwhtfdXkwommiN5Zojjou",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Mark decorative divider image with empty alt",
+              "rationale": "I looked at the image. It shows only a thin wavy tan line with a dot in the middle: a decorative divider between two paragraphs. It has no text and adds no information. An empty alt=\"\" tells screen readers to skip it.",
+              "confidence": 0.93,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 238,
+                  "name": "alt",
+                  "value": ""
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

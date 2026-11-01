@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_012wGxXgqq1Myec6MBRSLFqK",
+            "id": "toolu_018FuF3e9cXCzAgA7uZtKCXG",
             "name": "get_image",
             "input": {}
           }
@@ -21,7 +21,7 @@
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_012wGxXgqq1Myec6MBRSLFqK",
+            "id": "toolu_018FuF3e9cXCzAgA7uZtKCXG",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -33,22 +33,22 @@
       }
     },
     {
-      "requestHash": "392222c87e862447e8d2f01b52a604fbe2b9be809b9324e34f9a12a2c1005ca5",
+      "requestHash": "a7f8d2541027015e7e065b88fefbdb9c48a5aee64aa6fb3f75df80eeb4a9a976",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_015oJYfL36oLA4SYh8GkW9hU",
+            "id": "toolu_01UwxyEJesEfhEauT3otQh9m",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of the glaze-test image to write its alt text",
-              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. The image could not be loaded, so I can't see what it shows. I won't write alt text based on the file name or the nearby text. In a blog post about glazing, this image probably shows the work and carries information, but only someone who can see it can say what to describe.",
+              "title": "Need a description of /img/glaze-test.jpg to write its alt text",
+              "rationale": "The image could not be loaded, so I can't see what it shows. My rules say alt text has to come from the image itself, not from the file name or the text around it. This image is in a blog post about glazing pottery, so it's probably informative and shouldn't get an empty alt. But I can't confirm that without seeing it. Please describe the image, or pick an option below.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/glaze-test.jpg could not be loaded, so I can't see it. What does it show, and what should a reader take from it? For example: a side-by-side of a piece with one coat and with two coats, showing the colour evening out on a curved surface.",
+                "text": "The image /img/glaze-test.jpg could not be loaded. What does it show, and what should its alt text say? (Example format: 'Mug with one coat of glaze next to one with two, showing more even colour')",
                 "options": [
-                  "I'll describe what the image shows so you can write the alt text",
-                  "It's purely decorative and adds no information, so use an empty alt",
+                  "I'll provide a description of the image",
+                  "The image is purely decorative (use empty alt)",
                   "Skip this finding for now"
                 ]
               }
@@ -57,24 +57,24 @@
         ],
         "usage": {
           "inputTokens": 2511,
-          "outputTokens": 413,
-          "costMicros": 11521
+          "outputTokens": 391,
+          "costMicros": 11081
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_015oJYfL36oLA4SYh8GkW9hU",
+            "id": "toolu_01UwxyEJesEfhEauT3otQh9m",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of the glaze-test image to write its alt text",
-              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. The image could not be loaded, so I can't see what it shows. I won't write alt text based on the file name or the nearby text. In a blog post about glazing, this image probably shows the work and carries information, but only someone who can see it can say what to describe.",
+              "title": "Need a description of /img/glaze-test.jpg to write its alt text",
+              "rationale": "The image could not be loaded, so I can't see what it shows. My rules say alt text has to come from the image itself, not from the file name or the text around it. This image is in a blog post about glazing pottery, so it's probably informative and shouldn't get an empty alt. But I can't confirm that without seeing it. Please describe the image, or pick an option below.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/glaze-test.jpg could not be loaded, so I can't see it. What does it show, and what should a reader take from it? For example: a side-by-side of a piece with one coat and with two coats, showing the colour evening out on a curved surface.",
+                "text": "The image /img/glaze-test.jpg could not be loaded. What does it show, and what should its alt text say? (Example format: 'Mug with one coat of glaze next to one with two, showing more even colour')",
                 "options": [
-                  "I'll describe what the image shows so you can write the alt text",
-                  "It's purely decorative and adds no information, so use an empty alt",
+                  "I'll provide a description of the image",
+                  "The image is purely decorative (use empty alt)",
                   "Skip this finding for now"
                 ]
               }

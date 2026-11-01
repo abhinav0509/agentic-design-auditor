@@ -8,30 +8,30 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01BryrLofJSvVR3rxSKXsKBP",
+            "id": "toolu_01AdPhHF5V2muisHDoEEunt8",
             "name": "search_source",
             "input": {
-              "query": "<html lang="
+              "query": "html lang="
             }
           }
         ],
         "usage": {
           "inputTokens": 2369,
-          "outputTokens": 109,
-          "costMicros": 4873
+          "outputTokens": 100,
+          "costMicros": 4693
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS/AUKEAgTGAI4AUIIdGhpbmtpbmcSDKlD0uUguUnXGzKy0BoMWNjGpaOZPykvIja8IjBIhEezo5sYsAmR4USRZjy5JQ74wrlIXqBA1BBgV98XWJ5KEVhdDzp5FiCKV3HSjPEqmQXmVQ1PSwR7Bf5YReQcAH5ymzuQfUkkaG5tiLDrQbfH6lC4azrFwpI8Imi3JRmL5nr+kwiM1ZT7Rl+Sri7KtV3pGSkRiOhaxklEUgCRDFJV/nBgJvsGQ6mXIf/glM/NSiAzvWYNivAvvAMzfo7fofWuutWk9pc4UrIKz4K5dBOopoWG+2xb2jcMxGyhFvESXMX/m0sbm6KUtHpRsJTwqSVkgJpEp5xe5QcXSB+VENdm2aPkkbHkGnoJRXl31U4sng1XegQBbqeEUlSfULaTMPR6Bt0AcuOmsPqQYmRz1JjNn/aD64b/69p4iHhtGILbu9QBVlGo6TiAq1Q5rWJeeA9ETQ3uBKCXttyxNDQA4i9po6iMM7UJBDTflZVphgtMRcm97mDT0FbzwBH5vNY1/8LstLnr3kK6uS8rrcAGZxYdExYeqS2Ryv08fXwOZfzJzkNY/SR2iGOgdIRLkNXFtDyjKP4O55GZB/Ijnt4zZny0ufSJUVQ4H1+MRCF2SBM0XcNgL7mOjfsu+Jsz6Bw0JyP1AyLydl/er/jcUysNM8YSRUMQRxhcK0FY+/2sfNgEBdD93Tex7+SzqEcPj9t3/8op27/8DaS9+oFWyqoq28eVArU/jj+8lKEBdaiWzy84+YukaKGw2fR8jRXljs1Mm4eTY65bVuLHnU1ltI5mHxt9FfzJSgsVa5XsxjusQQIB4yAsGiI9O7ltFvg4Y3llbMw7aZna6+T/3sUPxg6CoH4TUVcSp4fC5gq3k74220IOAp/ex837xPo4OmlWFgJTFXfx9DGQ8p4Favt4o/4rKTbUIcoJTyX/1nrOdKKRPTs/VOXp3qHiekh4rvIu4purSO6iWvWqqMA2h4V6hanyYmo8JHulkJ8u9/TlchgB"
+            "signature": "CAQS5QUKEAgTGAI4AUIIdGhpbmtpbmcSDL8gS8u5BM8KvBFq2xoMlXOarX7TL7ENuwIxIjDz+KPTZpzrYVJw1aMP+zkIJsVETw0yvR+7Y9hYetOBU2Y4ugQySQ2IB9L/MU8g6bYqggU2vBM0CYTkvrlaEAliZWYr7zcZ4M43T3oBz37qaUAthKFuo8nNFk5wj7eYJSmPvUExvMh8r4jet0UFsBSIakyObgSGBlH+ZxJ+QTnmyMYRovM6rApAPWkKhnbC2NEhPxLFvKCYS1Oq1cgAbYS33XUmx/gQl3o6JEew8LtZ4LocUckmbOROneLr5fpqqmy9DHir2dF7txGuG6AW/EcrQFGWLw6vi1Idilp15QD/LAnfDKNSoahi0++bWfyvrkPeqDFeYquYbblT/QGM7CAKlniQKGmLALe0T7jPA5gYTyfBClwd9rzVI8ZB5Tz3+hBRvQdb+taAuF5SoedtJXXIM9KGFeO6VHdd7XBvshaTd0hPNiGm8zB/MBsV/V8C/Q33x6T+w7++WPQPw87KiGHhh+I9L619oH1IoOcWfj3Y804Fm81bdyunJ6xXaIz5maTyARexAkLUvm2GiOSQtvOsKRY9OI7S3PNp/NxVUEHzQ17axA5bbjxJCsEJASKmGGESZosxQt/Mxbd5+mVLwZkZ0jViBABvxc3WYgvoJ1J9BKq5/VIy7ol5uncSvFaYJajhD+j4OD89xdkPSn0JWfEO4YtDrFSbntEgwfQR/1Q3luksgD3J1HoaaS4/8+8Hh1YuuIiNE71H+8LQveM7RhVugC1LDGwYa73rsPUTK/I8NFWyt99w7O7fMbRaUG2bvHnJbVj4+GXyJs3GmCU2o69cWysww2JwZZchj7NsyH09Dvibh6hi7y3HKaK7iQZaaqIJ5/jO4fVitbLKUv96Y0X9S0X3aaTkAvMinF9Mj92rUi3CwSXHM3IeGzJ3XfpyBDQa+bMe0fJncbl6NZAKH3v5i7LfhEkYAQ=="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01BryrLofJSvVR3rxSKXsKBP",
+            "id": "toolu_01AdPhHF5V2muisHDoEEunt8",
             "name": "search_source",
             "input": {
-              "query": "<html lang="
+              "query": "html lang="
             },
             "caller": {
               "type": "direct"
@@ -42,16 +42,16 @@
       }
     },
     {
-      "requestHash": "ca8034cd61af51e77d2814de26e1ccdf8a7a234e99007d0c6c40f60c44e1f91d",
+      "requestHash": "259ee82b51fbf65e01552aa5d868f43831efa71b6387abbbf445f63b688d2949",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01A1rrRz2KQykmm8A45wXoJZ",
+            "id": "toolu_01JiBBpEPrpbrMfCY583V8oU",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add lang=\"en\" to the <html> element in contact.html",
-              "rationale": "The <html> element in contact.html has no lang attribute, so screen readers may read the page with the wrong language rules. The visible text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I'm setting lang=\"en\". I searched the repo and found no other pages with a lang value, so there was no regional variant like en-GB or en-US to match. If the site uses one, the reviewer can change the value.",
+              "title": "Add lang=\"en\" to the <html> element on contact.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. All visible text is English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), and so is the map image's alt text. Setting lang=\"en\" declares that. I found no other pages in the repo with a lang attribute, so there was no regional variant like en-GB to match. If the site uses a specific regional variant, the reviewer may want to change this value.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -65,24 +65,24 @@
           }
         ],
         "usage": {
-          "inputTokens": 2501,
-          "outputTokens": 370,
-          "costMicros": 10621
+          "inputTokens": 2492,
+          "outputTokens": 408,
+          "costMicros": 11345
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS/QUKEAgTGAI4AUIIdGhpbmtpbmcSDEjUKzOims1rvWTX7BoMsTfiPTpmsdm+KXkWIjAGmW7/BEXg6JmDjlotKfBbp313zRycZawxQHHckGtOa3jfqdU7eIj2b0gj5MT6aX8qmgVebLD9Yz8bw0bWSaEi2IDFDQdUSy26dNoUMGAlp2mjSiIv+pkUg+kNHtcN/NbTUWx9aChNltX5qVrabMRnvd5GMfe4dIAP60najBTFpzERaUgEyFrDALJaOw+XWvxMreiX6Pq1n+D1P0dGXJxCKDTASzjuCHsUgLOMM6z+g8rhQU2msWUL2tmY3M809kvArO6PdLAe6LjzZ+kuHsUgRpjsV+hAkCJqRA239tUz2RCyDudf2xH6P6Y2ySqPWHGQbeIfTtTC20JywanJsaLAvzuEZ+AYzpeiG7VcDCly5dytEKDujAo3sqbNPULPlxf7A9MvnYnenD77Aiphm1YmsO0GwoVfiDAQfAuHBtdYNyXWoyJmNrJOmDPvWDNrwXRb2TxOKTxOzSbmdnQu/B2BAc+Y2vcqndnwppaiY90XZkPlQl6b2zrvjOpGA5Xc8VQJW3EdtpKIt9GH6k/JtHBsXgeB/JLtCXIwhEAf6+olfdf3OXYhbzpfu+SLbx65yJ+URA9cHxriPYzSi8UpC0IeUTm46RaKOye7AV12Kc04zBzwJ+OcmEtG2TkL++jHafpeNK6ZqRX4OsrUsmP7AERnaI/GUs+i/6nHoXb2hdBIlWEASarjXzK4BUS9nb2uDRXqBz1i60deAIIP90JE4O5w1zmrBUZ5faQ10QQd1baVv7pMZE+4zri7P97/Q5CDDuMVL/CXgQFKWFzFVhCkgLOQJTbcrKRHvaDQVvE2ixyVURemQdEKVz6uZe8+L2/dzDTrziLIUVHDU+wk3uxftd7LImzzJaSOfHwocvlW6EY0irA8iV2qOHi+R4pHD0XccPjc3j65tbALkX9dwzzvnP5bxiS/Sw4/fSH1rTCZi3IOcRSSwl7pCLCd+xl3TH8YAQ=="
+            "signature": "CAQSxAYKEAgTGAI4AUIIdGhpbmtpbmcSDLrsZmPogrCXy6oLBRoMzhi/YOtZIsTj9h6sIjBeyM7VOnMIWJds/aDSlndaOIxTKBCUkAUfFV3cG5CbjoTwLrAsUyNkRr6JVFnS8Lwq4QXryWhy1ChgWUDkiLBXJgWbDahv+hKqmJL4pFuGiwy7WrB5FIdbN92gZkbIOp1dqIFwzHOcr/TYIXA4tTTnU+bcdx9Ouum3PteIrAu5b5WxC9pf1l6m6FulNvOAv/68opb5p5xUW1E3KsoypfNVPAlfnMF/dkMoKacS9Syh1rvhTMrXSmmExxCk+f9LLAgkXb7DaUctT44jZwiLLxOpNXNVU264IsOeaibOjYBKZSBOxPeFqvBYB803TQM8FIXJAvewatf11DQ8YnWLt5hN+LpLPKPWJ6rQvj/8DQ8Y/FShtWZJzXIXa8t7G+Ofl2Im5yU2Hg1Qyb9XY6578llb75GYTl8vYTIinjspxWg6TxRxEmR/tufXbXpuEG+o3grwbk/WVe2i9u0sWWQYyWgPvv6j/l37k+455OabEJpY4iMtpoON8zVvDcnG44jNJsHFqNe0KE1kN+kX7i+jwaoWtd0/2zJs6bMwARDy0vBA6xXWHunsFqk3tx1v3kSZWw75mz9j7LTh+HePNH5R8ETHV9ooBIGP3n/DwHCbYQWdhdNNMYMNvmzgdUMZv8I1bYbpucdPbKUIm9W9uW3IL4mM4Wex2c5TF6AhAULJlrnlGdbRzT7pO0GZEwQKsg77hMj+pkFN8V0rF91sh1Ok7EkFjIHwmk28KBV4eXiZywrTEsSW4agngMBuV86ASZ/x0dSOzU3lhwq1BOXi9R6fFowp1K9Hp8GvDGPYEErErcpZbqn5SeKH+yDA6DpkEOe8hQ6Hnvmvd9lLnjTVPjswldLFwRfmK/f+aRRnOvwgZYG7U0h2aMEMWd5jYhEYnwZWJ1OCcmEcet4zQViVMTjNevrQm2VWdfr4yK5ruEppTKZUhK3g6sp2pKq5KVtWqwL3r+lgn2JJw5d8yuEPd8miqnr4gRdJSb0/9Kg36UfPqu5OW7kxPE+5+UnPgQUqVbcqw+Wg7iJpaRY+k8CRduAiufEfrFYKphgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_01A1rrRz2KQykmm8A45wXoJZ",
+            "id": "toolu_01JiBBpEPrpbrMfCY583V8oU",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Add lang=\"en\" to the <html> element in contact.html",
-              "rationale": "The <html> element in contact.html has no lang attribute, so screen readers may read the page with the wrong language rules. The visible text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I'm setting lang=\"en\". I searched the repo and found no other pages with a lang value, so there was no regional variant like en-GB or en-US to match. If the site uses one, the reviewer can change the value.",
+              "title": "Add lang=\"en\" to the <html> element on contact.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. All visible text is English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), and so is the map image's alt text. Setting lang=\"en\" declares that. I found no other pages in the repo with a lang attribute, so there was no regional variant like en-GB to match. If the site uses a specific regional variant, the reviewer may want to change this value.",
               "confidence": 0.9,
               "ops": [
                 {

@@ -8,25 +8,25 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01SoRgP81u1J674J8n8ioVcD",
+            "id": "toolu_01Ef3uaHB4QARYV6PDewDD59",
             "name": "get_image",
             "input": {}
           }
         ],
-        "text": "I need to see the image before writing alt text.",
+        "text": "Per rule 6, I need to see the image first.",
         "usage": {
           "inputTokens": 2479,
-          "outputTokens": 40,
-          "costMicros": 3933
+          "outputTokens": 42,
+          "costMicros": 3973
         },
         "raw": [
           {
             "type": "text",
-            "text": "I need to see the image before writing alt text."
+            "text": "Per rule 6, I need to see the image first."
           },
           {
             "type": "tool_use",
-            "id": "toolu_01SoRgP81u1J674J8n8ioVcD",
+            "id": "toolu_01Ef3uaHB4QARYV6PDewDD59",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -38,22 +38,22 @@
       }
     },
     {
-      "requestHash": "db3bf74f65af75381dc15051b2ac7b2c670ab6a77d89dd297e85a0eca2cfcc3b",
+      "requestHash": "b26428f47f35a46c66f38b23800cac6325667bba332e01f6319b5ab159603575",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_019rxob4x35QNu551Wh1WkZk",
+            "id": "toolu_01N9bo9eaJYaM8R3WQtZTx5F",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Alt text needed for main product photo (mug-front.jpg)",
-              "rationale": "The <img src=\"/img/mug-front.jpg\"> on product.html has no alt attribute. It looks like the main product photo, so it is likely informative and should not get an empty alt. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the nearby text, so I need a reviewer to describe it.",
+              "title": "Alt text needed for /img/mug-front.jpg (image could not be loaded)",
+              "rationale": "The img at offset 140 (/img/mug-front.jpg) has no alt attribute. It's on a product page, so it probably shows the product and needs a description rather than an empty alt. But the image failed to load when I tried to view it. Alt text must not be written from the file name or the surrounding text, so a person who can see the image needs to describe it.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/mug-front.jpg wouldn't load, so I couldn't see it. What does it show? Please give a short description (under about 125 characters), including any important visible details such as colour, speckle pattern or text on the mug.",
+                "text": "I couldn't load /img/mug-front.jpg. What does it show? Give a short description (under about 125 characters) covering what a shopper needs to know, such as colour, speckle pattern and any text on the mug. Or tell me if it's purely decorative.",
                 "options": [
-                  "I'll provide a description of what the photo shows",
-                  "It's purely decorative, so use an empty alt (alt=\"\")",
+                  "I'll provide a description of the image",
+                  "It's purely decorative, so use alt=\"\"",
                   "Skip this finding for now"
                 ]
               }
@@ -61,30 +61,30 @@
           }
         ],
         "usage": {
-          "inputTokens": 2538,
-          "outputTokens": 425,
-          "costMicros": 11869
+          "inputTokens": 2540,
+          "outputTokens": 429,
+          "costMicros": 11957
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQShwUKEAgTGAI4AUIIdGhpbmtpbmcSDO/IfOulrUCOqsCfFhoMqvk9m4CM91bU0DP2IjD5mcXtSbzpScwBdspIDmel/yxI5mf20T8kI+nEDOSj5khR6H9Rv6/GetjnPo9z+WQqpAQYP0649fJbh/PSP11K9Eo2dyvQUprdhaaq2+d3Iw/C7yvpVn3yGq1E66K3/ka+dpwO1hsBSA+Jg4/iezt+4pMFIDpJs2FNNLi2ton4rrZ53DdTSDHvxJe/GKI30Yn5V6X2tw0m5Gm0PSqx4Kel7Pif8R0VOFgqDG2EJm1ZqwYDqIWOjVFJCgWp+6H97VsPHOBgixEaxD1NLTNFq92up/7xrP47HJCo7uPiRNpc+GxJxMxIxD4idEQUNmRtIJmBM2b3aNQei6SySrbTFtk23Ym/lKTdQ/M2R2NEpvK4j1V4hHvScT3yYC3FZcbVbn9mjRxG9/ie4NMsV2a2XG9fDWQ7cBp8rIU5DvZgeW/tAxBxVW9MGeM5b6psba6R9MeiE2H0JYJsBy2v2Z1VIYLgMiwsWmCGgdm45MQyUWDAwAQj3RvKbrl+13BlcbQXCWlFzy7gLDbLR+LWAHNEtIiZWv6dHXMBPK3YwaL4wsw6AcpVLlskZFh7fp9Q3ZtMc600ZzurUyMZXw9PPcXumWEcaWSmuavk1ym1dGgMjj6rmGNIYS6Vd7MArOLKmcqQ7bQ2LxRoFGTAI3JQ6fTtcDGY87tsvjoskfmbYYX/HZrQVmT+P4F7haUkKTCmQSP0qySx+9VclPmvURXvLPi230J2iQimctdILSax1LEaq/3mxqXntb79ACrx53MazJCmWEvqD7R6z1qDw7OQSUKtcBoLjcvWBsVT/BgB"
+            "signature": "CAQShwUKEAgTGAI4AUIIdGhpbmtpbmcSDDPc5Q+IUi/qdL4F/RoMbRtnkAgvrcBg6jzCIjAtKQecyGjpFqW+A6r0wmvcuaYC0+7FOpXFH9x4xw66S6HZ9GbjS4OzMWQcQ74/cQEqpARrkwrHyVkyRiQ8ykw/YPRq1A3x3cPf++DC9ZRm7ycRP+60uSVbNGOkmCPM0ANk9sKOW0c4sBye6hBwK2Wq5bBzEAa+xuX3ldLk7Rezr1B8LrDqkw3hdD4hOMD7AneTB/eonZ3Qha+MdynKrXDyxqHiOCEs7PIIlyp2ia9jWqm3QML4TIC++cl6Vs4JQ+kun+6LUVe4zgQXyHfoM4gYL8k1WOOTf49FgUdu5qZzxQuuYVQ/1utIXFkzan8Fx4JAqPvydemTsCE5a88VLVTv7Uk8H43X/BPyjR17ytO8059d7kfQoBdYrQ5ntjZbfaI/l5kLHeXPHUPzSG7lTVkklec3qmDaLptLhWdJPzVPHJ5FyQe4NLeshmeRfVrCiIv61kgAUAw1NB/rpDWoKWLuLKlGg39+9EerZXos7sencgLKJtbT87/2gVLsVlapDv8AEZUSwpfHH8mcBDdreoDq7JhP81zL6Z0R+RVa7zx9XqiCl+dBQ3/BqivKuYl8ZFC4QFr1JiptvN4MRCfKxdJhVImzKL1YhsTrn+OFCr/VZVO1PrWZMwbjTp5k6dbH1nSRUdNPC888Pt/YWFkJpEiuV1l15CtBnB3h8Q/4O08pEXjjCjJM5c5U4oJMQXs0UGp3Wrd5CoxtWNinmHFPJwXNklGWEYDi3ZQI9Cu0h4sz4EmQXb0bRj2K3iOdwGuL8Bb6/pIQapeIoeJ0wMzm7vHqmWUubFYHyhgB"
           },
           {
             "type": "tool_use",
-            "id": "toolu_019rxob4x35QNu551Wh1WkZk",
+            "id": "toolu_01N9bo9eaJYaM8R3WQtZTx5F",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Alt text needed for main product photo (mug-front.jpg)",
-              "rationale": "The <img src=\"/img/mug-front.jpg\"> on product.html has no alt attribute. It looks like the main product photo, so it is likely informative and should not get an empty alt. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the nearby text, so I need a reviewer to describe it.",
+              "title": "Alt text needed for /img/mug-front.jpg (image could not be loaded)",
+              "rationale": "The img at offset 140 (/img/mug-front.jpg) has no alt attribute. It's on a product page, so it probably shows the product and needs a description rather than an empty alt. But the image failed to load when I tried to view it. Alt text must not be written from the file name or the surrounding text, so a person who can see the image needs to describe it.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/mug-front.jpg wouldn't load, so I couldn't see it. What does it show? Please give a short description (under about 125 characters), including any important visible details such as colour, speckle pattern or text on the mug.",
+                "text": "I couldn't load /img/mug-front.jpg. What does it show? Give a short description (under about 125 characters) covering what a shopper needs to know, such as colour, speckle pattern and any text on the mug. Or tell me if it's purely decorative.",
                 "options": [
-                  "I'll provide a description of what the photo shows",
-                  "It's purely decorative, so use an empty alt (alt=\"\")",
+                  "I'll provide a description of the image",
+                  "It's purely decorative, so use alt=\"\"",
                   "Skip this finding for now"
                 ]
               }

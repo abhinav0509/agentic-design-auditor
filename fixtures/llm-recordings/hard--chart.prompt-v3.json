@@ -1,0 +1,96 @@
+{
+  "scenario": "hard--chart",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "e4d68f465b7f4ee542152ca724fb25018e9e8252383f19fae93319c756a66faf",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_013DPnMxoqCH7dWCKz7MQ93D",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2299,
+          "outputTokens": 26,
+          "costMicros": 2933
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_013DPnMxoqCH7dWCKz7MQ93D",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ddef0a6c5d4f2bd096a1f2fae6ff1d6b8f5bc9549a018d502cc7cf22413e629b",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01FEd5NV3G1vxoDGLi9QHPg4",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Chart image needs alt text: what does the chart show?",
+              "rationale": "The image is a bar chart with six green bars of different heights. Bars 4 and 6 are the tallest, and bar 5 is the shortest. It has no axis labels, category names, values or title, so I can't tell what data it shows. It sits in a \"how the year went\" update, so it probably carries information and shouldn't get an empty alt. Writing a meaningful alt needs the author to say what the chart measures and what it shows.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The chart at /img/chart.png has no labels. What do the six bars measure (for example sales by month or orders by quarter), and what is the main point a reader should take from it? Also, are the exact values listed anywhere else on the page?",
+                "options": [
+                  "I'll provide what the chart measures and the main takeaway",
+                  "The chart is decorative only: use an empty alt",
+                  "The data is described in nearby text: use a short alt that points to it"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2758,
+          "outputTokens": 465,
+          "costMicros": 13549
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSrQUKEAgTGAI4AUIIdGhpbmtpbmcSDGxyXGFW3waoxtzK9hoMJOUuoiT2I3qobel9IjBq2GgAxFS2HgfWE9mk+Vo2qTuNSl4dt7h0COiyX7aXLqpqnDG3pqKFawGFOL+ZTQQqygTRp4nlYZXWkA8+xRHeDhRsYij8ieuTWfBq9AQv/V2MHMoub11ywCD4LTwcKUBL6Pcu1xbKLEHVdjeHlinpEyc3pPY7y86c38YODe6oG70NsYrilitJplgViU288cEHc4Z+lQtSm+Sytg67pWpoqDiaIgOWz65HcXpxkkfsMMsjwR0pQco+QMY1gzMAcAg1xDPQcVnMbA13TUMIFsJCXoTZkMvNtHRYA+9FNE2uLvyBrbQC3x1E66OU8loUVOF4eY8bJ6pjIqlrYE7r0h4NikzoIWcmK3v7gL5gh06k133hnrrESwwoMQ8P7cKrw2ocolKhMOeV/7UNjUvRHM0tpHE3SLzsokOFkcbgrYrBl7lJrQKTqNlUXok2B9v+FRKOOifHKul7QUxUEYIEZJhYpAnDATa4M3yqsNbsxxkcueugQ5JjwDWOsLEBrI7UcFlCTTw3cYoetrxrqDnj4ipRKqt8pTQDeIWZRa4hqyAabTRzGOiaz/sp+0ymIwqtfispQKk5U6RTiDWWQKkODwadEeDwWxkiJ6M0GaHGfZLsB9L8KM3ZVx2i2Du7pim7DTdhg++44+PffVk8stgYrMF8H+fjK3T2PSf3iVJUwsKhQ9iPuiKYTEK2iu+XcOwWkm92s3iHP5Wn091MJj+dSsKmaKG+V/9KgKrKlAl1bxlbRtjRKfq79dLz1E7PebOSlN7yfnd9ACas3bGc8dcMNhiBnxAxAxJNA7iSLZ++WI7+Ef3atsUVeXH+HkLQ/i8WYp3dObvinB4CKIpco8tCGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01FEd5NV3G1vxoDGLi9QHPg4",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Chart image needs alt text: what does the chart show?",
+              "rationale": "The image is a bar chart with six green bars of different heights. Bars 4 and 6 are the tallest, and bar 5 is the shortest. It has no axis labels, category names, values or title, so I can't tell what data it shows. It sits in a \"how the year went\" update, so it probably carries information and shouldn't get an empty alt. Writing a meaningful alt needs the author to say what the chart measures and what it shows.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The chart at /img/chart.png has no labels. What do the six bars measure (for example sales by month or orders by quarter), and what is the main point a reader should take from it? Also, are the exact values listed anywhere else on the page?",
+                "options": [
+                  "I'll provide what the chart measures and the main takeaway",
+                  "The chart is decorative only: use an empty alt",
+                  "The data is described in nearby text: use a short alt that points to it"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

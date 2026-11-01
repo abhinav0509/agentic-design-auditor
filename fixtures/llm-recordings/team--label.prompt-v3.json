@@ -8,13 +8,13 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01L2WbHshGGbKKyT6VgMY83G",
+            "id": "toolu_01Wdm1KEfXJaVsCEBQTwevHh",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Label the jobs email input using the visible prompt next to it",
-              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, id=\"jobs-label\", says \"Want to work with us? Tell us your email.\" It is the input's visible prompt, and its id already suggests it was meant to be the label. Setting aria-labelledby=\"jobs-label\" gives the input that text as its accessible name, so the spoken name matches what sighted users see. This needs no new text. A reviewer may still want to change the <p> to a real <label for> element later, because that also makes the text clickable to focus the input. This patch fixes the finding but doesn't guarantee the page is fully accessible.",
-              "confidence": 0.88,
+              "title": "Give the jobs email input a label by pointing it at the visible prompt",
+              "rationale": "The email input has no accessible name. The paragraph just before it (id=\"jobs-label\") says \"Want to work with us? Tell us your email.\" It is the visible prompt for this field and already has an id we can use. Adding aria-labelledby=\"jobs-label\" makes screen readers read that same text as the input's name, so what users see and what they hear match. A reviewer should check this in a screen reader. A real <label> element would be a good follow-up because clicking it would also move focus to the field.",
+              "confidence": 0.85,
               "ops": [
                 {
                   "op": "set_attr",
@@ -28,24 +28,24 @@
         ],
         "usage": {
           "inputTokens": 2455,
-          "outputTokens": 476,
-          "costMicros": 12557
+          "outputTokens": 426,
+          "costMicros": 11557
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSmgYKEAgTGAI4AUIIdGhpbmtpbmcSDKGE6Aq5LVaJsJqXLhoMcCRL3LHygyTi4XK6IjDVfsaz5syI3tFjR26BRSTrckf4vIvfCb90WJITLipaYfCRWh5eEiFz+YtVXw6sfG8qtwXmpJH614YRzJNQtQdph5mlZT5ytNH2SVJImxBxQFE8CdCNcucY8UaWt3pFZ+o2JyJ4g4sGcfuJeZlGblhvz3z+BJRK/N31cm3EjodnYxubVoD365m217pdQMTKmvLBO0EUDirm0xleXHoW//S+lBQOR9mR4ACYkYsTqT3ZTR+bS25H+VPxRt0T4bTninOcEtxFwbeYMz/xAar2aQchb0J0mv/8Jt78bnSYiDiIbFh37Yh97SSARuiJ9GHwPIEQIy41Oyl2b8PHl+C29Foe/XQjvPaXaZfHRp3yVTtpRNqp5Le3FKtmCahzzsHTLTQIOxcsRUq09p8hi1LpubMXSCaAYNNnYsCLuRLeIPP0zmSg639GWqfccbvNlPyl6Om+E07TjSNTr+s1RLozr2fwYBjlO8YMeqHIB56iYyVmyRLV50oZ//wuwEy2cgW9B2XQQLc4f/C1j886ttUF8LQNPpzZpme43jvxtSu6vNbh4r4+CqoZc0z2IgmIPVWy50wEQS07/BrU0Z0G1h/j/Mgm2QCLbdtHqYCCD40IZNaSAcgwt33OPpJm7y3plxYLolJkRCjy9bCk62Vm/U8bxDAcO3q+o2dau6V8XZqIIuLeWQCZFNQNfDLTVNzZRZ8Yg/Or3f7f7kVsNdfJfnkVFNDeUwygjZDG99VLJzsnNA9GG4gB5+vsRFALOIWVXsfl8GRGuGWbUTaZjDed36w3i88VKlB9+AV9U56AwDtTR87XH0uMMWFqDBLPRZFudEM8tl35yJi0tQueCzppPp/blYTOBxTMR9kce50uonM2Hnft4lmI9SD8y5J1foD4egaWUQCyMPWPc1b24kDUNFV+bnLfXKYQIw18xQpB8BAXzKgtjdbddenCi9SknHTTxB14g2dEYu69pioGc6YB2UlmACpaQbJ3EpJd6LO45hgB"
+            "signature": "CAQSiQYKEAgTGAI4AUIIdGhpbmtpbmcSDKW0oO3Lnr29DsSHNRoM24vIMHytZVby9w4pIjBxnEo0DgoHHXKIyG6WnWfrMHQ32FTeZnidbe6Kn++5oF9tREzObWl3gLs2c515m2IqpgUkw2naqvZMsdSsEGy9bu9Ic6h8gcmZUKtAjXE9TjvTT8jEYXt+Csb+SXvdVaG2gQ5J4JLlD/CFAzHWje8qAdg3O2z9lERRpYlMBLLiK3R9wlyjwv29g+ogkCVVhngi9dytlPEYE0Jb2SUP04zsoqYszrBn7bqnT1H7U7sM+XO2BdgYVPcmLTrqnBDES3D9lQG6TssKBqbbMwpHae3SN/L2V9hw5nJdp+VK/AR8qh4dDMupEgoSc7rENUOtnZHKMEgPe2sY7mG0vPkT9YpNXJifP1w+USzcLAs+6W1m8LLDt3ZETmD2yisBrH4xKOOC/+zetYNXVwB50ZArw2U9fHOMC1OL8xAKEff9pfxVPrUKRyO5h3rlVIIGxLKRoa+yTNLf32c9X8uKtqptF/IP9Z/NyKJqwL83Z6HvYjhTSu1YrLUrXtCqRKVwCI1xzh3yWtQI9d03UYcg6evW3sxzNBI7DPMHoOany6r8cPjHENRG2bIfJ2ryI8TH5fN83SWyyokrTTyNguaeTVK6eCLGsSs5LUBPDAGIaXr7c4dY3E7vm86csr2IvqyoI1qnL++//PFO207IEGR/rUugseV29rENOaBosUjIc9NSJKFSrsc08tcW7ulZZGhGb15wB8CEpfbdXx4kzweEvhuFA2RZ+XDmyfp4S6zBNXVO/d1eR4RxPFlVlRa7geDzY0FASgLH+TAOeo9FAp3lERXemHhOrjzW2HFD4oGG9KGWEcRVtUJpNP5Crr5bCJQeqzbGCBiXbdK/MPEs+/JhUShBZEI1mXbXTPk3tP4MsSJhDr4PqDhWC35C80jFUjITIO0Py1ePA+mzwL5Wx9952L+t0FY0F392EWfcQ7hxSwi1XHVzp87Tv/RL6+AdaD7FnKUm2rG+w9PthAwaB4cYAQ=="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01L2WbHshGGbKKyT6VgMY83G",
+            "id": "toolu_01Wdm1KEfXJaVsCEBQTwevHh",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Label the jobs email input using the visible prompt next to it",
-              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, id=\"jobs-label\", says \"Want to work with us? Tell us your email.\" It is the input's visible prompt, and its id already suggests it was meant to be the label. Setting aria-labelledby=\"jobs-label\" gives the input that text as its accessible name, so the spoken name matches what sighted users see. This needs no new text. A reviewer may still want to change the <p> to a real <label for> element later, because that also makes the text clickable to focus the input. This patch fixes the finding but doesn't guarantee the page is fully accessible.",
-              "confidence": 0.88,
+              "title": "Give the jobs email input a label by pointing it at the visible prompt",
+              "rationale": "The email input has no accessible name. The paragraph just before it (id=\"jobs-label\") says \"Want to work with us? Tell us your email.\" It is the visible prompt for this field and already has an id we can use. Adding aria-labelledby=\"jobs-label\" makes screen readers read that same text as the input's name, so what users see and what they hear match. A reviewer should check this in a screen reader. A real <label> element would be a good follow-up because clicking it would also move focus to the field.",
+              "confidence": 0.85,
               "ops": [
                 {
                   "op": "set_attr",

@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01PkYTfCd7D6zJLxsqPP8HYr",
+            "id": "toolu_01UraJjCkRGvXBxeagBMWjxk",
             "name": "get_image",
             "input": {}
           }
@@ -21,7 +21,7 @@
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_01PkYTfCd7D6zJLxsqPP8HYr",
+            "id": "toolu_01UraJjCkRGvXBxeagBMWjxk",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -33,23 +33,23 @@
       }
     },
     {
-      "requestHash": "cbd5285ece767b661ae3ec2ebe81be8cedb81320d10c2a05bb77283e2e4628dd",
+      "requestHash": "672880fce7b80e765137b3f7e7c5981280eaf029e8b5543f6ed4dfcc2d6e045a",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01KaskRe1dw1DFjoQaXUaHJA",
+            "id": "toolu_016JJz1Uv3wJcHVHGYfjKbZ9",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need the map's content before writing alt text for /img/map.png",
-              "rationale": "The <img src=\"/img/map.png\"> on the Contact page has no alt attribute. I tried to load the image to see what it shows, but it failed to load. I won't write alt text based on the file name or a guess. A map on a contact page usually shows where a business is, so it's probably informative and not decorative. Useful alt text would give the location, such as the address or nearby landmarks. I need a reviewer to tell me what the map shows.",
+              "title": "Need a description of the map image on the Contact page",
+              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the page around it. A map on a contact page usually shows a location, which makes it informative. The alt text should say what the map shows, such as the address or area.",
               "confidence": 0.3,
               "question": {
-                "text": "The map image (/img/map.png) failed to load, so I can't see it. What location does it show? Please give the address or place name to use in the alt text, or say if the image is purely decorative.",
+                "text": "I couldn't load /img/map.png. What does this map show? If it shows your location, give the address or place name to use in the alt text, e.g. 'Map showing our shop at <address>'. Or say if it's only decoration.",
                 "options": [
-                  "It shows our location; the address is: (please provide)",
-                  "It is decorative or repeats an address already in the page text, so use an empty alt",
-                  "Other (please describe what the image shows)"
+                  "It shows our location. I'll give the address or place name for the alt text",
+                  "It's only decoration and adds no information (use an empty alt)",
+                  "Something else. I'll describe it"
                 ]
               }
             }
@@ -57,25 +57,25 @@
         ],
         "usage": {
           "inputTokens": 2525,
-          "outputTokens": 417,
-          "costMicros": 11657
+          "outputTokens": 397,
+          "costMicros": 11257
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_01KaskRe1dw1DFjoQaXUaHJA",
+            "id": "toolu_016JJz1Uv3wJcHVHGYfjKbZ9",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need the map's content before writing alt text for /img/map.png",
-              "rationale": "The <img src=\"/img/map.png\"> on the Contact page has no alt attribute. I tried to load the image to see what it shows, but it failed to load. I won't write alt text based on the file name or a guess. A map on a contact page usually shows where a business is, so it's probably informative and not decorative. Useful alt text would give the location, such as the address or nearby landmarks. I need a reviewer to tell me what the map shows.",
+              "title": "Need a description of the map image on the Contact page",
+              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the page around it. A map on a contact page usually shows a location, which makes it informative. The alt text should say what the map shows, such as the address or area.",
               "confidence": 0.3,
               "question": {
-                "text": "The map image (/img/map.png) failed to load, so I can't see it. What location does it show? Please give the address or place name to use in the alt text, or say if the image is purely decorative.",
+                "text": "I couldn't load /img/map.png. What does this map show? If it shows your location, give the address or place name to use in the alt text, e.g. 'Map showing our shop at <address>'. Or say if it's only decoration.",
                 "options": [
-                  "It shows our location; the address is: (please provide)",
-                  "It is decorative or repeats an address already in the page text, so use an empty alt",
-                  "Other (please describe what the image shows)"
+                  "It shows our location. I'll give the address or place name for the alt text",
+                  "It's only decoration and adds no information (use an empty alt)",
+                  "Something else. I'll describe it"
                 ]
               }
             },

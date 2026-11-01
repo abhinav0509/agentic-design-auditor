@@ -8,12 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01WPya2RQqRji3p2HTa86Vm6",
+            "id": "toolu_01LRPCgN2wig6BQ5KPjCmbvy",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the FAQ search field an accessible name that matches its visible label",
-              "rationale": "The search input (#faq-search) has no accessible name. The visible text \"Search questions\" is in a <label> on line 10, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the input itself, so this patch adds aria-label=\"Search questions\". It uses the same words as the visible label, so screen reader users and voice control users get the same name sighted users see. A better fix would be to edit the source and add for=\"faq-search\" to the <label> on line 10. That makes the link native and lets users click the label text to focus the field. If you make that change, you can drop the aria-label. Please re-test after applying either fix.",
+              "title": "Give the FAQ search field the accessible name \"Search questions\"",
+              "rationale": "The search input (#faq-search) has no accessible name. The visible <label>Search questions</label> just before it isn't linked to it: it has no for attribute and doesn't wrap the input. I can only edit the input itself, so this patch adds aria-label=\"Search questions\", using the same words as the visible label so that voice-control users can say the text they see. A better fix needs an edit outside this element: add for=\"faq-search\" to the <label> on line 10. That links the label natively, and clicking the label would then focus the field. If you do that, you can remove this aria-label. The fix should be checked with a screen reader.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -28,23 +28,23 @@
         ],
         "usage": {
           "inputTokens": 2486,
-          "outputTokens": 523,
-          "costMicros": 13621
+          "outputTokens": 520,
+          "costMicros": 13561
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS1QcKEAgTGAI4AUIIdGhpbmtpbmcSDO1wNUmmoZSuY/V4zhoM8V4To16FzLejFUkyIjB9YtDJJlKAof6tt4GuImsI2LNhiXi0eXaqe3Db0h6qJWRx89GZobMM2j6V2QwxVGsq8gaLCcQvnoEdHMoMfpR/uoqK2NyaTm9EPrPJ1Jv9TIEefpLWOoWnhqb+oQkFQtWeevP/6/rLTUN1+fY/wxWw6CX+1lrAiGR6PDPe1DevrQrAkfavYQvHUNFH8FsdRgFBmPoGO7uW9z0e5NamtwLavBsf2FjCMS+s9k3jAYGBLlQNWu48VPnBeBZ0q67y4gEC5MWnlnW6uqeqdXKhK4PJvvmK6kZX08l0qZQU90+Rj5OR76HeAiaKRvTrJv0tXfOsf7ojx1y4TxVPFl8xWiXGPbjnni9gMNmAXT1Lf7WwZO8HDNa+nLTX9kVxucRnq+sKmn3ol1B7L8p6USoVBs1RXbrLMpRYVFg1xAuRmBFkOuYlYdsONMx1jRcWtUEVzwy5w8aAudZqjn3LYPL9CaqmeC2BE5mlLM6+PAar5SwPHkyl/9MQa3Ak6LaHFeCMyJdTazkP8Ay0uPMOIr/taTUOLQq80IoWWNVEPBE2kcZRnmfFRW2bfPP+6W0lVKGmaeIx5TK3LWCS3VYZF4TiI5WC/U8AyBeUwlqujC7Bd4qdsXMHIm5ikepmbkxYfgp+UE4mxUBm403raa2da9qRt74YSbXmdtU3aRhYA/NrOgsjhfE2uqg2U+jsX0ryCBaKtKR3Ch5jaNeI7uQBqRYYwT+F7YakDB/Uv8xs+vkheVa0ahef5jur0mRIhMJ7aEl26OIF91/MOTcp/KsReY8mbKx4NVYcjkxzylfUpuT4Zs6+jP/16xJ1aHKJzqGA8l3QGqs+oROSgHVVoRzj8rtcLRPLbB8DrVibCH/yNYc5HlNe7tGSDyIzYZB6W9BF6E5Z7UH9rrBBs2Qz0CTZSLyOQ24GPh249w7VeM3UwEFaedbQAS9N/gZw2J6GagxFoLTjFW6tAQ1WJ3ystT+bj1XmvdiTT0SyEqs/c7Sp/j86SrndqpEtq58Xzio12M94ZWGRRN//sKBsD1UvDdot5TC6v++zoPKLieu1r3RohNp/2+7iTFvTJ2pxSj/1+SLBozw3h79AFXllqDdMUr83SlDMpfUrXopk4AW7Mjc7bCbuyVI/jNm2k8t8ZL4XBtCbh9snO5KWPkSFCjlD6ufF5IQoAkG7y0ulVCbd1lcaQQFcPSJn2tIWOikgIDljWkrbz46sWtfVz8I5ZJDFB1XCPjNKAgCBBTRqvbUYAQ=="
+            "signature": "CAQS9AcKEAgTGAI4AUIIdGhpbmtpbmcSDLQEY3IuOpI8C5+0qRoMC1nTyQpxkFetqjC3IjB7nyKoIe9nihMBn6GYQSbg7GbpbBagR9hiKQ8qXDgQkSWUnO9Bvm4EFTG2wBmnJGUqkQeg5+LGmYjGHC28X7RUv7i9dQWKBBPMwD/U5BuAjGulRHDFh3yHHFRAyCJpMEGwfJfpyr9Z7Jq0rvABP/6oZmxKkoq8reHGCnncLKoomGHGVOkFO5icB+YFff2UF6MtRwBP2yfTm1M0Uk1IIf9SWxseiYLjKZpvaxGKj+sIoGC5u/i7vIdyLnXfgBC6OFBI1WFpNCJFWWEFRA2QvqWIjgkhOl0IorrVoxmUmS9BwlUsBiFaT/jA/P3ysBFavRGl8jPNSpHmRv42GWORIYRnFA5vhg643C9r0I5MdeTQSXFOfKDnV42SzP6fyA+QQScBabKursfO8H8Y7u6VTbmrh5KL8ZwQ0XBzB3/2RKECloTnaZE5xdudHF/HjWzvSI44GwnwCThmrHW3cJzaYlE+YV7xScT/OEgrLT07yOEgyj6c01J4x/xYhvkygC3UIvh/xj7gffXKUphWx2trg8JvCn9QMZNbDpr25BzrxNE2cucAGV2nZ3DrmBWrG+KWZMoOnOCh8Z19j/5dudr/hkisP+TLPr7lfg2ktFI26f1Y71aKyOWePslLoJZh0auoYrn8XRwevVIQuUw9IFDpLNGuvtx/hLUHVnbQ3yDC8d2M8m42bzKG/fnlEn9vYgBUPOGND3/oZvSfCPZKYxYfYxiO2LKViTP5BqpxG6v1RkDVpTJVM1inN1DKQ5ExXxLZdSb2jFnIUUakTp8D6vwQCXBMs4wfAhmn3ZzfizJvx8+34AGPwLtlx7JVMVXHW5bh7gKc+/1tvG4krYsG0vOoiNRotsIHIxYq1OarnhmZGTwbL4cLUsdIoWAvkCtRPoGFJzUne91nDRPxT7oaw6NT6oEYMgw4vJ0F7W8kCEzd+94UCYQig3WuPTlgvWkEtswVCmmbvJBY00/dHKIudhLKKuI94ZRidR6rm01IrzB6J3B5cIjIdTtBfkl1Y3WW47MsNuWKNEwhRESlwcSeH5iN+fw+9WSCzk+CdFyqIbCaoSOo4wOSvID2hZfi52lVtZV8Mq9SyHYRElOhfPD56/guF9Uip2i+p9su29+jg1DW7+DAgnikWBiP6xZzq8RndhX2Ml3FkNSahIc6jroDGBMKkIIw31j7Rn4CkwtNx2zGA2afqQ6OM18ouqC7O5b8/389fF/pgB4XGAoaj74kAYVoXn+v8YCuj6r2YrOkl0+5uPDHFUCfoSrr2OnLo5Vib2GdjfkIhQvwGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01WPya2RQqRji3p2HTa86Vm6",
+            "id": "toolu_01LRPCgN2wig6BQ5KPjCmbvy",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
-              "title": "Give the FAQ search field an accessible name that matches its visible label",
-              "rationale": "The search input (#faq-search) has no accessible name. The visible text \"Search questions\" is in a <label> on line 10, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the input itself, so this patch adds aria-label=\"Search questions\". It uses the same words as the visible label, so screen reader users and voice control users get the same name sighted users see. A better fix would be to edit the source and add for=\"faq-search\" to the <label> on line 10. That makes the link native and lets users click the label text to focus the field. If you make that change, you can drop the aria-label. Please re-test after applying either fix.",
+              "title": "Give the FAQ search field the accessible name \"Search questions\"",
+              "rationale": "The search input (#faq-search) has no accessible name. The visible <label>Search questions</label> just before it isn't linked to it: it has no for attribute and doesn't wrap the input. I can only edit the input itself, so this patch adds aria-label=\"Search questions\", using the same words as the visible label so that voice-control users can say the text they see. A better fix needs an edit outside this element: add for=\"faq-search\" to the <label> on line 10. That links the label natively, and clicking the label would then focus the field. If you do that, you can remove this aria-label. The fix should be checked with a screen reader.",
               "confidence": 0.85,
               "ops": [
                 {

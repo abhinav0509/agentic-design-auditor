@@ -1,0 +1,123 @@
+{
+  "scenario": "hard--field",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "a4678bb024689cbfa32ca1f1c21445a3ef9d6fc25688370ad4894823d9ae8cb3",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XV4XuE36H6F9XYB653yXXT",
+            "name": "search_source",
+            "input": {
+              "query": "ref2"
+            }
+          },
+          {
+            "id": "toolu_016xJHSbPbpAr4xMrP4eqhoZ",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2275,
+          "outputTokens": 122,
+          "costMicros": 4757
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSxQUKEAgTGAI4AUIIdGhpbmtpbmcSDJgjI27cuAbhgzboLxoM96TePGsM5JQyIRpTIjC7lw+WVaz9L9MB4vTx/75pyuqZ0UK+QE3kDkpYsW7ZHATCWY6Fb6XcBp4DqzsaWCQq4gRxHROcZzJAGBQ+qr/PjmXlKXBjIcdfzMdYUFSxI1j1NGU4uztHTAZ7ck1Z6sG+toKrvNAbzffBwpJd99/KI980zdW9Aa+sdQKkTHXiZL4O6PzmVYCXuCljKys3Pk4EEvujk+DTy2OHj0jnZWcQirRsTtYlJwgi2yspSGN2dM2gLcmAS+vV8mLEY2ZyMCrqn2E9jLTpEWkyI0hPNPKgjCrOGT1MNve4xTIV6sRhMb8OoCqbFpxfPH/qLGfgyo6ebWbJRXp/J8ZSjW3+XUqtjxBNKKefu+v3BRmq0MlGGSMs4SuMS3mVPJzseDsDqbGQw59ISauMXYyz47zZr9XCSxcZcByvmdOKA+k/04SkkmpB9w3ETy6D3CjkVqoOWrOgAT2HXbxf1Ydj0KxpEwSWpwwxUbmZ1gkHlyxlzPYvrTUxVV1C0iMLRZ8IvqEbj2AjCBFjVXJVaQPrz/oe03HN6dFZ1FT55fNLjquqFolcprWUiZipyt+zJaYRHTmkEFDfknrGeHEjnS8xKB5DotJxyNS74x3y95JmqT0pR7gK7c6Y9A3TXV9iNAhXHQTpzsQFQhMW1+7bQH9bUjBDCRKGOi7wKSbP2//UyonMkYLxhgWtsyfGjOuSHXOZGY6sH3eiL4AFAuRrsTC2puPKbfrDDn16Nwz7lqt4/GuxwRxgLZifdt/hiITTtO87CjdzEvLYpCmTe/I57yQzWS0jaNkTL81Ajnu0MYsmYXu3jchGzO8YsY3qojf4Pw3satt985SDOV9XLXeLFzvzAdMsv/1+1899IQqUN9rSlxdLAHreuTHQi7xFGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XV4XuE36H6F9XYB653yXXT",
+            "name": "search_source",
+            "input": {
+              "query": "ref2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_016xJHSbPbpAr4xMrP4eqhoZ",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "02083ead202313ddfcc7bc4ee84f25e8d49d3327eafc8e3674750084d680bae4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01NDH9b1PMfGdvQHTER2WjfP",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the purpose of the unlabeled \"ref2\" text field",
+              "rationale": "The text input (name=\"ref2\") on the order form has no label, so screen readers announce it only as \"edit text\". Nothing on the page explains what it's for. There's no visible text, placeholder or nearby heading, and the name \"ref2\" only shows up once in the repo. Guessing a label like \"Order reference\" could mislead users, so I need you to tell me what the field collects. Then I can add an aria-label with that exact wording. A visible <label> would be better still, but that means changing the markup.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What should users type into the 'ref2' field on the order form? I'll use your answer as its accessible name (aria-label).",
+                "options": [
+                  "Order reference number",
+                  "Customer reference",
+                  "Promo or discount code",
+                  "Gift card number",
+                  "Other (please specify)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2516,
+          "outputTokens": 419,
+          "costMicros": 11661
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSyQUKEAgTGAI4AUIIdGhpbmtpbmcSDB9eomuqHGUiJdCEMBoMcYXq+A89vQUqGg87IjAEoinJGopNlvfBkrlXE0QzVb6k3WhYa91XHibZAy/xLvP2awWjpUws6ZsPyraB6r4q5gT3tRei1DQ45+F1xh1V/85S20MJIHzp2+NpXNmtmMa3FtuyGj/E/ob4rIG871qUipgAnj4hzu4pek+YDhZI74TykKateOu8ueKYvto0ciJnpbh8q1rSAaLml7fjbyKV9ol7Q6mtWdZcx5KcLtpv+nTMbO28MwHucVomz8ucz7FXINxhhnCkZ4PvtC199ZS2xqFUKouBHQkKNbSznwCKoQyfqygmH8JB4xALcxUTOfY19tk93Kvo5qAxifZqNCzs9oDg6S+5gP+VaVpS8gBQ+sXZr7PfY5FsCmBctGqEBPtbfdAouwPGjxlhl7+ScjU2RTtH6UAlaqpl0aR1iKSihjqYuHEv6+F4vZiNXQgpFRknvP6ZEZf4GpWm/Ys4zfBocf9GTr4MfefWq3ao6iVn9bMXJPd/DmcxXroY2ZVMNWlp71rZHMo40TOCgJOffsu7pvu1UWXARQQZTKPYg4ICeNJzXGP9AnOMQhJBiFbO7xj9VrLGXJW75hlDmGbiacydqIC9hK2GXLriliYy6zoxBBGcbXx7OXFnvzNDhmIa147Wuk/1iuSRtpgvMVR49bikeounIT+Vm/aVOrdeUcsyMzkHimZdhy25Z9C6gwM2k2UndHI+gdNMQ5TovuzeX0625e2vFb440X0mQyS+0lNK93t47ZZonytbMKiom0iTmn4mA5Wt92fTwjeI7pYfKmGtHS8bXvYU1ZdZtLn5Fee7FivpnlllZcOreQaP+hviqXbDfjM9XE2V87xgy/5T/vgMQdv3Het8jOsl+UAW6hw9nWpaGOjfCoqz907RCdnIxZ9OGRrRHBalGBgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01NDH9b1PMfGdvQHTER2WjfP",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the purpose of the unlabeled \"ref2\" text field",
+              "rationale": "The text input (name=\"ref2\") on the order form has no label, so screen readers announce it only as \"edit text\". Nothing on the page explains what it's for. There's no visible text, placeholder or nearby heading, and the name \"ref2\" only shows up once in the repo. Guessing a label like \"Order reference\" could mislead users, so I need you to tell me what the field collects. Then I can add an aria-label with that exact wording. A visible <label> would be better still, but that means changing the markup.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What should users type into the 'ref2' field on the order form? I'll use your answer as its accessible name (aria-label).",
+                "options": [
+                  "Order reference number",
+                  "Customer reference",
+                  "Promo or discount code",
+                  "Gift card number",
+                  "Other (please specify)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

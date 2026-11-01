@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01KQvw5wgJ5NDNB9w62uieWL",
+            "id": "toolu_01SKWx2yFkQg4cuY3Bu5rD8n",
             "name": "get_image",
             "input": {}
           }
@@ -21,7 +21,7 @@
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_01KQvw5wgJ5NDNB9w62uieWL",
+            "id": "toolu_01SKWx2yFkQg4cuY3Bu5rD8n",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -33,23 +33,23 @@
       }
     },
     {
-      "requestHash": "6434d17466dcbe1ffc8e0994e8eb64160c75ec8f4708c2abf0f98de6629b1906",
+      "requestHash": "27ecc3dd8e8fbbcf1d224b414cc433d1aa85856eb81bf7fbd632237e2f8a1ed7",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01XkN1w6CbpLSe1XE9t8EFVX",
+            "id": "toolu_017yy3XmW4RWa62kgRKcTVym",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of /img/g4.jpg to write its alt text",
-              "rationale": "The image /img/g4.jpg has no alt attribute. I couldn't load the image, so I can't see what it shows. The other gallery images are informative product photos, so this one probably needs descriptive alt text too. I won't guess it from the file name or the images around it. Please tell me what the image shows.",
+              "title": "Alt text needed for gallery image g4.jpg",
+              "rationale": "The img at offset 318 (/img/g4.jpg) has no alt attribute. I tried to load the image but it failed, so I can't see what it shows. The other gallery images show ceramic pieces, so this one is probably informative too. I won't write alt text from the file name or the nearby images, so I need a reviewer to tell me what the image shows.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description of the piece, like the other gallery items (e.g. 'Pair of espresso cups on saucers').",
+                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description (under about 125 characters) like the others, e.g. 'Pair of espresso cups on saucers'.",
                 "options": [
-                  "I'll type a description of the piece shown",
-                  "It's purely decorative (use empty alt)",
-                  "Image is broken/should be removed"
+                  "I'll provide a description of the piece shown",
+                  "It's decorative only, so use an empty alt",
+                  "Remove or replace the image"
                 ]
               }
             }
@@ -57,25 +57,25 @@
         ],
         "usage": {
           "inputTokens": 2593,
-          "outputTokens": 373,
-          "costMicros": 11049
+          "outputTokens": 386,
+          "costMicros": 11309
         },
         "raw": [
           {
             "type": "tool_use",
-            "id": "toolu_01XkN1w6CbpLSe1XE9t8EFVX",
+            "id": "toolu_017yy3XmW4RWa62kgRKcTVym",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of /img/g4.jpg to write its alt text",
-              "rationale": "The image /img/g4.jpg has no alt attribute. I couldn't load the image, so I can't see what it shows. The other gallery images are informative product photos, so this one probably needs descriptive alt text too. I won't guess it from the file name or the images around it. Please tell me what the image shows.",
+              "title": "Alt text needed for gallery image g4.jpg",
+              "rationale": "The img at offset 318 (/img/g4.jpg) has no alt attribute. I tried to load the image but it failed, so I can't see what it shows. The other gallery images show ceramic pieces, so this one is probably informative too. I won't write alt text from the file name or the nearby images, so I need a reviewer to tell me what the image shows.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description of the piece, like the other gallery items (e.g. 'Pair of espresso cups on saucers').",
+                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description (under about 125 characters) like the others, e.g. 'Pair of espresso cups on saucers'.",
                 "options": [
-                  "I'll type a description of the piece shown",
-                  "It's purely decorative (use empty alt)",
-                  "Image is broken/should be removed"
+                  "I'll provide a description of the piece shown",
+                  "It's decorative only, so use an empty alt",
+                  "Remove or replace the image"
                 ]
               }
             },

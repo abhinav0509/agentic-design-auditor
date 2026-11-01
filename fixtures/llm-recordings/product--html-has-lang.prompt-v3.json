@@ -8,7 +8,7 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01Fr9oErwYNai91NKkd9PuEd",
+            "id": "toolu_01JLmGMFgfDJeQo7hu9ykwoJ",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -17,18 +17,18 @@
         ],
         "usage": {
           "inputTokens": 2385,
-          "outputTokens": 106,
-          "costMicros": 4877
+          "outputTokens": 90,
+          "costMicros": 4557
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQS5QUKEAgTGAI4AUIIdGhpbmtpbmcSDD8z8bOdP+P6jU3D9xoMJHAVJOEsiGo6E+/uIjBJWlG3CSkxuO9+6j6bRzIoCqfv727Gs8BmiXstS3QMPWYxoN6UnvUOvnv9+8UDLYIqggXOqII7UetAWkcfhLzR92PmhOzYmqCc5iKLQyVysNOYcb0uVKn3Izazxisi7EJCNeGQRlsgxO0VXKt5gYU3VrAdP66/gzMZanMyFApsnVXP5g//5px9u0xm3AdjWk1zWx+VO7/bEkUMA6k/00w/693sFKUWVYnMiLTy+NoBft1KD9YmjXqY0y2NrN7wxi0GB+giK8rMx0g2IHNHQn84DQs5gtm4nNNCH0ZAqsc4BY6s8QmjhmiwlbWDDbGXuMq82OS5SLf4+JuaJ9kOlD2zARa31kWH8t/33zASt5CwUNzUfUxyFnfzL7Pp4e2NoQyY4HIBF/ATcv2ahV9QSsQXlAYxtLMK2VpDtJgpY4e4wzNeIpnXkSo/Vo7RROdoa72mwRzJlYXjBxdVJjkoWJ4ll23CURqRr6hh5S5DcjKiaJ0oL3cZjGDeJ3s5ZhfTGj5iHGhBONPAeeTvkLNGtTvq7g2TFHSdCFA5cU8GuS5G/EkioDjH5HtU+pM784HSu+z+xDijuuiQk01bqNIdUE7zSu44Cu3SCHggn1R5Yw5UCxbqY/tteCuUVSfiMPX6Y+lz/rKIS5i9oQlOp8TtXoNbN/K6qnxp8rl20vhEDfaouYH/OQjaQgq7+N+hpf5y+qJ2cmqYM12Rp+dv9SW6+gHcOPticj1rrIo3wlPnyD+imPkUaQqLgmuoXLONQ/SxDNt39kIkreTozoExqdmhpL/QkqWjxfRETyfe6rQR2P33keSNxbAFgQURTP7xJoPxBcRjWoDhytD2Yz+7I3MrHRwTUPfqbrKeJowDV5KlzKWHs4GgGZQfKxdBcbUP2sURBc3NGS3wNtrw8JeS9F/ZBmdKjctH3EsYAQ=="
+            "signature": "CAQSvAUKEAgTGAI4AUIIdGhpbmtpbmcSDAGVd8FyGTXKu7euphoMGHGRZM+yn7HkPhiHIjDUL8speSzxPo8mG5GYxnIpocLZ3Kw5l07qw2HTX2zUoHzvaqiD+KtRyO6r3OeRyxUq2QTwyXVpXHV9E4tLr+5VU+sWcxiZic04Kdh464af8ZXoiYYAuZiKcnSmybR67bRIWs9Du1nIm7vp9WAtzHKsX43VSTPyWKkWiHwGhLsMfrjwN2rb8smEvXqgj39Iro/kMA8aWHB8pzWjjPZjcafULAsSW7LSEauvV1L869zRUl7tK5eQl8Hwa+uupL6iQQNH82WaG9XgytDGmFoD0V1twxY5QaLeYg+ojrAPD1C+2sCS5kGVuU9kx5TP+G5OIu0g6t+aQ/hMGuN1e7bj6WI0jQqHjJEI5dTmkq72huCm3MLbM8s9iG968LD6gYW774Xl/AMzcVxjmuc19HKw1JpDv/Geku7nGNxsI10OTIA9+A3MC9vq7v+8lbJZuFMVPu4gdeRqysx6J8dj0l2NKS8VDgrpktUi5wH47TdEs3Kiz8J/rtTER+ZfBjV3GchSdR40AawO/vSti3DemnuYLHQwWOVsEy6sJZ1kll/B7fZx+O8qlFvea9ZnZFVYQlm9TTvgdtsBcnHdFafltyd9WTtw3OmFpOJdZg26A0LhUxqrOc1jNsfdfV3OJan5ZBS2vum69OG9x0gov1HWBsY3qPVsgYCI53ML6EBUtrWpylELx22NH1K/oLZ+LCfRMWb+QXd2mDKTiyFwK454IOjFxu1Hq2+RBir0yi3TUNmm8NezyWjMsUQdlR/14/AiCaVACj96PCC4s9700JmS58JoegiU3KODafAfoBNR5kt04BPUgdUK8Rs91lRv+9ftYXgRlRcnnXT4FrVFIxl57lI8iNCegPa1p3ijDOb4rlTRGAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01Fr9oErwYNai91NKkd9PuEd",
+            "id": "toolu_01JLmGMFgfDJeQo7hu9ykwoJ",
             "name": "search_source",
             "input": {
               "query": "lang="
@@ -42,16 +42,16 @@
       }
     },
     {
-      "requestHash": "fddb249b76fb1261623db8f900c6fac05167e17593f7919e35bee2710c7ffcd5",
+      "requestHash": "ccb0dd6e8bb0c913c0aedb40717c4c66b5f4069ef4de95e00b1739780bcbee0d",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01484bG8j6jc4s3qWG36BaLh",
+            "id": "toolu_01HVho1DkgmAWGaSfvmhVf1h",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en-GB\" to the <html> element",
-              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is in English (\"Speckled mug, 350 ml\", \"Dishwasher safe\", \"Quantity\", \"Add to basket\"). The £ price and the word \"basket\" point to British English, so I chose en-GB. I found no lang attribute anywhere else in the repo to follow. If the site isn't meant to be British English specifically, plain \"en\" would also work. A reviewer should check that this matches the site's intended language.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. The visible text is English. British spelling and wording (\"basket\", prices in £) point to UK English, so I propose en-GB. The repo search found no lang attributes elsewhere to check against. If the site is meant for a wider English audience, plain \"en\" also works. The reviewer should confirm which one fits the site.",
               "confidence": 0.85,
               "ops": [
                 {
@@ -65,24 +65,24 @@
           }
         ],
         "usage": {
-          "inputTokens": 2514,
-          "outputTokens": 464,
-          "costMicros": 12553
+          "inputTokens": 2498,
+          "outputTokens": 420,
+          "costMicros": 11609
         },
         "raw": [
           {
             "type": "thinking",
             "thinking": "",
-            "signature": "CAQSqgcKEAgTGAI4AUIIdGhpbmtpbmcSDMN3KcZ7V1wraghQqhoMJyPbN+0cGhvJjGWSIjA4HwGraCFV7rEiixoqRl90kdTRIWRQPvyJo446x3+OCLGX0cYw5SQLhRcA017caBkqxwZphwvQ9uWwwiWAFAHgWniJIQuUID/RMvDBn0I3vQyS1A40/2wI2g7asmECwbWH9EF9ZC2Txbw5XryDzPkLi8vv9ThWz9oo0U61WJkHP1PWxuGtKZIYwWUli4usQRcK8vvuTIc6GTLC+bzdCmmbRLj9mtJU3Z1i9obXpfcx//WXFLEPmJ+j6AmMyYyICjElXMXiaryFVNxbdo+FpE8h5guTPnJeECrWzdOE28YSb2xgy2ZtShzRts+6VBjp/SNRZDyhzo+YnnCnAFFPWo8RnpQgCsCjpOW21hmFbXOaelQ2yo2WP3hqBN9m/fXxqjCAL6Y2zetjgBl80ySrumf7cnsnSHFljIEIRyelKoMA8AnloFnY5OSFOoJfz5EZwtTW8zuZb1TlAZzTe4iaq4jezTs96pGBQv9/kK8HKEnLrVuE0UUbqdFoCmnZD0PoIJ3EYrReLwYm9wmzFKK0CVjYPy177LvvV2XuH8XlvaHdBQitByGjA8+9F/outZHMfnLxdNrP5LMFyeQAB1Wp9VuUp2AcumJw1kQcoz/TKJQpuGVXD4cklWiX5WUzdVYnIbdv99wm70cEISpD5PTvPfoQ1DxaiSUAwBqiDssF8RMwUAUC1ZXjRWug71UJkBop0xfBDSRlBLwNVfZ6UpDfH0NsXvAb/odGMDiB3vHbO6PUZZdhb590YWEgHo4uHIidCtxI+fWeXdqOHmr6eWMnrSqcsnVeopzQcp8cMl9Hg+LZ9TZh53OLubLouvOk7cbobD73D2vn72KeYwdmkogCtt5sq8KbMW/PrdFj91Z0J4nXKnyR55jkMRAtpw5VqC+jbdbwu3wfOaxJeGwSHknYRAx83jBB0GlWoJE7/9IjmzGc4G/N9mJSWHgGidgBSCRwqq7ygPcTxG+Ujg7idv5a3dns9h667O/6E7WU1lWHXQ4Dz778Yqg34/FgDMrausp1JvlSHwDM26YRgphoYcizK7vW141VqV8evRwd4C+ufHDXV8zSbd81bQJIr9UwN6SGLAFbtk6CSBbMepbhq5lO6NQfAf65fug/GOFtzycOqokHtxJawFOeNqJrVMVLHihMrOZRtGvM5m4vpv9LR0IoP4ynjCqAEyiLWoxRPBgB"
+            "signature": "CAQSoAcKEAgTGAI4AUIIdGhpbmtpbmcSDMEtV5stMUmhdJuTUhoM0WRv4at1GnB9XxDaIjDF9lPt4MMoW9GvqyJLbghhhtM/WnuxE5rHRyAC+XuoLIvYLT8IgO+UKWjZEs9hiKUqvQaRMszHmQ0pMX0DM/Z2ELlDRh1xLVG7/yu/IMo3z7/fElggE4o3X3uSvdpdXUX7NqY9Mt2fInZQhzHaIlxFc0SSSwTBi0GZbcqDKgOQOkM4Sq9xqVM4kfhIE1js6ITDTILhbh7hS3znwmZQLYBQyvvtRQbu133QipeWZ8cR/mJrZgefadzp9hMkXOJEut61WyPuMz3X1yf2AQBaftNwA9iEBViX+cFkoin7vSuYeuBPfyc5FWWsHXByJ2Gs15BwZ0OzL8s7oWc4EDE+PX0o5lWXl7vwhbxff0ka1yTlcJvE46r7BimdNdiy4PcjxSY1RoQziSeNIlcpBWN6FekkXsjYZZb+JsFcpzmjlVIWWxNBG4USk9RrW01WValjAuzj/7DQw93wa9SFuwC1qYizJRZnTVLBks9fRON2GRei5lU9XB+WRxViRPdFJwQtLBHurTL3EZyvviBgQlF9DxPkGWRMysj3a/IiDBcfSGTGcv/0aSxWXvyWKlfT8FCJklp912cE3UF38zNSTprNnYNVDU0jgYOToAxgHNxqHd1UPLlKWbG1DKWab7oVLY9soP/HjwVBtijB9sT49zSYPyphVS6aiT4v6rGr+iySf5JQECJHZYehLIVKO5ONE0/HSahOAZr+H27sF7VcSXcEud6lQBWBQNZQfwBqoPRSlVSZlUG1Kxzo71/Ad3mN3/bUKgms0quUGs+1V+v+Hjz42ymPgHr4MZwNYw7v0KmY3dvNDEzkm9Dz5RTQCH0Z2CBWjLyTLkQE6GSOywQrna04OpOAV/+wYFY8/BylUtel+vlcDbSsi9W2Tw4iLUJ/ST1rwOqlX+bIsy81+MEPtZdPjUWI5J6LaJy2bUthe9yvfLMo4DmjubqjfQpN3+EoXzO9xtDVNc4Dao0S1/9vkpbXF5QASwXpZS+QKeHoSw85OcMdzqohe8llpvsb90itaAuTMLSUSHcBKJK6oSLTFU6rX5QRIusT8I+nYXOpyfbUi8n7Gg1UGCEDMu7e92q9pL7XRRs+WjdR3jBB76tVh3ueYrBFoayuhYr/PjjjOC6Fv7M0oXUhMXOWqHhE/Ive94LlJMrNtisKZ/eAEfZkLBxmnwM3GAE="
           },
           {
             "type": "tool_use",
-            "id": "toolu_01484bG8j6jc4s3qWG36BaLh",
+            "id": "toolu_01HVho1DkgmAWGaSfvmhVf1h",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en-GB\" to the <html> element",
-              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is in English (\"Speckled mug, 350 ml\", \"Dishwasher safe\", \"Quantity\", \"Add to basket\"). The £ price and the word \"basket\" point to British English, so I chose en-GB. I found no lang attribute anywhere else in the repo to follow. If the site isn't meant to be British English specifically, plain \"en\" would also work. A reviewer should check that this matches the site's intended language.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. The visible text is English. British spelling and wording (\"basket\", prices in £) point to UK English, so I propose en-GB. The repo search found no lang attributes elsewhere to check against. If the site is meant for a wider English audience, plain \"en\" also works. The reviewer should confirm which one fits the site.",
               "confidence": 0.85,
               "ops": [
                 {

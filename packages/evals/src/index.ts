@@ -3,3 +3,4 @@ export * from './corpus.ts';
 export * from './mutate.ts';
 export * from './oracle.ts';
 export * from './images.ts';
+export * from './hard.ts';

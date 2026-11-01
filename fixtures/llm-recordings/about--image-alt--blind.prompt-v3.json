@@ -8,25 +8,25 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01BAkVqnBZEW56DeL3Qy3tVU",
+            "id": "toolu_01NuGafQVeSxADKqGsYCKS2Y",
             "name": "get_image",
             "input": {}
           }
         ],
-        "text": "Need to see image first.",
+        "text": "Need image first.",
         "usage": {
           "inputTokens": 2467,
-          "outputTokens": 34,
-          "costMicros": 3765
+          "outputTokens": 32,
+          "costMicros": 3725
         },
         "raw": [
           {
             "type": "text",
-            "text": "Need to see image first."
+            "text": "Need image first."
           },
           {
             "type": "tool_use",
-            "id": "toolu_01BAkVqnBZEW56DeL3Qy3tVU",
+            "id": "toolu_01NuGafQVeSxADKqGsYCKS2Y",
             "name": "get_image",
             "input": {},
             "caller": {
@@ -38,53 +38,54 @@
       }
     },
     {
-      "requestHash": "b6bb00d14b2ec781f1b3aa2813d1e6be035390deb8e0af00a291d6978fe6fd8a",
+      "requestHash": "7884c533e39c5d3a10a061263fb7ec6738c210aaf332ffb59751c5aaf8b70abe",
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_01KZVc5P5wFw7hFarprt45Zu",
+            "id": "toolu_01UijDu4bQqHJV9K64uzgeR1",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of /img/studio.jpg to write its alt text",
-              "rationale": "The img at offset 135 (/img/studio.jpg) on the About page has no alt attribute. I tried to load the image so I could describe it, but it failed to load. I won't write alt text based on the file name or the nearby text about the garage and kiln. That would be a guess. It's probably informative because it likely shows the studio, so an empty alt is probably wrong too. I need someone who can see the image to tell me what it shows.",
+              "title": "Alt text needed for studio photo on About page",
+              "rationale": "The <img src=\"/img/studio.jpg\"> on about.html has no alt attribute. I tried to load the image but it failed, so I can't tell what it shows. I won't write alt text based on the file name or the nearby text. It's on an About page right under \"About the studio\", so it probably shows the studio, its people or its work. That would make it informative and it would need a description, but someone has to confirm what's in it.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show? If it shows the studio, people, work or products, please describe the main subject in a sentence so I can write alt text for it.",
+                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show, and what should its alt text say? (Keep it under about 125 characters and describe what it's for, not just how it looks.)",
                 "options": [
-                  "It shows the studio space or workshop (please describe what's in it)",
-                  "It shows people at work in the studio (please describe them)",
-                  "It shows pottery or other products (please describe them)",
-                  "It's decorative only and adds no information (use an empty alt)",
-                  "Other (please describe)"
+                  "I'll provide a short description of what the photo shows (e.g. the studio space, the team, or the pottery)",
+                  "It's purely decorative and adds no information, so use an empty alt",
+                  "Retry loading the image and propose alt text from it"
                 ]
               }
             }
           }
         ],
         "usage": {
-          "inputTokens": 2520,
-          "outputTokens": 460,
-          "costMicros": 12497
+          "inputTokens": 2518,
+          "outputTokens": 453,
+          "costMicros": 12349
         },
         "raw": [
           {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShwUKEAgTGAI4AUIIdGhpbmtpbmcSDFSrCnWfxwop0zSySRoMszU2Ad1bmD0sxy7JIjD3qxoDxYh97jx1O5rdaDQz6IXPFq714YUhwpOF1iK7TW6hJ7V6LOa30ZV1xquUpEsqpAQsuvcLHW9zaNqOxYPxI9O5uf8BN6lCl7iAhVT9rPPB1xYsfUyGGwOY6Hk55riWrmp+yV7vT4UCDan+mTEmKr6D+NF0NULdvDNw3yes720J/gAxZSIZvYKGOxc26SqYz96EukwnB/Sd++H1MvcJcPehTC6xJOYqGNn7I4O3HGTbNQ/C5/7seMpyfbU1IYJ2PkmajD1igRChfETDmI/gB2uSD6VpRhQvH1ATqcJ4ZZV4CToqmw2+ZhcBkCCHlqucuS0SEghrDUWcsU2lEdiwqUyEZ5fhXnm/WayA8L0J3xyaANFXWwgRe/Su/UDeC9E3C73pCNfBvsytssqne1Dao54W0Vgtl9MBKddg76ch9kN3utYO8zT4efNzioe4bRzyA64H9HxUcwKFCvDKi1CrNKI+5n1wPyol+mKVlExmFxRyZKl33QRkP1kn6wmR4xHleetnpo/uTMYOHPlxe0yGx1oN8og6OACWsjrz7XBTSeG6WhUodFjzw4Ubx7kRXsHrTaUiND+/+ANPDOIZySOiwzzOEQZMRWu65ajJjmt4HmnQ2DkuS+BaZgbZdouyobNGXmtjYT3ksMvaf5F+0MJfrsMYe1T2sWEPjcDzTMqUcRutNo0Lu+FqFhaqRcnuyyBkQhuRJta0MOHgvtApI5JcoasJXJby8rWR4VpJxfrZjBcY3RrYgHYdT345paRDXbHJJZCKncYpf3+ZNbJaoFKjXx4S/c0wVRgB"
+          },
+          {
             "type": "tool_use",
-            "id": "toolu_01KZVc5P5wFw7hFarprt45Zu",
+            "id": "toolu_01UijDu4bQqHJV9K64uzgeR1",
             "name": "submit_proposal",
             "input": {
               "kind": "needs_input",
-              "title": "Need a description of /img/studio.jpg to write its alt text",
-              "rationale": "The img at offset 135 (/img/studio.jpg) on the About page has no alt attribute. I tried to load the image so I could describe it, but it failed to load. I won't write alt text based on the file name or the nearby text about the garage and kiln. That would be a guess. It's probably informative because it likely shows the studio, so an empty alt is probably wrong too. I need someone who can see the image to tell me what it shows.",
+              "title": "Alt text needed for studio photo on About page",
+              "rationale": "The <img src=\"/img/studio.jpg\"> on about.html has no alt attribute. I tried to load the image but it failed, so I can't tell what it shows. I won't write alt text based on the file name or the nearby text. It's on an About page right under \"About the studio\", so it probably shows the studio, its people or its work. That would make it informative and it would need a description, but someone has to confirm what's in it.",
               "confidence": 0.3,
               "question": {
-                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show? If it shows the studio, people, work or products, please describe the main subject in a sentence so I can write alt text for it.",
+                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show, and what should its alt text say? (Keep it under about 125 characters and describe what it's for, not just how it looks.)",
                 "options": [
-                  "It shows the studio space or workshop (please describe what's in it)",
-                  "It shows people at work in the studio (please describe them)",
-                  "It shows pottery or other products (please describe them)",
-                  "It's decorative only and adds no information (use an empty alt)",
-                  "Other (please describe)"
+                  "I'll provide a short description of what the photo shows (e.g. the studio space, the team, or the pottery)",
+                  "It's purely decorative and adds no information, so use an empty alt",
+                  "Retry loading the image and propose alt text from it"
                 ]
               }
             },

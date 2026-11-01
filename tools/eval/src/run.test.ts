@@ -6,7 +6,8 @@ import {
   type LlmRequest,
   type LlmTurn,
 } from '@beacon/agent';
-import { buildCorpus, loadCleanPages } from '@beacon/evals';
+import { buildCorpus, loadCleanPages, loadHardCases } from '@beacon/evals';
+import { scanHtml } from '@beacon/scanner';
 import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -206,5 +207,42 @@ describe('runEval: images', { timeout: 120_000 }, () => {
     });
     const run = JSON.parse(readFileSync(join(dir, 'run.json'), 'utf8')) as Record<string, unknown>;
     expect(run).toMatchObject({ model: 'claude-opus-5-5', promptVersion: PROMPT_VERSION, scores });
+  });
+});
+
+describe('runEval: hard cases', { timeout: 120_000 }, () => {
+  it('evalCases adds the hard cases with their labels', () => {
+    const hard = loadHardCases();
+    const cases = evalCases([pick('about--label')], hard).filter((c) => c.kind === 'hard');
+    expect(cases.map((c) => [c.id, c.rule, c.expect])).toEqual(
+      hard.map((h) => [h.id, h.rule, h.expect]),
+    );
+  });
+
+  it('each hard page scans to exactly its one violation, and is scored against its label', async () => {
+    const cases = evalCases([], loadHardCases());
+    for (const c of cases) {
+      const { findings } = await scanHtml(browser, `https://corpus.test/${c.id}.html`, c.html);
+      expect(
+        findings.map((f) => f.rule_id),
+        c.id,
+      ).toEqual([c.rule]);
+    }
+    const { scores } = await runEval({
+      browser,
+      cases,
+      llmFor: (_c, job) => scripted(job),
+      budget: { totalMicros: 5_000_000, perCaseEstimateMicros: 62_000 },
+    });
+    // The scripted model patches everything with a description: right only where one is expected.
+    expect(scores.map((s) => [s.id, s.correct, s.forcedBadFix])).toEqual([
+      ['hard--divider', false, null],
+      ['hard--logo', false, null],
+      ['hard--hours', false, null],
+      ['hard--icon', false, null],
+      ['hard--qr', false, true],
+      ['hard--chart', false, true],
+      ['hard--field', false, true],
+    ]);
   });
 });

@@ -2,7 +2,7 @@
 // or against the recordings (no calls, no cost). Refuses to start over budget. The API key comes from
 // the shell (ANTHROPIC_API_KEY); it is never read here.
 import { anthropicFromEnv, fixerModel, PROMPT_VERSION, promptHash, ReplayLlm } from '@beacon/agent';
-import { buildCorpus, loadCleanPages } from '@beacon/evals';
+import { buildCorpus, loadCleanPages, loadHardCases } from '@beacon/evals';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -23,7 +23,7 @@ const { values: args } = parseArgs({
 
 const model = fixerModel(process.env);
 const budgetMicros = Number(process.env.BEACON_EVAL_BUDGET_USD ?? '5') * 1e6;
-let cases = evalCases(buildCorpus(loadCleanPages(), 42));
+let cases = evalCases(buildCorpus(loadCleanPages(), 42), loadHardCases());
 if (args.limit) cases = cases.slice(0, Number(args.limit));
 const perCase = estimateCaseMicros(model);
 checkBudget(cases.length, perCase, budgetMicros);

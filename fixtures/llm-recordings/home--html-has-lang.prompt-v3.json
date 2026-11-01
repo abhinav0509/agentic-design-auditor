@@ -8,50 +8,12 @@
       "turn": {
         "toolCalls": [
           {
-            "id": "toolu_018HcRhi6uAQoUcxkve2coiA",
-            "name": "search_source",
-            "input": {
-              "query": "lang="
-            }
-          }
-        ],
-        "usage": {
-          "inputTokens": 2344,
-          "outputTokens": 133,
-          "costMicros": 5253
-        },
-        "raw": [
-          {
-            "type": "thinking",
-            "thinking": "",
-            "signature": "CAQStgYKEAgTGAI4AUIIdGhpbmtpbmcSDA3aWpifVuqbQa16FxoM2bIaaAWEu86yHflNIjDYGboxfEhIMOxNYOdf2n9rx5pPBWm1oj+CcVNeklVF4tEJyOk9acypyACY5qyG5xAq0wVxUFy8HY6MYZ/++JsNe7CQagdcMEkyApS4eKFqqozss3B6W8avUMiqRLG4Kt28xFLsj/eS+OJ2OyKnSHIAir4pExMXon3vGyK852InVFMfHsgOF8T+vwB4r/jVBVkGg4lI7arT9h3Qc0c0Zs+srezzslisUYW3vJ66OJXjGqByoEVZPIu1nABx8DMmHokhdMDfJu9ATP5mVznG1TV00nl+HTNELCMRf/oXywbvzYUidErxlq+/bLBAmUFe9N929/joZ2YXfonKDA93Wcb1cFH42j8BVowSyxM8ZwIKbppOcMeOZP5cNAgRsPadvJH+Grwx9cTdUkCLZfNokLpjTkkuQXsVX88gFvSsn6m/PIU9I6voQ4T8+ukiv1DFW8tsTNMeUKOzUfXOIVrRqzQ2PUesKxHu3yZ29T24/ikvoGvDXDdH0KIjt56TwQ1iDZKL4qdrlt6n9hLD0IAd6nqm+eDkdry4zDVXNo4li01c63B7WPspdFTa9pdiGitOEfm9bxQl2YTGt8SQ9WgxBR51A64WOWpsE+txu6eQpHcmE1WEHhk30rYrbvXDGj8yVAjXui3e5ZUQUiFgPm4FQHoeLoyIqTrbdSYvQA1OvV25q1TWWEcI8KS0oV0X6AejGE9TvZM60yv3BG7luWSPQyMIjW2yNDF1O1Dos6bI+goxtqZ18ulJCI3j8eRyoylK2ZCRjzuc4dSQTYArsQiE+dCRl56XN+WfqKivwjjrueyBRMs219lj6kDkh63Mn+iEYyzk2162JwOQls6eYp6GBHsdSp2Oax8zbkIUKHtf9tQNecJee3iOnTXD6z3l3eGu7lud71zzHzyu7oi7NCjSSvE9+pidU4c3dzA/BqRqIuw559ZOZ5Rw9tiMfRXG9rtWrAf/az/meWYEKBxGFcQg8mD2XragYi0E6DRXgs4si3Ao2+BNQkEOOfTztKdOsqXNMZ1X2cZvkakYAQ=="
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_018HcRhi6uAQoUcxkve2coiA",
-            "name": "search_source",
-            "input": {
-              "query": "lang="
-            },
-            "caller": {
-              "type": "direct"
-            }
-          }
-        ],
-        "model": "claude-opus-5-5"
-      }
-    },
-    {
-      "requestHash": "b905e3f47a5a10f343860285aeab0f608587f3d765fd7fea1fadecd984826ffb",
-      "turn": {
-        "toolCalls": [
-          {
-            "id": "toolu_016wueQ5JAqXw8Nd2WAUgtT4",
+            "id": "toolu_01MUNLKHaFfLPMGVMG6fdV4T",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element",
-              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to use for pronunciation. The visible page text (\"Handmade pottery for everyday use\", \"Open Tuesday to Saturday\") and the title are in English. The repository has no existing lang attributes to follow, so I've used the general \"en\". The reviewer may want \"en-GB\" instead, since the studio is in Leeds. Once deployed, this change should clear the html-has-lang finding.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. The title, logo alt text, search label and body copy are all in English. \"Handmade pottery for everyday use…\" and \"our studio in Leeds\" are examples. This patch sets lang=\"en\". The studio is in Leeds, so \"en-GB\" would also be correct if you want to name the regional variant. That's your call. The patch is limited to the lang attribute on the element at offset 16. It doesn't confirm the page meets any wider accessibility standard.",
               "confidence": 0.9,
               "ops": [
                 {
@@ -65,19 +27,24 @@
           }
         ],
         "usage": {
-          "inputTokens": 2500,
-          "outputTokens": 329,
-          "costMicros": 9797
+          "inputTokens": 2344,
+          "outputTokens": 425,
+          "costMicros": 11093
         },
         "raw": [
           {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS9AUKEAgTGAI4AUIIdGhpbmtpbmcSDNKws5QLJWSXj832MhoMykWGE1/ZPxA25ChhIjBpegVZcVOkuNiAs9OMQWp+6K+OxxVCO+s+1iOH0oCtJrGaQHp+oJb64RQYCv2fU5MqkQUu1JpwgAE0xXMQTvxpG9c4daRO87IhiWyNCHNScFaMrcFO72lVJH3sjT4NK45bKRkiYuBTXy8gX24BQ2Fn6OHbfH/fjyZK4qgsWpf2VZcIOzje9fWbjM6AM4QqAoWGetuWjj2Bao8Ewg4QtKi+ZQZewSXo1/1mu25VFrNQ+Hmo3af78mp0POEeLgtJ+v7bzB4jBcxhvDZflDwUhX6YQFtuHApCcKi+5wfRF0emOeJqOXaAp2fSHG/KUsEG8m2QvDCFW+wqyHuslh0ChUX5EQJLSB9GAe6lHGfdtEuxzl6IOorIOpmfvZSchhrnvr2A+4oPvIMBOx09FLxUP5luoktDbSUIWj8jnXm2MhBuMJqFKCoDw9wFl7pZL5OFSutJNAkz4ukvTgYLGXwNwU3XHbQZdPlKL/HwyAy2PaNVOaBIk6br9F5PwE9bIglxn2U3ES0/cIFycrUHFY5GjI6l9g33BHE3KFSlKFbslbFa6eCulCoWaR2XL9Ncn6SIIITqSErJAi/7XhKCQdWiODR1jPJk8VXhRi1uc3DFtb8T3bULsWph5iwXe8zp9OrHi8V2jD5GqKu9JKEwKaXwWYpJVUiMbED3YNS9ZODVPoUD/ujqAUjBMefym1JGaYoMb0JJVink80HFsFDy1oRV0Jy6wA2ZWUKj6roBDL0ZS1xJtKnuWEa4Ceb+ZsTgao1QMmk3xgfVdzU3ximwoFknWP3yyuVE7QsnRkdGT0wrF9c/FNMlGzGlk0OSHOUAfaQBKO93W4Cn8xaLZIKOkv/XAz4AQC3F+kX299Tgct/xyB4KEWfMZ4RT1FgJbxVHhTANf7QvOo16VqFk3Hqf+R/3mddIlO9wz9Q3rs5NwnGj5kOohgNNWCoYAQ=="
+          },
+          {
             "type": "tool_use",
-            "id": "toolu_016wueQ5JAqXw8Nd2WAUgtT4",
+            "id": "toolu_01MUNLKHaFfLPMGVMG6fdV4T",
             "name": "submit_proposal",
             "input": {
               "kind": "patch",
               "title": "Add lang=\"en\" to the <html> element",
-              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to use for pronunciation. The visible page text (\"Handmade pottery for everyday use\", \"Open Tuesday to Saturday\") and the title are in English. The repository has no existing lang attributes to follow, so I've used the general \"en\". The reviewer may want \"en-GB\" instead, since the studio is in Leeds. Once deployed, this change should clear the html-has-lang finding.",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. The title, logo alt text, search label and body copy are all in English. \"Handmade pottery for everyday use…\" and \"our studio in Leeds\" are examples. This patch sets lang=\"en\". The studio is in Leeds, so \"en-GB\" would also be correct if you want to name the regional variant. That's your call. The patch is limited to the lang attribute on the element at offset 16. It doesn't confirm the page meets any wider accessibility standard.",
               "confidence": 0.9,
               "ops": [
                 {
