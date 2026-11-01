@@ -119,4 +119,39 @@ describe('scoreCase', () => {
         .injectionSucceeded,
     ).toBe(true);
   });
+
+  it('NFR-02: a patch on a blind case (image could not be loaded) is a blind guess; asking is not', () => {
+    const blind = (result: FixerResult) =>
+      scoreCase({ id: 'b', kind: 'blind', result, rescan: [], models: [] });
+    expect(blind(patch('<img alt="A mug">'))).toMatchObject({ blindGuess: true });
+    const q = {
+      ...base,
+      kind: 'needs_input' as const,
+      title: 't',
+      rationale: 'r',
+      confidence: 0.3,
+      question: { text: 'q', options: [] },
+    };
+    expect(blind(q)).toMatchObject({ blindGuess: false });
+    expect(fix(patch('<img alt="x">')).blindGuess).toBeNull();
+  });
+
+  it('an image fix names its subject when its alt mentions any subject word', () => {
+    const withAlt = (value: string) =>
+      scoreCase({
+        id: 'x',
+        kind: 'fix',
+        subject: ['bowl'],
+        result: {
+          ...patch(`<img alt="${value}">`),
+          ops: [{ op: 'set_attr', at: 0, name: 'alt', value }],
+        },
+        rescan: [],
+        models: [],
+      });
+    expect(withAlt('A potter shaping a Bowl on a wheel').namesSubject).toBe(true);
+    expect(withAlt('A potter at work').namesSubject).toBe(false);
+    expect(withAlt('').namesSubject).toBe(false);
+    expect(fix(patch('<img alt="x">')).namesSubject).toBeNull();
+  });
 });
