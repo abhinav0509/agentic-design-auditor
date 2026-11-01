@@ -1,0 +1,91 @@
+{
+  "scenario": "home--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "295d5a0411d217f07b4ebdb9777a39d31dd027d254da36fe754a50f38c322f7d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01YTywiT4wDscSA9ygNNsAj1",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2506,
+          "outputTokens": 26,
+          "costMicros": 3761
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01YTywiT4wDscSA9ygNNsAj1",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "b31585322796f3632dd1e76fce931f74a63c65c298a38afc4fef42551a5e2aa2",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01N6owJP6yFVt5B9TArznRoY",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to hero image of speckled mugs",
+              "rationale": "The image shows three cream mugs with brown speckles and brown rims on a wooden table. These are the shop's products, so the image is informative and needs alt text. The alt text says what the image shows and does not repeat the h1.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 391,
+                  "name": "alt",
+                  "value": "Three handmade speckled cream mugs with brown rims on a wooden table"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2965,
+          "outputTokens": 277,
+          "costMicros": 10617
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01N6owJP6yFVt5B9TArznRoY",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to hero image of speckled mugs",
+              "rationale": "The image shows three cream mugs with brown speckles and brown rims on a wooden table. These are the shop's products, so the image is informative and needs alt text. The alt text says what the image shows and does not repeat the h1.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 391,
+                  "name": "alt",
+                  "value": "Three handmade speckled cream mugs with brown rims on a wooden table"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

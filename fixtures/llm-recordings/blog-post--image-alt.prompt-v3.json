@@ -1,0 +1,101 @@
+{
+  "scenario": "blog-post--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "67b2f2c19f43812221a647bc4f112622fd74bf51b0c5ec42188d25e5a5ba98a5",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01G4iRc5Zro7bw674A3ghGsE",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "I need to see the image first.",
+        "usage": {
+          "inputTokens": 2466,
+          "outputTokens": 35,
+          "costMicros": 3781
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to see the image first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01G4iRc5Zro7bw674A3ghGsE",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "9ad39f52893630cb7f7ca80b0a3fbb3474e8b2dd129feb7fec3b559b44abee04",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01GZPXooXJRR6ToRikujma9V",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to the colour swatch image in \"Why we glaze twice\"",
+              "rationale": "I looked at the image. It shows a grid of 12 rounded squares that go from pale blue through teal to deep green. That's real content in the article, so it needs alt text that describes it. An empty alt would hide it. I wrote the alt from what the image shows. I didn't call the squares \"glaze tests,\" because that idea comes from the file name and the image alone doesn't confirm it. If the squares are glaze test tiles, or if they compare one coat with two, the reviewer may want to add that. I used \"colour\" to match the British spelling on the page.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 154,
+                  "name": "alt",
+                  "value": "Twelve colour swatches shading from pale blue through teal to deep green"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2934,
+          "outputTokens": 605,
+          "costMicros": 17053
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS1wkKEAgTGAI4AUIIdGhpbmtpbmcSDFGhS8yQDOajUaGwzRoM9lUlwcaFOBNyoyUnIjA8ak7K+dTCf6Ljkb2Ac+yeX5RwSJQMrnvg4DnGhD989+7GBYld+PQElyn5Z2Vp3KQq9AhEa60OOiEcmE9qin311fEoVRe53J+bEjL4up4yc8tVD8uup+eYxTD2C8pBX3N7Fcgss3JIeBZuUjAFlk5G4B7CMTLkM77nqvSk9Z8rC+SqgY3LR4z+aiXNIFa7Bfycpj3Ksd4EDt4OJZckieAkPMFjrRTgruyOLXKIIN/FIRE4q6XLltqwlFxyV145g6KcJpIzIQCV7nfwZqsZOaaPeRVMm5aTVbn5Z3yrvctcXYZAtGcgHKrhe09gAe5oOWEWSKUALdAJr8H8cHxakunIjZF5/uZ4UWDIOKKZqPvUyy29hGDgXcA7PQ5i/AeKElCOP9D2W6uTqghWd4q4sViwpgt9cSaKw77BXCxXbfjiqEJMbXpNfpFLa7Ov3hGGlPdk4v4TDNDuAEyna2ssSquFqaGLCgxZDMsoMSXuTZIIbklFwO4EQglONX5u/9S684MzV7ci7oPOUEWoW9QEA4wgUZScPhh/D1puA1Hso3xp3rf1q0gxXjFkPR7vxvFOhDOsJho5JStCKV38BX5A4IwlEjnlWpg+Lx5wvjKtmlP6V16WBbZzn9VfMP816dDAl9JOiqH+nlBSk2enscl+ajkJzEpnGZjY51jRJutDC5xXE7B0tvA9ZgJjbeu0wJr6oIhTc0aPWp0QCj6+tdvoVDu0mhHCixmkKSNOnyQ4AS7ly3MYxYqahjlCa66Hh0QNfHiEXmIhe1kDZpt5TaKYA+M5qhk4CZxjjtaq3bGZNiLLfI4wblq5a/ZGnyiN9Cff8mKvZEEwcgzbO4GUSZdmwZzJQ2SLarJKmfPRajY3QgH5HZ+4WrPMLK3/8VfZh4yeP/7570DCaWPwsrSWeblxWUW4mCb0q1F2zn3SDqRqVMDkLIYNNfkYheHFiCW/mmBMRCwmFNQSN+hpWc7u3UnviEy8nm6l+i8troj1bxfFyHD8JjJGoDyXL0Go89l0grK4xB1sKN5DuLi7BThSFL+F0GxaHEDgKaZdcYTvL+MBEeY5UqmoGJcpXJ8paXddeZQaUa1PGwkFLu6w77PlB3aqAZ10fAlyXWcYwvCZNVt2FzMVkOyuQM1RoWvTvafdjrajrobzWwuYGtR7nuKgo1FEAJx7Iwq9SUiF4PLJ4UDvLGXxUqlF5RUXVLqteDoLM4cHJS11LYoVCaE7FJVhKonsh7245RC7C3bKLt9VZdZzkbIssrI64Dfw2Nl1bbHq9OcCdTPGCsjmEMHk1C5/sPSbRvtMlKWyqyAr22BRx5HBVsmgjZhPeZzbelVXbK2nmHT7aLexqRXu+koPL3l2Tt7u1ZTtBjZeNzOTpFN2rM9VbUpkEnaEVAJCJX4wkVEm3KgcfBOUZ3vPZNambHKoBtrmFcp/0DoaJOPKW38ZvI+XvYCwFwqxwH8BtJerEJgisoGXoNUlfMlZZDN7r/COXCseFMNq9FX9/R9BNcJGx9HyNdpjAudCZHAAGaHq6Xgpm2WM+LKb5X8jV83/vWQrqH69SuHLMqjzFbEt2iCK4n4jZZwRu7RwPAhJEmYYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01GZPXooXJRR6ToRikujma9V",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to the colour swatch image in \"Why we glaze twice\"",
+              "rationale": "I looked at the image. It shows a grid of 12 rounded squares that go from pale blue through teal to deep green. That's real content in the article, so it needs alt text that describes it. An empty alt would hide it. I wrote the alt from what the image shows. I didn't call the squares \"glaze tests,\" because that idea comes from the file name and the image alone doesn't confirm it. If the squares are glaze test tiles, or if they compare one coat with two, the reviewer may want to add that. I used \"colour\" to match the British spelling on the page.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 154,
+                  "name": "alt",
+                  "value": "Twelve colour swatches shading from pale blue through teal to deep green"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

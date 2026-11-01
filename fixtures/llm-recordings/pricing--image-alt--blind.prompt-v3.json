@@ -1,0 +1,91 @@
+{
+  "scenario": "pricing--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "915b28ee4ed0cf588f633b712797a7444492a1b4ca93f0266f1dbbe9bcbccaca",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01U8yKtiRpxqYd8LGYgtqXaY",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2589,
+          "outputTokens": 26,
+          "costMicros": 4093
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01U8yKtiRpxqYd8LGYgtqXaY",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "16a03a0fe7d8ba2540feaa02a3230fa36675e618d331c907b6be4594b18fd2d8",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_015QeuyrU6KWrkhiBb5e5FyH",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/workshop.jpg",
+              "rationale": "The img at offset 132 has no alt attribute. I tried to load the image but couldn't, so I can't see what it shows. I won't write alt text based on the file name or the text around it. The image is on a workshop pricing page, so it probably shows the workshop, its people or the work made there. That would make it informative, but I need to know what it actually shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "What does /img/workshop.jpg show, and what should it tell visitors on this pricing page? (I couldn't load the image to check.)",
+                "options": [
+                  "It shows the workshop, people or work made there. I'll give a short description to use as alt text.",
+                  "It's purely decorative and adds no information, so use an empty alt (alt=\"\").",
+                  "It contains text that matters. I'll give that text."
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2634,
+          "outputTokens": 400,
+          "costMicros": 11753
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_015QeuyrU6KWrkhiBb5e5FyH",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/workshop.jpg",
+              "rationale": "The img at offset 132 has no alt attribute. I tried to load the image but couldn't, so I can't see what it shows. I won't write alt text based on the file name or the text around it. The image is on a workshop pricing page, so it probably shows the workshop, its people or the work made there. That would make it informative, but I need to know what it actually shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "What does /img/workshop.jpg show, and what should it tell visitors on this pricing page? (I couldn't load the image to check.)",
+                "options": [
+                  "It shows the workshop, people or work made there. I'll give a short description to use as alt text.",
+                  "It's purely decorative and adds no information, so use an empty alt (alt=\"\").",
+                  "It contains text that matters. I'll give that text."
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

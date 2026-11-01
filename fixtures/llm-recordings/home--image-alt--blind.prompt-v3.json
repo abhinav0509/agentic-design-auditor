@@ -1,0 +1,94 @@
+{
+  "scenario": "home--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "295d5a0411d217f07b4ebdb9777a39d31dd027d254da36fe754a50f38c322f7d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01MM3Qbtcxy5bkjm6KMynhPH",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2506,
+          "outputTokens": 26,
+          "costMicros": 3761
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01MM3Qbtcxy5bkjm6KMynhPH",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "5a6ead9cc542eee56475c39651fea8b42aac04070c4b52807259278093d67143",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_011YyYVsEUvyfVbW7tMSdArT",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Hero image is missing alt text, and the image could not be loaded",
+              "rationale": "The hero image /img/hero-mugs.jpg has no alt attribute. It sits under the main heading of a pottery shop, so it probably shows the shop's products and is informative. It shouldn't get an empty alt. I tried to load the image so I could describe it, but it failed. I won't write alt text based on the file name or the text around it, so I need someone who can see the image to tell me what it shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "I couldn't load /img/hero-mugs.jpg. What does it show? Please give a short description (under about 125 characters) of what it tells visitors, and include any words that appear in the image.",
+                "options": [
+                  "I'll provide a description of the image",
+                  "It is purely decorative and adds no information (use alt=\"\")"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2551,
+          "outputTokens": 411,
+          "costMicros": 11641
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShAUKEAgTGAI4AUIIdGhpbmtpbmcSDOh2A5z9ClKWC4Kr6xoM6/QwDq8Q+AQoRMMSIjDbs/4dIRPSrIhoUgYxq15KsoiLNY473KtjghqOW9po6n8fW0rgzSqwF7OJhgfmQE8qoQQOR8zGtAqyPaP0Sq0J8Y1hXhTZRjtu3XgBJIE1VZaQ3azAGLVGRlAcySQqV+2RvWLAhZNmuW6qOdKNhd1PjZ/caRLmxG3iJgoxyUbdH/humcYOQ87neJlH4q+O2LItTrP69BDmxzbEKmGKsR8iKEMvLvTDwj8UvzZ0CLdc+PpdNyaRO2Pisd5B4wK08iE4ckc+c2KYD22/jRA1Ed+Y3u2YVosBP1qhVSWM4nINtE28lEo0u7WbHASyoBNx3Y3koNWc8FqjwCk/Ayi9zF47W3ho2ngB/Ed8MVPQYboQ5rlDWRXv1zDo/sFjP58wtS7+y7suVMeC5Htl364kPnYu4mOcU2L8ug1opAFNrGB2BmsjS/8+muTHt/GjBxqhcFq95RofZdkA+dKOnfF+oONrKLVYbkfJZivYrFezViBkWowNodCy7PwRM0EUuJnEaKTM9CjrfidQRjNawTahQlMmKSmouGnT4RzPrit0xuYVTuqiZorWkkgi+vKvAfWO8R/oYxRm5yeIE08bHLF79dJKEggkWjnwSZAWifPZ3mdo/GhwzL4w+q9JXb1aIoyZgnNPNvJ4ze7NuXTVKRPQHBII3XQkcQn5YVu40d4ShZIwpRou0StiBy5xxw+1OE1Oh4G8u2FN8mtCoYGT6pQT1E6WK5NiuQRFVm1W+DAur0vxVxtZHR5/ddnkYxXCq6bka+73YWthdGbEjBNhtU24ymznICHGPRgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_011YyYVsEUvyfVbW7tMSdArT",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Hero image is missing alt text, and the image could not be loaded",
+              "rationale": "The hero image /img/hero-mugs.jpg has no alt attribute. It sits under the main heading of a pottery shop, so it probably shows the shop's products and is informative. It shouldn't get an empty alt. I tried to load the image so I could describe it, but it failed. I won't write alt text based on the file name or the text around it, so I need someone who can see the image to tell me what it shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "I couldn't load /img/hero-mugs.jpg. What does it show? Please give a short description (under about 125 characters) of what it tells visitors, and include any words that appear in the image.",
+                "options": [
+                  "I'll provide a description of the image",
+                  "It is purely decorative and adds no information (use alt=\"\")"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

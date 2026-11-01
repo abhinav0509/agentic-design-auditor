@@ -1,0 +1,105 @@
+{
+  "scenario": "blog-post--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "cbfe088a3a905bb4f003ddca45c81ae306988ccfadf5735224f9893a246cd4a8",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AqcjzuoUzpLUJVAng1dsNb",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2341,
+          "outputTokens": 115,
+          "costMicros": 4881
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSggYKEAgTGAI4AUIIdGhpbmtpbmcSDHEojwrdo5ZjXG764BoMWzffsEJjPKSo8bZMIjD8HX/ebD/ewz8v5W2CS40e03Tgy5a5xeoJ2CW9fturAkP9xqr3H9EvYOcigND2A4IqnwX83DHx0WcM1tKWLU+wFOIbFpXdXrS9+A2mPz8JWSD99VVXRalaV+cbY467CC2J/H8sNZ5eJBPO46siIhyH6fu/jyA0mHEEehktw29LtBu+QECeWiv5mc9N70ePqAmA0oJtme0/DwwFxlrnSi+My90MvTqUUrO/I0sGxZA/eEL/bztKvvPkLVsOXEm9dq5rzw6INCxv82oNBF6PuYza2QTO+Yk2XgBEeXV5UNB+BJQpOMqBXua9Wb01Xzgsw/MbL2tL6qw1Mgdiz+XfJCcCaiSwWyJnERwd9t1m4iHH6quGuPunprWdWiBR3UnN5GLjxZXK0BaH00cos+ZUdzxGvWfdgL21eENaA/KOUI7FuPzfCDXiiaqJKYpfBucjAKWrNBGbej/pv6RQBOvgNwoWj3f8zpQsIRr2AZcCQE89nsjePJk+6yk9azXg3RQHAT7AyI0QSVbdsImKyeh9UCcJthuH4ISonVUv5Owd6XWY+oL6uKgAXlw9pjYcxc8JlR6GMgMNQZazGKeY8jP+TOmjroGumdoVpr+wSxK49RE/HRkv6kD+YQsHMA2Mrx37l+xiA5FNND1XkOcYyXPGGjTF3TFx8kxmTeFBRDfzU00M8F6cKAL5GqqHwMMOUqeeZS4wToZXI3f3eAPqL4mUPEtRaxr0VoFMnFspE2hW41NqWzedE2Jenib7dpISJewvn5c97itfRS6I8Hy1afMg9EOvr0xhA7uUyuHpNLNQlZriRhKIb8UBkbujZpHYgBq0YUoecF5u+1MfwQNv8LHgBNQrrO4iiq2CRp5+5P2PoLYvVB8x85aN03sjjBXDh/bUKEHdEsGcYP+cR6MSYdD22Y0OHlvnITb+rW6n/Dxl10il6fAp/nEMGyp2LixDGOx12BSGARgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01AqcjzuoUzpLUJVAng1dsNb",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "4fddd7d485e4676ff22afeae16fad836b6afab712740f8a30562082f191c5da1",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01W5BPD4UpKrQtkjwRytWogD",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. The title, heading, body text and image alt text are all in English, so lang=\"en\" fits. The British spelling (\"colours\") suggests \"en-GB\" could also work, but plain \"en\" is correct either way. A reviewer can change it to \"en-GB\" if the site prefers. No other file in the repository sets a lang value that this should match.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2479,
+          "outputTokens": 368,
+          "costMicros": 10493
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSqAYKEAgTGAI4AUIIdGhpbmtpbmcSDLQfUZ8za+s83wzsChoMSJ24GIQtXC6ZYUj6IjDY+XeQVN83Mog2ENbX9gem6DYscziVYjHxy2Mxr+VXdXzaK+KIn+3SvyLy+cWNWkcqxQWwQuSZGjVwFkH8AX3l6K80mxfCchRPiIxSu0BtN2SDp0ww65yl//mlmN3gcoBsoZtAECJktvn+nLMaDEafNJaPNPVgxL9mT6c8F11bzyRF+apo9P0OO+U9irEGTIiW0viqcdUYf0q/3+nxmI+uCcJ/IKk70sZiz6r0zM0XRyGeMQfEKkAc22rOYrIdFg/0+RHztj84bYw6XDkmC8HIUty7dcTkjAJsxb8EREUbEjt8zaAc3oBPEfhAZkepQN8Klp3Dc8MEZOvUxMnFWveORKfKQQCYwPx6sxOZJSGKxXsfeJQD5JdLxSyFNhC7NyhuSfDj4b8Hyic/0SyzC0KEUYsxHItvzeNfnAEA7vNvykdc8az8Us0OKG5p7rLstbXQKkYj7N5s3b7Mf+m0TWrPBILkGAJL47OcTCmdmrIuPoKPV8YLwkn+6n2WYg/XUc+jjXhxE5C/eRYnVqYVRDhFQ/SYHMdUx8G/jwLtTiSOdH1ghK7yY8HB0mXoXh0oLpu79B1C+/1P/2icVCJ9lQkvw5Bw1JYZu+woWHDJXva+QbbbeWfotX1vQ6xsuTydg5k5GtqucdzjT3OSrbiIEU6PWLmJpZAPT519NZXMNu02xN9rSPulYQVuF2DinE/7gUoP4AGF/oJJmoFMB+1qWEhqdSOYz70gaTsjAJVHN6/7cyei7+RtqZqCGvM9o3xPMjBksbDlIhydTdmup4QIgoMXnFbaLmVi9Y0X/gV1D/IRardeKZCy6rVQX19p8R3tfeontvYoUd9RUYOxaDZzJyUbb9kuopL8kyszXibu3Mpy95sNatH2Ljeyq4hnqcttDnOfjExJJCQEJTZIsPAKUUlAvSW7UHe9+/dNH63BFygZWCiJgU7r1xxvY/esEln2wDmDvcT+zG530r5/NpujjttaANqxMzPGaCLKTdRta64bmaI1/jrkQjwdGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01W5BPD4UpKrQtkjwRytWogD",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. The title, heading, body text and image alt text are all in English, so lang=\"en\" fits. The British spelling (\"colours\") suggests \"en-GB\" could also work, but plain \"en\" is correct either way. A reviewer can change it to \"en-GB\" if the site prefers. No other file in the repository sets a lang value that this should match.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

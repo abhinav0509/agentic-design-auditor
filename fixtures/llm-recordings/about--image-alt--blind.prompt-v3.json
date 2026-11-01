@@ -1,0 +1,100 @@
+{
+  "scenario": "about--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "53dfa8a631a95f78c6b4fbbb1941a6044d6370393a2a4755c987d64b7c26af0e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BAkVqnBZEW56DeL3Qy3tVU",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Need to see image first.",
+        "usage": {
+          "inputTokens": 2467,
+          "outputTokens": 34,
+          "costMicros": 3765
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Need to see image first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BAkVqnBZEW56DeL3Qy3tVU",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "b6bb00d14b2ec781f1b3aa2813d1e6be035390deb8e0af00a291d6978fe6fd8a",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KZVc5P5wFw7hFarprt45Zu",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of /img/studio.jpg to write its alt text",
+              "rationale": "The img at offset 135 (/img/studio.jpg) on the About page has no alt attribute. I tried to load the image so I could describe it, but it failed to load. I won't write alt text based on the file name or the nearby text about the garage and kiln. That would be a guess. It's probably informative because it likely shows the studio, so an empty alt is probably wrong too. I need someone who can see the image to tell me what it shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show? If it shows the studio, people, work or products, please describe the main subject in a sentence so I can write alt text for it.",
+                "options": [
+                  "It shows the studio space or workshop (please describe what's in it)",
+                  "It shows people at work in the studio (please describe them)",
+                  "It shows pottery or other products (please describe them)",
+                  "It's decorative only and adds no information (use an empty alt)",
+                  "Other (please describe)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2520,
+          "outputTokens": 460,
+          "costMicros": 12497
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01KZVc5P5wFw7hFarprt45Zu",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of /img/studio.jpg to write its alt text",
+              "rationale": "The img at offset 135 (/img/studio.jpg) on the About page has no alt attribute. I tried to load the image so I could describe it, but it failed to load. I won't write alt text based on the file name or the nearby text about the garage and kiln. That would be a guess. It's probably informative because it likely shows the studio, so an empty alt is probably wrong too. I need someone who can see the image to tell me what it shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/studio.jpg wouldn't load, so I can't see it. What does it show? If it shows the studio, people, work or products, please describe the main subject in a sentence so I can write alt text for it.",
+                "options": [
+                  "It shows the studio space or workshop (please describe what's in it)",
+                  "It shows people at work in the studio (please describe them)",
+                  "It shows pottery or other products (please describe them)",
+                  "It's decorative only and adds no information (use an empty alt)",
+                  "Other (please describe)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

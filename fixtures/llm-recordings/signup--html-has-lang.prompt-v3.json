@@ -1,0 +1,100 @@
+{
+  "scenario": "signup--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "ff270f2044c90663dc5223109b001613a729288fb9d6176b2d16a1b92e4d353d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01V4PHYmDaVVnXcYUuH8Zf58",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2338,
+          "outputTokens": 106,
+          "costMicros": 4689
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS8AUKEAgTGAI4AUIIdGhpbmtpbmcSDKfg/Ha4/eLpaOqOlBoMw/DIhifSurIuHA25IjDLOezB7wkOsVrdtk2BHzKqhgFghr4OwhqVwPp4yIU1QJu27UhfMvrzSb6etOguC8UqjQVX44vsTc81ncpCzckzKfwngiv5F3nHKsaOyAMOOgT81pOkIictXPRpCh4thvEU7+pjxwSAvLUxTYImgA3kBwhWD9mlUmRZYNU9y1ucfV1fOjvN65mK2ByKWVTMaqGPTZh8xN5Mj1EgfoNdC6q6TSWw1Nhs1lyhGDWNiYysRE6uZuwrPYnak6/KVdXwkrNpaI+5iTAjJK6gyQriSrLnYBIrxAgrZg11a6niQvGNRnpdFlM50XY/dtEy5ouRQWtd0AOSHGn/GHHcnFP7ul01XuXldFfIxyY1iJ13WcJDiWXAfY7shV99NiFhXfUfveQJHx8bqUvOissVp2wI3VeKGmbVHuMCkduHDLEh829gWrPiwF6yn91pqjKApmVUgiT81nUbWQ39HRwgkpC9d9m8kUhftxsNKghNpETk8/YaL0NDAR/zq1DbZMrOx2Xeh5Q3uJCX5x0o6hiAs/Rua+HjNd827zA0+8NpqDk8JnzLvVYP+g+fMS9MZ51UqlYjSSW24LLYLv3nk0yrdaiMz/4VMZvFVkk0XN+uCVXtbjb5y8SE4wZ5q+KHiiEQvVEKdjNmDo4V2BxQO/pX8yBVx6iCOP9k42LGzBGTlDYfvhUFM9RUud3c7yyZw8QPqP+/L3C3qEK47c3/zUWEpEt3GwhDLjSbyjFJaQemF1kmlM9wUVNQVTVT0hMw+Kj/Hdd2ZsXrcYluG2u7/kxNOGBJujxGYa/xKvAcPAmgNrDEWiQLodx/h1XWhF7WUE9iiho6uzIgmmIupWXwJFSc2FQvziE+Xy4gvkoNOlmI2FZfhraN8h+2Th3UeTTDe9Ulb3dWLW5jhY3/HxZ2p6IGtrQO6RdGmY0bnWEw1vBTr90BSFzBRxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01V4PHYmDaVVnXcYUuH8Zf58",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "7dcd148eb98209eea3e29235b886d498d6dede5f9db9a221bbdeb2a00b5027de",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Tfb8mcxagZRkiDzLkKJLB8",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element on signup.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All of the page's text is in English: the title \"Create an account\", the heading, the labels \"Email\" and \"Password\", the \"I agree to the terms\" text and the image alt. So lang=\"en\" fits. I searched the repo for other lang attributes and found none, so there's no regional variant like en-US or en-GB to match. If the site has a preferred variant, the reviewer can change it.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2467,
+          "outputTokens": 334,
+          "costMicros": 9765
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01Tfb8mcxagZRkiDzLkKJLB8",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element on signup.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All of the page's text is in English: the title \"Create an account\", the heading, the labels \"Email\" and \"Password\", the \"I agree to the terms\" text and the image alt. So lang=\"en\" fits. I searched the repo for other lang attributes and found none, so there's no regional variant like en-US or en-GB to match. If the site has a preferred variant, the reviewer can change it.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

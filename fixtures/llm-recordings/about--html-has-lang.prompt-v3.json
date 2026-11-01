@@ -1,0 +1,105 @@
+{
+  "scenario": "about--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "525d250705eb7fb2cf985de787d0186beaee2d36eea3c0dc6dd19caa81620452",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01HYZPH76JaEpWn9bh5Q2hVK",
+            "name": "search_source",
+            "input": {
+              "query": "html lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2371,
+          "outputTokens": 122,
+          "costMicros": 13709
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSkQYKEAgTGAI4AUIIdGhpbmtpbmcSDEtWMxN2WABhHFln1RoM5eGA3sbuowo4dv1VIjA8Rri6S3q20+/M7t1UXHhzjCr3VUEBczpVDl8Bkp+JuF4fiUxM/jzPyxtDL3mf6r4qrgV3vREpSLjlWyFLoAAI1MWf5Cr/zo5YuFmBP+bH3AxRS7GYthtrO4mKUUZpSiwImaC0VPMshkgvwUrnbKHo+ibnF0eD/9MzKtcjR7R5/KPKPdhxVk9q7UQzlhR7IwYJRZI6/xZ6weWKprjv1WnMqTLP3VUZwcOhdIwcnK45POmeLfkD/Av7EuIKpVLFozOArAysOSFCxTg3ISUKwC8HFv+t8oFKoh3b4hRyuPgx6pz3pz25u9Hcc73WXwVV6ds2sW+GCcdA7ioCXEG1q1UxZ0Z2D15a+kQZ/mCMCYqjKHqSU+Fk9NDGbcVeuUxO+7KxADgJ7rM58mnqxC7eNfN1PmT1ynaGGK9aL1ZD3mhaj2SeD9AcIZOnMSnOphbzKY54IpGie419J10xSVpdzhmXVbvIl6GkS9uoqVXU4DhdEBLwiaHLF0iU8NiCj3HwKwCpEnIBs6cJVSCsM/7lXbcL4ZeMOQ/+437n0JzGDhe0FCUYdGNe1PQ5mf8h5ji/r0drkyovg1ST/bSxmL8B6SnvYIGZ8xLPuKJmpcAWPWlHqipXnQeIvHQ2K3If3QYDANn8n6SG8Aup41KJJfmDI1j06RDciuG7ET/eN6M3d5q10xIJB+Nsae/gl664BCWxYeoC6+TPAl0c3fa7PmB2voJoB/bVQbDvdaXu1uO2cjEc6JKGatAI/LfhAUrtNc+SCxGgY1/Qcs8+CKq57ha7JAMMGAI16kIU/vK8OYbvyEZZlNqdDhafE4REKripaEflj/2giDbea4Wqw/XGBNPWnuNP1Hf5gc5tWeUn2zBI1P2l0G06MIG1jLH1RA3jtGnQGXTvf5f7UolnbrlK17K7iX9JTwelnQQEFC58UlsC7df7To/FHieDRW6cIuQYQG0u5pyBmR7ZilGaVoYAJD/w3Fr47hgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01HYZPH76JaEpWn9bh5Q2hVK",
+            "name": "search_source",
+            "input": {
+              "query": "html lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "1445efc13273da9f450191bca54286c8ad58e1b76e6a2318c8b606437d55aceb",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01NjCtuNcFwoshAH6feAp4Pt",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element on about.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is English (\"About the studio\", \"Join the newsletter\", \"Email address\"), so this patch sets lang=\"en\". I searched the repo for an existing lang setting, such as a regional one like en-GB or en-US, and found none, so I used plain \"en\". If the site prefers a regional code, the reviewer can change it. This fixes the html-has-lang finding on this element only. It doesn't mean the page passes every accessibility check.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2516,
+          "outputTokens": 387,
+          "costMicros": 11021
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS7QUKEAgTGAI4AUIIdGhpbmtpbmcSDLm5ZJOjSxphf9j5WhoMz1RqUG22wERKeuViIjCNXLMO/17WPnKqlIqwKuSEWW6VDzIUKrrim4biKUHb9tcnLGfEEQe9eNJPvns939MqigWbjUzI8Rk4NkJAq1NjEtXWDli5r8fwGc5FNaHkgIP4vL+eCPN9y5F4mwWMH4H9GmE9jg5JFRhtS9WVlg8wbLVApaKGWSCTcHDYInSv499ndCg+pafKMJUTUKZ/fNQW5jh80ppHrt7TGW/HzYjhqFC2S8rvQndXtBSKzcBcKy+o+sScucVSnA+WXmtp9akl6jEusQjiTERy7pJqCMY9taiNSsGxPlP5rYIVtBMOxGgvvASXEEsM2ZAWf1i4DigTazzBDktYseZTJzjf3X5z3bZRIt5c5H/U+iLVWEKWHDrlf+ZoJnRvo/vYlltbNCPKRlw//uR5Wqr7GiDue8/Vh5QfhQUvo7JzQACagw9TRe9TdcGBTJ7nEe8+xfuFczgTX0ZdwC7FJhZXLLR5wZVFVqxAhRiPyE6JmyLfhkN1v7F0X9iA4+jIfIskaSUFPGo1p/CkBkDSYVsEw/6VT3PNJifMNqUNUpsjOh6eGPFlqtDheZNATFI+gAfDqyxnzyVuYlN1JFaueTGEXdxwpkBCXnMHKXvONuvYlQMyikCdwXv+hdkf/MW0Q9QzcISYRAZo29wVQ/UXz4wvOK25vnonb62q63hnMncpXXkpXQQT2f75C4k46V4dh04NvWl79wuCYoc30mqPzy6S4epajsX3sBmuomp6t9PKexhWvifxoNbMXCjgETZssQHXl0AxzWRyEtfHB36gqsGYzt08bfXrZCF/tV4V0Ju5BBcGSTyW4/pvfRYDe1RDhnjW/RKCLXf4+/CIxOivRPV8jAvKzhWE0hndF6TqFO1+6asDkamZTRP7AvWbCG5GbkwJP2fabtC5aAo9YVGoJxvpdk5wTCGnLcxMXmQBsqePnf70XhgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01NjCtuNcFwoshAH6feAp4Pt",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element on about.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is English (\"About the studio\", \"Join the newsletter\", \"Email address\"), so this patch sets lang=\"en\". I searched the repo for an existing lang setting, such as a regional one like en-GB or en-US, and found none, so I used plain \"en\". If the site prefers a regional code, the reviewer can change it. This fixes the html-has-lang finding on this element only. It doesn't mean the page passes every accessibility check.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

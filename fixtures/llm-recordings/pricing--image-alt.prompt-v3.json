@@ -1,0 +1,96 @@
+{
+  "scenario": "pricing--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "915b28ee4ed0cf588f633b712797a7444492a1b4ca93f0266f1dbbe9bcbccaca",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01T84UCJTF5GKQYt8AVN9MLG",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2589,
+          "outputTokens": 26,
+          "costMicros": 4093
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01T84UCJTF5GKQYt8AVN9MLG",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "d5d0627c47825d0200553afb9b1d0d45edcea3cfe2ba720757034822f7b8cfa2",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01MoB4R24DwRweNL94Jr3EWe",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to workshop illustration",
+              "rationale": "I looked at the image. It's an illustration of four people sitting side by side, each with their hands on what look like pottery wheels. It shows what the workshop involves, so it carries information and shouldn't have an empty alt. The proposed alt describes the activity and is short. Reviewer: please check that the workshop really is pottery. The picture is simple, and the page text doesn't name the craft.",
+              "confidence": 0.7,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 132,
+                  "name": "alt",
+                  "value": "Illustration of four people working at pottery wheels in a workshop"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 3048,
+          "outputTokens": 439,
+          "costMicros": 14189
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSlgcKEAgTGAI4AUIIdGhpbmtpbmcSDEURAEhxTWWuK7AfQRoMElqwUw2pb7fsaYqhIjBomfrraPMzC1ItRqB3AO6tm9QM9uku9QTg9EAfYKd3eYmQDDBOsyd/YIxmj40RWIEqswbcKROd9Az+1m7W7Rsih5IImtOdR+z2ZIP8zfAG3vB7oeF/vCk4Me/9oUm2WqrNj7BIEr/dGfC2Bd/cKSWBmxdNbnaiv3oodffo85KREVjGTckO9A2nIgNL/tdd/ZNuqXAoCmuJ2h7K1cgMyqq+rSg2wCIGS+7PYS5hNPIIHo4JBB6y+4e43ZuWMcWpWE7mD5NkDTuurvyLqwvL3TSmbTPm8Dccj9cRRYKrYFodXk+GPscx2MIuf3U+5TJT50KACU5KzlQJCV2c660jzU2bZTAP6M6TaTA0ChcFZKQXvw8XZqTpSp5BEWc1FU+aIovUZcc82F906Uvc1ez+yJaCE28OeZLz00SoGEz6mvA3M2Jovj181Iv4ySi5MMj0hBOqos7TaPuOUkKTgPN6aSvV4JaJOwet01cOJMfdZ05rLrFsaynLuX1D5nQkkDC+2cVA/O82opaF4NvHTNFKlZipo5brN/K9VJbNOF9jqavd6YuAep+4Eapo+lgHqNAHy6Q+LppQc9q1SqsdypGkTrLduZp1pCxKQS7TH5e4P2+SXW6nFMqkjgJK73g4I5o9Y+KswcBOViWagUJfEafDhOFqXOTbemzEhiIEIQMqW1as8yNISK06j4ornEqdNYhsHoJbSpG746IhKZS5eVQwQWN5LJlrpnb0v7GomwHjwfMfKjUHaoqqQJBGr1DatUR+5FSOU4PhfwTmoCGfIbqg4kTx6LaT0JOrx3gB06haEpM2CpPEb+TtJKRui0IukP6FVLdr9vbarh6GrRio5ykDfqUVNZ+kOO+oV7kVv9rBWdodcUjJ9PZw3x6bmXzrrTQp8AYQtGXRQZoHII1XQ/Toe7V7JXGRsCAz+jKozroWEzsdHl2AdoKN5nIav9tf4+Im1/92rVVVLSbqsKxTguFeKf5+BXYV16h2cQbVeMUVY/yf8Oh56g8jSb7yudGs/evPkDuzAIQ3Bi3j0kvT6lPafucKYJ5GO3Zm0aZxfWu83FHTRSmdEbv1qLhLD4B+678OXGnzBAjQ0TZrfCF2874hCSJTnZi76bRUEoj5WafzzR0cAWrHvSqc12/Go5Ld3fb6FXGw0cLZh/4YAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01MoB4R24DwRweNL94Jr3EWe",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to workshop illustration",
+              "rationale": "I looked at the image. It's an illustration of four people sitting side by side, each with their hands on what look like pottery wheels. It shows what the workshop involves, so it carries information and shouldn't have an empty alt. The proposed alt describes the activity and is short. Reviewer: please check that the workshop really is pottery. The picture is simple, and the page text doesn't name the craft.",
+              "confidence": 0.7,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 132,
+                  "name": "alt",
+                  "value": "Illustration of four people working at pottery wheels in a workshop"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

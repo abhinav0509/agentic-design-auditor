@@ -1,0 +1,91 @@
+{
+  "scenario": "gallery--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "256c1172e44deceb873435b62c1d49cb497d55888f76ab34ecf01d291cb647bd",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_012EHCXCr9bLwFDFhbboQziQ",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2548,
+          "outputTokens": 26,
+          "costMicros": 3929
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_012EHCXCr9bLwFDFhbboQziQ",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "5129a30c271c47ffb715044a673913a5c1abeba10c16d613c8f3c758d598f74c",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01We2PrgWnRMWvDHgzwrjB6e",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to gallery image g4.jpg",
+              "rationale": "The image shows a product: a wide cream bowl with a dark blue glazed interior, holding three pieces of fruit (red, yellow and green). Gallery items are informative, so the alt text describes the bowl in the same style as the other gallery images. The blue glaze is mentioned because the page has a colour filter.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 318,
+                  "name": "alt",
+                  "value": "Wide cream bowl with a deep blue glazed interior, holding fruit"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 3007,
+          "outputTokens": 308,
+          "costMicros": 11405
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01We2PrgWnRMWvDHgzwrjB6e",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to gallery image g4.jpg",
+              "rationale": "The image shows a product: a wide cream bowl with a dark blue glazed interior, holding three pieces of fruit (red, yellow and green). Gallery items are informative, so the alt text describes the bowl in the same style as the other gallery images. The blue glaze is mentioned because the page has a colour filter.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 318,
+                  "name": "alt",
+                  "value": "Wide cream bowl with a deep blue glazed interior, holding fruit"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

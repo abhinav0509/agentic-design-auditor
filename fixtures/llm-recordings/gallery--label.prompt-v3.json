@@ -1,0 +1,67 @@
+{
+  "scenario": "gallery--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "69343eba6b31b1b3a1f104feb5db1d97031cdc90db1f7734892149065bfa2543",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01S8jr8TK5tLfbLkWjaJatHY",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the colour filter select an accessible name",
+              "rationale": "The <select id=\"g-filter\"> has no accessible name. The visible <label>Filter by colour</label> right before it isn't linked to it, because it has no for attribute and doesn't wrap the select. I can only edit the select itself, so I'm adding aria-label=\"Filter by colour\". It uses the same words as the visible label, so screen-reader and voice-control users hear the same name that sighted users see. A better follow-up fix in the source would be to add for=\"g-filter\" to the existing <label>. That fixes the link and also lets users click the label to focus the select. If you do that, you can remove the aria-label. Please re-test after applying this. It fixes the reported issue but doesn't guarantee the page is compliant.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 529,
+                  "name": "aria-label",
+                  "value": "Filter by colour"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2506,
+          "outputTokens": 513,
+          "costMicros": 13501
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSigcKEAgTGAI4AUIIdGhpbmtpbmcSDPt2JAJrXoKrK7WQJhoMMPUZcRDE9rpe30qGIjBuqvnRSm47LF1KefeJa6VPXiXNksVgi05dbwqUNQmVYsIf1pK87gF1CZfhdDnvYqkqpwbZbjTHNEJIdOPUDpz5cwtg1BUJL+C0B1Lu08jwTev0Sx2ekCqZr+MCCW3EMAeipZaT/xYV0uqU2pED2hiZ8ym3xdZ5uWFw8vpsosNKoYAmkMVqjafocWxtwumZK1MOcIDTHD0itNKAmTUY8jMLV4A2Bxi8FTXrLO+CcHjxMBhpXfXB/RFUpZPljzszv5bAK0OGcPudLT2FYfDW0CBe5n4koGvYNBXUb6J47jZ/swSKg+4sCWVCauo17IlDimdsVbjPBN61b4w6uvVwyW4T42a+E/oQdqmUWOzUnjULO/jyq6FQ16yoYzQXh0oLk7QMm8Y/l5gCV3a4Q/HZTEBrsv67Q39dv/djPRFzxYMMO/bX/ytymRQ74HheyNfKZGksr7r7gObboubTGvwlpB/FcpGA74bLfy64SMLOXDxbDypRuN8lu4R5/8Q/v9djGo8aZFF3pPblLLrpdFnR67v+VzpCUBJ2XykkB8HFBedKhJN8/MosHyyOFuaLbB6wjpSuCFG+mtNAsB+iX6H/gqobYTLnc9DIn5Hv78rFHR8M+lKnMoDYQc+RXw/715rM7WfKfVWJ0ED27JnVYEOPnfTeLLBFLVNAZWoEhICkp57KyJrrbsVK+iijFEmvlD7p8WWJ0P+vtx+MqT8EVhu8wTZctWC1moKlGqvew5eutbFA6cgT4QiuYlLoL3tGnSg4WVsRHAxz5cJ/hBXM0q+EMBLDhK34ejbBoRD4/W/NaZ+I0xGPPGXCgazz7G+kaV9kvGzgDa7l/RJrbDd2q14NbbOd7TerxhUzsZNenr/9HvEGnW8C968EFGC7chod118B+la+BA0WEsts9ipQkZGND92hrOQLRbpZ6bRR6QpytKOMe+UGsmIgRgYbA+Y9Uem2vDBOs0ERGKt2p0h1FbgKkHF8vWENwd9Wue+PRhbxq9Ssaoyr9phBt60SgVB6+rVuraY1mAnGSTPNhaYM5++v8oVeYEhzafK/PCVsgcneXjZuPkEsBSf1QfFt7bL9BEyfDhNbnXK/j/VqxKtZhBatm158WKVgEuxLwVfhsbGDQmCxjIxqL0Q3+wFLF8wYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01S8jr8TK5tLfbLkWjaJatHY",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the colour filter select an accessible name",
+              "rationale": "The <select id=\"g-filter\"> has no accessible name. The visible <label>Filter by colour</label> right before it isn't linked to it, because it has no for attribute and doesn't wrap the select. I can only edit the select itself, so I'm adding aria-label=\"Filter by colour\". It uses the same words as the visible label, so screen-reader and voice-control users hear the same name that sighted users see. A better follow-up fix in the source would be to add for=\"g-filter\" to the existing <label>. That fixes the link and also lets users click the label to focus the select. If you do that, you can remove the aria-label. Please re-test after applying this. It fixes the reported issue but doesn't guarantee the page is compliant.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 529,
+                  "name": "aria-label",
+                  "value": "Filter by colour"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

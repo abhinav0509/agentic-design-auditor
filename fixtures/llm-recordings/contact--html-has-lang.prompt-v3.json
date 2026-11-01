@@ -1,0 +1,105 @@
+{
+  "scenario": "contact--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "5e31431f986741756a46c896a98954d0c9236e37cd83dab4699289c1c9a53342",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BryrLofJSvVR3rxSKXsKBP",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2369,
+          "outputTokens": 109,
+          "costMicros": 4873
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS/AUKEAgTGAI4AUIIdGhpbmtpbmcSDKlD0uUguUnXGzKy0BoMWNjGpaOZPykvIja8IjBIhEezo5sYsAmR4USRZjy5JQ74wrlIXqBA1BBgV98XWJ5KEVhdDzp5FiCKV3HSjPEqmQXmVQ1PSwR7Bf5YReQcAH5ymzuQfUkkaG5tiLDrQbfH6lC4azrFwpI8Imi3JRmL5nr+kwiM1ZT7Rl+Sri7KtV3pGSkRiOhaxklEUgCRDFJV/nBgJvsGQ6mXIf/glM/NSiAzvWYNivAvvAMzfo7fofWuutWk9pc4UrIKz4K5dBOopoWG+2xb2jcMxGyhFvESXMX/m0sbm6KUtHpRsJTwqSVkgJpEp5xe5QcXSB+VENdm2aPkkbHkGnoJRXl31U4sng1XegQBbqeEUlSfULaTMPR6Bt0AcuOmsPqQYmRz1JjNn/aD64b/69p4iHhtGILbu9QBVlGo6TiAq1Q5rWJeeA9ETQ3uBKCXttyxNDQA4i9po6iMM7UJBDTflZVphgtMRcm97mDT0FbzwBH5vNY1/8LstLnr3kK6uS8rrcAGZxYdExYeqS2Ryv08fXwOZfzJzkNY/SR2iGOgdIRLkNXFtDyjKP4O55GZB/Ijnt4zZny0ufSJUVQ4H1+MRCF2SBM0XcNgL7mOjfsu+Jsz6Bw0JyP1AyLydl/er/jcUysNM8YSRUMQRxhcK0FY+/2sfNgEBdD93Tex7+SzqEcPj9t3/8op27/8DaS9+oFWyqoq28eVArU/jj+8lKEBdaiWzy84+YukaKGw2fR8jRXljs1Mm4eTY65bVuLHnU1ltI5mHxt9FfzJSgsVa5XsxjusQQIB4yAsGiI9O7ltFvg4Y3llbMw7aZna6+T/3sUPxg6CoH4TUVcSp4fC5gq3k74220IOAp/ex837xPo4OmlWFgJTFXfx9DGQ8p4Favt4o/4rKTbUIcoJTyX/1nrOdKKRPTs/VOXp3qHiekh4rvIu4purSO6iWvWqqMA2h4V6hanyYmo8JHulkJ8u9/TlchgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BryrLofJSvVR3rxSKXsKBP",
+            "name": "search_source",
+            "input": {
+              "query": "<html lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ca8034cd61af51e77d2814de26e1ccdf8a7a234e99007d0c6c40f60c44e1f91d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01A1rrRz2KQykmm8A45wXoJZ",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in contact.html",
+              "rationale": "The <html> element in contact.html has no lang attribute, so screen readers may read the page with the wrong language rules. The visible text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I'm setting lang=\"en\". I searched the repo and found no other pages with a lang value, so there was no regional variant like en-GB or en-US to match. If the site uses one, the reviewer can change the value.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2501,
+          "outputTokens": 370,
+          "costMicros": 10621
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS/QUKEAgTGAI4AUIIdGhpbmtpbmcSDEjUKzOims1rvWTX7BoMsTfiPTpmsdm+KXkWIjAGmW7/BEXg6JmDjlotKfBbp313zRycZawxQHHckGtOa3jfqdU7eIj2b0gj5MT6aX8qmgVebLD9Yz8bw0bWSaEi2IDFDQdUSy26dNoUMGAlp2mjSiIv+pkUg+kNHtcN/NbTUWx9aChNltX5qVrabMRnvd5GMfe4dIAP60najBTFpzERaUgEyFrDALJaOw+XWvxMreiX6Pq1n+D1P0dGXJxCKDTASzjuCHsUgLOMM6z+g8rhQU2msWUL2tmY3M809kvArO6PdLAe6LjzZ+kuHsUgRpjsV+hAkCJqRA239tUz2RCyDudf2xH6P6Y2ySqPWHGQbeIfTtTC20JywanJsaLAvzuEZ+AYzpeiG7VcDCly5dytEKDujAo3sqbNPULPlxf7A9MvnYnenD77Aiphm1YmsO0GwoVfiDAQfAuHBtdYNyXWoyJmNrJOmDPvWDNrwXRb2TxOKTxOzSbmdnQu/B2BAc+Y2vcqndnwppaiY90XZkPlQl6b2zrvjOpGA5Xc8VQJW3EdtpKIt9GH6k/JtHBsXgeB/JLtCXIwhEAf6+olfdf3OXYhbzpfu+SLbx65yJ+URA9cHxriPYzSi8UpC0IeUTm46RaKOye7AV12Kc04zBzwJ+OcmEtG2TkL++jHafpeNK6ZqRX4OsrUsmP7AERnaI/GUs+i/6nHoXb2hdBIlWEASarjXzK4BUS9nb2uDRXqBz1i60deAIIP90JE4O5w1zmrBUZ5faQ10QQd1baVv7pMZE+4zri7P97/Q5CDDuMVL/CXgQFKWFzFVhCkgLOQJTbcrKRHvaDQVvE2ixyVURemQdEKVz6uZe8+L2/dzDTrziLIUVHDU+wk3uxftd7LImzzJaSOfHwocvlW6EY0irA8iV2qOHi+R4pHD0XccPjc3j65tbALkX9dwzzvnP5bxiS/Sw4/fSH1rTCZi3IOcRSSwl7pCLCd+xl3TH8YAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01A1rrRz2KQykmm8A45wXoJZ",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in contact.html",
+              "rationale": "The <html> element in contact.html has no lang attribute, so screen readers may read the page with the wrong language rules. The visible text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I'm setting lang=\"en\". I searched the repo and found no other pages with a lang value, so there was no regional variant like en-GB or en-US to match. If the site uses one, the reviewer can change the value.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

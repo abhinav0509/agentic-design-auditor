@@ -1,0 +1,96 @@
+{
+  "scenario": "contact--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "9397b2a965e69699c62789f3db6e5e43025baeae75e4a826854cd62a8355cd2e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01MUtENGZWQuVZsxLogrEhMc",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2480,
+          "outputTokens": 26,
+          "costMicros": 3657
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01MUtENGZWQuVZsxLogrEhMc",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "29eab0f44fdb0eadd290eac2e7c974e5a0bcb4e6ee1bdfd2eeab8942102c7cff",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01LYpaWnqh1ERvXfBaE5d3at",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add descriptive alt text to the contact page location map",
+              "rationale": "I looked at the image. It's a map showing where the studio is: on the main north–south road between Kiln Lane and Mill Street, with the station further south on the same road. It gives directions that appear nowhere else on the page, so it needs alt text that describes the location. Please check the wording against the real address. A text address or directions on the page would also help.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 125,
+                  "name": "alt",
+                  "value": "Map: the studio is between Kiln Lane and Mill Street, north of the station on the same road"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2939,
+          "outputTokens": 393,
+          "costMicros": 12833
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSswYKEAgTGAI4AUIIdGhpbmtpbmcSDMWyftHhgMxmQwuhzxoM4j4W1+43D9vJbytcIjCMu2DhrK8DdfmJWGanOqMBBrm1aBq/O5YhRYA1o4e+RpbTsoeQx0xLSiQHKeCvxkwq0AXvk1yTvoRFp1sr17z3lBz44EqASqD9gXBj0oH9c0OvxnDQETrymhHKK20s70xSDJt4fatQ3N4OKYgWRb0ZUXrraQ3LhQuv0hOqVS8RDrU9k/cmnBUD0B0Dwkfaf24vGJMff5tP1jMorQ8OnR+cYw/dJAOVX1pzvuPtnWFLY5vRwHbLqkuNVbHgyJ90vVw1ziCZtklb5gwLL2ZRwErDbZEVwkk2dG/qhQLO4KyyoJYljh+2RKqlBvBOHLIIRL4TfycJfWBK3sHI7kom4ccRywpQi3bxOSuMD2dTkQVKi4lp6mH8UjyM/lx+yZIin74cxpc2Ed7TVsbdY31bwths+tNjVkG7tq0S2oPFdIqRYPcOW2hJlET4QpgBvLkovn7phHhu5sOomNB6xsooA6XgwNSlPFhfQ60BkkAFrOhMzaZqquC+uEtNjJaPM0izD9DOi88nA/ZA3uPe5VRiKjHtbteAyLdeQgynjpCWTvfhlu19fmq417etdLUgBIvL1aStnhiiCEZfMX4j8TkQmB8bc+ChtpLM+pKRtbV2drgM9FCnOIa86b8gdel2WhpSG8WeLeXA6cgXwTVyr15XSQDbRo8cS/mFp0+2tg/3rVvPv/vui3rryf+OQItidvNemnecMOq7pyrChwwqRSj86Puet0+4S+UKmllfbJvO5tRaFEQoklYJk3MSLKvAg3w7x2WxwdglJ8/ZTXvuOavOtgmheoP2WlOd2Ij50UyT3qDnlvcpTRBqu6Y68AmsgtjijTUyYwfTLMO/nsXSYEQnPQikCMU8ubNM+evWF0H5lYF7V/IzMKPF+CRVg0C9d3Rl81nZFWUegp6EZ0bk3taZSpD8F6FkWo/B7uIgb52HfqvJ6hgwIFujm+cXX/teUMz8E3BZ/Ijhe57GWfdD2rq5itIRIHYIOVmETUrvAt9CyIPikOJR83pF/z/ByH6Db/r3YwMhJekYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01LYpaWnqh1ERvXfBaE5d3at",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add descriptive alt text to the contact page location map",
+              "rationale": "I looked at the image. It's a map showing where the studio is: on the main north–south road between Kiln Lane and Mill Street, with the station further south on the same road. It gives directions that appear nowhere else on the page, so it needs alt text that describes the location. Please check the wording against the real address. A text address or directions on the page would also help.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 125,
+                  "name": "alt",
+                  "value": "Map: the studio is between Kiln Lane and Mill Street, north of the station on the same road"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

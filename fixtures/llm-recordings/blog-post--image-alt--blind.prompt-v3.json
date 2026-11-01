@@ -1,0 +1,91 @@
+{
+  "scenario": "blog-post--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "67b2f2c19f43812221a647bc4f112622fd74bf51b0c5ec42188d25e5a5ba98a5",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_012wGxXgqq1Myec6MBRSLFqK",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2466,
+          "outputTokens": 26,
+          "costMicros": 3601
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_012wGxXgqq1Myec6MBRSLFqK",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "392222c87e862447e8d2f01b52a604fbe2b9be809b9324e34f9a12a2c1005ca5",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_015oJYfL36oLA4SYh8GkW9hU",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of the glaze-test image to write its alt text",
+              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. The image could not be loaded, so I can't see what it shows. I won't write alt text based on the file name or the nearby text. In a blog post about glazing, this image probably shows the work and carries information, but only someone who can see it can say what to describe.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/glaze-test.jpg could not be loaded, so I can't see it. What does it show, and what should a reader take from it? For example: a side-by-side of a piece with one coat and with two coats, showing the colour evening out on a curved surface.",
+                "options": [
+                  "I'll describe what the image shows so you can write the alt text",
+                  "It's purely decorative and adds no information, so use an empty alt",
+                  "Skip this finding for now"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2511,
+          "outputTokens": 413,
+          "costMicros": 11521
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_015oJYfL36oLA4SYh8GkW9hU",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of the glaze-test image to write its alt text",
+              "rationale": "The <img src=\"/img/glaze-test.jpg\"> at offset 154 has no alt attribute. The image could not be loaded, so I can't see what it shows. I won't write alt text based on the file name or the nearby text. In a blog post about glazing, this image probably shows the work and carries information, but only someone who can see it can say what to describe.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/glaze-test.jpg could not be loaded, so I can't see it. What does it show, and what should a reader take from it? For example: a side-by-side of a piece with one coat and with two coats, showing the colour evening out on a curved surface.",
+                "options": [
+                  "I'll describe what the image shows so you can write the alt text",
+                  "It's purely decorative and adds no information, so use an empty alt",
+                  "Skip this finding for now"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

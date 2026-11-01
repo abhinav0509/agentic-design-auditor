@@ -1,0 +1,67 @@
+{
+  "scenario": "team--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "6a15acfb4ee34c72190945291dcd0f45b0aab812f156c0fad980b8ee0eb710e6",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01L2WbHshGGbKKyT6VgMY83G",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Label the jobs email input using the visible prompt next to it",
+              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, id=\"jobs-label\", says \"Want to work with us? Tell us your email.\" It is the input's visible prompt, and its id already suggests it was meant to be the label. Setting aria-labelledby=\"jobs-label\" gives the input that text as its accessible name, so the spoken name matches what sighted users see. This needs no new text. A reviewer may still want to change the <p> to a real <label for> element later, because that also makes the text clickable to focus the input. This patch fixes the finding but doesn't guarantee the page is fully accessible.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 420,
+                  "name": "aria-labelledby",
+                  "value": "jobs-label"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2455,
+          "outputTokens": 476,
+          "costMicros": 12557
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSmgYKEAgTGAI4AUIIdGhpbmtpbmcSDKGE6Aq5LVaJsJqXLhoMcCRL3LHygyTi4XK6IjDVfsaz5syI3tFjR26BRSTrckf4vIvfCb90WJITLipaYfCRWh5eEiFz+YtVXw6sfG8qtwXmpJH614YRzJNQtQdph5mlZT5ytNH2SVJImxBxQFE8CdCNcucY8UaWt3pFZ+o2JyJ4g4sGcfuJeZlGblhvz3z+BJRK/N31cm3EjodnYxubVoD365m217pdQMTKmvLBO0EUDirm0xleXHoW//S+lBQOR9mR4ACYkYsTqT3ZTR+bS25H+VPxRt0T4bTninOcEtxFwbeYMz/xAar2aQchb0J0mv/8Jt78bnSYiDiIbFh37Yh97SSARuiJ9GHwPIEQIy41Oyl2b8PHl+C29Foe/XQjvPaXaZfHRp3yVTtpRNqp5Le3FKtmCahzzsHTLTQIOxcsRUq09p8hi1LpubMXSCaAYNNnYsCLuRLeIPP0zmSg639GWqfccbvNlPyl6Om+E07TjSNTr+s1RLozr2fwYBjlO8YMeqHIB56iYyVmyRLV50oZ//wuwEy2cgW9B2XQQLc4f/C1j886ttUF8LQNPpzZpme43jvxtSu6vNbh4r4+CqoZc0z2IgmIPVWy50wEQS07/BrU0Z0G1h/j/Mgm2QCLbdtHqYCCD40IZNaSAcgwt33OPpJm7y3plxYLolJkRCjy9bCk62Vm/U8bxDAcO3q+o2dau6V8XZqIIuLeWQCZFNQNfDLTVNzZRZ8Yg/Or3f7f7kVsNdfJfnkVFNDeUwygjZDG99VLJzsnNA9GG4gB5+vsRFALOIWVXsfl8GRGuGWbUTaZjDed36w3i88VKlB9+AV9U56AwDtTR87XH0uMMWFqDBLPRZFudEM8tl35yJi0tQueCzppPp/blYTOBxTMR9kce50uonM2Hnft4lmI9SD8y5J1foD4egaWUQCyMPWPc1b24kDUNFV+bnLfXKYQIw18xQpB8BAXzKgtjdbddenCi9SknHTTxB14g2dEYu69pioGc6YB2UlmACpaQbJ3EpJd6LO45hgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01L2WbHshGGbKKyT6VgMY83G",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Label the jobs email input using the visible prompt next to it",
+              "rationale": "The email input (name=\"jobs\") has no accessible name. The paragraph right before it, id=\"jobs-label\", says \"Want to work with us? Tell us your email.\" It is the input's visible prompt, and its id already suggests it was meant to be the label. Setting aria-labelledby=\"jobs-label\" gives the input that text as its accessible name, so the spoken name matches what sighted users see. This needs no new text. A reviewer may still want to change the <p> to a real <label for> element later, because that also makes the text clickable to focus the input. This patch fixes the finding but doesn't guarantee the page is fully accessible.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 420,
+                  "name": "aria-labelledby",
+                  "value": "jobs-label"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

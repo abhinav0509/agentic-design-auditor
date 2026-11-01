@@ -1,0 +1,152 @@
+{
+  "scenario": "signup--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "d838cfb98596dd068e4f65d7cac55f085568fd5d422c70056961139183660eec",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KaxwgdfWMMne9B7JNtxpgx",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "I need to see the image before proposing alt text.",
+        "usage": {
+          "inputTokens": 2448,
+          "outputTokens": 41,
+          "costMicros": 3829
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to see the image before proposing alt text."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KaxwgdfWMMne9B7JNtxpgx",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "20c9d3664979948200d89afacfab11f1eafe40365b9024d44326c90f15e13b00",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AetSWSCXrcnt74GLypk8U8",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Decide if the welcome illustration on the signup page is decorative or informative",
+              "rationale": "The image at /img/welcome.jpg is a flat, simple drawing of two arms holding a teal mug on a beige background. It has no text. It doesn't show a product, person, place or piece of work, and the form doesn't depend on it, so it looks like a decorative welcome graphic, which would get an empty alt (alt=\"\"). But it's a fairly large picture placed right under the H1, and the author may have meant it to set a welcoming tone or show something about the brand. That would make it informative. Only the author knows which they meant, so I'm asking before I add anything.",
+              "confidence": 0.6,
+              "question": "The welcome image is a simple drawing of two arms holding a teal mug, with no text. Should screen readers skip it, or should it have a description?",
+              "options": [
+                "Decorative: set alt=\"\" so screen readers skip it",
+                "Informative: set alt=\"Hands holding a warm mug of coffee\"",
+                "Informative: I'll provide my own alt text"
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2922,
+          "outputTokens": 651,
+          "costMicros": 17925
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS7QgKEAgTGAI4AUIIdGhpbmtpbmcSDMZokRKa9+BtsKw3XBoM3xA03y4itQm5kCJuIjAY40L00lPiiOeD1NZnbdvN1XheAUvEnAN6FqWwuPA1H4DPLrBJDZB7vYZrgej+aR8qighn9u+yWwph9SmaZsrkr/AbLyT3EcOxpoHQbdBHZ2PxwHRUoOrSATTMApMTVrk2rmqhHJJquqdbScs3DDxiAeznjt2ivpf//997JFKvIDiDYvf2pTajK4wtC+cwDAflUw5LloPdXR7NKmBwBGe1IlqE0iKzgiQUdfm1MN6rMIgV/iql1Gz1l16WWqpk6vsLGbyk5p195t83sTpSz7GdaEtkY4q0t76ctW7ARgJVfNbO9zoYuylWbNxrsdcR3xMSBglCxRvtAYOwM4CkOMozzu5FBszgOVWuYcJwbbwLizJoktNwWDobqRKUgoySo1V1QNT5An+0KgEWHNV2vIyYg8fchgmbMk/7iRxzih8r9q3bnvKMvpADFE1Id7LNLIblZVHZAszZ140AaeIRIrAOjGFFrIwImflSj6O34sggmkod6AjyF9ggJzhh6MPd+8rO2K3TAnuBz6VucAsddvU1o8YwqXt8gp3d6ikpMibtfYKb/5ghbZW6cziquA5U704RjZfo8NBKQ6KRnbsgZEIcO9n+UIxCzCIaMSp2tOl9yLzgq7y4z/BP+GJah1P19nY8Q3qvrbuV73MtNDGPgw1VtvCH4SmRJa1qyUKVa3Zl36h0YiGPp5qPyGMw9qlMplxr8gCmqaHoMRUKQ5bDvuMP3KCYz9p0LQx7Whi37R+/3Up4OHhsQrCAlMbdCN8AYhD91WpxNlLt5RTSRDdw6heljguCtqRaqaOtZiEwdmHzECTTuvj5KN0sFxKBUkdoRmijpPxWhcIDSfACH/0eKqexebvtDMy7G1IxSM0WwN+yaHSI05Yf4Bbc/hr17A5Xe6CY1DZX1kc6srEmMSvYHVEfhdo+eMdIVQeWQduDbXV0hWh+a0lUqUtekXqiOl0FB9ogwMfcKzlR9bQQqKccn2+VF/WLCbxZgy4VSjAfa+5oCOhnMV6bMedGUYSrBbFi6uW8o8rbAsJ3te1oMZ19hYDGpCTSa6Q62jhvG+mdTVCnfhtr9nSffFf+lKYEyZCzyrMyy+y+ktqKcptJD79DKDdyjf2CdGXPNiN+7mTfhuMYPx8BADUbV0JJMUQe1He1HYhUzodrmCmQrjwUlcr10bFnfgAsCKRgT474ZKHfikBDMiQyz09FdJvr2o/bfQUqNfSFzbT/0F1axLtgYO8JlRMAPEqw4Y9DqmOxek1OOCIds1puKrRO0LebkBIyP3DMQyku6+Nhnygeoo1WUyBuqXXB5hWQlcIw64Fo0dx+sld2uMFrSlKodi/aKi+sM0wv0w1PlQyqVGNBOgEj5EScdOOefhkv1aP5i/7s71qvvghc5CkCQFTuw25S9e77y8r3E5VlMAztKcsimWdfYwwCugH6CXIjDrfgBLoNoPp9WhgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01AetSWSCXrcnt74GLypk8U8",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Decide if the welcome illustration on the signup page is decorative or informative",
+              "rationale": "The image at /img/welcome.jpg is a flat, simple drawing of two arms holding a teal mug on a beige background. It has no text. It doesn't show a product, person, place or piece of work, and the form doesn't depend on it, so it looks like a decorative welcome graphic, which would get an empty alt (alt=\"\"). But it's a fairly large picture placed right under the H1, and the author may have meant it to set a welcoming tone or show something about the brand. That would make it informative. Only the author knows which they meant, so I'm asking before I add anything.",
+              "confidence": 0.6,
+              "question": "The welcome image is a simple drawing of two arms holding a teal mug, with no text. Should screen readers skip it, or should it have a description?",
+              "options": [
+                "Decorative: set alt=\"\" so screen readers skip it",
+                "Informative: set alt=\"Hands holding a warm mug of coffee\"",
+                "Informative: I'll provide my own alt text"
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "2e5b7279cfa8693722fbc816aad85339f9061846bd7c84a8a2c8d4b773db4607",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01U4q8yaPanRB2oBKgKeS2Le",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Decide if the welcome illustration on the signup page is decorative or informative",
+              "rationale": "The image at /img/welcome.jpg is a flat, simple drawing of two arms holding a teal mug on a beige background. It has no text. It doesn't show a product, person, place or piece of work, and the form doesn't depend on it, so it looks like a decorative welcome graphic, which would get an empty alt (alt=\"\"). But it's a fairly large picture placed right under the H1, and the author may have meant it to set a welcoming tone or show something about the brand. That would make it informative. Only the author knows which they meant, so I'm asking before I add anything.",
+              "confidence": 0.6,
+              "question": {
+                "text": "The welcome image is a simple drawing of two arms holding a teal mug, with no text. Should screen readers skip it, or should it have a description?",
+                "options": [
+                  "Decorative: set alt=\"\" so screen readers skip it",
+                  "Informative: set alt=\"Hands holding a warm mug of coffee\"",
+                  "Informative: I'll provide my own alt text"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 3619,
+          "outputTokens": 466,
+          "costMicros": 17013
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01U4q8yaPanRB2oBKgKeS2Le",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Decide if the welcome illustration on the signup page is decorative or informative",
+              "rationale": "The image at /img/welcome.jpg is a flat, simple drawing of two arms holding a teal mug on a beige background. It has no text. It doesn't show a product, person, place or piece of work, and the form doesn't depend on it, so it looks like a decorative welcome graphic, which would get an empty alt (alt=\"\"). But it's a fairly large picture placed right under the H1, and the author may have meant it to set a welcoming tone or show something about the brand. That would make it informative. Only the author knows which they meant, so I'm asking before I add anything.",
+              "confidence": 0.6,
+              "question": {
+                "text": "The welcome image is a simple drawing of two arms holding a teal mug, with no text. Should screen readers skip it, or should it have a description?",
+                "options": [
+                  "Decorative: set alt=\"\" so screen readers skip it",
+                  "Informative: set alt=\"Hands holding a warm mug of coffee\"",
+                  "Informative: I'll provide my own alt text"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

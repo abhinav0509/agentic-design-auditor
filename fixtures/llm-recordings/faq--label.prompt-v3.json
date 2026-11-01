@@ -1,0 +1,67 @@
+{
+  "scenario": "faq--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "ca510e393484c6af63d53e61bd594b8a669940a50b3a1ce3ae6f844d69236a4d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01WPya2RQqRji3p2HTa86Vm6",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the FAQ search field an accessible name that matches its visible label",
+              "rationale": "The search input (#faq-search) has no accessible name. The visible text \"Search questions\" is in a <label> on line 10, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the input itself, so this patch adds aria-label=\"Search questions\". It uses the same words as the visible label, so screen reader users and voice control users get the same name sighted users see. A better fix would be to edit the source and add for=\"faq-search\" to the <label> on line 10. That makes the link native and lets users click the label text to focus the field. If you make that change, you can drop the aria-label. Please re-test after applying either fix.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 432,
+                  "name": "aria-label",
+                  "value": "Search questions"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2486,
+          "outputTokens": 523,
+          "costMicros": 13621
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS1QcKEAgTGAI4AUIIdGhpbmtpbmcSDO1wNUmmoZSuY/V4zhoM8V4To16FzLejFUkyIjB9YtDJJlKAof6tt4GuImsI2LNhiXi0eXaqe3Db0h6qJWRx89GZobMM2j6V2QwxVGsq8gaLCcQvnoEdHMoMfpR/uoqK2NyaTm9EPrPJ1Jv9TIEefpLWOoWnhqb+oQkFQtWeevP/6/rLTUN1+fY/wxWw6CX+1lrAiGR6PDPe1DevrQrAkfavYQvHUNFH8FsdRgFBmPoGO7uW9z0e5NamtwLavBsf2FjCMS+s9k3jAYGBLlQNWu48VPnBeBZ0q67y4gEC5MWnlnW6uqeqdXKhK4PJvvmK6kZX08l0qZQU90+Rj5OR76HeAiaKRvTrJv0tXfOsf7ojx1y4TxVPFl8xWiXGPbjnni9gMNmAXT1Lf7WwZO8HDNa+nLTX9kVxucRnq+sKmn3ol1B7L8p6USoVBs1RXbrLMpRYVFg1xAuRmBFkOuYlYdsONMx1jRcWtUEVzwy5w8aAudZqjn3LYPL9CaqmeC2BE5mlLM6+PAar5SwPHkyl/9MQa3Ak6LaHFeCMyJdTazkP8Ay0uPMOIr/taTUOLQq80IoWWNVEPBE2kcZRnmfFRW2bfPP+6W0lVKGmaeIx5TK3LWCS3VYZF4TiI5WC/U8AyBeUwlqujC7Bd4qdsXMHIm5ikepmbkxYfgp+UE4mxUBm403raa2da9qRt74YSbXmdtU3aRhYA/NrOgsjhfE2uqg2U+jsX0ryCBaKtKR3Ch5jaNeI7uQBqRYYwT+F7YakDB/Uv8xs+vkheVa0ahef5jur0mRIhMJ7aEl26OIF91/MOTcp/KsReY8mbKx4NVYcjkxzylfUpuT4Zs6+jP/16xJ1aHKJzqGA8l3QGqs+oROSgHVVoRzj8rtcLRPLbB8DrVibCH/yNYc5HlNe7tGSDyIzYZB6W9BF6E5Z7UH9rrBBs2Qz0CTZSLyOQ24GPh249w7VeM3UwEFaedbQAS9N/gZw2J6GagxFoLTjFW6tAQ1WJ3ystT+bj1XmvdiTT0SyEqs/c7Sp/j86SrndqpEtq58Xzio12M94ZWGRRN//sKBsD1UvDdot5TC6v++zoPKLieu1r3RohNp/2+7iTFvTJ2pxSj/1+SLBozw3h79AFXllqDdMUr83SlDMpfUrXopk4AW7Mjc7bCbuyVI/jNm2k8t8ZL4XBtCbh9snO5KWPkSFCjlD6ufF5IQoAkG7y0ulVCbd1lcaQQFcPSJn2tIWOikgIDljWkrbz46sWtfVz8I5ZJDFB1XCPjNKAgCBBTRqvbUYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01WPya2RQqRji3p2HTa86Vm6",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the FAQ search field an accessible name that matches its visible label",
+              "rationale": "The search input (#faq-search) has no accessible name. The visible text \"Search questions\" is in a <label> on line 10, but that label has no for attribute and doesn't wrap the input, so it isn't linked to the field. I can only edit the input itself, so this patch adds aria-label=\"Search questions\". It uses the same words as the visible label, so screen reader users and voice control users get the same name sighted users see. A better fix would be to edit the source and add for=\"faq-search\" to the <label> on line 10. That makes the link native and lets users click the label text to focus the field. If you make that change, you can drop the aria-label. Please re-test after applying either fix.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 432,
+                  "name": "aria-label",
+                  "value": "Search questions"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
