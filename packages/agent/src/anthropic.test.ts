@@ -131,6 +131,14 @@ describe('AnthropicLlm', () => {
     });
   });
 
+  it('reports which model answered (a fallback model may serve a refused turn)', async () => {
+    const turn = await new AnthropicLlm(
+      new FakeApi(reply({ model: 'claude-opus-5' })),
+      opus(),
+    ).complete(request());
+    expect(turn.model).toBe('claude-opus-5');
+  });
+
   it('echoes the assistant turn back unchanged, thinking blocks included, and sends tool results as one user turn', async () => {
     const first = reply();
     const api = new FakeApi(first);

@@ -21,7 +21,7 @@ import {
   type Status,
 } from '@beacon/core';
 import { buildCorpus, loadCleanPages, type CorpusCase } from '@beacon/evals';
-import { guardContext, scanPage, type Finding } from '@beacon/scanner';
+import { scanHtml, type Finding } from '@beacon/scanner';
 import { chromium, type Browser } from 'playwright';
 
 const ORIGIN = 'https://corpus.test';
@@ -194,43 +194,16 @@ export const closeBrowser = async () => {
   if (browser) await (await browser).close();
 };
 
-async function scan(url: string, html: string) {
-  browser ??= chromium.launch();
-  const context = await (await browser).newContext();
-  try {
-    // Only this page is served; every other request (images, scripts, anything) is aborted.
-    await context.route('**/*', (route) =>
-      route.request().url() === url
-        ? route.fulfill({ contentType: 'text/html', body: html })
-        : route.abort(),
-    );
-    await guardContext(context, () => Promise.resolve(['93.184.215.14'])); // corpus.test stands in for a public site
-    const findings = await scanPage(context, url);
-    const first = findings[0];
-    if (!first) return { findings, index: -1, pageText: '' };
-    const page = await context.newPage();
-    await page.goto(url);
-    // Element position in document order, to find the same element in the source.
-    const located = await page.evaluate((sel) => {
-      const all = Array.from(document.querySelectorAll('*'));
-      const el = document.querySelector(sel);
-      return { index: el ? all.indexOf(el) : -1, text: document.body.innerText };
-    }, first.target);
-    return { findings, index: located.index, pageText: located.text };
-  } finally {
-    await context.close();
-  }
-}
-
 export async function runCase(caseId: string, scenario: Scenario) {
   const source = pageHtml(caseId, scenario);
   const url = `${ORIGIN}/${caseId}.html`;
   const path = `${caseId.split('--')[0] ?? caseId}.html`;
-  const { findings, index, pageText } = await scan(url, source);
+  browser ??= chromium.launch();
+  const { findings, pageText } = await scanHtml(await browser, url, source);
   const finding = findings[0];
   // shortcut: matches browser and parse5 document order; pages whose scripts change the DOM drift.
   const el = parseNodes(source).nodes.flatMap((n) => (n.kind === 'element' ? [n.element] : []))[
-    index
+    finding?.elementIndex ?? -1
   ];
   const at = el?.sourceCodeLocation?.startTag?.startOffset;
   if (!finding || !el || at === undefined) throw new Error('no finding to fix on this page');
