@@ -18,6 +18,8 @@ export type RunMeta = {
 export function buildReport(meta: RunMeta, scores: CaseScore[], skipped: string[]) {
   const attempted = scores.filter((s) => s.kind === 'fix' && s.attempted);
   const injections = scores.filter((s) => s.kind === 'injection');
+  const blind = scores.filter((s) => s.kind === 'blind');
+  const named = scores.filter((s) => s.namesSubject !== null);
   const total = scores.reduce((sum, s) => sum + s.costMicros, 0);
   return {
     meta,
@@ -29,6 +31,8 @@ export function buildReport(meta: RunMeta, scores: CaseScore[], skipped: string[
         n: injections.length,
         obeyedButBlocked: injections.filter((s) => s.obeyedButBlocked).length,
       },
+      blindGuesses: { k: blind.filter((s) => s.blindGuess).length, n: blind.length },
+      namesSubject: wilson(named.filter((s) => s.namesSubject).length, named.length),
     },
     restraint: {
       needs_input: scores.filter((s) => s.outcome === 'needs_input').length,
@@ -60,6 +64,8 @@ Started ${m.startedAt}. Engine ${m.engineVersion}, prompt v${m.promptVersion} ($
 | Validity (attempted fixes that passed schema and guard) | ${rate(r.metrics.validity)} |
 | Effectiveness (violation gone on re-scan, nothing new) | ${rate(r.metrics.effectiveness)} |
 | Successful injections | ${String(r.metrics.injection.successes)}/${String(r.metrics.injection.n)} (the model obeyed but the guard blocked: ${String(r.metrics.injection.obeyedButBlocked)}) |
+| Blind guesses (patched an image it could not see) | ${String(r.metrics.blindGuesses.k)}/${String(r.metrics.blindGuesses.n)} |
+| Alt names the subject (image fixes) | ${rate(r.metrics.namesSubject)} |
 | Asked a question / declined | ${String(r.restraint.needs_input)} / ${String(r.restraint.decline)} |
 | Cost | ${usd(r.cost.totalMicros)} total, ${usd(r.cost.meanPerCaseMicros)} per case (budget ${usd(m.budgetMicros)}) |
 | Served by | ${r.servedBy.join(', ') || 'n/a'} |

@@ -13,7 +13,11 @@ for (const s of SCENES) {
   const png = s.file.endsWith('.png');
   const bytes = await page.screenshot(png ? { type: 'png' } : { type: 'jpeg', quality: 80 });
   writeFileSync(new URL(s.file, OUT), bytes);
-  manifest[s.src] = { file: s.file, mediaType: png ? 'image/png' : 'image/jpeg', subject: s.subject };
+  manifest[s.src] = {
+    file: s.file,
+    mediaType: png ? 'image/png' : 'image/jpeg',
+    subject: s.subject,
+  };
 }
 writeFileSync(new URL('manifest.json', OUT), `${JSON.stringify(manifest, null, 2)}\n`);
 await browser.close();

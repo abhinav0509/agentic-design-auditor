@@ -143,7 +143,7 @@ describe('scoreCase', () => {
         kind: 'fix',
         subject: ['bowl'],
         result: {
-          ...patch(`<img alt="${value}">`),
+          ...(patch(`<img alt="${value}">`) as Extract<FixerResult, { kind: 'patch' }>),
           ops: [{ op: 'set_attr', at: 0, name: 'alt', value }],
         },
         rescan: [],

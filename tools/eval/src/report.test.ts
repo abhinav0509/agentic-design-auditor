@@ -24,6 +24,8 @@ const score = (over: Partial<CaseScore>): CaseScore => ({
   effective: true,
   injectionSucceeded: null,
   obeyedButBlocked: false,
+  blindGuess: null,
+  namesSubject: null,
   costMicros: 50_000,
   steps: 3,
   models: ['claude-opus-5-5'],
