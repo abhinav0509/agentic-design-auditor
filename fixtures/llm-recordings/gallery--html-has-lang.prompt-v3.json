@@ -1,0 +1,105 @@
+{
+  "scenario": "gallery--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "b5b96b412f1ed977bc4023a005c0717b84f8cd85f24d1330871f9875e4e06372",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_0138N2KRr65ZC6iE19fRKYxo",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2387,
+          "outputTokens": 120,
+          "costMicros": 5165
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSnwYKEAgTGAI4AUIIdGhpbmtpbmcSDEp+XfyXPe1EF1hF2BoMYSGOBQ47bt0MY8DFIjAyXsl+Jwhp+Rem6JqvHCvmJnN+gCSos/JleHpetiNFB7CwJRRG90pTS2LmxReHSAUqvAXj1/EIZ7oPnDR8lkNgrZc1+uYg9XCRYdOKFcb7uVVjKeF8OlrNgMMMOnIr+51PNh3mI3XDqprD2yTOGiNDULas+mnXWvSzDcgD/gQUc6szypMS/fUGZFIQel6rSIrQU7kD8BvC0xEREPxzYyE5BwhZBgGdn6wR8zy3vkZL+nucnxbdbCVWW0A/EDhDo0ecZh48dCEy2zwbGICwF6ef2hWqskzXVZ86bUUil3X3t1QVFWo/CNSAm9V5+IIn0AcbMF9X/Eeuym7R4PoLmOXZ5YnSnUO9LIFIm/dilOtu8OuApgZHXvE9fVbb6zn3NQ2gG99i/AM+NtR2ZGyovXwVUUbOSNJswBYxZc/fvMdfNV7JhlQyeMJOCdoVQS5NN0BRbcet8BF5M15ZF65qzTDIjRWp9U9I7KetS1Nqh0p3Wiit42MwxbJsXP9JvaGxYH2+6bSa/00Vq33K6LncnNx/K3LVZmPPshjdJcuhkJevIsSba1kn1dTra3ScmzHZstzAZHh10mli90/j7Xlt2DoVvsNTyz8nhbXIL5HetuFKIjQxiUK3uTO7hjaRcSLsYm8lV44T27jQ7WMjJuHnnU1r88H8333HGbCfpG4NREsAOJVOA/q+leugbQdw4+n3LVIdkc3S2Q7Eo9kTT0m2rTkXfMBAuma+brjOVBbsZOaFDCK0VOYisTMvKHgqopbg6Rm+oNAdJf5gCzD9nxQqfGwUtbLpTOVLFcFHT6bcN805j0h/Di51sYC9mY+PPhua0lCz4qQrlOeQUnZHlEVzRSU/aPxoZauJY4QpKhufZKggbW5p/EcZ+oSxFVBwZOicEnmilDC7Gr701WxAppzc452Aio/ZctU1SPpoJ7CUr8TmmTfUaaYF+hAUbIBTNG7gGg/FsddrJUFJaHRUoKMzzlzy+dLsvw6vNPXlT1WQVhH2GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_0138N2KRr65ZC6iE19fRKYxo",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "6df07a4193621c7adb54f049e4cf5d2fbfad9b5eaa91a56b42afacfd40e8f18e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_013u3UHy2uqTqWuERkDcjvQy",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in gallery.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to use for pronunciation. The page title, heading, alt text and visible text (\"Gallery\", \"Filter by colour\", \"All\", \"Blue\") are all in English. I searched the repository and found no other page with a lang attribute to match. I chose plain \"en\" rather than a regional code. The spelling \"colour\" suggests British English, so a reviewer may want \"en-GB\" instead if that's the site's audience. A check with axe or a screen reader should still be run after this change.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2530,
+          "outputTokens": 395,
+          "costMicros": 11237
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSggYKEAgTGAI4AUIIdGhpbmtpbmcSDIXmPyTJur848r7DZhoMMT1yX6rgMjYC1YqSIjCS0Pu7XK7xkl7GwOKjbFZl+goKTV97yV7qjdLewF+mJodxpsDDpTghc8OjwvyEEHYqnwUibMIvExNbI63nAlIPBuNOri5Kb9S0WZxh3qkXtHxpSnTawisY4VP/uI13v9tNUX9KCJkzI/yLlyIgrJk58NgLl2QuzTYtEc5TxRz/6iYmbV5EWa37vgHtuwcMyXS0t36mg1dkkYt5ilxoI1FpAMjcn+7zpWUOOGGKTCgSjOk21Lvza4Fx/XkltdxgBZ++3/1/UMPuMbibdOoSzH4aTCRX7kZE0Urz0mEhgkw69G10eLU7+80w1SiaNQZmJowZ+aE5zvVkPA2/yyhp/RlIw8tDOcLg7n5lfhqrdil+RLwQVzTowgTp8/xZgtm7RPF+RJHwt7BBZqIyzvu6wQMwnOVSsVwVs3nawZoVd2Wsv1o02ZAb+30cJzYLf1VMQkZBdlNQKIlrQow0Nzru//vHT7NxX91SuAKOWaBCh5p0tLzmjHe1WYPRSE9lzUy0c/TI7kfWSRMnosDIf+dOzUSWO4dbz2tqNdLDhQVv9iUYfeNba1Tr9RL5LfQtTsDvWlBvOziI+2EPDwLujowp0Nn7rYaSv/OQFHXekvG5NdqMSpfoPE5FVQjszoaQIMbwaj81L03y18+lisGNgQqnnMspvRNVyGOUKMuDqOrX9nv5Dll56HhLTq29Kv+PRvBGtganaZ3ybBhhqms/Hs+q9R70jSzxtiF+lA44fXBvIOkz0/CUTURK8sgfmaNBawTw9+4iCuu9O/ApbZIJD+1gqgw5/k1kYu0k+p/xqCYoezxghAFOF/9rZpifAkbQ5FNvTOjprAGwVkFtc15OyVKWU/mKOVj+kdTHV5gmv0PWwAIPhNfLXifOIidXluJ4h1/i+/CgSx9w9emoZbqy5XHUjEfdZ3zAzVK3Up639Vvl9mxKC+xzXI0wwIzcrH6KL1gIdBJmrhgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_013u3UHy2uqTqWuERkDcjvQy",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in gallery.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers have to guess which language to use for pronunciation. The page title, heading, alt text and visible text (\"Gallery\", \"Filter by colour\", \"All\", \"Blue\") are all in English. I searched the repository and found no other page with a lang attribute to match. I chose plain \"en\" rather than a regional code. The spelling \"colour\" suggests British English, so a reviewer may want \"en-GB\" instead if that's the site's audience. A check with axe or a screen reader should still be run after this change.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

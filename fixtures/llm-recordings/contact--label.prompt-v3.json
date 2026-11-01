@@ -1,0 +1,67 @@
+{
+  "scenario": "contact--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "a52409b3bbd8d0fa68d82f1ca61cb7846ebd080f7fb990de68eb4475b7383d91",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Fp82movNnjgpoGP3SPUh72",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the Topic select an accessible name that matches its visible label",
+              "rationale": "The <select id=\"topic\"> has no accessible name. A visible \"Topic\" label sits just before it on line 11, but that label has no for attribute and doesn't wrap the select, so they aren't linked. I can only edit the select itself, so this patch adds aria-label=\"Topic\". That matches the visible label text, which keeps it consistent for speech-input users. A better fix in the source would be to add for=\"topic\" to the <label> on line 11. That links the two directly and also lets users click the label text to focus the select. If you make that change, remove this aria-label. This patch should clear this finding, but it doesn't make the page compliant. Please check with assistive technology.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 350,
+                  "name": "aria-label",
+                  "value": "Topic"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2561,
+          "outputTokens": 519,
+          "costMicros": 13841
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSyAcKEAgTGAI4AUIIdGhpbmtpbmcSDPvnBgzlGOOclNtFwRoMYcbkEpoCXOjDVqQ6IjB5ghxZrKQjm5Q92aePxKnk2OZyyyHaCvpKco4BX08MV0rod339lEjMpfHpukHkI0Eq5QZ0JjR/G0erHGiK0BddV9F6kniFE+/BBLv3SBFrjuQMqNvVT8v0IUAkiQxtHgD+41WL5LOlBFFnY0MNLCs9oFYkGpSKD7LoZEvN5LqKuI7wsBx+wWr8StZwvxC4xGjBeIkMmRDdLwvXh+lQyk+Pi21v3bkIUI3p3RlcCPmCbdXWIAY4riD4OL1duXEMR9ZQB3QWsxOaCAuNGKE9WxeqrOXSqDRPkLCJZmekbzqA6s7mMZdcP1n3Kt35fGIObcNLtV3GbX+pVC3QmAc55N+pYP6pw6HTUOG/m31uTmfkEn88a8KQKDuU9b3Swox7+Am29kqKA8VZsK+JzcsX/jGxI1fTWeaDamIKtncOWSi5MNs2YuydZWtL5cmQfxhOn0qY1nN/nHJp9tKnJvZGQiCFLv3gg+lzIDJ7fSN+OKFewI/VEJGoyp656FoThhuWeGDy1MYLwMBY/zhSmBhKiF8/CZi6IQexnLb9q+Cy7GtpR0rOU5Ywwqk0l1erEzEMjU/mAzd3i9GaoBIkQ5S8GckX8t77yay9Zx8NPH0uryBYmUNheSAn3R19l6BXCBJaH5LwQ58lUie8a3IpCRmfE66YfiD1LzQMJ02aHz2aOFuLpBDhxdx+aXz3v1+kRWrMq6apJBgxHK9Lv8o8IJMxpQOeJwgVLgBUWwCWS+z/o1hp70ZqvL/FpprI6Mhg/Ia6zAOY2JKmFYP+ggLe7djxu7uGrcp+PupArwbA0Xl22RAcpUg1KTK6ewD1aOPcPScvy+YrVwxZ1jFt3Tvir+zWtUJYuY9RWyHRGFdZLJrKW4qlI1mHCuXYdtOE6u3dwWazBBCurfdeq72kZyVnui2IIWNBq/HM7pINWY0+aZhH3UQHai5UhzDpoMTMfI3Vwk8isJl3S/QsLGOw2+tWClj4J0G5mTJ5V/TkDEgb2a2MmDPGDtlRge8T+ISgl37ikOKQ3/I/1eIXCU+sZblOYvPBHQXHfhb4u5NDuug1vV3DZd2CiGfg9iWCIYBKtiRDQ3egObHtDL2G+bSj8cJmayFMz/4l0ARNIIKf08FNhL6UK+LqgfSi2mjH/SETMpWUbvyd8Mcitsmi68Tr7zqt8nvv/IF0lN9loYJnxnvotaH5T5ifcLZEO087iDLlKoIJXf9B3dewY1llBy0tDBgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Fp82movNnjgpoGP3SPUh72",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the Topic select an accessible name that matches its visible label",
+              "rationale": "The <select id=\"topic\"> has no accessible name. A visible \"Topic\" label sits just before it on line 11, but that label has no for attribute and doesn't wrap the select, so they aren't linked. I can only edit the select itself, so this patch adds aria-label=\"Topic\". That matches the visible label text, which keeps it consistent for speech-input users. A better fix in the source would be to add for=\"topic\" to the <label> on line 11. That links the two directly and also lets users click the label text to focus the select. If you make that change, remove this aria-label. This patch should clear this finding, but it doesn't make the page compliant. Please check with assistive technology.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 350,
+                  "name": "aria-label",
+                  "value": "Topic"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

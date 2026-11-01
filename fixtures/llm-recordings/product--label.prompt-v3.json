@@ -1,0 +1,67 @@
+{
+  "scenario": "product--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "53477ececc14f11d4a7aa032d399face21bb41ef9201074a5f1fb4dcbf3d71c4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Y39KiPQiU85FkL1tWzb8cc",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the quantity input the accessible name \"Quantity\"",
+              "rationale": "The number input (#qty) has no accessible name. A visible <label>Quantity</label> sits right before it on line 11, but it has no for attribute and doesn't wrap the input, so it isn't linked to the input. Screen readers announce the input as just \"spin button, 1\".\n\nI can only edit the flagged input, so this patch adds aria-label=\"Quantity\". It matches the visible label text, so the spoken name and the on-screen text agree, which helps voice-control users.\n\nA better fix in the source would be to add for=\"qty\" to the <label> on line 11 instead. That links the visible label to the input, and clicking the label then moves focus to the input. If you make that change, this aria-label isn't needed. Please check with a screen reader after applying either fix.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 399,
+                  "name": "aria-label",
+                  "value": "Quantity"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2476,
+          "outputTokens": 567,
+          "costMicros": 14461
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSzwcKEAgTGAI4AUIIdGhpbmtpbmcSDFa5q3CaR+oh18KdGhoM4APsrNtqbuN3EIfwIjAKPCW4Bao0Z44IM91BhEHNI4qX2FLhS/ZIs45eUimb7cIjOdJZJoPhaxq6oXX2nwoq7AZOyFJXLaq1IopVkgjdt9+SfkkqqFX8QNtfX9KT1o1ra0iZbJWSwizcYLQoX3c8GsYDI3wM+/VGmxsJKcW92EtpX8mZyxzyxQF89qy1Y1hvtHfYMnUi7D4YHdAX2nn2a+IUzR2WD9hJQZTBf5bqxjqPcQIJhUuO+EtdKS0LDtKvqGfxasO/dUu4Im96SS5eoSxc9cxzB5fCgVQ9sXWwVdwap1pLyS+ad3guB59v4HjhTvi6SviuWd3JAXIvvKWVbVb1GvxbXjNTJ9LPtsM5uQ9cNGbgS1U8lxMfcuVlXKLTVPDOqV4okor6gyvYNHT0rc/5NH205Oe7eYSNbaqwIrEQcOVu/doCWvDOjnK8Ho8XZZ5Vlyyael3cXtilt0l7/m+BO42Aqnyz2CRX5M0y4r/BcwRbZKmuy0930jq/TYvgHJgtT7V0VxxqCSdHE2NxW8V7UR3QoO5W5HPF2F50C2hdV+9gOxv6/iDhTZE0xHug8wwvxn/2RKDWxAvjWtshaMXbAeORBRSF37JcHj9YEo51r2a8p31m8Jr+Bn62t5paQS0i//MwuhTPaFp1Vwc8ZDSvKUHPuzDd3knG957si13EKMsJgl2+MN0rcKeZeIxt7M7PLQ+454ujq5IX+OiG3PHZS/V2wSWCcsYtg43+T7iq0qbQPH2wMMW0WhoEbh5W8j+9rEa6eKDpLLhySHpWtoNa+z8/gDNbs8ibKHpF4orOS99KEPUdfde+2bNojhdnfKKbLsTy8VHIfbKGGVB6TkqqDYNJEzK+83bSGKb2M/4fXyx/hJtXU3+pL1eas5WzUaYcBXJJ7pbqTnI7+10cXFsMBxUmx6AYMkZ1iBjAeORtbPlGXmf3k4q1t2s7abSrlI3rJMoHBXOwSrzq152nj0TOtgNg0fyuy4Ae/2sLQC6Az1ymA7FfmaJkqMFuAzj+bN8vSwWrTXWxGK2zr/OuJWdNOwaZ/H9vlBVUVWb3CrOp/OBgODARtaehfnk5imXXbPU6c9LgV0Jbh6fbqzLA4kKE39Kgd2J1na1v3HyEow84H4Q+pEqbJ3N6d+6Ns85HoTfxe6vxzz8X85k8QQqiwC6hKc3mFXk99LMWg+JppRf9PZz5BpxRoh5xUJ4b468Zr7+MqHR/bEhcWo6gB7CvKDvcR4lCl70ViUHYVfsYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Y39KiPQiU85FkL1tWzb8cc",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the quantity input the accessible name \"Quantity\"",
+              "rationale": "The number input (#qty) has no accessible name. A visible <label>Quantity</label> sits right before it on line 11, but it has no for attribute and doesn't wrap the input, so it isn't linked to the input. Screen readers announce the input as just \"spin button, 1\".\n\nI can only edit the flagged input, so this patch adds aria-label=\"Quantity\". It matches the visible label text, so the spoken name and the on-screen text agree, which helps voice-control users.\n\nA better fix in the source would be to add for=\"qty\" to the <label> on line 11 instead. That links the visible label to the input, and clicking the label then moves focus to the input. If you make that change, this aria-label isn't needed. Please check with a screen reader after applying either fix.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 399,
+                  "name": "aria-label",
+                  "value": "Quantity"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

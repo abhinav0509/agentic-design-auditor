@@ -1,0 +1,101 @@
+{
+  "scenario": "about--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "53dfa8a631a95f78c6b4fbbb1941a6044d6370393a2a4755c987d64b7c26af0e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_014qBvPgssh9zYy5BkWPN3eF",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Need the image first.",
+        "usage": {
+          "inputTokens": 2467,
+          "outputTokens": 33,
+          "costMicros": 3745
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Need the image first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_014qBvPgssh9zYy5BkWPN3eF",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "2b2933c38856f3a9c393fc2e38c16b7ec88e8ec5fc96fcf4a05e3b258663e342",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XUFk6i6rkcMk3J2wRgpXbE",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to studio image",
+              "rationale": "I looked at the image. It's an illustration of a potter shaping a clay bowl on a pottery wheel, so it shows the studio's work and carries information. It needs a short description, not an empty alt. I used \"Illustration of a potter shaping a clay bowl on a wheel\". The reviewer should check that this matches the studio's intent.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 135,
+                  "name": "alt",
+                  "value": "Illustration of a potter shaping a clay bowl on a wheel"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2933,
+          "outputTokens": 339,
+          "costMicros": 11729
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSrQUKEAgTGAI4AUIIdGhpbmtpbmcSDJfoLJzpqRk7TDbhPBoMwPMUnuJGgcEQJ6F2IjCY6zcFu6BxcvVG4e99cHYh622PMrE+pV2jyP9PDEcsWk11lI8XXmcKPh/dF2cyOPsqygT/XY/92n8Uu5DGwCpkGQigkjXSGmPnrmb+U4BHoIKuAR9tD9cd/+qKvboiGuMOwoVhM25WpzH3cEeLWrsGquvNGnvLjJR1qrPgtk6SZGHaPNi7Q/hWUwgYvA5jsgyGjevr/gxRvu8dnWxNC4qJzDfi4pLjIMrDvUSWvB/ZfbBzbDY/HoZ0pzdIfnhIdFcSamrTc7B5/go/1hjFDbtmPjwezqTTkiD0nAXtbdN7lf0FP2r/8lgXY5fDhQEruEvFMFGHclsa3yhJ9WnnBxCmaDvgoBdsU2VyDbOB04xG7seB8W4a5wDVRMbLqcdm9eGQVZV8OfaxQniwZBR19F+MubqdcmH9GJOGRarjnnzMAT4DogWAbL/7nWoyBr0brFKRGTOCPM8EKN3mqwd8KGPH6QXREx8dwECwR+ozSZlwPJTdUFAZEltmivpMX5vrURaP2Kulrz9vsSrqi4WK6Ln1203fgy5lVfGEq4itP4wl+EEv380xB+FU94xrUnoRmJ6oNMLSINLb3CFyQPL8przR4MvRtDEZnJ3wqlwQDxS7Lv9VHdFIvPgKyMeMC+Z6Wgr69zWeChlaJyNIT1vQKcZpCphKTUQN7K4Mnvrdpl2ow9pLoJuHLo54cb+W1bhni8R3Wj6HzluZ9TxfUvMfTn8NMGlGOaoo2VsRu9nrUVg2/VupTGZvtTbGCs69Fylg8ugJUNXH58lLdt3aYaZK+XWs7L7+pNg60ZskknkCnYMjUjK23+omgDUhhEg8MfXAB0vI+LiPqNPy0LHpexWyGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XUFk6i6rkcMk3J2wRgpXbE",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to studio image",
+              "rationale": "I looked at the image. It's an illustration of a potter shaping a clay bowl on a pottery wheel, so it shows the studio's work and carries information. It needs a short description, not an empty alt. I used \"Illustration of a potter shaping a clay bowl on a wheel\". The reviewer should check that this matches the studio's intent.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 135,
+                  "name": "alt",
+                  "value": "Illustration of a potter shaping a clay bowl on a wheel"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

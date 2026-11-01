@@ -1,0 +1,67 @@
+{
+  "scenario": "about--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "314dfefd2611fca49f1ded90d5b49bb5374dde53d2b9f6b5dba8b6571f3549d3",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01H9fwELNdFbg56seQrhWHVE",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the newsletter email input an accessible name that matches its visible label",
+              "rationale": "The input #news-email has no accessible name. A visible <label>Email address</label> sits just before it, but the label has no for attribute and doesn't wrap the input, so the two aren't connected. I can only edit the element at this offset, so this patch adds aria-label=\"Email address\" to the input. That uses the same words as the visible label, so screen reader users and voice control users get the name they'd expect.\n\nA better fix in the source would be to add for=\"news-email\" to the <label> on line 11. That links the two directly, and clicking the label would then move focus into the field. If you make that change, the aria-label becomes unnecessary and can be removed. This patch fixes the missing name, but it hasn't been tested with assistive technology.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 381,
+                  "name": "aria-label",
+                  "value": "Email address"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2483,
+          "outputTokens": 567,
+          "costMicros": 14489
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShAgKEAgTGAI4AUIIdGhpbmtpbmcSDFgXT6i8mkmBWGuw3hoMwEqtB2rDtNO0MBnJIjDBOYkRJOZJRK+Axf7wpwAvfFXUgH1/BEoT09pXaqL5lmxc1qc2+oI4Wqa3oc+WLuIqoQcxiESZdrplBNU34RCm3o2LZrETLmst5XylIVYuV4ajllgAQ5XKc2C6uMokLZxj55cOS2lMeNjgR0+ntOPFOplZ6ogx/4XPw1lOTeXV3mJtR4HIEoMaPrIgXvWZiHesLCYysOUqb8krGgHBtNq9zytnmcheRDYPsfE4n2Bo28htmXKMHGgvRYH8QSU+SiRtINurODtWl5H0BZZXQAZ2dcd4sWqLBM4+20BYxqzLtimcGTdfryekaQE5CXOsCWZkLALCXCfxDWH+5Qz9TfT9CjdocxYr2dyzXqPLI1FxnNYDcWFDc2yQ4evWOt9nLmW521+uGT+XZg4BBwIswxrTtJGbQJ0hmyBoWInKxwJZJdHVavZ4+QLz+2B1N0qGL80kwn6P7LIOmionVboxVESLnFPJoqc5m9ysPogg3Tp32Ud6QGsD5r7I1pBVzb18siNMaHSPQXCws20h2Jlfd4T3eTXtYLZWrmZJWM7PRIHTQN60X+hvNJLjj91hHehswtO13xrCVSsbYKlPwjYp1UwpdBJnFPzpJfTAUaeC79w1DSOf4oLDSaOPZPJ2s4RAmHUh+WZtGalmBG0GWQ+qyWjheTIrR6RMALEnKgFjbPl0t/FOm+ZhuJHzAywyQvKmr3RxV065x3kK6YeRp43trzoyEOYrAKx6chIoHRxuBGyVwFRh5qkHy0LAU1khvJUI/8Ig3PgUnWZO+6HMU0aIZxlO2Vs7Hkzbra/rZvrCrB5GeL4gzhNFzmVVsO3fWBbZCYOnOIHhpZ43yRwTlOYcNoC4LOOQG7rNGrYQ/oKnHctgSH4nUN9EuuzpnqlFi+lF+3+9xgeIOCGx9bOhnuP6/Hnl9yfK0tyPw/vykShWV6Vxux8IAFqqg4rCLAmDVk49V6h5r8MlHbFLRnAB1eLRn8N6BR134BKQiTEUKDzFEcQm+uIxQ07qr9zfcve/G4cf9o/57Xx8iYpjDCvwL+VvMyVJrvsIlTi4fpVcpou8CcW0cc8QIEme26/qVqtLkJBqFimX3snf761Mc75i7eC5jxFXUGq2WIE2cySd8j51mz18LxGbMuoz0VyKTHpMrPnwPZGmLTMcKyD6jxMtUm9VkcGn/JJHShmAznedoejIzrvJXXgLelIQG4Ira1ztl1fa9tIiCgQCeWXEQiQ2WKn8TsGVTZffhrlEkKuAY28L/9+QBhrol2bsNOl7/zk5tsJkwIZ2jFOUw8Fcqey3R87vaEuYsPxNIxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01H9fwELNdFbg56seQrhWHVE",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the newsletter email input an accessible name that matches its visible label",
+              "rationale": "The input #news-email has no accessible name. A visible <label>Email address</label> sits just before it, but the label has no for attribute and doesn't wrap the input, so the two aren't connected. I can only edit the element at this offset, so this patch adds aria-label=\"Email address\" to the input. That uses the same words as the visible label, so screen reader users and voice control users get the name they'd expect.\n\nA better fix in the source would be to add for=\"news-email\" to the <label> on line 11. That links the two directly, and clicking the label would then move focus into the field. If you make that change, the aria-label becomes unnecessary and can be removed. This patch fixes the missing name, but it hasn't been tested with assistive technology.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 381,
+                  "name": "aria-label",
+                  "value": "Email address"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

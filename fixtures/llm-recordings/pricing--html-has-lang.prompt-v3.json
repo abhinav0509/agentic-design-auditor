@@ -1,0 +1,105 @@
+{
+  "scenario": "pricing--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "c049602badfa9268494e5e423aa57cbd4152c2102c9613256b37946ab1675205",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01QbUZUcVAefmjDWAsC8EdZr",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2403,
+          "outputTokens": 126,
+          "costMicros": 5349
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSlAYKEAgTGAI4AUIIdGhpbmtpbmcSDCzBvxKfjDlcqnOxihoMvo4+hWzYuGx+SKRSIjBRkq1H3Yo7OENoPEpN+4ugOh3nl2PRpGLa81bF8K++XGLVHoL9bkU6ndkRM+DkxlEqsQVAV2DcgNQrJPE9XQMap1GS/mC3VFSUPFsxkaNo8g17atlDd0F4DCRMI2uyrMOrNxBhi0OkBUmjBKcGw3ND6kcCOLkkr3QZXiK91X9xdd/JOeerdeHG06uFPpaGWZmdbFWClIB3gX4QviNfZ9nZFu+bsWmfHjV1Jboqh4+Q1ul0HTifdFxTPDUQW5cWwGgPsfnnPZm9RFkixyNFOnzSHPYgKWpgq8p7EMY/yYuaFvJXBDWxpeuh//MPa4GpzuHb6kIKU1/DNSMAFOdQELEy8L0HbTjRlAVujxCCcdoHiElrUMpK3flHIzwo5ZAHt0C+oqASgbVSzbTTEkAjLYTZHFnpsQDGtMgJwNYngZggRxw28F/N8XfIHJ4nJYSSfVUX6dXf9dvMfkq+daV6Plq71tGBU0LbvpmQnsgMF6d32ieplI6w1jUoI2J6R8zQDBWxun1vWUCY1k33wXU7TTfX+9eldNEuWG5S7Z/nnpJVVK3p6Sk+hj18SDcT4SOml/vqjFTXT96xbX266QGRXURBbjfLLOaiyRF/NTWU2eun3XJXDEoPu507Rp64z7f9tgCXK8nTMqZAuAZUDgiN3lW7nVa5nsTVN/FNLVQ0LJy3DbnNxcKUKwMwd8ix0Z7s48K3QsPxR1UTccXZiVQTOUeQ3pUCHEHxccRrS9oSe9Oqapb7PTEHNSoDSvnU+PbrdgK6rDM5RCiZ6Bw9jjUkjmLsNl9nqMRMvOJv/34ZcUtFC1G9pCkdHxOrtTdrdJyG7frO/mTWDiYI/JvWGXSsYRaY0GTKNnl7TJq3FkzPFaHdxgMirYt8MUPt+VD0zGsJGT+sfuwFT/FoYR4ei9nnOBFTdHHRrPv0pYaLN3YkrPonlVQ0XtydAr2hoHDhHqEB0LEvRiPtnBDFGfNzGkfOc6hutazcjxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01QbUZUcVAefmjDWAsC8EdZr",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "9c1146ccb95a1ffd2fa3197402357459d51107902247e11b1aad0d3e0b57237f",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01YB7qnbMji8gwbEr2uDJbH1",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in pricing.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The page text (\"Workshop prices\", \"Taster evening\", \"Six-week course\", \"Check availability\") is English, so lang=\"en\" is a safe value. The prices are in £, so the site is probably British. If the reviewer wants that region in the tag, lang=\"en-GB\" would also work. I searched the repo and found no existing lang convention to follow. This change only adds the missing attribute. It doesn't mean the page is compliant overall.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2552,
+          "outputTokens": 378,
+          "costMicros": 10985
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSywUKEAgTGAI4AUIIdGhpbmtpbmcSDFPe+b9+2H2LFoLDMxoMO29k4qlcYaeuNXu9IjCPbNG50HRA0AEgTfd5BM0X8Tb1Dxj8lI7wLwXv1seb8JaPSlYzAfV1CjLIVx6hvW8q6ASLNnmc8OlQrMviKd3xjEHpiXJfAscJib9l7zSHWAzbuI9/JUCcY3/PtMlliXeabEbaRhMHc/FLx7MNPK80ajiyP6W5VtmxchNwuK4KFmzAL3FwKWIZCvpUc9VpA4r+vOxxfa0ZDjmVjUTAdRbBAq0lhQ2i7JqgIwlaAxtitjB5dZq4TIG0c4qgovA+UGrMhGENeV8BGRLzWJ5L30EayOkVfxtIUGq/Bt1BjcuV9CTxqdYRvusSmpionZJNwzJNYiuqepcR3IbazwPjoYwPy/30fMRV5Tikb6acsevCkA7zydyUVKSMCf0hbg3IvXazrBO7S0d2I8nVhnC33bmtZKiCL7BtiXJ2Vtdh6IFrIWTYwggzIbbnyApMnR5V2qutr081Ln3Nwk9Dg69n3eQIs+x3j7ZzARfy8fhSWbjPlv7+9baf7s0xSH0XO2bfeLIymEGNGOjBMV/n5sOte3iHPzZ8FWUJTEurysvLFTthIqGsLIYSlB9zAAbvoJz5e98nE6AVOYar/fioDnDg+LrcVvihYH2U1ThLNUjm2Cxcyed2dFyXD3tU2lIIknhr7LSs+qJ2nU+sWDnw0R8NBPV4L6jOcLBKCAQb7ijIbefj5/JZ+94WwO6+WBeTSISDSOYfYNzpXrh6mqw3JoAHEFHYwDxu/vNt0bD/RDDJmlTO+0Ppoy3kPdCjNukQPY+Ooc/ZwELqYtQ+nP8gjkSm98VT5Gl0HwDGe6ST4SKHoilM3qhGpan0w6tpDBNIAM9RbVkl/hepHwBOREfe88QklEmyAs5NtqCz61vBSJXPudrWuO7kMl/pqCUWlgFMGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01YB7qnbMji8gwbEr2uDJbH1",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in pricing.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The page text (\"Workshop prices\", \"Taster evening\", \"Six-week course\", \"Check availability\") is English, so lang=\"en\" is a safe value. The prices are in £, so the site is probably British. If the reviewer wants that region in the tag, lang=\"en-GB\" would also work. I searched the repo and found no existing lang convention to follow. This change only adds the missing attribute. It doesn't mean the page is compliant overall.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

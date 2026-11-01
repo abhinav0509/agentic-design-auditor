@@ -1,0 +1,96 @@
+{
+  "scenario": "product--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "9d6324c2b69d00d861295f2de6b807b93c87faf8268404b914514c38a1885a44",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01QvsyYyU1Qiy4xo7odiwSQC",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "I need to see the image before writing alt text.",
+        "usage": {
+          "inputTokens": 2479,
+          "outputTokens": 40,
+          "costMicros": 3933
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to see the image before writing alt text."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01QvsyYyU1Qiy4xo7odiwSQC",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "116ddd54aae0ceebb19cbffd2acbb44f48069cba66da650144ea86a6e091c742",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Evwa46SnE2uUkc7mUpP3qK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to main product image of speckled mug",
+              "rationale": "The image shows the product from the front: a cream mug with brown speckles, a brown rim and a handle on the right. It is the main product photo, so it carries information and needs a description. The handle photo next to it already has alt text, so this alt describes the front view.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 140,
+                  "name": "alt",
+                  "value": "Front view of the cream speckled mug with a brown rim"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2952,
+          "outputTokens": 279,
+          "costMicros": 10605
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01Evwa46SnE2uUkc7mUpP3qK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to main product image of speckled mug",
+              "rationale": "The image shows the product from the front: a cream mug with brown speckles, a brown rim and a handle on the right. It is the main product photo, so it carries information and needs a description. The handle photo next to it already has alt text, so this alt describes the front view.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 140,
+                  "name": "alt",
+                  "value": "Front view of the cream speckled mug with a brown rim"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

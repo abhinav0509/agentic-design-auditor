@@ -1,0 +1,91 @@
+{
+  "scenario": "signup--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "d838cfb98596dd068e4f65d7cac55f085568fd5d422c70056961139183660eec",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01JoeTy3nG2KLJxpk3am8brT",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2448,
+          "outputTokens": 26,
+          "costMicros": 3529
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01JoeTy3nG2KLJxpk3am8brT",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "993c97a2eb6306e21e9e1a14816830a725bc39e16464caf65bba1132c47e07fb",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BhAjF71NUjDvdZutYMNL6m",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/welcome.jpg",
+              "rationale": "The img at offset 142 on signup.html has no alt attribute. I tried to load the image, but it could not be loaded, so I can't tell what it shows. The file name and the text around it aren't enough to write alt text, and they aren't enough to decide that the image is decorative. A reviewer needs to describe the image or confirm that it's purely decorative.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/welcome.jpg on the 'Create an account' page could not be loaded for review. What does it show, and does it convey information (e.g., product, people, place, or text) or is it purely decorative?",
+                "options": [
+                  "It is purely decorative (use alt=\"\")",
+                  "It is informative — I will provide a short description of what it shows",
+                  "It contains text that should be included in the alt"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2493,
+          "outputTokens": 400,
+          "costMicros": 11189
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01BhAjF71NUjDvdZutYMNL6m",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need image content to write alt text for /img/welcome.jpg",
+              "rationale": "The img at offset 142 on signup.html has no alt attribute. I tried to load the image, but it could not be loaded, so I can't tell what it shows. The file name and the text around it aren't enough to write alt text, and they aren't enough to decide that the image is decorative. A reviewer needs to describe the image or confirm that it's purely decorative.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/welcome.jpg on the 'Create an account' page could not be loaded for review. What does it show, and does it convey information (e.g., product, people, place, or text) or is it purely decorative?",
+                "options": [
+                  "It is purely decorative (use alt=\"\")",
+                  "It is informative — I will provide a short description of what it shows",
+                  "It contains text that should be included in the alt"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

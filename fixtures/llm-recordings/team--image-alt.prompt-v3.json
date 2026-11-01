@@ -1,0 +1,96 @@
+{
+  "scenario": "team--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "687cecdcc5827e6ce951fa893d9064dff02d4dad1c03d582916c73c46960e6dc",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01PD6DVHkndAoQevKYgKHyHz",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2461,
+          "outputTokens": 26,
+          "costMicros": 3581
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01PD6DVHkndAoQevKYgKHyHz",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "36e233a8c4e35ca92231980223a0202dbc3f5f0e8810901d825957224e5e9793",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AScKNCKtqA12HCxsVfgsJn",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to Ana's team photo",
+              "rationale": "The image has no alt attribute. I checked the image: it shows a person standing behind a large cream bowl with a green glaze, set on a table. Because it shows a team member and her work, it carries information and needs a description. The figcaption already names her as \"Ana\", and the alt text describes what the photo shows. It matches the style of Tom's photo (\"Tom Hale loading the kiln\"). The figcaption doesn't give Ana's surname, so I left it out. The reviewer may want to add it, and should confirm that the bowl is her work.",
+              "confidence": 0.7,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 137,
+                  "name": "alt",
+                  "value": "Ana with a large green-glazed ceramic bowl"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2920,
+          "outputTokens": 610,
+          "costMicros": 17097
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSigoKEAgTGAI4AUIIdGhpbmtpbmcSDM9z9eZmKdtv6UCt2BoMtO6nozTLCrR1SSrPIjAYcagqU1V+tpyfXQpjSAdexZbYChy0szKgNhl0AwM0YLVCSxd5B/8j9zzOVSPqtfUqpwlgY75pGhxnfo7vdFj+8kPwbTcy7KXEkZErAofMEvRJeUc3nBhnZjWHCmpbV+uBYGX9NcGTsItyE1RsFvR4bklbD+QU+o+Zcpzx3564fobwITbu5ywTugh+yOmUGicBbQLSHNxq5eaXcPHJt7MclrRsVD0J7JUOnPA6Dzf86MyBQBobSzEaawcb0CFD3By30+9CPrG9haOuNHJxMy2QqynpdyTQXGwKcPrRtaKHSR6GetWC883R9hQgxiqB4u3+hYb7Gdpw1qTR5pV8VwnOCJ4Xy2KNTo0ZDrX98muZL9B/vBN7E6JM4F1rbX7XZ5LiqFYySLYWAHuOMoB4JhdEdWp4D8ZZsUb1xYSpmVcCk/NpDiai4lWkZh40EqzWhg+3jkfHH5BS6PwlU98EfplDyt6QY5URTGPFNkYUY0xhKJxguD/h7myEbeqztd85qoSahPQh5RKFrpTqkShxHkXGabWioGCXut6c23p/LUyiRm5K207iuN0C/qcaL8osxSSi2W/JVw8SL3UAKpqZFDNsxUY1+FWFlzA2hwKUSeoqKnxQZeYvU9GAg671JS0Sm6tUufftxDQLfXEqjF5MvP7/0F9QQf9iX5blLQ1dy29dqmoo/WpSX2VPHPLQt3MFokWr2Lj/mgg/S9i5WLE+ZfNdk16i/HRkSDIiDzM1U9JTYCSjGkIChkrTidPpLQz3Qm0/fQmpfcBlzyzy/S26chk973PHQ5M5LF83pgecD6eKUKEcVkgcmigIVF+CoLw7BZ2QjOYSzh+2ekaE5SFCJ4g61qRDf242MROA6vqk2stLI2kkxwK0sC9mM5v8JMZS1orCl1tRnTT62r9a98I8ib2nFQgg3XEXeCPz9MepRNpTSBEC7hz5gfnSklwXgmfL+e4XktCmzEhiamTtPgdBGc0MN/0I0+eHddptzFh8g35r4WMLC/feGWGyiFXVqlNnyga0NPOcq6DMh36v20oaIiBvvciG5YdundSuzmJAqT9YOQNAxch8OvCG9Ybl3s2JfxOkfXTtW6+df+UfQj+4DlmUJ+OXfYd/+EZI4s3hVd0oqQE3PAeV2Eo8fDZN11+pIR6UmwRfuB1Wye16j8WaL6jzc1NzNmTfbqTAchLsgCU18XqIDqNLo972aNx5wDOn8cWHL1ufXny/kOwfNWr8p2dgkirqyaRSIGqOrEHbSI+Rf3aBIWSrpjZVmQN0uQv4i3+dWrS85FYLYE02UnYix+VSgL/XF2/342RTiNADKytqLY6wmANV4UWgg7g4ymUMdWTIy/2D7YjW7GaFySpa7taOc+TzTKmExjwdo7XulUZEQnwsFNygJ9mdSrd1oBx5+QIaET6yZs7zKbhKDOjtyvCIY6nIMu5FyhieUsN//1ydtQxwDvM2B50pL4rddqozp72K8y3uby5aC/WTklOyAVXj2sjfRe+IOgcJSKAUzPfxwi6J8zEnTxCkIPwhLnP/UG1CvV/1/TU5Fy40fAvxDR5MMXeILioquLYAQAqk2PIRB9IEX38Tj503Bq02xkNa1tfha/HCYXZx1EWSbwe2rs9GR9zc0mxqE0SqG7bBvfiBrrpJTK7RUclLZngYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01AScKNCKtqA12HCxsVfgsJn",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to Ana's team photo",
+              "rationale": "The image has no alt attribute. I checked the image: it shows a person standing behind a large cream bowl with a green glaze, set on a table. Because it shows a team member and her work, it carries information and needs a description. The figcaption already names her as \"Ana\", and the alt text describes what the photo shows. It matches the style of Tom's photo (\"Tom Hale loading the kiln\"). The figcaption doesn't give Ana's surname, so I left it out. The reviewer may want to add it, and should confirm that the bowl is her work.",
+              "confidence": 0.7,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 137,
+                  "name": "alt",
+                  "value": "Ana with a large green-glazed ceramic bowl"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

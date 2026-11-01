@@ -1,0 +1,91 @@
+{
+  "scenario": "contact--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "9397b2a965e69699c62789f3db6e5e43025baeae75e4a826854cd62a8355cd2e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01PkYTfCd7D6zJLxsqPP8HYr",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2480,
+          "outputTokens": 26,
+          "costMicros": 3657
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01PkYTfCd7D6zJLxsqPP8HYr",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "cbd5285ece767b661ae3ec2ebe81be8cedb81320d10c2a05bb77283e2e4628dd",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KaskRe1dw1DFjoQaXUaHJA",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the map's content before writing alt text for /img/map.png",
+              "rationale": "The <img src=\"/img/map.png\"> on the Contact page has no alt attribute. I tried to load the image to see what it shows, but it failed to load. I won't write alt text based on the file name or a guess. A map on a contact page usually shows where a business is, so it's probably informative and not decorative. Useful alt text would give the location, such as the address or nearby landmarks. I need a reviewer to tell me what the map shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The map image (/img/map.png) failed to load, so I can't see it. What location does it show? Please give the address or place name to use in the alt text, or say if the image is purely decorative.",
+                "options": [
+                  "It shows our location; the address is: (please provide)",
+                  "It is decorative or repeats an address already in the page text, so use an empty alt",
+                  "Other (please describe what the image shows)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2525,
+          "outputTokens": 417,
+          "costMicros": 11657
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01KaskRe1dw1DFjoQaXUaHJA",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the map's content before writing alt text for /img/map.png",
+              "rationale": "The <img src=\"/img/map.png\"> on the Contact page has no alt attribute. I tried to load the image to see what it shows, but it failed to load. I won't write alt text based on the file name or a guess. A map on a contact page usually shows where a business is, so it's probably informative and not decorative. Useful alt text would give the location, such as the address or nearby landmarks. I need a reviewer to tell me what the map shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The map image (/img/map.png) failed to load, so I can't see it. What location does it show? Please give the address or place name to use in the alt text, or say if the image is purely decorative.",
+                "options": [
+                  "It shows our location; the address is: (please provide)",
+                  "It is decorative or repeats an address already in the page text, so use an empty alt",
+                  "Other (please describe what the image shows)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

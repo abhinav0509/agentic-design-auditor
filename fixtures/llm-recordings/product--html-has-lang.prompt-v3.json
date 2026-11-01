@@ -1,0 +1,105 @@
+{
+  "scenario": "product--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "fc7fa8036fe05c5b6a4ba26fd73c9d04c3d0c1df721edbe174781c0d44a3671f",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Fr9oErwYNai91NKkd9PuEd",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2385,
+          "outputTokens": 106,
+          "costMicros": 4877
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5QUKEAgTGAI4AUIIdGhpbmtpbmcSDD8z8bOdP+P6jU3D9xoMJHAVJOEsiGo6E+/uIjBJWlG3CSkxuO9+6j6bRzIoCqfv727Gs8BmiXstS3QMPWYxoN6UnvUOvnv9+8UDLYIqggXOqII7UetAWkcfhLzR92PmhOzYmqCc5iKLQyVysNOYcb0uVKn3Izazxisi7EJCNeGQRlsgxO0VXKt5gYU3VrAdP66/gzMZanMyFApsnVXP5g//5px9u0xm3AdjWk1zWx+VO7/bEkUMA6k/00w/693sFKUWVYnMiLTy+NoBft1KD9YmjXqY0y2NrN7wxi0GB+giK8rMx0g2IHNHQn84DQs5gtm4nNNCH0ZAqsc4BY6s8QmjhmiwlbWDDbGXuMq82OS5SLf4+JuaJ9kOlD2zARa31kWH8t/33zASt5CwUNzUfUxyFnfzL7Pp4e2NoQyY4HIBF/ATcv2ahV9QSsQXlAYxtLMK2VpDtJgpY4e4wzNeIpnXkSo/Vo7RROdoa72mwRzJlYXjBxdVJjkoWJ4ll23CURqRr6hh5S5DcjKiaJ0oL3cZjGDeJ3s5ZhfTGj5iHGhBONPAeeTvkLNGtTvq7g2TFHSdCFA5cU8GuS5G/EkioDjH5HtU+pM784HSu+z+xDijuuiQk01bqNIdUE7zSu44Cu3SCHggn1R5Yw5UCxbqY/tteCuUVSfiMPX6Y+lz/rKIS5i9oQlOp8TtXoNbN/K6qnxp8rl20vhEDfaouYH/OQjaQgq7+N+hpf5y+qJ2cmqYM12Rp+dv9SW6+gHcOPticj1rrIo3wlPnyD+imPkUaQqLgmuoXLONQ/SxDNt39kIkreTozoExqdmhpL/QkqWjxfRETyfe6rQR2P33keSNxbAFgQURTP7xJoPxBcRjWoDhytD2Yz+7I3MrHRwTUPfqbrKeJowDV5KlzKWHs4GgGZQfKxdBcbUP2sURBc3NGS3wNtrw8JeS9F/ZBmdKjctH3EsYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Fr9oErwYNai91NKkd9PuEd",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "fddb249b76fb1261623db8f900c6fac05167e17593f7919e35bee2710c7ffcd5",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01484bG8j6jc4s3qWG36BaLh",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en-GB\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is in English (\"Speckled mug, 350 ml\", \"Dishwasher safe\", \"Quantity\", \"Add to basket\"). The £ price and the word \"basket\" point to British English, so I chose en-GB. I found no lang attribute anywhere else in the repo to follow. If the site isn't meant to be British English specifically, plain \"en\" would also work. A reviewer should check that this matches the site's intended language.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en-GB"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2514,
+          "outputTokens": 464,
+          "costMicros": 12553
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSqgcKEAgTGAI4AUIIdGhpbmtpbmcSDMN3KcZ7V1wraghQqhoMJyPbN+0cGhvJjGWSIjA4HwGraCFV7rEiixoqRl90kdTRIWRQPvyJo446x3+OCLGX0cYw5SQLhRcA017caBkqxwZphwvQ9uWwwiWAFAHgWniJIQuUID/RMvDBn0I3vQyS1A40/2wI2g7asmECwbWH9EF9ZC2Txbw5XryDzPkLi8vv9ThWz9oo0U61WJkHP1PWxuGtKZIYwWUli4usQRcK8vvuTIc6GTLC+bzdCmmbRLj9mtJU3Z1i9obXpfcx//WXFLEPmJ+j6AmMyYyICjElXMXiaryFVNxbdo+FpE8h5guTPnJeECrWzdOE28YSb2xgy2ZtShzRts+6VBjp/SNRZDyhzo+YnnCnAFFPWo8RnpQgCsCjpOW21hmFbXOaelQ2yo2WP3hqBN9m/fXxqjCAL6Y2zetjgBl80ySrumf7cnsnSHFljIEIRyelKoMA8AnloFnY5OSFOoJfz5EZwtTW8zuZb1TlAZzTe4iaq4jezTs96pGBQv9/kK8HKEnLrVuE0UUbqdFoCmnZD0PoIJ3EYrReLwYm9wmzFKK0CVjYPy177LvvV2XuH8XlvaHdBQitByGjA8+9F/outZHMfnLxdNrP5LMFyeQAB1Wp9VuUp2AcumJw1kQcoz/TKJQpuGVXD4cklWiX5WUzdVYnIbdv99wm70cEISpD5PTvPfoQ1DxaiSUAwBqiDssF8RMwUAUC1ZXjRWug71UJkBop0xfBDSRlBLwNVfZ6UpDfH0NsXvAb/odGMDiB3vHbO6PUZZdhb590YWEgHo4uHIidCtxI+fWeXdqOHmr6eWMnrSqcsnVeopzQcp8cMl9Hg+LZ9TZh53OLubLouvOk7cbobD73D2vn72KeYwdmkogCtt5sq8KbMW/PrdFj91Z0J4nXKnyR55jkMRAtpw5VqC+jbdbwu3wfOaxJeGwSHknYRAx83jBB0GlWoJE7/9IjmzGc4G/N9mJSWHgGidgBSCRwqq7ygPcTxG+Ujg7idv5a3dns9h667O/6E7WU1lWHXQ4Dz778Yqg34/FgDMrausp1JvlSHwDM26YRgphoYcizK7vW141VqV8evRwd4C+ufHDXV8zSbd81bQJIr9UwN6SGLAFbtk6CSBbMepbhq5lO6NQfAf65fug/GOFtzycOqokHtxJawFOeNqJrVMVLHihMrOZRtGvM5m4vpv9LR0IoP4ynjCqAEyiLWoxRPBgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01484bG8j6jc4s3qWG36BaLh",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en-GB\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All the visible text is in English (\"Speckled mug, 350 ml\", \"Dishwasher safe\", \"Quantity\", \"Add to basket\"). The £ price and the word \"basket\" point to British English, so I chose en-GB. I found no lang attribute anywhere else in the repo to follow. If the site isn't meant to be British English specifically, plain \"en\" would also work. A reviewer should check that this matches the site's intended language.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en-GB"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

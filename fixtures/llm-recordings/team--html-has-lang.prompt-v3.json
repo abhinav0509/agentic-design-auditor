@@ -1,0 +1,105 @@
+{
+  "scenario": "team--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "08105ba606e5d9231ad30696cf2ce0624034e4f4659844088fff7727c2c47ad4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01PBCLAefvcV57GuD4n176AF",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2442,
+          "outputTokens": 99,
+          "costMicros": 4965
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5AUKEAgTGAI4AUIIdGhpbmtpbmcSDFnWipooz0tyNIxv4BoM5sw2jY65plQihOUTIjBEH74FFLZrk+gHNHHyWohNP4btDx0BBZttpHOtbBpMA4FrAUdBNig6AVxe1+jTWe8qgQXGYHDydrXJ+fn0wZ8FqjpZ5wsdELuyVhX/IRM+juLNPsxfz8O3gCehr8Sq2CiiWhufFCgSjzkUxMm+9rLLZBJZwtmXM73LXo2djgS7umHZzE3sWHqT15nEdVgm34xbGt5QW+wD/mNW/NEGvRpuXdvg4fvfU5nQo6onSDykrly7X5qGp+eeCKFwT/Mli82MgYbqlgND0JbuyHJ6uWDr/eEy7TBl2Y/uNO3vK6gmH3GTUE74sqq6PYAqVmc73eAjCk9doXZDGqQrwIEbQJRMhGCJrXiEpjkIZW9ojA3IG+aJvBrq51VLWqZ+uepKdfjRc4MDNjaL4I1MF+hYnIC6QLBeGWL3Z9Tvf3N0pMh4t2/6PyZLROb0TZr8jiUHNU/dZPb4WY/JsGSYVZV8DCpR0B3GmshfZssq0tte76A7D3/x/gvYDtxbnHqgoy0kZlwQtL/u4U/ZozRKJgbDr+LVIxPQbwhZF9u3m/ip4Z5rexdXdaQYDpQlF6leVevrEW4umkiBjwNLaFVSnBOeAWrYUAc2NU1WUuVTXEugEYS0Dj4Jq1XvqYUJJlHLjpJeqOZ0q2JUE/97EWqLvc6jbx5tL4RvkPy1Sez7HPnr6y5sAMXCQHbSYPizdX/tfkZNGoskhvPCKYQ/QzFEUX4p6ezqWm9XHNgmMabCyazthxHZpv/gGkDwtxYY5ac7kzuD4poIdWt/I+wcNRkLFVjbCAS/jecSkoOZDZLl+0S2z0A19N9g3qftj/iL6nk+H4XH9zNHLLyxMA7TV0mXe+a3CSZiBg/lF5mHunpd3M/XCqZGpZXXz58VKY+1oWKmJlhhr1Q9OlyYQlma4KqcHFvGIVMXcBe4fRgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01PBCLAefvcV57GuD4n176AF",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "9b201aeb1e6d3caa470710af67927fb683be636adf5d46180bc9fd25363aa6a0",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Mt3Jo5gv52pMg5fHsCf8Ft",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in team.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The title, heading, captions, alt text and form text are all in English, so lang=\"en\" fits. No other file in the repo sets lang, so there is no site convention (such as en-GB or en-US) to follow. The reviewer may want a regional subtag if the site uses one.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2564,
+          "outputTokens": 329,
+          "costMicros": 10053
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5QUKEAgTGAI4AUIIdGhpbmtpbmcSDCdb9iynbfu27PF7kRoM9lJ0eLeHfSe31azFIjB/WE5MHQTpcULS83Nj0068qM5l0chOfbiQWvwPRJAXlY1SFiWOBHkTXYccFL0vcosqggXtZhWBAoiK03J2o/AASguklNEFg+N32VqzgAeCT2Rqe3kxIkmwtsIwGD9dKevmvNByPMW44YoI01KFFHaK+9MBGn8oP1mr8ZQgkU20uaJ9l7+cnYqzhXuzodADvGcjl9HiVrLcj1OcxECbo5/hM9DBwgWgrLLcOFXRL/jbIbJGko69/1h1Gyx12N78t9AgW3vF6IdODA/fuK8IPQ9gOlTGFnhaFgf/NqpJk8kK4NxYf/aY42g0PguGMOEYoSuUptEAXgp70na/Sf7+sYeAzkPzeST5xSvoJoJSXUHgACw2Mx3gpPCXL/1iP9Ipuwk6fFh2x7ADPegq6DonuqM7oAHNuzTjIYQauCwZyk+85zlOGRH1bjgv3YtphhZdpHebhT7Kd8zWgbgVj/4W+aWlvSFHMwfPN5iFTGU23NExbMW7c7zbJ6MItbB6bj1j6D0GQpt767dmiczW9wN0ZqinwMuqdxu8qYN9rFk/gOCkJG6kx2M/eMtF0S9euizJ3AuXY3CjXPAMBL6UnqNGGyK0Jic/+8LBYIt8BKgzNZZLGs0IG7g90uoSg0ZpGzykwSu15R4ccWBCseuVh6TCFxKF7Vto6q4puG3zPi2OBBcJJN7q/A94k8eRaisODGqohzpN7JeydQb19wXc4gqZNjUwOwCTkoXdJrBwyYSloS/LJpot718fe7TQRhB5BqcuU0sD/52Bgpu1jj+ZrKK6maXdtGWItZwRNPTsiiYwuJ5wpjUeKsz8wzxtOCCU5krB5V/mttSOeQCzljiKu8wRI4hBPAXR1PS+vYkFlnsXGZzYcPASrMB4Xb1AJaW1RovNOsOPEf7Nv5gaBhMMz/xgjtiSm3GZsR4YAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Mt3Jo5gv52pMg5fHsCf8Ft",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in team.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use for pronunciation. The title, heading, captions, alt text and form text are all in English, so lang=\"en\" fits. No other file in the repo sets lang, so there is no site convention (such as en-GB or en-US) to follow. The reviewer may want a regional subtag if the site uses one.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

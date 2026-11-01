@@ -1,0 +1,101 @@
+{
+  "scenario": "product--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "9d6324c2b69d00d861295f2de6b807b93c87faf8268404b914514c38a1885a44",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01SoRgP81u1J674J8n8ioVcD",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "I need to see the image before writing alt text.",
+        "usage": {
+          "inputTokens": 2479,
+          "outputTokens": 40,
+          "costMicros": 3933
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to see the image before writing alt text."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01SoRgP81u1J674J8n8ioVcD",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "db3bf74f65af75381dc15051b2ac7b2c670ab6a77d89dd297e85a0eca2cfcc3b",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_019rxob4x35QNu551Wh1WkZk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for main product photo (mug-front.jpg)",
+              "rationale": "The <img src=\"/img/mug-front.jpg\"> on product.html has no alt attribute. It looks like the main product photo, so it is likely informative and should not get an empty alt. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the nearby text, so I need a reviewer to describe it.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/mug-front.jpg wouldn't load, so I couldn't see it. What does it show? Please give a short description (under about 125 characters), including any important visible details such as colour, speckle pattern or text on the mug.",
+                "options": [
+                  "I'll provide a description of what the photo shows",
+                  "It's purely decorative, so use an empty alt (alt=\"\")",
+                  "Skip this finding for now"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2538,
+          "outputTokens": 425,
+          "costMicros": 11869
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShwUKEAgTGAI4AUIIdGhpbmtpbmcSDO/IfOulrUCOqsCfFhoMqvk9m4CM91bU0DP2IjD5mcXtSbzpScwBdspIDmel/yxI5mf20T8kI+nEDOSj5khR6H9Rv6/GetjnPo9z+WQqpAQYP0649fJbh/PSP11K9Eo2dyvQUprdhaaq2+d3Iw/C7yvpVn3yGq1E66K3/ka+dpwO1hsBSA+Jg4/iezt+4pMFIDpJs2FNNLi2ton4rrZ53DdTSDHvxJe/GKI30Yn5V6X2tw0m5Gm0PSqx4Kel7Pif8R0VOFgqDG2EJm1ZqwYDqIWOjVFJCgWp+6H97VsPHOBgixEaxD1NLTNFq92up/7xrP47HJCo7uPiRNpc+GxJxMxIxD4idEQUNmRtIJmBM2b3aNQei6SySrbTFtk23Ym/lKTdQ/M2R2NEpvK4j1V4hHvScT3yYC3FZcbVbn9mjRxG9/ie4NMsV2a2XG9fDWQ7cBp8rIU5DvZgeW/tAxBxVW9MGeM5b6psba6R9MeiE2H0JYJsBy2v2Z1VIYLgMiwsWmCGgdm45MQyUWDAwAQj3RvKbrl+13BlcbQXCWlFzy7gLDbLR+LWAHNEtIiZWv6dHXMBPK3YwaL4wsw6AcpVLlskZFh7fp9Q3ZtMc600ZzurUyMZXw9PPcXumWEcaWSmuavk1ym1dGgMjj6rmGNIYS6Vd7MArOLKmcqQ7bQ2LxRoFGTAI3JQ6fTtcDGY87tsvjoskfmbYYX/HZrQVmT+P4F7haUkKTCmQSP0qySx+9VclPmvURXvLPi230J2iQimctdILSax1LEaq/3mxqXntb79ACrx53MazJCmWEvqD7R6z1qDw7OQSUKtcBoLjcvWBsVT/BgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_019rxob4x35QNu551Wh1WkZk",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for main product photo (mug-front.jpg)",
+              "rationale": "The <img src=\"/img/mug-front.jpg\"> on product.html has no alt attribute. It looks like the main product photo, so it is likely informative and should not get an empty alt. I tried to load the image but it failed, so I can't see what it shows. I won't write alt text from the file name or the nearby text, so I need a reviewer to describe it.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/mug-front.jpg wouldn't load, so I couldn't see it. What does it show? Please give a short description (under about 125 characters), including any important visible details such as colour, speckle pattern or text on the mug.",
+                "options": [
+                  "I'll provide a description of what the photo shows",
+                  "It's purely decorative, so use an empty alt (alt=\"\")",
+                  "Skip this finding for now"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

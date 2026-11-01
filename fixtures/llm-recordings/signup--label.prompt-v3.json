@@ -1,0 +1,67 @@
+{
+  "scenario": "signup--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "2345ba809d4490d9dad470097e16b3056bf03b16c3b7411478a43b4edd069c06",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_017SS6KUVHT5uX1f52FhdmgF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the password field the accessible name \"Password\"",
+              "rationale": "The password input (#su-pass) has no accessible name. The visible text \"Password\" on line 11 is in a <label> that has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the input itself, so this adds aria-label=\"Password\". That matches the visible label word for word, so screen reader and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the <label> on line 11, which also makes clicking the label focus the field. If you make that change, remove this aria-label so the name isn't set in two places. This fixes this one finding only. It doesn't make the page compliant.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 379,
+                  "name": "aria-label",
+                  "value": "Password"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2473,
+          "outputTokens": 523,
+          "costMicros": 13569
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5QcKEAgTGAI4AUIIdGhpbmtpbmcSDOJH+sGM/TR8wFrCORoMXbXH3/xy+EDHliciIjBDRnBJwa3Cn3wOQ7S/hjhs2yGQoGe6JLzTcepqyny2NhhJP75EKsmEKz0AkKl8n9Yqggdj/mlMmGsQVlpMvcjKI3emLveM/hrhnz4dLwbyfeqBdDNEmjw/0PadjmGa2/bxr5CoPHgCAzh7qwuR+B0e2YTN2yvsc09ZiXx70/pTUkBoyvlYn0oU0Jj70uuZrUu13ElR2DmrzYiHfj/YaXf+bKcTveg4GxLJyx4Bs48kJgXpfGad3qby3lavIPrJ3j5N8Kesjur6xavAaPT7Zw9S40d3Rzzi4dTrYIZDkDVj+BnNxt1+7VoicgUPEv2eh48Lt8Ivf6cMHWfD8p0uIcdjuFAangpdpDwQlo1ZMJvup8mgQJ7sFV4H/W4tHNgIIRuuOhQmfpxe096GLOGhzevNzI4TfNeAJrFubD+D+F6K9Iaq8Uz7IaCnu4cADCmgdkUdk5/h/YeunoYN/1roGi6fbyeVbYUWbz8gq1gUBiRIsgfzHxfpPrrFneE7+IizJ8OY+GPJZP1djVH6djy5DCVu+AbHqHEP3QfmLtGm+XaRpmmy/ZyNCpSH4R65TroOg99/EBLlXU9QmrNAcGm5v/hcw7xVDh4XXlS8gh0EHOb+p7yA04CuKmucVjX/u8CZ+nc5am3jCpqizRhQH16ymwirfxI8Lzl6Z2F4knafh2wJJOZy8tdEWPg7hkSqd3+kHfXTZiofAK7Jqv8KseIJmEu9t2GQjCu2i+/+kFsQD5AloN1BayanpwkpsL8c9C80fbLTga1QnSfXc/HaBvBRTlgYkjAbqjMmdb//rWBg/zEzpFVw+74Yi3bWcaXGMIPH23wTwkBsKM7Rlsaw1vT6pz7dNc3hMhHhltJUjosrsHman0a3TeF00x4dAnV/slw0753IGpe8zUDv+CvgcGcldOv+CL/o/zC5cb4A02hJB3yqoLvlBiBbGtCRBOI5uAhQhPEiOSWdz/QYb24424R4xAwhsfFXxCtrb52Z5ttZpvaWQvKhgKYKcDtMSTuHIPh6w0JHVzlMjHp8L+ZQeGsWhgNHvsgxQZxUxp0XRFJPOKtV3oVj5Du/gvbsrGq2DtC4XiDmGzyKrJCEA3+GjeonfiohNTc6b5G8zJNautvCZ3mgI0A7OtJQmPw7bXT1xQ0iKT5OiqSkfMyzPL1Z1tw7ndWq5d02oIz44zOmy0LzZ8x+fQn0deLen6KtTAE+moWwCuRTHT6Xx5x42Zh2uhp8AF1i4wUKpSfDLrhsIoEIni2fUh8I1yo/GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_017SS6KUVHT5uX1f52FhdmgF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the password field the accessible name \"Password\"",
+              "rationale": "The password input (#su-pass) has no accessible name. The visible text \"Password\" on line 11 is in a <label> that has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the input itself, so this adds aria-label=\"Password\". That matches the visible label word for word, so screen reader and voice control users get the same name sighted users see. A cleaner fix in the source would be to add for=\"su-pass\" to the <label> on line 11, which also makes clicking the label focus the field. If you make that change, remove this aria-label so the name isn't set in two places. This fixes this one finding only. It doesn't make the page compliant.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 379,
+                  "name": "aria-label",
+                  "value": "Password"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

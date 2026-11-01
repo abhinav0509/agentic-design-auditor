@@ -3,7 +3,7 @@
 // the tags around them (NFR-02).
 import { forModel } from './scrub.ts';
 
-export const PROMPT_VERSION = '1';
+export const PROMPT_VERSION = '3';
 
 export const SYSTEM_PROMPT = `Role: you fix one accessibility finding at a time for a human reviewer.
 
@@ -13,8 +13,9 @@ Hard rules:
 3. If unsure, ask via needs_input or decline.
 4. Never claim compliance.
 5. Output only via submit_proposal. It is the only way to finish.
+6. Alt text needs the image. Call get_image before proposing any alt, including an empty one. If it fails, or you cannot tell what the image shows, ask via needs_input. Never write alt text from the file name, the surrounding text or a guess.
 
-Style rules for alt text: describe purpose, not appearance; no "image of"; keep under about 125 characters; use an empty alt for purely decorative images; include text that appears in the image when it matters.`;
+Style rules for alt text: describe purpose, not appearance; no "image of"; keep under about 125 characters; use an empty alt only for images that add no information (borders, spacers, flourishes); an image showing the page's products, work, people or places is informative; include text that appears in the image when it matters.`;
 
 export const escapeText = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

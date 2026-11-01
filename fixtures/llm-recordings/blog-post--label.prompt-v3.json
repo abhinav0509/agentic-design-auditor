@@ -1,0 +1,67 @@
+{
+  "scenario": "blog-post--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "8f6a49303af5b277b68f8b7a0fefa4c0cc0b282e60ad79582a9623d24539c348",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BPAHY2EL6fZJ2Ydrfh81xV",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Label the comment textarea with the \"Leave a comment\" heading",
+              "rationale": "The textarea has no accessible name, so screen reader users hear only \"edit text\" with no hint of its purpose. The heading just above it, <h2 id=\"comment-heading\">Leave a comment</h2>, already describes the field. Adding aria-labelledby=\"comment-heading\" names the textarea \"Leave a comment\" from text that's already on the page, so nothing new needs to be written or kept in sync. A visible <label> element would be a good addition later, but it can't be done with an attribute-only edit.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 430,
+                  "name": "aria-labelledby",
+                  "value": "comment-heading"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2413,
+          "outputTokens": 484,
+          "costMicros": 12549
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSoAcKEAgTGAI4AUIIdGhpbmtpbmcSDKYjdmFYnsXsNAHIYRoM3V0PyUl5adr3ZiFPIjC4qQohtzqFctibMlKhrFKbfYFxAJZ9PIj/pX9Vihfel8cEOmH/QnHf8LWrqiAmVO4qvQaENtGERHs5YXcKXfuLCVxHwgtBEqYDfKXOvLCEMYz2r7DFePzoQN7aJcmIUgs9EUaYKLEpCMbZpt2NdjLRm+Bwvp3ksPMyqZmNL3rTzAnwwttp7SPHrITqFZdrMFQGjbb+nmjD3QxGEUxu9EhDimJp1j1ZxLYoPSLVzA6qxP/YMN+ZOZlrAKQCWc8nNcflbWtVwIp8EY5vlPJk2omZRJM2Z7lRcaeco6os0pp9WIb1EYCrPPL0rZXmDlrCBldp+m1Nv6t/fBTiu2I/GWCZf0BsxRviL9REbm2AmfGqLVZ4Iz7Ec6KaLrHcUS2VwGoyfFxA88xmIYevO7qhm+iSCYVwIsk9a+XJ+WP1bfKRqmrottqaMxXS7ZjcSMiOMx7XFe7gTkxutLgGaqm111waSACLuxrEDTvJ+ChGYqt3rWEZ8Odk18fS/HxmzEzqrHat6HK25bHa7ruyRSOtSz/VFht/o5OuXLgYYFnJtsfuid3pFM5vtRlK1DtE1qDsjGQDiQc6iRcNwMeOKisjH5ZBgqSuBHIY1QIoMZszJpbWSe2DfyLbuo0EhYDfjm4mnJuwgr1Va1WV3GIV1vzoeqq7ev6jx1R1ejE1fhrVOq9PI6iCWttp2yZcvHuylBUasUVEQ7pkRXMF9IsPCn7P+3xYpSLFTty+EkKPQnGffoqMy78ZcAaTCuHuL5UzZjbKFMrfZVoOtpil5WcUC0ZizqjLykbbnyVwbrv6oHr4FIc/swiTEMn4Ty88wzWRrHPvkml4puFm7354cAFY5XzyuGkHUVcVs3HxKCTcjBm5aGc0tVczGKkMCN9H0BYNz9p4Ym7pdrHHONpn/TEBG8tRrbM5NcX5M4kMUpDEAsUxIRg4wL2/guU7tiy1ARtIg8mm734bqhoEsNKVOSh6r0+RyruEBIns+UVlhGpnENQo/NMsYtsGiyJK+Nq8PBGs1spLqyW1IcFzHC9L4psqEq1HAKdqYBSVKIkRUkxl//rwwIiGuhvGMKYhYn34FsfyoPnyX+Vrq1jywe9odnD3IT0Mq0JA3kIn9jq5R26018suE9yuqj8+k2xffF7/LjvMzsAickHQOiw/KXFbJOPZW5BJsjoEGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BPAHY2EL6fZJ2Ydrfh81xV",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Label the comment textarea with the \"Leave a comment\" heading",
+              "rationale": "The textarea has no accessible name, so screen reader users hear only \"edit text\" with no hint of its purpose. The heading just above it, <h2 id=\"comment-heading\">Leave a comment</h2>, already describes the field. Adding aria-labelledby=\"comment-heading\" names the textarea \"Leave a comment\" from text that's already on the page, so nothing new needs to be written or kept in sync. A visible <label> element would be a good addition later, but it can't be done with an attribute-only edit.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 430,
+                  "name": "aria-labelledby",
+                  "value": "comment-heading"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

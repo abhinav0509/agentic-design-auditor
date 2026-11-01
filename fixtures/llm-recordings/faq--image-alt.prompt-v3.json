@@ -1,0 +1,96 @@
+{
+  "scenario": "faq--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "7ddfec4e970befb34b03a5414f11b5e45bfe3f75b295e1da68522307cd656248",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01UPHbxAXSqoCUE74rNYqhyB",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2464,
+          "outputTokens": 26,
+          "costMicros": 3593
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01UPHbxAXSqoCUE74rNYqhyB",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "b1a9407d353297312a8399c8944fabde677c2c25293d61d86d85e7bd22da0fac",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01FieDqgHKAz3P3MuQmHZuXg",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to the packing illustration on the FAQ page",
+              "rationale": "The image is a simple illustration of an open cardboard box with three round, wrapped bundles inside. It goes with the FAQ's shipping question, so it tells the reader something about how orders are packed. I didn't mark it as decorative. The bundles are wrapped, so I can't confirm they are pottery, and the alt text says only what can be seen. If the reviewer thinks this is just decoration, alt=\"\" would also work.",
+              "confidence": 0.6,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 137,
+                  "name": "alt",
+                  "value": "Three wrapped items packed in an open shipping box"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2923,
+          "outputTokens": 499,
+          "costMicros": 14889
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSoggKEAgTGAI4AUIIdGhpbmtpbmcSDB/qoKmL3/+kehNOsBoMorTx5HChVumepuDyIjDdjLxCRZDkpB9byo9fJ+yd3z5ZX5GDyZ7kv4wnBTfI+6tMbC89c+xj5QT/3elQArgqvwebzfTSiooq29ayNzPYEZVGH+LpE+a9FysfqSHrGnGjRi0d8Wb6mzK/6vFkEr631OPmHa+bTvkNST+lEJTg7mw1yilMOe8BUYUH8XSXHEp1I6ljLIN3LvfLHppHjdULFAmpjXUO9e71JP9gVbYvuYPQYHzAVN8r3B7ixSCqVwaTuIIaJfjyWlCIyBkAAM1MgK5IGWTPfG93oLK9UWEaIJKOKSm/+9geCRiqAOIcl68HB0mh6hMepewD+3aOqT3zU/av4IrpGZv15pidkE63/rWAt7Ewcl/clPPCZVTAcRkqJ8SAMVhB5kqks/GEXG9exDslwpLIE/dwgreTa4SrjSpBFncfGntG51ooq2W5Zch5oEGyKtim48PMpPPlpOSo903sq17yv1iY4weaSsM1WMgdhA79QqGxloATodUzSjaE7f5WmKAZnSFT96opKxmlubspPgd00tb8c/h0myW+FNU0b7t3+9iC4SsMc/LzSotEJhPVRMOs6nQpHOLpPJA8ifhvwJkd8TxfeysagQhKmvBKNV1Ovly98ORO0BzjK4yzPo7Ft5I9vMiYjIZ70MYukWyU4QS9mMrOTYFFnPXv93PPbVb4Uqbuu9rA7Qea4mnCbSA5A1nrcEmbo1dc4yiELZzGMK0Re+xsoB9McXdj47asbfNEzWs/cErFbyg/O8Usl4AH3g8V6yEZMQflzqc+mWDGGYe2A9QKEprnESeHo2rlrqRmN0uYc3bLi7nrCR7axMDnywtDcpbxieTyocpUC0AqpeF9PPewP0U7+DN3w1IgI5/L4kYUR4SZ7wcD4Z21PrwiJfsw/YZd86AJe5ARWP0orIboYt8yPbTXPUWv/Vl5qxHxYCF2FlXaTuFvhaZYXxg0DVP+xVq4H91RupRTtmuWD/s0dqk9pXg5rPEdhlxaLMIIWvVpS0Su9slmLTztReH+2EJBup5xA4iv8RmSa54zgx2cVQMn2SV/N8Hsun23QzouPFakXz1HjW9ubTkL9LJC3eYVtGiv3siopXCxnjs8SB7W0qkKCi6wmX+3/tbo+fOP7N0UHwbwillFd/ZXLBhrDz44jgm0/fZAIszL/7cyYkzT8UXXndGW9JYxmwrsttCLj8Co/ILYzJcTaqiQNlhwS8GGBmP+vSv/cLAJ4bguE6m1qmNH2gCz258DmbgbLAJTLa36TZAxQLVIBNK0DXC6yxLuzhO0t4FORx7gp+jaTxFdwWG6E21iBJ4C1r5MSKaVcc+G7hueFKYOxqar8gxHkz+9yYLyqCVZGZCEcRgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01FieDqgHKAz3P3MuQmHZuXg",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add alt text to the packing illustration on the FAQ page",
+              "rationale": "The image is a simple illustration of an open cardboard box with three round, wrapped bundles inside. It goes with the FAQ's shipping question, so it tells the reader something about how orders are packed. I didn't mark it as decorative. The bundles are wrapped, so I can't confirm they are pottery, and the alt text says only what can be seen. If the reviewer thinks this is just decoration, alt=\"\" would also work.",
+              "confidence": 0.6,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 137,
+                  "name": "alt",
+                  "value": "Three wrapped items packed in an open shipping box"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "scenario": "gallery--image-alt--blind",
+  "model": "claude-opus-5-5",
+  "promptVersion": "3",
+  "turns": [
+    {
+      "requestHash": "256c1172e44deceb873435b62c1d49cb497d55888f76ab34ecf01d291cb647bd",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KQvw5wgJ5NDNB9w62uieWL",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2548,
+          "outputTokens": 26,
+          "costMicros": 3929
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01KQvw5wgJ5NDNB9w62uieWL",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "6434d17466dcbe1ffc8e0994e8eb64160c75ec8f4708c2abf0f98de6629b1906",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XkN1w6CbpLSe1XE9t8EFVX",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of /img/g4.jpg to write its alt text",
+              "rationale": "The image /img/g4.jpg has no alt attribute. I couldn't load the image, so I can't see what it shows. The other gallery images are informative product photos, so this one probably needs descriptive alt text too. I won't guess it from the file name or the images around it. Please tell me what the image shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description of the piece, like the other gallery items (e.g. 'Pair of espresso cups on saucers').",
+                "options": [
+                  "I'll type a description of the piece shown",
+                  "It's purely decorative (use empty alt)",
+                  "Image is broken/should be removed"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2593,
+          "outputTokens": 373,
+          "costMicros": 11049
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01XkN1w6CbpLSe1XE9t8EFVX",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need a description of /img/g4.jpg to write its alt text",
+              "rationale": "The image /img/g4.jpg has no alt attribute. I couldn't load the image, so I can't see what it shows. The other gallery images are informative product photos, so this one probably needs descriptive alt text too. I won't guess it from the file name or the images around it. Please tell me what the image shows.",
+              "confidence": 0.3,
+              "question": {
+                "text": "The image /img/g4.jpg couldn't be loaded. What does it show? Please give a short description of the piece, like the other gallery items (e.g. 'Pair of espresso cups on saucers').",
+                "options": [
+                  "I'll type a description of the piece shown",
+                  "It's purely decorative (use empty alt)",
+                  "Image is broken/should be removed"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
