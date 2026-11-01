@@ -1,0 +1,135 @@
+{
+  "scenario": "home--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "343df40fc780a77d9668edafcea561b39bb46865655483bbb35516756e88e765",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_018KYSg8291ndfvLnq6tjG2k",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "text": "Let me look at the image to describe it accurately.",
+        "usage": {
+          "inputTokens": 2397,
+          "outputTokens": 42,
+          "costMicros": 4059.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "Let me look at the image to describe it accurately."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_018KYSg8291ndfvLnq6tjG2k",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "d67e2faaf303857adfb498cdcb44af2185249cfc2fa15072ae0fc182dbfa8793",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_014sETftGzFmTuS69dgXsGm2",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "text": "The image I got back is just a flat pink square, so I can't tell what the hero picture actually shows. Let me check the DOM.",
+        "usage": {
+          "inputTokens": 2459,
+          "outputTokens": 114,
+          "costMicros": 5747.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS1wUKEAgTGAI4AUIIdGhpbmtpbmcSDMG2n1hpzVY1LT+GQxoM57JFjVEmI8/aESm4IjD/gDyV+AebJuq+NJnT2YaF3ta0QgX4SYPuXYF8vfv0w23D+altKbXu97KrmxQ3sdkq9AS+lxDW/coec3dia+n2rXlpZe3TUZAQdoS/8kKWdH60kH1XU/vzv4Hz+zU6f7RXSQvxcDBWNh6+VzQDYdviU9EG3iTvb6zvh1TYQHOcbj+q/K2bYK0WsUCVaBgV60KtfT6uPvnIuCKJcV/DCMv+4SIrfmIJ5JnNcNEPpmP7tYQSoAse9IjsZxxCrchpZQow1LzKBfUmekkZ3kaHz902W9DePBZkgDQ3vAxeNotRbtaqGV21K/25X1pWq/F3qCrqTPodh3lORZRBJTjSRcKoI15n0TLWiGAXqjiBMOXcV/dtVojl0OIvE7CZ1V2puSeTPYS0SSDVgChqO76pitU4Fo7l3FypdYNEukLVv8aEoEuAi5lZpY+/mNVJCxlSos+0yryQeN+2mK25iMNJmIof4APsu9Th80Z8i/FwT5G7dWvBvXugVfZih7HI/AD/Kp5VWKZTIaCVRgcf7/4MjM8HChOjkIIRSIvEyA7F402pr4qqBn4IS/sE37pOTMsYNTIg+E4cdpX+Gb+6n5ZlRXpMCnoDk9TZzmwUamrHFjwtMTxneoAna8AlxJ5+zgm4HkqyExrmgyCfso82eMAKk6f+ALXm5cdjj2PekObP+E/mGzefxt0SQtSDFEj4Wq9wAUczLU+ewgSrVS3RbDj+5kQPz3jiHsTH8jcs8SvBISBonNVCeyqMDYNxEoCaE3+7yd6Xu6dqKjE8QlRbEneCkQIYGzIHaBuLggON0JYFz5zSYgR7zbspVHWr48zCDJYpDZLbJE4kaZvymHDXX1m7VdfJLhN6hLgxDI9lFfOTQINTz7Ia+wxM8negZHkCNCrV5s3E+eUjCwvLGAE="
+          },
+          {
+            "type": "text",
+            "text": "The image I got back is just a flat pink square, so I can't tell what the hero picture actually shows. Let me check the DOM."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_014sETftGzFmTuS69dgXsGm2",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "b36f3c9ea07989362d8a60fd1baca8676ce1a3c075145a399f71c31e6d565c83",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XBD6jW6FDQUDs22K2kZz7o",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Confirm what the hero image shows before adding alt text",
+              "rationale": "The hero image on home.html (offset 391) has no alt attribute. The image came back as a plain pink square, so it may be a placeholder or may not have loaded. Because of that, I can't confirm what it shows. The filename \"hero-mugs.jpg\" and the nearby heading hint at handmade mugs, but I shouldn't write alt text from a filename alone. I'd rather ask than guess.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The hero image (/img/hero-mugs.jpg) under the heading 'Handmade pottery for everyday use' came back as a plain pink square, so I can't see what it shows. What alt text should it have?",
+                "options": [
+                  "Handmade glazed mugs from the Fern & Clay studio",
+                  "Empty alt (alt=\"\"): the image is decorative and the heading already covers it",
+                  "Other: I'll provide a description of what the photo shows"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2625,
+          "outputTokens": 436,
+          "costMicros": 12851.2
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01XBD6jW6FDQUDs22K2kZz7o",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Confirm what the hero image shows before adding alt text",
+              "rationale": "The hero image on home.html (offset 391) has no alt attribute. The image came back as a plain pink square, so it may be a placeholder or may not have loaded. Because of that, I can't confirm what it shows. The filename \"hero-mugs.jpg\" and the nearby heading hint at handmade mugs, but I shouldn't write alt text from a filename alone. I'd rather ask than guess.",
+              "confidence": 0.4,
+              "question": {
+                "text": "The hero image (/img/hero-mugs.jpg) under the heading 'Handmade pottery for everyday use' came back as a plain pink square, so I can't see what it shows. What alt text should it have?",
+                "options": [
+                  "Handmade glazed mugs from the Fern & Clay studio",
+                  "Empty alt (alt=\"\"): the image is decorative and the heading already covers it",
+                  "Other: I'll provide a description of what the photo shows"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

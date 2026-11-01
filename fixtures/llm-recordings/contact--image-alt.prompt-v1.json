@@ -1,0 +1,166 @@
+{
+  "scenario": "contact--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "34089c45ab469dd867f4419dd09532630e71376fe8038b9fc1e39c1387e0f8c0",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_0154YGGyjUEkd5PaNRERUEaN",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_01TnxDNg5LNueaTKCgSRh25S",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "text": "I need to see the image to describe the map's purpose.",
+        "usage": {
+          "inputTokens": 2371,
+          "outputTokens": 71,
+          "costMicros": 4535.2
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to see the image to describe the map's purpose."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_0154YGGyjUEkd5PaNRERUEaN",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01TnxDNg5LNueaTKCgSRh25S",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "0bddad5521d69d246cd5b82c81da754ac52c5fd4c01c58391f6b4a34e0fc98c7",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01LYLPRb5DycSaS2LCQmXpY3",
+            "name": "search_source",
+            "input": {
+              "query": "map.png"
+            }
+          },
+          {
+            "id": "toolu_01XLhCJf9Ua5henwmDN8NsMq",
+            "name": "search_source",
+            "input": {
+              "query": "address"
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2548,
+          "outputTokens": 131,
+          "costMicros": 6443.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS1AUKEAgTGAI4AUIIdGhpbmtpbmcSDFZnkFm2g/6VJEO98RoMP29L5g+6T1AnSKXIIjA1T/Opuvl3pXbLnXsrg8yjWsQggAEHcrScavnAnNoiiQsdKdJj+YVQ/S4uAkTB/ucq8QRTjIvD+JIozFpLYodg8K6E8YxzF0Yf0Oa6WXLYdDFDX4aeu6A/oZ26GRRtI9/2qKns0CQZfINRVuvVN6GeWt5Lgb6SC9lUMdw0n9xniirsxTtf1kw1lkLkv82zwrhHAuxulgbSpCQ2w4OccCkJE7XIgIx0mlAoJ4TgXav407TCj+fepZpitqGKpE2IX5mzSmGKZCtijAlyA1MhucwUZpX4x8r/eenqGfjlap8Pf8h3VokMV65Vcsb5iF/MXh1KPFWO+z/NXs+vkcJSMVWUqgsX+nKHXFf2kYLwLz5Z2Ik4rP4GiZyakSeUthUE1SOF5jElJjLIaJqUfTMeCtfYQWDChPXGCIDhMuGUZA0QRV7RlCB4i69yyPGwQswIO+iEldiiWEVCnLP4abAbFLN+vHIQK0Ov9DUuGfNwiIFCLKnfhBkvFILcOG5H9Op3XQjN/tfohM6eFN7ilXrULjmM6a4HtaIvIf1Q4QN/n+eh1d4atedHWpRRJbWpYmiFiXEbPwYrEDxLIgqwpCVd59mS1UqfLvLNukuj2uib0AYX2BGDppAFbXkx7xwSbNRYXygAWIC0sFODBHx5Ukc3TTfxz9cZo5yhO3R4x7pI8q/DYChv7x0p0qpviNv5YW5iSeEBFLXfzL77gEW0xMNZw91gZ8+q7fRkey6NoF0aSAin+jq/Uc5wc9CEWcbZ4QstSLWbGl0leAbLcfJQhs1KvyzPNXOsMVa8UlQVYQ/O29OLeAzmswOr4prtD5/2J1inQsX20Ror3vuYoNE8TiwFDESRkpX6eDVS1Uinq7OrVwguaHWClAG8rE2VoDkOupjTcAfmwZoZGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01LYLPRb5DycSaS2LCQmXpY3",
+            "name": "search_source",
+            "input": {
+              "query": "map.png"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XLhCJf9Ua5henwmDN8NsMq",
+            "name": "search_source",
+            "input": {
+              "query": "address"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "2eb0768a6b8a6a91258d631aa57b6d407ac7d140d215f52e7d74d40eb4d11ed3",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_012U9WaqvBZDJSWxeCHaykNF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the map's location to write alt text for the contact page map",
+              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. Based on the file name and where it sits under \"Contact us\", it's probably a location map, and that would usually carry information. But the rendered image is just a small solid pink square with no visible map, text or address. Nothing else in the repo mentions the address either: a search for \"map.png\" only finds this line, and a search for \"address\" finds nothing. I can't write accurate alt text without knowing what location the map shows, and I can't confirm whether the image is decorative. So I'm not guessing.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/map.png on the Contact page show? If it's a location map, please give the address or place it marks, which will become alt text like 'Map showing our location at <address>'. If it's only decorative, say so and I'll set alt=\"\".",
+                "options": [
+                  "It's a location map. I'll provide the address or place name",
+                  "It's decorative. Use alt=\"\"",
+                  "It's a placeholder or broken image. It should be removed or replaced (outside attribute fixes)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2763,
+          "outputTokens": 485,
+          "costMicros": 14383.2
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_012U9WaqvBZDJSWxeCHaykNF",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Need the map's location to write alt text for the contact page map",
+              "rationale": "The <img src=\"/img/map.png\"> on contact.html has no alt attribute. Based on the file name and where it sits under \"Contact us\", it's probably a location map, and that would usually carry information. But the rendered image is just a small solid pink square with no visible map, text or address. Nothing else in the repo mentions the address either: a search for \"map.png\" only finds this line, and a search for \"address\" finds nothing. I can't write accurate alt text without knowing what location the map shows, and I can't confirm whether the image is decorative. So I'm not guessing.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/map.png on the Contact page show? If it's a location map, please give the address or place it marks, which will become alt text like 'Map showing our location at <address>'. If it's only decorative, say so and I'll set alt=\"\".",
+                "options": [
+                  "It's a location map. I'll provide the address or place name",
+                  "It's decorative. Use alt=\"\"",
+                  "It's a placeholder or broken image. It should be removed or replaced (outside attribute fixes)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

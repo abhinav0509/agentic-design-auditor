@@ -2,8 +2,8 @@
 // cases once the next one could cross it.
 const dollars = (micros: number) => `$${(micros / 1e6).toFixed(2)}`;
 
-// shortcut: typical tokens per case from the fixer's prompt size; replace with the mean of the last
-// real run once there is one.
+// shortcut: a fixed upper bound. The first real run (2026-11-01, Opus 5.5) measured 1.8¢ per case
+// against this 6.2¢; switch to the last run's mean plus a margin when budgets get tight.
 export const estimateCaseMicros = (price: { inputPerMTok: number; outputPerMTok: number }) =>
   8000 * price.inputPerMTok + 1500 * price.outputPerMTok;
 

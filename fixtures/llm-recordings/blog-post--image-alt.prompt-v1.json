@@ -1,0 +1,103 @@
+{
+  "scenario": "blog-post--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "615b8f16cd2b8549ddbeb273e64c5a0ce5fdd4adddfc70d69527ad3f616bae57",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Mqz1CPjxJBYJKSexdbKGLQ",
+            "name": "get_image",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2357,
+          "outputTokens": 48,
+          "costMicros": 4019.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSkgUKEAgTGAI4AUIIdGhpbmtpbmcSDDG1pkIUQTttq68GZBoMySSK9JkjVWma4yZzIjAtlNSG0kASwe0Rf2sB2oQIEuDXYdmSdF2iGdpL+RX567mJbynrui+sJ6K0UMjxNFQqrwTYE+xY/qb8+EWn1PAulSXHKCc48PV7SEB5TTxIOJyJ7Lgj9ajBEj5yq08GVTJWjeSMC3lnq2EhwNrnx347970pUmQ9VScJlOq+B1nJdJGFkGOfPWWTwi5xUz1wDZbsVTxZuPAJBWImtp4nlPSzmjCy6ExfmyVoU6OzWQUDWI7LOliVY7STRNmzMU+oWV/AOufS2ycm76Zth2DLCzb3yaMWi6uuHTrYbhO7uT23KbLW4rGNnQsh8KlqFXKCRmqUgBXZzCfPwOMe1prwuCyN3d9g4C3KFHvHzV4So8TmmqsXsqaTiKQi3TvNRyjMJ3QcUjWhOlXly2qj8pDTWzILdg6ybSMjaIvUmY3sHhRbOantQ0/Hfjk85IDlrkikVhBeSIpNFqi+TqpROLziDDSglnXI1YUAVIezTfJiW6k8ZuYEMblWfWf34gJ1iGj/wjVBJujlsShZtouaRENbJt6VFS8KwJjvwSWTo/Nplmgb85/F6po/0l5s7es4kZN7B3mrmxAs8khM1118l9jnrd8gQhKXEY3dHmC/S5MHfJefzbEPnJohlHKxTpFcVey6sfcRLODGIkKkUfEskEGhRqRaqhh+7Xh13+FOd8ghNkBYwd6hq3xioqsiu+w5nsvCD/fWJC2B6MLmsv28zvGXDjv6CG6PginCvRWr6HW4EDE670ZbOchDZ2+rkXLkeu3iAmd2L/bAcB2WWBtH4CY27LI58515rECha7VpXKHOhGGTdQLfGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Mqz1CPjxJBYJKSexdbKGLQ",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "7e6f4531a21436cbd82bb56d490efad477e3532dcbe551a380e48edd0cec2d2f",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_015rjeBMnyqNz4ka4S2NZ8Sa",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for glaze-test.jpg in the blog post",
+              "rationale": "The image at offset 154 (/img/glaze-test.jpg) has no alt attribute. When I looked at the image, it was just a plain pink/magenta square. It might be a placeholder, or the image may not have loaded properly, so I can't tell what it actually shows. The filename and the paragraph next to it suggest it's a glaze test showing how even the colour is after one coat compared with two. If so, it supports the article and needs real alt text. I don't want to guess what's in it, so I need someone who knows the image to confirm.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/glaze-test.jpg show? When I looked at it, it was just a plain pink square, so I can't confirm what's in it.",
+                "options": [
+                  "A comparison of one coat vs. two coats of glaze on a curved piece. Suggested alt: \"Glaze test: one coat looks patchy on the curve, two coats look even\"",
+                  "A single glazed test piece in pink. Suggested alt: \"Pink glaze test piece with even colour after two coats\"",
+                  "It's decorative or a placeholder. Use alt=\"\"",
+                  "Something else (I'll give the alt text)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2425,
+          "outputTokens": 576,
+          "costMicros": 14851.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSogYKEAgTGAI4AUIIdGhpbmtpbmcSDKQP4GBciRIca4th2hoMLjQRxawDtXH3utgzIjCOPtCP2QYUgMx8byyevytp+4bBicpM4jxwM62F64LEaDuBZzY5RrIUOntG10lNw5oqvwUFAUrDK4HSews2pSrbvxU3dCI3ourRUBfvUq+OeRh0WjKsbojh16WA/sU+GnkmZDQktCVVL9mtXLBJ6+WBZ8eXxISNUNIU6WQVzvm2hHxXdLF2Exl9lhvD3v9SSrVK370MgYTD2dKvymEMVuStkhyYArpCnXacATpnT/kU0uwb+VHsGaQGBlc5wAds7l+r2Kg+mdzvbGzqIdwM6TAdk+G+8tre6v19RAvsEV41yyy0X2eotR5zLnjZzHROM/H6OOnTVh/aNDt7F6/52rif2AyPcdqUBu9x9ZYz+AV6SC9J9aaC346/AlzXuA0NWsiGe2S8s0z3q0pzqhcDr3MBhAKw21aj8lF4RmH2AN67TPVcunLeBTn9Knv4anNJhAEGJ5S8XmY7hL3lEl3hqjz7UOR38yTbrlbXtkWplox58hcUhW3kj3uiiZbuwUooDB+MJS5bluFTxW/8T71oMnMWO6lss+mNxBsUDfXTs65Wdw8RsQboZJcDYImWYB85zn6WNVSsd8ML6X+4cGzadYH93PgHVck6b/v1mdtfCVEriLwhKDLoPw2ZbSKUf7HUBWU/X8cuGgdTKzalYHUcbn3hkpdRB0rGdsAdmN9lukaP6a/CCWlsjFegUWJxQWKS/HbcwqJqmx/7rIvTstGEvTDJ15EEJU1gpKBesIaGqr/EMAwxEUAnWQjdq/zxs6x80PvqwH2UjPVwyx5641UZGC+xvMfguLaskYwHJlWXCmpUBM+tNZNqHSCK5g3Qs5SNaq/MAd2q2O1+nq/7nGlTB1xE88+X5huGmDkTJGM/qEzdlOQ5HgSUVBwx6mKXkVC6Tcdn8T3EQ2NaGGqS/e0SEMjIbloLSFyPU4ijYZgvrsYcScvscmsy9+9NlqCXd4mI879JoEn44u+qLB7fje8eHu1V4YcVnG8fCK2ZKdnuonxahYRvGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_015rjeBMnyqNz4ka4S2NZ8Sa",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Alt text needed for glaze-test.jpg in the blog post",
+              "rationale": "The image at offset 154 (/img/glaze-test.jpg) has no alt attribute. When I looked at the image, it was just a plain pink/magenta square. It might be a placeholder, or the image may not have loaded properly, so I can't tell what it actually shows. The filename and the paragraph next to it suggest it's a glaze test showing how even the colour is after one coat compared with two. If so, it supports the article and needs real alt text. I don't want to guess what's in it, so I need someone who knows the image to confirm.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/glaze-test.jpg show? When I looked at it, it was just a plain pink square, so I can't confirm what's in it.",
+                "options": [
+                  "A comparison of one coat vs. two coats of glaze on a curved piece. Suggested alt: \"Glaze test: one coat looks patchy on the curve, two coats look even\"",
+                  "A single glazed test piece in pink. Suggested alt: \"Pink glaze test piece with even colour after two coats\"",
+                  "It's decorative or a placeholder. Use alt=\"\"",
+                  "Something else (I'll give the alt text)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

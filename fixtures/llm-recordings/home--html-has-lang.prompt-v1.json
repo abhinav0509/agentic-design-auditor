@@ -1,0 +1,105 @@
+{
+  "scenario": "home--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "b489a665c91d4cc5e5967a71de03fe0bcc7995de77993477efe256a9969f1997",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AN98SkMjXtR7thJYcWhE3X",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2235,
+          "outputTokens": 122,
+          "costMicros": 5011.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSlgYKEAgTGAI4AUIIdGhpbmtpbmcSDE8deueyPxumFVJFhBoMeixqjMLM6umVdduJIjCNMxhp6IOmj7XLGeZX48KG7utnanKDcQQ6eS83g7totaYQ4l2bJYnThJK8mwW8BBMqswVg7pjUq/eCwZuraDB6Y/+O4KlwU4yy+x7TwYw1lD4f2ktITfxN7rHIh4dXvOOT10K0p+mdNwhbsAqPJzaSTlLfzQAJ0jHlRPAOe9RS1lOuw0mgFaZ4FuogrKMMmGoBF1rwDPyLZhL6qrb04O0asMfBNKpsdza/FQ069q4uHnoP5G6e1qq7vvN7YV+J8/TeFlDGPsvOBBHWzHu9uphvjd45Rw1ZKCP1afegi+PYnqfr3GpQjoPf+ULqbkTKLvbW+YbIg2klZA1NGFaSP/Aerc41JbCvIi6Ntg0GYi4hNw15H64fs6pUI1p6eOe5AjFy5YTMccDJzWOOuNdxHLCQYwmfpJEvAc9GGnbIqicsfNJE7+lGRE5JkKU117MhgtT5kSKaf2l1YYJo+u006OFn0puFgC6BFZlzF8TxIulwSQbDajkYpuCqnMvS4Z1cWjaqZtrPBcenkChrrirBUEH0XmWsx6VRGq86eDc20giFvTqfWBo6CTyiiU52VHLWr884IgndIAk0ZAqiqFEoAJcDsDi7i5uy8EzhIf6wxajiOlAhb171Iki8TRmI+Cl1ECfgpxSCReZGQSUnbtqD9uZyf8UwYafH0KnRESAEqH8iiLqHESobhFoBih19QS0Jg2Bc083sAkxTwY6SbEz9vTQybBMFI+QoPqtJ+ObCX8xS3uWanFxDh7R78xESyw6qAj/vzqRR2P5Ebj3q6hjM1kzgCJnaujvWdzpYoJ91d4lcyVPSvub6xYvUI81rHvRBOAb9MBN1z0YYV8F2qVTsVPGEBmtSglZjeCh9dEAXRfXtAJpTFQY7O1rU+p1Ti2Nf8WhwjEsvhqwSwmvsjqKgZxRGzH+Xj9P9xQPTiqkfubNrGW8FwVKWbwe7DWPTrttoZ7hwWzvKy9KbGKyjkPoKjRkiCDV9kckvGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01AN98SkMjXtR7thJYcWhE3X",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "53b7387fddae24956ab21dc282a02c1b59eb285052aead1ae4b00e53a614cae3",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01FqQxRY73wdDKSDLZMxZ1BP",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. All the visible text is English (\"Handmade pottery for everyday use\", \"Open Tuesday to Saturday\", the search controls), so lang=\"en\" fits. I searched the repo and found no other page that sets lang, so there's no existing convention to follow. The studio is in Leeds, so the reviewer may prefer \"en-GB\" to get British pronunciation. That would also be a valid value.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2380,
+          "outputTokens": 462,
+          "costMicros": 12391.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS1gcKEAgTGAI4AUIIdGhpbmtpbmcSDCt0GP5ygvUK5fIg9BoMbuxbEWQpba8UY0GMIjBIAI+KlKvBlbxYjgqBL30d1bc1dREMlzIeKUm4BtjawKKMnl2knK1quq198D6F2Kgq8wYjJ8BqshvTTz5SJfXvjpS4N44gDxiTq4t7l96JoCZqV24ZnKRoNIWqQM1RN7l/VSr4zihh8L9tH16geI7qJR1Dw0JCx3vb6X3jH76UVPArh9w00AsGXYx8e0t14HypIyNYBNWW/MPsoYDo98Wdp0wBIXwnio3nzzTsLlcg/T2wEw2y+ANsNUQ8tL9Jbx7Zicc9GkHTjGziiptaMEUKN/PQcLqtQXaVBMqRufeK38kVwYN6X6bJvTohmBCq8++e6lojAXGv2hDi1P4nzEYGpdsv9H4VpMyxA8O4NfE0dNeWC/dUC9iTU5xNdLK/gKKRm7fugB8X6oFWoFSOozO1DFVvfltbIJl6rTUp8700glw1FR6NUrkntVOISIsDseHxC45x4rpjEK6nKP0iFc/LwP6JbUNgCtTJBp5Naz1dtvRYZMUh3Ye5zUj/+b4gY90Y5gM/uowWunPZ72TyUI3u9onFfeb/dvhfZHvHdtLPi6PZSKnnqpL1+tfb/QMfFRXxIOVRNNkdW7dR8r8Ksez+5PbeOJ8e5CgZtJt88tZubtzG5WglxajouRUpKS6aJcRIJTWwU2NjIhdfb0SRFdYX9SqCtgovLeBXT1KUdbUmmdniBBgvgTyvaHczKTYxkhCbr01owhS3I3CQpbcUVmBeCdk3fh4J5JFD5+L0Lp8q8AExRqVOxeUmXJmBpHBCoLocyMDtNUXMiaGMFDUV3DGPAbJ3JqHGYITVtMLop/YX2Nia8p52G5bgaBVFTldVx9Xok24B8QCMuKoQEv8yu+dNLtQ55ehR3U4U6KAssfVGWGg5kdzoQL47RqZGSUpiMZ8ubKuEnKgZW6KX4AYuWJinh4bsjMZ3g2Q1GS/SDFeAry/j8xwvd/BObdryxdPXjg3pluHKehGrXtBFHUAN/ExaB3AVRq61zH5P0sOLhrEOKbq+yOPzIVf7inm+wIBYlH6RmSG7Z8/v/MGPl/CTAq2znpiAkd1O5TSzOTM6cyIAtvk0fAcPhRDrKRxEknYmeTzju3g6mh/P1MELLXrGxImTB1RM/UZrbDnKdGNDOr57xWwaOprI3TNmgAjZN7uApCbxl8ZFt3IqncSFKmIJvauw/4bEw0mxpBEvxAvK6ftaG6HKhNjTjL0gdiEBgds8sFiBd84H+mECuo3mdqqzbaBGpTNhPodDGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01FqQxRY73wdDKSDLZMxZ1BP",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to use when reading the page. All the visible text is English (\"Handmade pottery for everyday use\", \"Open Tuesday to Saturday\", the search controls), so lang=\"en\" fits. I searched the repo and found no other page that sets lang, so there's no existing convention to follow. The studio is in Leeds, so the reviewer may prefer \"en-GB\" to get British pronunciation. That would also be a valid value.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

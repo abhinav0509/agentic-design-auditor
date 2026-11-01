@@ -1,0 +1,171 @@
+{
+  "scenario": "faq--image-alt",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "e4557c56101d4c9e86f82522c3262cda2a873aa9b546836cec2df114f09cf5ee",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01NnKWuqr1fxrare2WKjDNm9",
+            "name": "get_image",
+            "input": {}
+          },
+          {
+            "id": "toolu_015rj2N3kNiumdFAxKsf3sB4",
+            "name": "get_dom_snippet",
+            "input": {}
+          }
+        ],
+        "usage": {
+          "inputTokens": 2355,
+          "outputTokens": 74,
+          "costMicros": 4531.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQShgUKEAgTGAI4AUIIdGhpbmtpbmcSDHYr+ALZRVXtM3xndBoMPTX9m3vDgMMXhg30IjDdKFdcR/p4KWuTedUE+N1j9FOAcrz2BS0sKULI74iGFEFFLHWwgOTW9hOsqzaMHP0qowSvma9Aauz6+s9QsuUpsYQCgpUfDTdoaHfVVWZRP1V8dWXMODM6Ssckoc3fQnmatLPcdgUuVtfQV+mUc3VJ92rWlFgnZ9CjLO7OXqIIfnAfP6EifsThhlSvM+5eZsTW7RTcCHJ14YJz5xpFHIDO4YrXvvStG008FQeQL3PsiMSk6tGeInqkThX+8JSON0ApExbJT72Xti3Z0eFrYmcF5li+4P2knQGCv+GBI4fxgj82RJJeme/0IVYou3JcuHgKiTlSAXMfOJYj+WgsKtNvogZ2RPi2ps3KAmCkZWSB9l8x6RCbuN4DHM4wUwzhftNIbsex/vTGy4/9GYSblFcXhN5zR7EcEm9V3RLsYPd/fwyJGMxc5VxD4fo7I7H2pmSBpOdxWl6VDu/KdzQxhQrjZAzoOEtoHIJPkpMcecvY6q7tla7PXGuFmDLGOWTbRh+P5vjDucbdbWqcLkZTZXVZ35t8eoGOvvvpa38BNdGgrvGJvdALu1yWIYpcDb5oVcKsbyTeQprbWqzS4C2OQkRAX8n4yTC/4aozNYgwaord1GJgXwVhhnNP9BnJ3CD1HTAw5j2GzxABpEYdbWG9CRN0lVbSmHqI03xkYqJDv1YGqwxOpPPP/EhpN6/VR9FOjHxrJMjsrmbmdViQvZUA8dCwDKUUAcX0cz2rww32w2mVH0DbXsfzaI538nXisRBLyfRvLocaaXgviJ7cyC+AoyQl+3j7mi27GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01NnKWuqr1fxrare2WKjDNm9",
+            "name": "get_image",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_015rj2N3kNiumdFAxKsf3sB4",
+            "name": "get_dom_snippet",
+            "input": {},
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "a071366b5b781481a2d423d9c3562e8eae19e516ddde72d888812131c08b00e9",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XHp49w5YZG4CiwSQqXu34b",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Is /img/packing.jpg on the FAQ page informative or decorative?",
+              "rationale": "The img at offset 137 has no alt attribute. The image I got back was just a flat pink square, so I can't see what the photo shows. The filename \"packing\" suggests a photo of orders being packed, which may only be decorative next to the FAQ heading. If it is decorative, alt=\"\" is the right fix. If it says something useful, for example how fragile pottery is packed for shipping, it needs short alt text that explains that. I don't want to guess, so I'm asking before writing alt text.",
+              "confidence": 0.4,
+              "question": "What does /img/packing.jpg show, and what is it for on the FAQ page?",
+              "options": [
+                "Decorative only, so use an empty alt (alt=\"\")",
+                "It shows how orders are packed for shipping, so use alt=\"Pottery wrapped and boxed for safe shipping\"",
+                "Something else (please describe what it shows and I will write the alt text)"
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2538,
+          "outputTokens": 531,
+          "costMicros": 14403.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5AYKEAgTGAI4AUIIdGhpbmtpbmcSDKyQOwmR7ESwhTw6QhoMYYKPSL5Qv2TONBejIjAYldHW5bEKJ9WxpQMX/ES4M1Zqy9xr1UcPJtUf4dicoJSNo63If7NSBG3RcMCusL4qgQYrhUIyS+xwcJTLtibEf4kxaKKVo2XDD5Tls2PZ/MmTXR0wU6AIvoOqcoIn7PqNLnIgUTdFv8mNqSd1G3kuFG8ti9GKBqHLcK5f7FwNBKvmo3qZ2cNOGbpxbKqrzdhLuej0Pd9+GgWl5wPmoJEOTGTu6LOOZoohcgaXdmVeePJapZ67K9a0QgODt8VecAXNOOp9qWSgSQymC6czA16Kkc+50+kFOTA+GU1Xbt+gp1JqF0Mi6MuSb0XAULun0cQsZx5TbxuPUHU/CYH3zXI5gg60ED37UDb2Cj5aTH2y6k1yOafGqu/buQaimKwFe5dNMt0rvh+Vkz6deaEfhKBZcmhzxHSvubzKPq5JIhe78vQ10K2GuFFEATkve+y16wZ3t0dTCkLF0yjPmsC+Oju293K68njBRoEp0xghZlum98zxdQPSrVHrACeUV/RrqCemjqb0of/qu73mEb9mqhN8qIeX5TN6IInhi2vtpI9aNH0ObU3etAqhmDzJrPuu2dxMIa17yUDyiw0E5MVvK/isis4E1JlKQGJbAfLEhpGR6iNePl1drxPOPJK4zyi29rmf4fAGLIi6zMmo1uiFKLAPvGYMTJZVHTu8I4Zd3ueu4oEvsxIyaeJZY1Z2TUPqbYkHObe4HbyuLSoFmLmPQbVZ/Tyvn7kdrXX/V1xX5sm70tCPsXqjlbGXCiBV2teZkLxKo2BZIzlHC1o7MmQ4gdWxqrE4gRfYriJxgyzL5RHNPxknsbHIp9Wi3xMz2ClSywrRlhZ2sjxI467jHbY4YiWh95py2X5DL1FWy3IGFtohgD74RR/hYOVgbvf3jLVhpqYxH18AOqAvHFMTyJRsh9XTNBycMT75guQxpmWD5lx2w9Ns0QTbRPFh/kGCVGMAL09T3d8us9p6recrw/H1BkkjipK/nzqcS4P1u07wqFTyDUUoTr8tMTOmR5KOG4XprbH8PM5X/G+gbiylqPfn2wNAPJePU9vrM1wNhvdxCay70MUoDioAnbO1yv0boIFZpecLZjgqGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XHp49w5YZG4CiwSQqXu34b",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Is /img/packing.jpg on the FAQ page informative or decorative?",
+              "rationale": "The img at offset 137 has no alt attribute. The image I got back was just a flat pink square, so I can't see what the photo shows. The filename \"packing\" suggests a photo of orders being packed, which may only be decorative next to the FAQ heading. If it is decorative, alt=\"\" is the right fix. If it says something useful, for example how fragile pottery is packed for shipping, it needs short alt text that explains that. I don't want to guess, so I'm asking before writing alt text.",
+              "confidence": 0.4,
+              "question": "What does /img/packing.jpg show, and what is it for on the FAQ page?",
+              "options": [
+                "Decorative only, so use an empty alt (alt=\"\")",
+                "It shows how orders are packed for shipping, so use alt=\"Pottery wrapped and boxed for safe shipping\"",
+                "Something else (please describe what it shows and I will write the alt text)"
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "ccb00b9fbca10b68e4c25b52cd8b1778d00056d0bd3cf29c1dc26558045bb872",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01QBdBbQp7kEzdWiAZetmrYK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Is /img/packing.jpg on the FAQ page informative or decorative?",
+              "rationale": "The img at offset 137 has no alt attribute. The image I got back was just a flat pink square, so I can't see what the photo shows. The filename \"packing\" suggests a photo of orders being packed, which may only be decorative next to the FAQ heading. If it is decorative, alt=\"\" is the right fix. If it says something useful, for example how fragile pottery is packed for shipping, it needs short alt text that explains that. I don't want to guess, so I'm asking before writing alt text.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/packing.jpg show, and what is it for on the FAQ page?",
+                "options": [
+                  "Decorative only, so use an empty alt (alt=\"\")",
+                  "It shows how orders are packed for shipping, so use alt=\"Pottery wrapped and boxed for safe shipping\"",
+                  "Something else (please describe what it shows and I will write the alt text)"
+                ]
+              }
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 3115,
+          "outputTokens": 460,
+          "costMicros": 15291.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5AUKEAgTGAI4AUIIdGhpbmtpbmcSDLzUdrJCGc1CMmDavhoMDZPmnNjTu+6Ds76bIjBdWp+b5Rsz1zZFVj4nj/k6V48fxeNFbjnxoFGeo3bwyfy0wk7uPKDgeu9nLIwAxIUqgQV3IE/6Y8Z7dvKjFHZEKi9C0NVGNvqHQb354w+vVAwcopiNbS5l9WAQBzF0DInEfaueveSRErDACtpSlj/Z3Xuz+VqYF82AYxF6Etfx3CTJMaWbybzX88d7ia4ibv9H+Cja4ZmaxP5RPgMEnlsmVgFYKLZ4e1copG75v5DMGzmfnnlf+bIv3FpAlu6MHphe8mDZ5u8uNaRjZKyKjPM+T/Ic2no1jO9wjJn9BjZmNW7Jl6aHoLXO3s3JnzMFKCY7GFS6skePLY/BoCiLY5sHOKnWGun/XH1UI1wl6lpIPh6n4NjgJb28wwRfT6us4xd+2wyWQjqv4RXlfxj/XkWV54ntxL/NZM9NCsYDKV2P7YB+m2EY3ty3bzjqULqCOT0ojhJ9fUXZLuAYiHri4fkZ6Wr2oWfPTP71RjjHD5fk+CYyrPKHs8AxO80pA8BeZn5m5gfhnbB9m730YlCdpRNfXSKU4LdCb3zwwU2+/t1lS0HuJpRKF4A8i+OI0eB7onGktNacGLXZoDGSBFH6MNVxJdzgu90zOEIoLiOn2W8oqmQHugvKaaxSOljYvYHRE4e/I17WgeEfcX/NoPe0t+grB7t9qw8vzSJPefi2Kf4OW4itYNNHvgXcV0EiHLbjHAfnYnbogkRwfK/N5g8lIMeYasjWkAy0/CeT7fwseZFjwYj/bsE3v80c/u4igZQughGYU7wAWvY4itmAe2WYk25rnQr7U0SNg1E03pmNUwDdj0NehQBJHjmLq94BY1Bba6C+B4UDxnyMuDl2oqkcguTAMcHAQgtexKA8cnHOFfMtYl/8pqqe+2zC9EN1U5FmtZv6ZcqkfhNHbzyrvsscS1pEkyWQZxgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01QBdBbQp7kEzdWiAZetmrYK",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "needs_input",
+              "title": "Is /img/packing.jpg on the FAQ page informative or decorative?",
+              "rationale": "The img at offset 137 has no alt attribute. The image I got back was just a flat pink square, so I can't see what the photo shows. The filename \"packing\" suggests a photo of orders being packed, which may only be decorative next to the FAQ heading. If it is decorative, alt=\"\" is the right fix. If it says something useful, for example how fragile pottery is packed for shipping, it needs short alt text that explains that. I don't want to guess, so I'm asking before writing alt text.",
+              "confidence": 0.4,
+              "question": {
+                "text": "What does /img/packing.jpg show, and what is it for on the FAQ page?",
+                "options": [
+                  "Decorative only, so use an empty alt (alt=\"\")",
+                  "It shows how orders are packed for shipping, so use alt=\"Pottery wrapped and boxed for safe shipping\"",
+                  "Something else (please describe what it shows and I will write the alt text)"
+                ]
+              }
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

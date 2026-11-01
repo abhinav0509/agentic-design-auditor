@@ -1,0 +1,100 @@
+{
+  "scenario": "signup--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "3c8304a9060c09f6754e34b4c6a09f76b76c03cf2cfa03e01013f675e9cea2b5",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Dy4SCHQwcCsxvrq1nu5XrH",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2229,
+          "outputTokens": 122,
+          "costMicros": 4987.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSngYKEAgTGAI4AUIIdGhpbmtpbmcSDKpBTvXjvg5dg57u4xoMrp7mvM/Sx5b/XDnHIjBRSKaf2b7Q5tmTDjq9p2mKjWjRMOvw/Jhbf7U6WPtc2gJ1ofC3VVS5UN7+xlXYfbwquwUcEmQi0jvrfV/hARAAeAaPMuLv8VgkhwHHxUYohNCGmpI7xztQt1QmadljVpHshMIIwM4anwAXFxJZU2i3tBasMNx8hsZKDhymEPe0mMqhQRzzEEjhiy3R2SNmWplvGo6jIlOC8ZapLKyVkMqGrXJoM1z8JDRh++/2pwAnRSnKZGcQmXPTcPTJNQPSfXuECFu4zJx1R7NaOO06vIjSKZlbc/+OSCyCy20VhyPh73rG+cgz+hlko3KwNIuPWaONONM+qzlVtMr4tYf4EJxUN2Mm0KUAtdKFY/XS/N4KzECdnmgnujhhNFjLUkvL03NiLS8m7J/mq5ASjkbpmYfDRftvVCHcr0RWOaXlyDROLYr9cITJq0+IsAsga5h6xLhslChhdVf0SjGD447aQwO2MR6MFG87J/Q65vqAIKi8OfuNi5x+93Po4n8Kon9+dW4qc4gATJsh9DgdDeCYVivwA/vGALeg8d71X8cEWt+fcfIpZf4vTZnRWYc/ZI8pCRaKcSxlk02HdeCY+Zk1TOw8yAZIoUbrREuxf5DUX0UYLnqQvl4CoDnnOUtzdxKdsGqmZULLdI0hrKoEEGmgtQS1kpGkHak2X939wemg1lX/5l67nRiPkCowTbfEzhgmvN3DYho/lNmtMTxKjlVJfAHyNxoY+NHZQBM4nkv12Z3iI2yWn6/osL08jcJyyCmzlQcgAhwwzrgsZKyJ5CN29kRxFoxnYdFJSVfGl/5eZusP9/Byl1KP1SKJVOuiH45aA6fqW5UtRudZDYZFKHk+p7F4Oa6q4WvE4BWkHRWrDQr0EKMNcC6iH14gay/JybWHD1BYyntJwVHJbTvvOgwQnMvLBwI/amH3BG0vxAaneHcRpWXfE8HLE069GiFQAaQFctEC8S8UU3/eH1HmOdLsOkTj6KsjSbE0DPc3da13nQcYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Dy4SCHQwcCsxvrq1nu5XrH",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "eca19e1258ba6e6c3798cda6837e9796d93a9c0fc4bb62c23c70a9f91e6695f0",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Atn6ZdjgYfxkWfzKK6aheT",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in signup.html",
+              "rationale": "The <html> element in signup.html has no lang attribute, so screen readers can't tell which language to use for pronunciation. All the page text is English (\"Create an account\", \"Email\", \"Password\", \"I agree to the terms\"), so this adds lang=\"en\". I searched the repo and no other file sets a lang value, so there's no regional variant (like en-US or en-GB) to match. A reviewer can change it to a regional tag if the site prefers one. This addresses this one finding only. It doesn't mean the page is fully accessible.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2374,
+          "outputTokens": 352,
+          "costMicros": 10167.2
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01Atn6ZdjgYfxkWfzKK6aheT",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in signup.html",
+              "rationale": "The <html> element in signup.html has no lang attribute, so screen readers can't tell which language to use for pronunciation. All the page text is English (\"Create an account\", \"Email\", \"Password\", \"I agree to the terms\"), so this adds lang=\"en\". I searched the repo and no other file sets a lang value, so there's no regional variant (like en-US or en-GB) to match. A reviewer can change it to a regional tag if the site prefers one. This addresses this one finding only. It doesn't mean the page is fully accessible.",
+              "confidence": 0.9,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

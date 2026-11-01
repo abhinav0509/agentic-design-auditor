@@ -1,0 +1,67 @@
+{
+  "scenario": "about--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "5f1b1de37417bbaedc8082a65bbe4cbf03f050d63ed2a86278bad3943b0f6abc",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01D95bzubWLD4SY8JZnzcCdR",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the newsletter email input an accessible name that matches its visible label",
+              "rationale": "The input #news-email has no accessible name. A visible <label>Email address</label> sits right before it (about.html line 11), but the label has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the element at offset 381, so this patch adds aria-label=\"Email address\" to the input. The text matches the visible label exactly, so speech-input users can say the same words they see. A better fix for a developer to make in source: add for=\"news-email\" to the <label> on line 11 and drop this aria-label. That also lets users click the label text to focus the field. Adding autocomplete=\"email\" to the input would help too. Please check this with a screen reader before treating the issue as resolved.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 381,
+                  "name": "aria-label",
+                  "value": "Email address"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2374,
+          "outputTokens": 588,
+          "costMicros": 14887.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS4ggKEAgTGAI4AUIIdGhpbmtpbmcSDDx9VOkAgK/6tk20HBoMcU1kFMVwvz6Y/sPSIjDq6gs9pzixy3jhnT8QY+KoOSlTxyGBPZrxFl7J8z1JFccZlJyPmnPJtpsrMbiYDusq/wfagTaYKioMV5lxrPVdaTqbDQmwYtUpGN1hqf9QKQCP0qEfRNxVL6q876H8ToamWg0tBbYFLhQdNe4fQ1a1IJaLYcCc1fN3DfnZEpdCUQqUWja2kGR9eoceiUdbkVwE+CemVtgvnAjZUmCVm+imMDkZBUzYJkJ3yYrJAvJW0Jnc5MBG9hdUjqURG7vmIvq+zWh832ydaCSCjGR0L97t7GfDLny5ZSNu7KXqK8JhQVctPjTJZW7H+QJV2vUJeS5Gcwi6Nfo2x6pEw5nHbuM35ZNXYEVr2jLv822ebvJ4cFyA6w+5GLfdRC5mogOV662La8P8b0F2Cn7QQ4Pxd+vpgBvdRrDNnMynkcERBJYIUjaeMOfOMaNVXEalo9WUfHdfANl0a8IE3+J1a6hICPumFsEVaiQQJNuzE8tjJXRrW+ib3bKj8tUsWrecryoS3/5nsUBTE2os9BM7QgzKWwqXt92Z51qe8Ocya6BrzZScbRhX1T0Xawfu6moH8oO+Pd+raKoTbr5A6b9eddCumH8oNX9cAYkj6H8HPhoUVEf4pAQ+w9ObBmixWKw6594uH4TZqVmo/2H68Gus7QnUqUQPeCsxv62WYfookhqn0h6ixn5Zm5MDHPxY+V/V4aefaV79RWzFFbQubGJe5q7TJBbIyVwIHDqaMkD56sILYcrWeX2L7gW3T9g7XHNR3tRIrLfFZ1AZWe/fL8atlrvM9fbzNDt6OXPAPowZxqq+FEFL8fgnxVZorS1MJXqdLICG9+Fu0ydJO/QzrB/NEjKu06xWhWNnKwmSWhjkzv3xD2qD5UZ/EUmf+uCN75mDL9g9hQUh7Pu0VKcgMt3yvpQDKbcKlkuAczQrrk9rXdSIqPYA1oiw97lZ2M2lz2zZrBGSui5gMJ9bQiQ1EZ6SZ8QRnvdvHw0yCSaW8v3eE675Hkz9/qon8vT94C8ObFsGnymSnoTgVeCKczemcInoYccpaA7MBgGkAEl/AGFsrCeHfhePwsJcxnG37/TdWVd9YYVJACLVpJDincc04yul3KtOtBnJgmCTvODDqcm2nczXzZluKpn7nVnT+2Pi5xZAmbdCA3JtEuYnlUIp0C7iWMcTiThWkByfdfiKPQA4OseaNkNTlqjRHEM+/UkVLSXa23XffRE8gD/WZ6JDL9wBtXfG1wEY5R7dSNRvsJg+vOOv99rxKYXB57gv/FUfGO8m4UQb3hfgB3WraA8l4ss1fQwIUViggPhjvk+HhWgXmCQ4neT0v/lVM9Pc99OgWnyqQbAWgxIFRpiXuRevtF9OHp91FQAqkRwIXy8AJa1Y4P/ypdUokbGITMWKAikIJ0AO7gDKrgmiI+SAgkEG0zc4YgJNfDkGtucYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01D95bzubWLD4SY8JZnzcCdR",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Give the newsletter email input an accessible name that matches its visible label",
+              "rationale": "The input #news-email has no accessible name. A visible <label>Email address</label> sits right before it (about.html line 11), but the label has no for attribute and doesn't wrap the input, so the two aren't linked. I can only edit the element at offset 381, so this patch adds aria-label=\"Email address\" to the input. The text matches the visible label exactly, so speech-input users can say the same words they see. A better fix for a developer to make in source: add for=\"news-email\" to the <label> on line 11 and drop this aria-label. That also lets users click the label text to focus the field. Adding autocomplete=\"email\" to the input would help too. Please check this with a screen reader before treating the issue as resolved.",
+              "confidence": 0.85,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 381,
+                  "name": "aria-label",
+                  "value": "Email address"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

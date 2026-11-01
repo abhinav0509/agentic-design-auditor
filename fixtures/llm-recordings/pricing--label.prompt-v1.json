@@ -1,0 +1,67 @@
+{
+  "scenario": "pricing--label",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "442ec4ed844838e5cad854dace9e519159f77d773b1c04618396808a72368b38",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01MqRj1CYHPcTFRh8TccrGeJ",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add an accessible name to the voucher text input",
+              "rationale": "The text input at line 14 has no label, aria-label, aria-labelledby or title, so screen readers only announce it as an unnamed \"edit text\" field. Its name attribute, \"voucher\", and its place in the workshop booking form suggest it's for a voucher code. I've added aria-label=\"Voucher code\" to give it a name. A reviewer should check that this matches what the field is for, and whether it's optional, for example \"Voucher code (optional)\". Sighted users still won't see a label. Ideally, add a visible <label> in the source, like the \"Preferred day\" field has, which would also meet WCAG 2.5.3 (Label in Name). This change fixes the missing name but doesn't guarantee the form is fully accessible.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 478,
+                  "name": "aria-label",
+                  "value": "Voucher code"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2414,
+          "outputTokens": 520,
+          "costMicros": 13687.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS0QYKEAgTGAI4AUIIdGhpbmtpbmcSDOVMaCTQ5lfCFREXOhoMy6CMjAKnFMqUp4bdIjAuTomwWQ8mhPAei1qL6f5EubwSb8yUCPsfgoyj1RByOiVyPPmsYIX6ntZvVDzJwREq7gUxArr7aTpml1BY051oMCR2OZ/8wFgio1kzXj2IY4Wua2SG/UeXzL5ceMbzJdkFkmaFldugg8LtsdQLN3kqNPaDn2UjLymppeiZ2QWxgg2qH0PWnba7yjObCSxLuE5K+jPVMotX2J3YINPypaTbF5vjEYKE4Pd24yCxh6O9PbfByN94yKK3wOpO6hYwcysfwyVgMSfamvjjulBblTVg+0UHk3xIJ3mTDzxTgdRWBkUJO3CiHAXfoPd5/9wwfcsqi+RCb/CIT7yXsgx3xiN9ANSHnNbiuVKozzcBxEahOxzEPJ9olJBkvnx2TOzq6GO7htmesdeT6q+oTZ4RC9PEF4JucX1FUmzXW+qTohZGlHLJpp0+h16smCwrxqSxAbzPeoILB9oqDDnRh/0DTeSEPuZXKB8nPoeydwiWOgjynLxL2zNTGwxm2zSHCinv9yNWYJ54QI3sao/o5zlcLOWyOO889AF2sGmPnJ7s0PZRcNyuzvzg23AYiKdm6GN7rUYMnvPwJYAjqLT5NLRROD9vsLEOnzK6qRQXJ8uDMp6i/YyGShftljiUwRwxdq+2GS6Lh0FgF8eQ7tOFj3mPnz/emhRsvaTGMlEtDgZ3L8THj295C9Sy6nTzJMaXEnp6nZlCBqzASKixOc3hPnQrSGOkikLuELwpfJo/4ipzKd070P/xF/JiP3B5JN5YE4r8aKjjyOL+e8RwvyPXnjZQtKpXH4/dR77Wu6r7T45GrMF8Gc20MouNjuz29eOljRiSA3wCkDQ9mkhyCL4taEbJqMQ60TSw994jbMvg7i1kieI0RxJsDb0txGeSS6uzsAOYzX/uuPyU6LVnWWG/pREMVjvfDPAZMjGvrrOrYNi9JQY6ygmBoO0nnaV5O1qnoQXyfFTrvylWe7lhHCqeYZJz9rsop+CYuzfJsl5M1rA7Xp0eyHVUkyCN+ePuM6bTxp1h40Rv018m+xMJH6+52hfDWCllCHv/43UTfthydFj7/zJEC3IYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01MqRj1CYHPcTFRh8TccrGeJ",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add an accessible name to the voucher text input",
+              "rationale": "The text input at line 14 has no label, aria-label, aria-labelledby or title, so screen readers only announce it as an unnamed \"edit text\" field. Its name attribute, \"voucher\", and its place in the workshop booking form suggest it's for a voucher code. I've added aria-label=\"Voucher code\" to give it a name. A reviewer should check that this matches what the field is for, and whether it's optional, for example \"Voucher code (optional)\". Sighted users still won't see a label. Ideally, add a visible <label> in the source, like the \"Preferred day\" field has, which would also meet WCAG 2.5.3 (Label in Name). This change fixes the missing name but doesn't guarantee the form is fully accessible.",
+              "confidence": 0.8,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 478,
+                  "name": "aria-label",
+                  "value": "Voucher code"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "scenario": "contact--html-has-lang",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "6a1240705cadfb088086a9abe579d8754188fd19e27c92290ab2b9754c863065",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01RSkJvJssHQyUp3Z3XhY4nj",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2260,
+          "outputTokens": 100,
+          "costMicros": 4671.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS7AUKEAgTGAI4AUIIdGhpbmtpbmcSDNFHRnQTHg6VDswKMhoMZlg0BEAT6V+gmKmhIjCtH07mzZbscIUfKjIkOcd76+uqK9W9FAsshQ1tDQ1s3dUjAPy/DtFhnTYAaNR4dnQqiQWLQtqlfZP/swAPcmIwNGReTi3DiZsIPU7g3vllKOV8h8uJhXqTbVGt6j95Scbj97dSBR5QLqaUq1DqNYYVghsCOZ6mgk9zH9yQNWAzXmlpHZTECtElOHWM5Naycl4UhzOTyWcvOxziZsYeo0CdIbo6VEieddiwlysYw4x70AhhBAbc8pTRiLOWxK324yxdXnrn5sEQK7Y11D1hkg+JQistlbLeVk8XmJF/3zb7oU9zxmpUkfTJHiFqXmAbj0jQ+QMaAbYsqeW933ZvIDZu4kgz99+E7hZ1Jt+IaY2OGOARfJh3njXMwMl9QfH3jEugO9kAzCwqOr9CRcMpQd7ENFZUmSANJFg7J+YCZv1omKZG8AvphLh4FXm2xLD9NYR7+xgmc/RYNiPC3VcjB2M89Hc8OD1N4RPB1IMGx+vPqgwEMSaenTpiAPqQEqZ2UnyLcrcRSeJlxVGkfZcaAigdDuV0XtFT8F2OhX7UBp6hlkzcWFdnUd0n88YN4eJzUeORkRl7EhOGtm5bsqNPpO/U5weAIRRNHDtkCGOxwQGvwRmUor9gzPWd5l54jZUSTGMaazhCwN6UjRsc5QJ54yOSN88PAtlNNXMMA47CBLA1eaSK2MIXdN24nfMzxWZyu13AMP8JyuyKTHcfYH6KdITMcfAFN7oPrm4E3mJrdK9Rj+HHA3mCkT0seb7a9UmpsW3k274CLh+uWCty9eJy4j54eBQCRXgFK6IQ9fMdN2G4N5k8QBjCEc795tPju+kUhOEcW8YeMyMCqD1A1sLJcjY9yU5GSbNZK61BOhZIBISo2pFi2kEEUydavdGkdJx7s0TuqKmf80cPKPisxs0zYp/RjiiGJA8rUZFvjtt5GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01RSkJvJssHQyUp3Z3XhY4nj",
+            "name": "search_source",
+            "input": {
+              "query": "lang="
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "29bd5377f7210ea0dfe5f1de9d5735ac222460eba1307e6f881b25374a93a1be",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_018nnDTw8onB4Niu6GH67m1V",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in contact.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All of the page text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I set lang=\"en\". No other file in the repo sets lang, so there's no existing regional variant to match (such as en-GB or en-US). A reviewer may want a regional code if the site targets a specific locale. The other pages probably have the same problem and should get the same fix.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2383,
+          "outputTokens": 368,
+          "costMicros": 10523.2
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS3QUKEAgTGAI4AUIIdGhpbmtpbmcSDG0FEY8mYrJ3zmiBzRoMLEqAtqxvIGRIieBqIjC7Xq/bFfHKFQUe/btxdTyS3bi0cOTJRYrKMyxTd7WwAC26E0p8it6yf6rYt0xZpyEq+gTzKafwKchliq7ElDwjqnz/RlXS513C3MC0RP5NgGU047/les4O/Y0g59XjkoGIFTmGvVQmxoxiKIkEea8blo+0C6VtmGGuJFNIKfyChUk0QXrSnMVkAE8Q+mSy2jRdEhoNqZyE8chZVv9UnwE4U8UxPGWKKXnoU12bsBzje+rBTQHoqzyP8LPPpINI3gLLeAlJYitOO0VvoZtfoRHBG0IbuTSSUndJq3OHHUc06QLilQTkIhY+ExhyUG1L4kKURLgezydl+pCvyrgvuG4ZCde6WZ/kNmUSH51SRSvPn6D76Buqh3a7ZDWglqVsiHmCLPzipmnREQL29nWr3tc/WDhNAiwavB0Iw82nBYyt8LvdP3vaHkZ2702HtVSXFY/V97tkDDnhX2ACYoL7/kgW5Tiv91JtuHDCUKY88FTh/5MftAhudFkePZtezymB2Wt/SNfHo1lQd3/MHW7MfW4bKKXURQmzi9JpFMq+RxUMcVbKDdjNwNhsqAFBGdCa9VxD5pv2/PgLZM2qZwgAssJVO9gHyeYoUqX+EU3tOomuzmPaeV1jr2DYhbjcnoZToLAwhA1PY5kHbqa4ox2ywWfZ5+bu0SVzKQ9DErd2jHPN33Y59E96fD9rL/GPGz0JViSDWNDRq6b//dbHkm+h79UJeqXiuIG8AY5CptJRGnZbva1CF31EzGNtZXr6c6LQyosRZuPvb/Bc5Uik/FIkRDnFxzJ0hRemRFVxhfX0ep2ppp1qkFxg+HbDEx/ZHOCTH4l+x+qisCtkwuStQcnYUu7ohXwssm3tdPGL1kISleU6ZD1VwmX2iIsyckBBLeycPZklc3HyngICsOe/qLQaGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_018nnDTw8onB4Niu6GH67m1V",
+            "name": "submit_proposal",
+            "input": {
+              "kind": "patch",
+              "title": "Add lang=\"en\" to the <html> element in contact.html",
+              "rationale": "The <html> element has no lang attribute, so screen readers can't tell which language to read the page in. All of the page text is in English (\"Contact us\", \"Your name\", \"Topic\", \"Order\", \"Workshop\", \"Message\", \"Send\"), so I set lang=\"en\". No other file in the repo sets lang, so there's no existing regional variant to match (such as en-GB or en-US). A reviewer may want a regional code if the site targets a specific locale. The other pages probably have the same problem and should get the same fix.",
+              "confidence": 0.88,
+              "ops": [
+                {
+                  "op": "set_attr",
+                  "at": 16,
+                  "name": "lang",
+                  "value": "en"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
