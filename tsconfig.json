@@ -18,5 +18,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["packages/*/src", "tools/*/src", "vitest.config.ts"]
+  "include": ["packages/*/src", "tools/*/src", "apps/*/src", "vitest.config.ts"]
 }
