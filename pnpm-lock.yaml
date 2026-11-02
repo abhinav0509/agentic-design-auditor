@@ -36,6 +36,31 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
 
+  apps/worker:
+    dependencies:
+      '@beacon/agent':
+        specifier: workspace:*
+        version: link:../../packages/agent
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@beacon/mapper':
+        specifier: workspace:*
+        version: link:../../packages/mapper
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../../packages/scanner
+      '@beacon/verifier':
+        specifier: workspace:*
+        version: link:../../packages/verifier
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+    devDependencies:
+      '@beacon/evals':
+        specifier: workspace:*
+        version: link:../../packages/evals
+
   packages/agent:
     dependencies:
       '@anthropic-ai/sdk':
