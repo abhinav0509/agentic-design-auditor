@@ -29,7 +29,8 @@ it('NFR-03: enqueuing the same finding twice for a run makes one job', async () 
 
   expect(first.created).toBe(true);
   expect(again).toEqual({ id: first.id, created: false });
-  const jobs =
-    await db.sql`select status, attempts from fix_jobs where run_id = ${seed['run'] ?? ''}`;
+  // The seed has its own job in this run; count only this finding's.
+  const jobs = await db.sql`
+    select status, attempts from fix_jobs where run_id = ${seed['run'] ?? ''} and fingerprint = 'fp-1'`;
   expect(jobs).toEqual([{ status: 'queued', attempts: 0 }]);
 });
