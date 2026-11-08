@@ -8,6 +8,7 @@
   "dependencies": {
     "@beacon/agent": "workspace:*",
     "@beacon/core": "workspace:*",
+    "@beacon/db": "workspace:*",
     "@beacon/mapper": "workspace:*",
     "@beacon/scanner": "workspace:*",
     "@beacon/verifier": "workspace:*",

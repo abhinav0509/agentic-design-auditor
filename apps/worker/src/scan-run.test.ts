@@ -1,0 +1,63 @@
+// The scan step of a run (v1.0 §9.1 steps 1-4 and 6, FR-05, D-038): every page of the run through
+// the guarded browser into Postgres, then the run moves on to fixing. Pages are served by Playwright
+// routing; every other request is aborted, so no test touches the network.
+import { createTestDb, seedOrg, type TestDb } from '@beacon/db/testing';
+import { guardContext } from '@beacon/scanner';
+import { chromium, type Browser, type BrowserContext } from 'playwright';
+import { afterAll, beforeAll, expect, it } from 'vitest';
+import { scanRun } from './scan-run.ts';
+
+const ORG = '00000000-0000-4000-8000-0000000000a7';
+const ORIGIN = 'https://site.test';
+const doc = (body: string) =>
+  `<!doctype html><html lang="en"><head><title>t</title></head><body>${body}</body></html>`;
+const PAGES: Record<string, string> = {
+  [`${ORIGIN}/`]: doc('<h1>Studio</h1>'),
+  [`${ORIGIN}/about`]: doc('<p>About</p><img src="team.jpg">'),
+};
+
+let db: TestDb;
+let seed: Record<string, string>;
+let browser: Browser;
+let context: BrowserContext;
+
+beforeAll(async () => {
+  db = await createTestDb('scan_run');
+  seed = await seedOrg(db.sql, ORG);
+  browser = await chromium.launch();
+  context = await browser.newContext();
+  await context.route('**/*', (route) => {
+    const html = PAGES[route.request().url()];
+    return html === undefined
+      ? route.abort()
+      : route.fulfill({ contentType: 'text/html', body: html });
+  });
+  // site.test stands in for a public site; the guard itself is tested in @beacon/scanner.
+  await guardContext(context, () => Promise.resolve(['93.184.215.14']));
+}, 60_000);
+
+afterAll(async () => {
+  await browser.close();
+  await db.drop();
+});
+
+it('FR-05: scanning a run stores each page as served, queues a job per finding and moves the run to fixing', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+
+  await scanRun({ sql: db.sql, context }, { orgId: ORG, runId, urls: Object.keys(PAGES) });
+
+  const pages = await db.sql`
+    select url, served_html from pages where run_id = ${runId} order by url`;
+  expect(pages).toEqual(Object.entries(PAGES).map(([url, html]) => ({ url, served_html: html })));
+  const findings = await db.sql`select rule_id, selector from findings where run_id = ${runId}`;
+  expect(findings).toEqual([{ rule_id: 'image-alt', selector: 'img' }]);
+  const jobs = await db.sql`select status from fix_jobs where run_id = ${runId}`;
+  expect(jobs).toEqual([{ status: 'queued' }]);
+  const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
+  expect(status).toEqual({ status: 'fixing' });
+}, 60_000);
