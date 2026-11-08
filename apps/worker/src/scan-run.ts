@@ -15,7 +15,18 @@ export async function scanRun(
 ): Promise<void> {
   if (urls.length > MAX_PAGES)
     throw new DomainError('TOO_MANY_PAGES', `a run scans at most ${String(MAX_PAGES)} pages`);
-  for (const url of urls) {
+  // A resumed run skips the pages it already stored (NFR-03).
+  const stored = new Set(
+    (
+      await asApp(
+        deps.sql,
+        orgId,
+        (tx) => tx<{ url: string }[]>`
+        select url from pages where run_id = ${runId}`,
+      )
+    ).map((p) => p.url),
+  );
+  for (const url of urls.filter((u) => !stored.has(u))) {
     const { served, text, findings } = await scanPageContent(deps.context, url);
     await asApp(deps.sql, orgId, (tx) =>
       savePageScan(tx, { orgId, runId, url, served, text, findings }),
