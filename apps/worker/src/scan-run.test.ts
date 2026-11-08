@@ -5,6 +5,8 @@ import { createTestDb, seedOrg, type TestDb } from '@beacon/db/testing';
 import { guardContext } from '@beacon/scanner';
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, expect, it } from 'vitest';
+import { savePageScan } from '@beacon/db';
+import { asApp } from '@beacon/db/testing';
 import { scanRun } from './scan-run.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000a7';
@@ -20,6 +22,8 @@ let db: TestDb;
 let seed: Record<string, string>;
 let browser: Browser;
 let context: BrowserContext;
+/** Every URL the browser requested, in order. */
+const fetched: string[] = [];
 
 beforeAll(async () => {
   db = await createTestDb('scan_run');
@@ -28,6 +32,7 @@ beforeAll(async () => {
   context = await browser.newContext();
   await context.route('**/*', (route) => {
     const url = route.request().url();
+    fetched.push(url);
     // Any other site.test page is a plain clean page.
     const html = PAGES[url] ?? (url.startsWith(`${ORIGIN}/`) ? doc('<p>Page</p>') : undefined);
     return html === undefined
@@ -82,4 +87,33 @@ it('FR-05: a run of more than 10 pages is refused before anything is scanned', a
   expect(counts).toEqual({ pages: 0 });
   const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
   expect(status).toEqual({ status: 'queued' });
+}, 60_000);
+
+it('NFR-03: a resumed run does not scan again the pages it already stored', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'scanning', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const [home, about] = Object.keys(PAGES) as [string, string];
+  // The worker crashed after storing the home page.
+  await asApp(db.sql, ORG, (tx) =>
+    savePageScan(tx, {
+      orgId: ORG,
+      runId,
+      url: home,
+      served: PAGES[home] ?? '',
+      text: 'Studio',
+      findings: [],
+    }),
+  );
+  fetched.length = 0;
+
+  await scanRun({ sql: db.sql, context }, { orgId: ORG, runId, urls: [home, about] });
+
+  expect(fetched).not.toContain(home);
+  expect(fetched).toContain(about);
+  const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
+  expect(status).toEqual({ status: 'fixing' });
 }, 60_000);
