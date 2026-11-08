@@ -1,0 +1,19 @@
+{
+  "name": "@beacon/worker",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@beacon/agent": "workspace:*",
+    "@beacon/core": "workspace:*",
+    "@beacon/mapper": "workspace:*",
+    "@beacon/scanner": "workspace:*",
+    "@beacon/verifier": "workspace:*",
+    "playwright": "1.64.1"
+  },
+  "devDependencies": {
+    "@beacon/evals": "workspace:*"
+  }
+}
