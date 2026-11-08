@@ -27,7 +27,9 @@ beforeAll(async () => {
   browser = await chromium.launch();
   context = await browser.newContext();
   await context.route('**/*', (route) => {
-    const html = PAGES[route.request().url()];
+    const url = route.request().url();
+    // Any other site.test page is a plain clean page.
+    const html = PAGES[url] ?? (url.startsWith(`${ORIGIN}/`) ? doc('<p>Page</p>') : undefined);
     return html === undefined
       ? route.abort()
       : route.fulfill({ contentType: 'text/html', body: html });
@@ -60,4 +62,24 @@ it('FR-05: scanning a run stores each page as served, queues a job per finding a
   expect(jobs).toEqual([{ status: 'queued' }]);
   const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
   expect(status).toEqual({ status: 'fixing' });
+}, 60_000);
+
+it('FR-05: a run of more than 10 pages is refused before anything is scanned', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const urls = Array.from({ length: 11 }, (_, i) => `${ORIGIN}/page-${String(i + 1)}`);
+
+  await expect(
+    scanRun({ sql: db.sql, context }, { orgId: ORG, runId, urls }),
+  ).rejects.toMatchObject({ code: 'TOO_MANY_PAGES' });
+
+  const [counts] = await db.sql<{ pages: number }[]>`
+    select count(*)::int as pages from pages where run_id = ${runId}`;
+  expect(counts).toEqual({ pages: 0 });
+  const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
+  expect(status).toEqual({ status: 'queued' });
 }, 60_000);
