@@ -6,9 +6,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@beacon/core": "workspace:*",
     "postgres": "3.4.9"
-  },
-  "devDependencies": {
-    "@beacon/core": "workspace:*"
   }
 }
