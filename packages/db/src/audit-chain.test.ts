@@ -107,3 +107,16 @@ it('FR-16: two writers in one org at the same moment still form one chain', asyn
   expect(b?.prev_hash).toEqual(a?.hash);
   expect(Number(b?.id)).toBeGreaterThan(Number(a?.id));
 });
+
+it('FR-16: an event cannot be backdated; its time is the database transaction time', async () => {
+  const proposal = seeds[ORG_A]?.['proposal'] ?? '';
+  const [row] = await asApp(
+    db.sql,
+    ORG_A,
+    (tx) => tx<{ created_at: Date; tx_time: Date }[]>`
+      insert into proposal_events (org_id, proposal_id, to_status, actor_type, created_at)
+      values (${ORG_A}, ${proposal}, 'pending', 'user', '2000-01-01T00:00:00Z')
+      returning created_at, now() as tx_time`,
+  );
+  expect(row?.created_at).toEqual(row?.tx_time);
+});
