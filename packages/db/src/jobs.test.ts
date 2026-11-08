@@ -66,3 +66,23 @@ it('NFR-03: claiming a job leases it for 120 s and counts the attempt', async ()
   expect(row?.status).toBe('running');
   expect(row?.locked_until.getTime()).toBe((now?.getTime() ?? 0) + 120_000);
 });
+
+it('NFR-03: a job whose worker crashed is claimed once more after its lease runs out, then not again', async () => {
+  const runId = await newRun();
+  const job = await asApp(db.sql, ORG, (tx) =>
+    enqueueFixJob(tx, { orgId: ORG, runId, fingerprint: 'fp-crash' }),
+  );
+  const claim = () => asApp(db.sql, ORG, (tx) => claimFixJob(tx, { runId }));
+  // The worker holding the lease dies; time passes beyond the lease.
+  const expire = () =>
+    db.sql`update fix_jobs set locked_until = now() - interval '1 second' where id = ${job.id}`;
+
+  await claim();
+  await expire();
+  const retried = await claim();
+  await expire();
+  const third = await claim();
+
+  expect(retried).toEqual({ id: job.id, fingerprint: 'fp-crash', attempts: 2 });
+  expect(third).toBeNull(); // v1.0 §9.2: one retry
+});
