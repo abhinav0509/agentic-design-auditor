@@ -1,7 +1,7 @@
 // The fix-job queue (v1.0 §9.1 step 6, §9.2, NFR-03, D-037): one job per mapped finding in a run,
 // keyed by (run_id, fingerprint), claimed and finished in Postgres under RLS.
 import { afterAll, beforeAll, expect, it } from 'vitest';
-import { claimFixJob, enqueueFixJob } from './jobs.ts';
+import { claimFixJob, enqueueFixJob, finishFixJob } from './jobs.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000e1';
@@ -85,4 +85,31 @@ it('NFR-03: a job whose worker crashed is claimed once more after its lease runs
 
   expect(retried).toEqual({ id: job.id, fingerprint: 'fp-crash', attempts: 2 });
   expect(third).toBeNull(); // v1.0 §9.2: one retry
+});
+
+it('NFR-03: a job that errors is queued once more, a second error fails it, and success is done', async () => {
+  const runId = await newRun();
+  const enqueue = (fingerprint: string) =>
+    asApp(db.sql, ORG, (tx) => enqueueFixJob(tx, { orgId: ORG, runId, fingerprint }));
+  const claim = () => asApp(db.sql, ORG, (tx) => claimFixJob(tx, { runId }));
+  const finish = (id: string, outcome: 'done' | 'error') =>
+    asApp(db.sql, ORG, (tx) => finishFixJob(tx, { id, outcome }));
+  const statusOf = async (id: string) =>
+    (await db.sql<{ status: string }[]>`select status from fix_jobs where id = ${id}`)[0]?.status;
+
+  const flaky = await enqueue('fp-flaky');
+  await claim();
+  await finish(flaky.id, 'error');
+  const afterFirstError = await statusOf(flaky.id);
+  await claim();
+  await finish(flaky.id, 'error');
+  const afterSecondError = await statusOf(flaky.id);
+
+  const fine = await enqueue('fp-fine');
+  await claim();
+  await finish(fine.id, 'done');
+
+  expect(afterFirstError).toBe('queued'); // v1.0 §9.2: one retry on transient errors
+  expect(afterSecondError).toBe('failed');
+  expect(await statusOf(fine.id)).toBe('done');
 });
