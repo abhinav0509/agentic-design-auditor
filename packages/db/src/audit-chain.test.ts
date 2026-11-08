@@ -2,12 +2,14 @@
 // org, computed by the database on insert, so no writer can skip or forge a link. The formula below
 // is the contract an export verifier recomputes.
 import { makeProposal } from '@beacon/core/testing';
+import type { TransactionSql } from 'postgres';
 import { afterAll, beforeAll, expect, it } from 'vitest';
 import { saveProposal } from './proposals.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
 const ORG_A = '00000000-0000-4000-8000-0000000000d1';
 const ORG_B = '00000000-0000-4000-8000-0000000000d2';
+const ORG_C = '00000000-0000-4000-8000-0000000000d3';
 
 let db: TestDb;
 const seeds: Record<string, Record<string, string>> = {};
@@ -16,6 +18,7 @@ beforeAll(async () => {
   db = await createTestDb('audit_chain');
   seeds[ORG_A] = await seedOrg(db.sql, ORG_A);
   seeds[ORG_B] = await seedOrg(db.sql, ORG_B);
+  seeds[ORG_C] = await seedOrg(db.sql, ORG_C);
 });
 
 afterAll(async () => {
@@ -68,4 +71,39 @@ it('FR-16: each org has its own unbroken hash chain of proposal events', async (
       expect(r.hash, `${org} event ${String(i)} hash recomputes`).toEqual(r.expected);
     });
   }
+});
+
+it('FR-16: two writers in one org at the same moment still form one chain', async () => {
+  const proposal = seeds[ORG_C]?.['proposal'] ?? '';
+  const insertEvent = (tx: TransactionSql) =>
+    tx<{ id: string; prev_hash: Buffer | null; hash: Buffer }[]>`
+      insert into proposal_events (org_id, proposal_id, to_status, actor_type)
+      values (${ORG_C}, ${proposal}, 'pending', 'system')
+      returning id, prev_hash, hash`.then((rows) => rows[0]);
+
+  // Writer 1 inserts and holds its transaction open; writer 2 inserts meanwhile.
+  const held = Promise.withResolvers<undefined>();
+  const inserted = Promise.withResolvers<undefined>();
+  const first = asApp(db.sql, ORG_C, async (tx) => {
+    const row = await insertEvent(tx);
+    inserted.resolve(undefined);
+    await held.promise;
+    return row;
+  });
+  await inserted.promise;
+  const state = { secondDone: false };
+  const second = asApp(db.sql, ORG_C, insertEvent).finally(() => (state.secondDone = true));
+  // Release writer 1 once writer 2 is blocked on the org lock, or has already finished without it.
+  for (;;) {
+    const [w] = await db.sql<{ n: number }[]>`
+      select count(*)::int as n from pg_stat_activity
+      where datname = current_database() and wait_event_type = 'Lock' and wait_event = 'advisory'`;
+    if (state.secondDone || (w?.n ?? 0) > 0) break;
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  held.resolve(undefined);
+
+  const [a, b] = await Promise.all([first, second]);
+  expect(b?.prev_hash).toEqual(a?.hash);
+  expect(Number(b?.id)).toBeGreaterThan(Number(a?.id));
 });
