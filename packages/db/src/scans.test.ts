@@ -84,3 +84,26 @@ it('FR-05: a scanned page is stored as served with its findings and one job each
       .sort((a, b) => (a.fingerprint < b.fingerprint ? -1 : 1)),
   );
 });
+
+it('FR-05: the same finding on two pages is stored for each page and fixed by one job', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'scanning', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  // A template-driven site: the same header logo on every page (v1.0 §9.1 step 4).
+  const logo = (url: string): RawFinding => ({
+    ...finding('image-alt', 'header > img', '<img src="logo.png">'),
+    page_url: url,
+  });
+  for (const url of ['https://example.test/', 'https://example.test/contact'])
+    await asApp(db.sql, ORG, (tx) =>
+      savePageScan(tx, { orgId: ORG, runId, url, served: SERVED, text: '', findings: [logo(url)] }),
+    );
+
+  const [counts] = await db.sql<{ findings: number; jobs: number }[]>`
+    select (select count(*)::int from findings where run_id = ${runId}) as findings,
+           (select count(*)::int from fix_jobs where run_id = ${runId}) as jobs`;
+  expect(counts).toEqual({ findings: 2, jobs: 1 });
+});
