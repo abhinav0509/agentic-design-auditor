@@ -158,3 +158,38 @@ it('NFR-03: a worker that lost its lease cannot finish the job its successor now
   expect(during?.status).toBe('running'); // still B's
   expect(byB).toBe(true);
 });
+
+it('NFR-03: two workers claiming at the same moment never get the same job', async () => {
+  const runId = await newRun();
+  for (const fingerprint of ['fp-race-1', 'fp-race-2'])
+    await asApp(db.sql, ORG, (tx) => enqueueFixJob(tx, { orgId: ORG, runId, fingerprint }));
+
+  // Worker A claims and holds its transaction open; worker B claims meanwhile.
+  const held = Promise.withResolvers<undefined>();
+  const claimedA = Promise.withResolvers<undefined>();
+  const a = asApp(db.sql, ORG, async (tx) => {
+    const job = await claimFixJob(tx, { runId });
+    claimedA.resolve(undefined);
+    await held.promise;
+    return job;
+  });
+  await claimedA.promise;
+  const state = { bDone: false };
+  const b = asApp(db.sql, ORG, (tx) => claimFixJob(tx, { runId })).finally(
+    () => (state.bDone = true),
+  );
+  // Release A once B has finished, or is blocked on A's row.
+  for (;;) {
+    const [w] = await db.sql<{ n: number }[]>`
+      select count(*)::int as n from pg_stat_activity
+      where datname = current_database() and wait_event_type = 'Lock'`;
+    if (state.bDone || (w?.n ?? 0) > 0) break;
+    await new Promise((r) => setTimeout(r, 10));
+  }
+  held.resolve(undefined);
+
+  const [jobA, jobB] = await Promise.all([a, b]);
+  expect(jobA?.id).toBeDefined();
+  expect(jobB?.id).toBeDefined();
+  expect(jobB?.id).not.toBe(jobA?.id);
+});
