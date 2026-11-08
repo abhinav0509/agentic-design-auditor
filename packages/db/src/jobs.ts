@@ -44,3 +44,20 @@ export async function claimFixJob(
     returning id, fingerprint, attempts`;
   return job ?? null;
 }
+
+/**
+ * Ends a claimed job. `error` is for transient failures only (model timeout, outage): the job goes
+ * back to the queue while it has attempts left, else it fails. A guard failure, an unmapped finding
+ * or a needs_input answer is a finished job (`done`), never retried (v1.0 §9.2).
+ */
+export async function finishFixJob(
+  tx: TransactionSql,
+  { id, outcome }: { id: string; outcome: 'done' | 'error' },
+): Promise<void> {
+  await tx`
+    update fix_jobs set locked_until = null, status = case
+      when ${outcome} = 'done' then 'done'
+      when attempts < ${MAX_ATTEMPTS} then 'queued'
+      else 'failed' end
+    where id = ${id}`;
+}
