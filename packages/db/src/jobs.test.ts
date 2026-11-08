@@ -113,3 +113,25 @@ it('NFR-03: a job that errors is queued once more, a second error fails it, and 
   expect(afterSecondError).toBe('failed');
   expect(await statusOf(fine.id)).toBe('done');
 });
+
+it('NFR-03: a job whose last lease runs out is failed, so the run can finish', async () => {
+  const runId = await newRun();
+  const job = await asApp(db.sql, ORG, (tx) =>
+    enqueueFixJob(tx, { orgId: ORG, runId, fingerprint: 'fp-lost' }),
+  );
+  const claim = () => asApp(db.sql, ORG, (tx) => claimFixJob(tx, { runId }));
+  const expire = () =>
+    db.sql`update fix_jobs set locked_until = now() - interval '1 second' where id = ${job.id}`;
+
+  await claim();
+  await expire();
+  await claim();
+  await expire();
+  const none = await claim();
+
+  expect(none).toBeNull();
+  const [row] = await db.sql<
+    { status: string }[]
+  >`select status from fix_jobs where id = ${job.id}`;
+  expect(row?.status).toBe('failed');
+});
