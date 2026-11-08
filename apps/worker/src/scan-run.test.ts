@@ -117,3 +117,31 @@ it('NFR-03: a resumed run does not scan again the pages it already stored', asyn
   const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
   expect(status).toEqual({ status: 'fixing' });
 }, 60_000);
+
+it('FR-05: a page that cannot be scanned is stored with its reason and the run goes on', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const blocked = 'http://127.0.0.1/admin'; // the URL guard refuses private addresses (NFR-09)
+  const unreachable = 'https://down.test/'; // the router aborts it, like a host that is down
+  const about = `${ORIGIN}/about`;
+
+  await scanRun(
+    { sql: db.sql, context },
+    { orgId: ORG, runId, urls: [blocked, unreachable, about] },
+  );
+
+  const pages = await db.sql`
+    select url, scan_error, served_html is not null as scanned from pages where run_id = ${runId}
+    order by url`;
+  expect(pages).toEqual([
+    { url: blocked, scan_error: 'URL_NOT_ALLOWED', scanned: false },
+    { url: unreachable, scan_error: 'SCAN_FAILED', scanned: false },
+    { url: about, scan_error: null, scanned: true },
+  ]);
+  const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
+  expect(status).toEqual({ status: 'fixing' });
+}, 60_000);
