@@ -33,6 +33,11 @@ export async function claimFixJob(
   tx: TransactionSql,
   { runId }: { runId: string },
 ): Promise<ClaimedFixJob | null> {
+  // A job that lost its last lease will never be claimed again; fail it so the run can finish.
+  await tx`
+    update fix_jobs set status = 'failed', locked_until = null
+    where run_id = ${runId} and status = 'running' and locked_until < now()
+      and attempts >= ${MAX_ATTEMPTS}`;
   const [job] = await tx<ClaimedFixJob[]>`
     update fix_jobs set status = 'running', attempts = attempts + 1,
       locked_until = now() + ${LEASE}::interval
