@@ -1,7 +1,7 @@
 # D-037: A small fix-job queue in Postgres, not pg-boss (yet)
 
 - **Date:** 2026-11-08
-- **Decision:** fix jobs live in a `fix_jobs` table (migration `0004`), one row per mapped finding in a run, unique on `(run_id, fingerprint)` (v1.0 §9.1 step 6). `enqueueFixJob(tx, { orgId, runId, fingerprint })` inserts with `on conflict do nothing` and returns the existing job on a repeat (NFR-03). Claiming, the 120 s lease, one retry and `failed` arrive one test at a time on this table.
+- **Decision:** fix jobs live in a `fix_jobs` table (migration `0004`), one row per mapped finding in a run, unique on `(run_id, fingerprint)` (v1.0 §9.1 step 6). `enqueueFixJob(tx, { orgId, runId, fingerprint })` inserts with `on conflict do nothing` and returns the existing job on a repeat (NFR-03). `claimFixJob(tx, { runId })` takes the oldest queued job of the run with `for update skip locked`, marks it `running`, counts the attempt and leases it until the database time + 120 s (`locked_until`, migration `0005`; the v1.0 §9.2 job timeout). Reclaiming an expired lease, one retry and `failed` arrive one test at a time on this table.
   - `fix_jobs` is tenant data: `org_id`, composite foreign keys, forced RLS and the `tenant_isolation` policy, like every table in D-019. `seedOrg` seeds it, so the RLS matrix covers it.
 - **Context:** D-034 consequences; v1.0 §7.4 and addendum C name pg-boss.
 - **Options:** pg-boss (a dependency with its own schema and tables outside our RLS, and a cross-tenant job table); a table of our own.

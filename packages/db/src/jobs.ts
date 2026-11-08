@@ -17,3 +17,23 @@ export async function enqueueFixJob(
   if (!existing) throw new Error(`fix job for ${fingerprint} vanished`);
   return { id: existing.id, created: false };
 }
+
+/** The v1.0 §9.2 job timeout: a claimed job is leased for this long. */
+const LEASE = '120 seconds';
+
+export type ClaimedFixJob = { id: string; fingerprint: string; attempts: number };
+
+/** Takes the oldest queued job of a run, marks it running and leases it; null when none is free. */
+export async function claimFixJob(
+  tx: TransactionSql,
+  { runId }: { runId: string },
+): Promise<ClaimedFixJob | null> {
+  const [job] = await tx<ClaimedFixJob[]>`
+    update fix_jobs set status = 'running', attempts = attempts + 1,
+      locked_until = now() + ${LEASE}::interval
+    where id = (
+      select id from fix_jobs where run_id = ${runId} and status = 'queued'
+      order by created_at, id limit 1 for update skip locked)
+    returning id, fingerprint, attempts`;
+  return job ?? null;
+}
