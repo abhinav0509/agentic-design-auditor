@@ -11,7 +11,8 @@ export type PageScan = {
   /** The HTML the scan fetched, and the page's visible text (untrusted content). */
   served: string;
   text: string;
-  findings: RawFinding[];
+  /** As the scanner reports them, with the engine's own rule id (the verifier needs it). */
+  findings: (RawFinding & { engine_rule: string })[];
 };
 
 /**
@@ -31,9 +32,10 @@ export async function savePageScan(tx: TransactionSql, scan: PageScan): Promise<
   for (const f of scan.findings) {
     const fp = fingerprint(f);
     await tx`
-      insert into findings (org_id, run_id, page_id, fingerprint, rule_id, impact, selector,
-        html_snippet)
-      values (${orgId}, ${runId}, ${page.id}, ${fp}, ${f.rule_id}, ${f.impact}, ${f.target}, ${f.html})
+      insert into findings (org_id, run_id, page_id, fingerprint, rule_id, engine_rule, impact,
+        selector, html_snippet)
+      values (${orgId}, ${runId}, ${page.id}, ${fp}, ${f.rule_id}, ${f.engine_rule}, ${f.impact},
+        ${f.target}, ${f.html})
       on conflict (run_id, fingerprint, page_id) do nothing`;
     await enqueueFixJob(tx, { orgId, runId, fingerprint: fp });
   }
@@ -47,4 +49,55 @@ export async function savePageError(
   await tx`
     insert into pages (org_id, run_id, url, scan_error) values (${orgId}, ${runId}, ${url}, ${reason})
     on conflict (run_id, url) do nothing`;
+}
+
+/** What a fix job works on: its finding (first page in URL order) and that page as scanned. */
+export type FixJobInput = {
+  findingId: string;
+  finding: {
+    page_url: string;
+    rule_id: string;
+    engine_rule: string;
+    impact: string;
+    target: string;
+    html: string;
+  };
+  page: { url: string; served: string; text: string };
+};
+
+export async function loadFixJob(
+  tx: TransactionSql,
+  { runId, fingerprint: fp }: { runId: string; fingerprint: string },
+): Promise<FixJobInput> {
+  const [row] = await tx<
+    {
+      id: string;
+      rule_id: string;
+      engine_rule: string;
+      impact: string;
+      selector: string;
+      html_snippet: string;
+      url: string;
+      served_html: string;
+      visible_text: string;
+    }[]
+  >`
+    select f.id, f.rule_id, f.engine_rule, f.impact, f.selector, f.html_snippet,
+      p.url, p.served_html, p.visible_text
+    from findings f join pages p on p.id = f.page_id
+    where f.run_id = ${runId} and f.fingerprint = ${fp}
+    order by p.url limit 1`;
+  if (!row) throw new Error(`no finding for fix job ${fp}`);
+  return {
+    findingId: row.id,
+    finding: {
+      page_url: row.url,
+      rule_id: row.rule_id,
+      engine_rule: row.engine_rule,
+      impact: row.impact,
+      target: row.selector,
+      html: row.html_snippet,
+    },
+    page: { url: row.url, served: row.served_html, text: row.visible_text },
+  };
 }

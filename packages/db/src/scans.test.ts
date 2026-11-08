@@ -22,9 +22,14 @@ afterAll(async () => {
   await db.drop();
 });
 
-const finding = (rule_id: string, target: string, html: string): RawFinding => ({
+const finding = (
+  rule_id: string,
+  target: string,
+  html: string,
+): RawFinding & { engine_rule: string } => ({
   page_url: URL_,
   rule_id,
+  engine_rule: rule_id,
   impact: 'critical',
   target,
   html,
@@ -93,7 +98,7 @@ it('FR-05: the same finding on two pages is stored for each page and fixed by on
     returning id`;
   const runId = run?.id ?? '';
   // A template-driven site: the same header logo on every page (v1.0 §9.1 step 4).
-  const logo = (url: string): RawFinding => ({
+  const logo = (url: string): RawFinding & { engine_rule: string } => ({
     ...finding('image-alt', 'header > img', '<img src="logo.png">'),
     page_url: url,
   });
