@@ -20,10 +20,15 @@ export async function enqueueFixJob(
 
 /** The v1.0 §9.2 job timeout: a claimed job is leased for this long. */
 const LEASE = '120 seconds';
+/** The first run plus v1.0 §9.2's one retry. */
+const MAX_ATTEMPTS = 2;
 
 export type ClaimedFixJob = { id: string; fingerprint: string; attempts: number };
 
-/** Takes the oldest queued job of a run, marks it running and leases it; null when none is free. */
+/**
+ * Takes the oldest free job of a run, marks it running and leases it; null when none is free. A job
+ * whose lease ran out (its worker died) is free again while it has attempts left.
+ */
 export async function claimFixJob(
   tx: TransactionSql,
   { runId }: { runId: string },
@@ -32,7 +37,9 @@ export async function claimFixJob(
     update fix_jobs set status = 'running', attempts = attempts + 1,
       locked_until = now() + ${LEASE}::interval
     where id = (
-      select id from fix_jobs where run_id = ${runId} and status = 'queued'
+      select id from fix_jobs where run_id = ${runId}
+        and (status = 'queued'
+          or (status = 'running' and locked_until < now() and attempts < ${MAX_ATTEMPTS}))
       order by created_at, id limit 1 for update skip locked)
     returning id, fingerprint, attempts`;
   return job ?? null;
