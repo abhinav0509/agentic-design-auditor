@@ -38,3 +38,13 @@ export async function savePageScan(tx: TransactionSql, scan: PageScan): Promise<
     await enqueueFixJob(tx, { orgId, runId, fingerprint: fp });
   }
 }
+
+/** Stores a page that could not be scanned, with its reason (a stable error code), once. */
+export async function savePageError(
+  tx: TransactionSql,
+  { orgId, runId, url, reason }: { orgId: string; runId: string; url: string; reason: string },
+): Promise<void> {
+  await tx`
+    insert into pages (org_id, run_id, url, scan_error) values (${orgId}, ${runId}, ${url}, ${reason})
+    on conflict (run_id, url) do nothing`;
+}

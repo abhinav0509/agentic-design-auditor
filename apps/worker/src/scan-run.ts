@@ -2,7 +2,7 @@
 // browser into Postgres, then the run moves on to fixing. The caller owns the BrowserContext, so the
 // sandbox, egress proxy and in-app guard (D-017, D-020) are set up there.
 import { DomainError } from '@beacon/core';
-import { asApp, savePageScan, type Sql } from '@beacon/db';
+import { asApp, savePageError, savePageScan, type Sql } from '@beacon/db';
 import { scanPageContent } from '@beacon/scanner';
 import type { BrowserContext } from 'playwright';
 
@@ -27,7 +27,16 @@ export async function scanRun(
     ).map((p) => p.url),
   );
   for (const url of urls.filter((u) => !stored.has(u))) {
-    const { served, text, findings } = await scanPageContent(deps.context, url);
+    let page;
+    try {
+      page = await scanPageContent(deps.context, url);
+    } catch (e) {
+      // v1.0 §12.3: the page is listed as not scanned with its reason; the run goes on.
+      const reason = e instanceof DomainError ? e.code : 'SCAN_FAILED';
+      await asApp(deps.sql, orgId, (tx) => savePageError(tx, { orgId, runId, url, reason }));
+      continue;
+    }
+    const { served, text, findings } = page;
     await asApp(deps.sql, orgId, (tx) =>
       savePageScan(tx, { orgId, runId, url, served, text, findings }),
     );
