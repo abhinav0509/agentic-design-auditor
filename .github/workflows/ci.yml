@@ -75,6 +75,12 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm --filter @beacon/scanner exec playwright install --with-deps chromium
-      - run: pnpm smokescreen:install # pinned release, sha256-checked (D-021)
+      # Keyed on the installer, which pins the version and hashes: a bump downloads and re-checks.
+      - name: cache Smokescreen
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/smokescreen
+          key: smokescreen-${{ runner.os }}-${{ hashFiles('tools/smokescreen/src/install.ts') }}
+      - run: pnpm smokescreen:install # pinned release, sha256-checked (D-021); skips when cached
       - run: pnpm test:ci
       - run: pnpm trace
