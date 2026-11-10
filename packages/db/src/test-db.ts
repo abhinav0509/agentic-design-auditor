@@ -1,7 +1,9 @@
-// Test harness: a throwaway database per test file, plus the app-role session production uses.
+// Test harness: a throwaway database per test file; re-exports asApp (session.ts) for older imports.
 // Not imported by production code.
-import postgres, { type Sql, type TransactionSql } from 'postgres';
+import postgres, { type Sql } from 'postgres';
 import { migrate } from './migrate.ts';
+
+export { asApp } from './session.ts';
 
 const ADMIN_URL = process.env['BEACON_TEST_DATABASE_URL'] ?? 'postgres://localhost/postgres';
 
@@ -27,19 +29,6 @@ export async function createTestDb(tag: string): Promise<TestDb> {
       await admin.end();
     },
   };
-}
-
-/** Runs fn in a transaction as beacon_app with app.org_id set (or unset when org is null). */
-export function asApp<T>(
-  sql: Sql,
-  org: string | null,
-  fn: (tx: TransactionSql) => Promise<T>,
-): Promise<T> {
-  return sql.begin(async (tx) => {
-    await tx.unsafe('set local role beacon_app');
-    if (org) await tx.unsafe(`select set_config('app.org_id', $1, true)`, [org]);
-    return fn(tx);
-  }) as Promise<T>;
 }
 
 /** One row in every tenant table for this org, chained through real foreign keys. */
@@ -122,5 +111,9 @@ export async function seedOrg(sql: Sql, org: string): Promise<Record<string, str
     `insert into outbox (org_id, topic, payload, dedupe_key) values ($1, 'export', '{}', 'k1')`,
     [org],
   );
+  await sql.unsafe(`insert into fix_jobs (org_id, run_id, fingerprint) values ($1, $2, 'fp')`, [
+    org,
+    run,
+  ]);
   return { user, site, run, page, finding, proposal };
 }

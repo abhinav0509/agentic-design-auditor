@@ -3,12 +3,11 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./testing": "./src/test-db.ts"
   },
   "dependencies": {
+    "@beacon/core": "workspace:*",
     "postgres": "3.4.9"
-  },
-  "devDependencies": {
-    "@beacon/core": "workspace:*"
   }
 }

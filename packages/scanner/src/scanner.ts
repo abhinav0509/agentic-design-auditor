@@ -28,10 +28,25 @@ export type Finding = {
 const NAVIGATION_TIMEOUT_MS = 30_000;
 
 export async function scanPage(context: BrowserContext, rawUrl: string): Promise<Finding[]> {
+  return (await scanPageContent(context, rawUrl)).findings;
+}
+
+/** A scanned page: the HTML as served (for the mapper), its rendered visible text and its findings. */
+export type PageContent = { served: string; text: string; findings: Finding[] };
+
+export async function scanPageContent(
+  context: BrowserContext,
+  rawUrl: string,
+): Promise<PageContent> {
   const { url } = await checkUrl(rawUrl, guardResolver(context));
   const page = await context.newPage();
   try {
-    await page.goto(url, { waitUntil: 'networkidle', timeout: NAVIGATION_TIMEOUT_MS });
+    const response = await page.goto(url, {
+      waitUntil: 'networkidle',
+      timeout: NAVIGATION_TIMEOUT_MS,
+    });
+    if (!response) throw new Error(`no response for ${url}`);
+    const served = await response.text();
     // evaluate() goes through the devtools protocol, so a page CSP cannot block the injection.
     await page.evaluate(axe.source);
     const results = await page.evaluate(
@@ -42,7 +57,7 @@ export async function scanPage(context: BrowserContext, rawUrl: string): Promise
         }),
       Object.keys(ENGINE_RULES),
     );
-    return results.violations.flatMap((v) => {
+    const findings = results.violations.flatMap((v) => {
       const rule = ENGINE_RULES[v.id];
       if (!rule) throw new Error(`axe returned an unrequested rule: ${v.id}`);
       return v.nodes.map((n) => ({
@@ -55,6 +70,8 @@ export async function scanPage(context: BrowserContext, rawUrl: string): Promise
         html: n.html,
       }));
     });
+    const text = await page.evaluate(() => document.body.innerText);
+    return { served, text, findings };
   } finally {
     await page.close();
   }

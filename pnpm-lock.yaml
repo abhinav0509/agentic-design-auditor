@@ -44,6 +44,9 @@ importers:
       '@beacon/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@beacon/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@beacon/mapper':
         specifier: workspace:*
         version: link:../../packages/mapper
@@ -84,13 +87,12 @@ importers:
 
   packages/db:
     dependencies:
-      postgres:
-        specifier: 3.4.9
-        version: 3.4.9
-    devDependencies:
       '@beacon/core':
         specifier: workspace:*
         version: link:../core
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
 
   packages/evals:
     dependencies:

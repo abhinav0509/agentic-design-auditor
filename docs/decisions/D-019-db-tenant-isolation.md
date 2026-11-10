@@ -15,4 +15,4 @@
   - `decisions (org_id, user_id)` references `memberships`: only a member of the org can decide.
   - `organizations` and `users` are readable (own org; members of own org) but not writable by `beacon_app`. Sign-up (FR-01) gets its own path.
 - **Options considered:** PGlite (no setup, but one connection, so no concurrency tests); testcontainers (needs Docker); Drizzle-generated migrations (cannot express RLS, triggers and roles without custom SQL anyway).
-- **Revisit:** when the API needs sign-up writes (FR-01), and when Drizzle table definitions arrive.
+- **Revisit:** when the API needs sign-up writes (FR-01), and when Drizzle table definitions arrive (deferred by D-035).

@@ -4,7 +4,7 @@
 import { buildCorpus, loadCleanPages } from '@beacon/evals';
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { scanPage } from './scanner.ts';
+import { scanPage, scanPageContent } from './scanner.ts';
 import { guardContext } from './url-safety.ts';
 
 const ORIGIN = 'https://corpus.test';
@@ -22,6 +22,9 @@ const extra: Record<string, { html: string; headers?: Record<string, string> }> 
     html: doc(
       '<h3></h3><p style="color:#eee;background:#fff">faint</p><a href="/x"></a><div id="d"></div><div id="d"></div>',
     ),
+  },
+  scripted: {
+    html: doc('<p>Hello</p><img src="x.png"><script>document.body.append("Added")</script>'),
   },
   'strict-csp': {
     html: doc('<img src="x.png">'),
@@ -120,5 +123,15 @@ describe('scanPage', { timeout: 60_000 }, () => {
 
   it('still scans a page whose CSP forbids all scripts', async () => {
     expect(await scanPage(context, url('strict-csp'))).toMatchObject([{ rule_id: 'image-alt' }]);
+  });
+});
+
+describe('scanPageContent', { timeout: 60_000 }, () => {
+  it('FR-05: returns the HTML as served (not the rendered DOM), its visible text and its findings', async () => {
+    const result = await scanPageContent(context, url('scripted'));
+
+    expect(result.served).toBe(extra['scripted']?.html); // the mapper compares this with the repo file
+    expect(result.text).toBe('Hello\n\nAdded'); // rendered: the script's text is what a visitor sees
+    expect(result.findings).toMatchObject([{ rule_id: 'image-alt', target: 'img' }]);
   });
 });
