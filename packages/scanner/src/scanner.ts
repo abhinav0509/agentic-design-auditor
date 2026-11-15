@@ -49,11 +49,14 @@ export type PageContent = {
   text: string;
   findings: Finding[];
   reported: ReportedIssue[];
+  /** PNG crops of flagged elements by target, when asked for (FR-29). */
+  crops: { target: string; png: Uint8Array }[];
 };
 
 export async function scanPageContent(
   context: BrowserContext,
   rawUrl: string,
+  _options: { crops?: boolean } = {},
 ): Promise<PageContent> {
   const { url } = await checkUrl(rawUrl, guardResolver(context));
   const page = await context.newPage();
@@ -86,7 +89,7 @@ export async function scanPageContent(
       else reported.push(...nodesOf(v).map((n) => ({ ...n, help: v.help, tags: v.tags })));
     }
     const text = await page.evaluate(() => document.body.innerText);
-    return { served, text, findings, reported };
+    return { served, text, findings, reported, crops: [] };
   } finally {
     await page.close();
   }
