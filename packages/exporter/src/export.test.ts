@@ -167,6 +167,45 @@ describe('exportBatch', () => {
     expect(git.file(result.branch, 'about.html')).toBe(about);
   });
 
+  it('FR-25: proposals whose lines or diff context changed since they were made are apply_failed and nothing is pushed', async () => {
+    const changed = INDEX.replace('<img src="a.jpg">', '<img src="a.jpg" class="hero">');
+    const git = new FakeGitProvider({ 'index.html': changed });
+    const a = altA();
+    const b = altB();
+
+    const result = await exportBatch({ git, verify: verifyOk }, { runId: RUN, proposals: [a, b] });
+
+    // b's diff context includes a's line, so b fails too, as `git apply` would.
+    expect(result).toEqual({ status: 'apply_failed', proposalIds: [a.proposal_id, b.proposal_id] });
+    expect([...git.refs.keys()]).toEqual(['main']);
+  });
+
+  it('FR-25: two proposals changing the same line are apply_failed', async () => {
+    const git = new FakeGitProvider({ 'index.html': INDEX });
+    const first = altA();
+    const second = approved('index.html', INDEX, [
+      { op: 'set_attr', at: at(INDEX, '<img src="a'), name: 'alt', value: 'Other' },
+    ]);
+
+    const result = await exportBatch(
+      { git, verify: verifyOk },
+      { runId: RUN, proposals: [first, second] },
+    );
+
+    expect(result).toEqual({ status: 'apply_failed', proposalIds: [second.proposal_id] });
+  });
+
+  it('FR-25: when the combined batch fails verification nothing is pushed', async () => {
+    const git = new FakeGitProvider({ 'index.html': INDEX });
+    const verify = () => Promise.resolve({ ok: false });
+
+    const result = await exportBatch({ git, verify }, { runId: RUN, proposals: [altA(), altB()] });
+
+    expect(result).toEqual({ status: 'verification_failed' });
+    expect([...git.refs.keys()]).toEqual(['main']);
+    expect(git.commits.size).toBe(1);
+  });
+
   describe('NFR-01: never writes the default branch or a non beacon/* branch', () => {
     const refused = async (git: FakeGitProvider, runId = RUN, proposals = [altA()]) => {
       const before = new Map(git.refs);
