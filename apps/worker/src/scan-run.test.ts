@@ -7,6 +7,7 @@ import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, expect, it } from 'vitest';
 import { savePageScan } from '@beacon/db';
 import { asApp } from '@beacon/db/testing';
+import { InMemoryBlobStore } from '@beacon/core/testing';
 import { scanRun } from './scan-run.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000a7';
@@ -172,4 +173,25 @@ it('FR-29: issues outside the fixable rules reach the database for the report, w
   const [jobs] = await db.sql<{ n: number }[]>`
     select count(*)::int as n from fix_jobs where run_id = ${runId}`;
   expect(jobs?.n).toBe(0);
+}, 60_000);
+
+it('FR-29: with a blob store, each croppable flagged element is stored once and its row points at it', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const blobs = new InMemoryBlobStore();
+
+  await scanRun({ sql: db.sql, context, blobs }, { orgId: ORG, runId, urls: [`${ORIGIN}/`] });
+
+  const rows = await db.sql<{ selector: string; crop: string | null }[]>`
+    select selector, evidence->>'crop' as crop from findings where run_id = ${runId}`;
+  const cropped = rows.filter((r) => r.crop !== null);
+  expect(cropped.length).toBeGreaterThan(0);
+  for (const r of cropped) expect(await blobs.get(r.crop ?? '')).not.toBeNull();
+  // The whole page (no <main>) is flagged but too big to say anything as a crop.
+  expect(rows.find((r) => r.selector === 'html')).toMatchObject({ crop: null });
+  expect(blobs.blobs.size).toBe(new Set(cropped.map((r) => r.crop)).size);
 }, 60_000);
