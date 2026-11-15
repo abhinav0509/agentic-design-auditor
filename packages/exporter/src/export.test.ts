@@ -206,6 +206,35 @@ describe('exportBatch', () => {
     expect(git.commits.size).toBe(1);
   });
 
+  it('FR-25: re-runs the guard on the combined result, so two safe proposals cannot add a duplicate id', async () => {
+    const FORM =
+      '<html lang="en">\n<body>\n<input name="a">\n\n\n\n\n<input name="b">\n</body>\n</html>\n';
+    const idOn = (name: string) =>
+      approved(
+        'form.html',
+        FORM,
+        [{ op: 'set_attr', at: at(FORM, `<input name="${name}"`), name: 'id', value: 'email' }],
+        'label',
+      );
+    const git = new FakeGitProvider({ 'form.html': FORM });
+    const [first, second] = [idOn('a'), idOn('b')];
+    let verified = 0;
+    const verify = () => {
+      verified++;
+      return Promise.resolve({ ok: true });
+    };
+
+    const result = await exportBatch({ git, verify }, { runId: RUN, proposals: [first, second] });
+
+    expect(result).toEqual({
+      status: 'blocked',
+      proposalId: second.proposal_id,
+      reasons: ['DUPLICATE_ID'],
+    });
+    expect(verified).toBe(0);
+    expect([...git.refs.keys()]).toEqual(['main']);
+  });
+
   describe('NFR-01: never writes the default branch or a non beacon/* branch', () => {
     const refused = async (git: FakeGitProvider, runId = RUN, proposals = [altA()]) => {
       const before = new Map(git.refs);
