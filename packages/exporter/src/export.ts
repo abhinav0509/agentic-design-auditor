@@ -76,26 +76,71 @@ const prBody = (proposals: Proposal[]) =>
     'Each commit carries a `Beacon-Proposal` trailer. Automated checks cannot find every barrier, so please test the pages with real users and assistive technology.',
   ].join('\n');
 
-/** Commits each proposal on top of the default branch's head; returns the last commit. */
-async function commitBatch(
+type Step = { proposal: Proposal; path: string; content: string };
+
+// Two changes conflict when their changed lines touch; an insertion occupies its own line.
+const overlaps = (a: Replacement, b: Replacement) =>
+  a.line < b.line + Math.max(b.remove.length, 1) && b.line < a.line + Math.max(a.remove.length, 1);
+
+/**
+ * Applies the proposals in order to the files at `head`: each diff is checked against the file as
+ * it is at `head`, then its changed lines are spliced in, shifted by the earlier changes above it.
+ */
+async function planBatch(
   git: GitProvider,
+  head: string,
+  proposals: Proposal[],
+): Promise<{ steps: Step[]; files: Map<string, string[]>; failed: string[] }> {
+  const originals = new Map<string, string | null>();
+  const files = new Map<string, string[]>();
+  const applied = new Map<string, Replacement[]>();
+  const steps: Step[] = [];
+  const failed: string[] = [];
+  for (const p of proposals) {
+    const path = p.target.file;
+    if (!originals.has(path)) originals.set(path, await git.readFile(head, path));
+    const original = originals.get(path) ?? null;
+    const done = applied.get(path) ?? [];
+    const r = original !== null && p.change ? replacementOf(original, p.change.diff) : null;
+    if (original === null || !r || done.some((o) => overlaps(o, r))) {
+      failed.push(p.proposal_id);
+      continue;
+    }
+    const shift = done
+      .filter((o) => o.line < r.line)
+      .reduce((n, o) => n + o.add.length - o.remove.length, 0);
+    const lines = files.get(path) ?? linesOf(original);
+    lines.splice(r.line + shift, r.remove.length, ...r.add);
+    files.set(path, lines);
+    applied.set(path, [...done, r]);
+    steps.push({ proposal: p, path, content: lines.join('') });
+  }
+  return { steps, files, failed };
+}
+
+/** Plans, verifies and commits the batch on the default branch's head; returns the last commit. */
+async function commitBatch(
+  deps: ExportDeps,
   base: string,
   proposals: Proposal[],
 ): Promise<string | ExportResult> {
-  const head = await git.headSha(base);
+  const head = await deps.git.headSha(base);
   if (head === null) throw new Error(`default branch ${base} has no head`);
+  const { steps, files, failed } = await planBatch(deps.git, head, proposals);
+  if (failed.length > 0) return { status: 'apply_failed', proposalIds: failed };
+
+  const combined = [...files]
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+    .map(([path, lines]) => ({ path, content: lines.join('') }));
+  if (!(await deps.verify(combined)).ok) return { status: 'verification_failed' };
+
   let sha = head;
-  for (const p of proposals) {
-    const before = (await git.readFile(sha, p.target.file)) ?? '';
-    const r = p.change && replacementOf(before, p.change.diff);
-    if (!r) return { status: 'apply_failed', proposalIds: [p.proposal_id] };
-    const lines = linesOf(before);
-    lines.splice(r.line, r.remove.length, ...r.add);
-    sha = await git.createCommit({
+  for (const { proposal, path, content } of steps) {
+    sha = await deps.git.createCommit({
       parent: sha,
-      path: p.target.file,
-      content: lines.join(''),
-      message: commitMessage(p),
+      path,
+      content,
+      message: commitMessage(proposal),
     });
   }
   return sha;
@@ -118,7 +163,7 @@ export async function exportBatch(deps: ExportDeps, input: ExportInput): Promise
   // The branch is created last, pointing at the finished commits, so it exists only when complete
   // and a retry after any crash just opens the PR (NFR-03).
   if ((await git.headSha(branch)) === null) {
-    const built = await commitBatch(git, base, proposals);
+    const built = await commitBatch(deps, base, proposals);
     if (typeof built !== 'string') return built;
     await git.createBranch(branch, built);
   }
