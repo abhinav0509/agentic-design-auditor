@@ -73,17 +73,12 @@ const prBody = (proposals: Proposal[]) =>
     'Each commit carries a `Beacon-Proposal` trailer. Automated checks cannot find every barrier, so please test the pages with real users and assistive technology.',
   ].join('\n');
 
-export async function exportBatch(deps: ExportDeps, input: ExportInput): Promise<ExportResult> {
-  const { git } = deps;
-  const proposals = [...input.proposals].sort((a, b) =>
-    a.proposal_id < b.proposal_id ? -1 : a.proposal_id > b.proposal_id ? 1 : 0,
-  );
-  const base = await git.defaultBranch();
-  const branch = branchName(
-    input.runId,
-    proposals.map((p) => p.proposal_id),
-  );
-
+/** Commits each proposal on top of the default branch's head; returns the last commit. */
+async function commitBatch(
+  git: GitProvider,
+  base: string,
+  proposals: Proposal[],
+): Promise<string | ExportResult> {
   const head = await git.headSha(base);
   if (head === null) throw new Error(`default branch ${base} has no head`);
   let sha = head;
@@ -100,7 +95,29 @@ export async function exportBatch(deps: ExportDeps, input: ExportInput): Promise
       message: commitMessage(p),
     });
   }
-  await git.createBranch(branch, sha);
+  return sha;
+}
+
+export async function exportBatch(deps: ExportDeps, input: ExportInput): Promise<ExportResult> {
+  const { git } = deps;
+  const proposals = [...input.proposals].sort((a, b) =>
+    a.proposal_id < b.proposal_id ? -1 : a.proposal_id > b.proposal_id ? 1 : 0,
+  );
+  const base = await git.defaultBranch();
+  const branch = branchName(
+    input.runId,
+    proposals.map((p) => p.proposal_id),
+  );
+
+  // The branch is created last, pointing at the finished commits, so it exists only when complete
+  // and a retry after any crash just opens the PR (NFR-03).
+  if ((await git.headSha(branch)) === null) {
+    const built = await commitBatch(git, base, proposals);
+    if (typeof built !== 'string') return built;
+    await git.createBranch(branch, built);
+  }
+  const existing = await git.findPullRequest(branch);
+  if (existing) return { status: 'pr_open', branch, pr: existing };
   const pr = await git.openPullRequest({
     head: branch,
     base,
