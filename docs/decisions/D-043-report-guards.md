@@ -1,0 +1,21 @@
+# D-043: Report guards: the honesty check and work-email ownership
+
+- **Date:** 2026-11-15
+- **Decision:** two pure checks in `@beacon/core` for the URL-only report (D-041).
+  - **FR-31, `complianceClaims(text)`:** returns the claim phrases found, as written. It flags compliant/compliance, conforms/conformant/conformance, certified/certification, "passes WCAG", "meets WCAG", "fully accessible", "100% accessible", "ADA-ready" or "EAA-ready", and "accessibility score". Naming WCAG as a reference ("WCAG 1.1.1, reference only") passes.
+    - `ProposalSchema` refuses a proposal whose title, rationale or question (text and options) makes a claim. Agent words therefore cannot carry a claim into a PR or a report.
+    - The exporter's PR title, description and commit messages have a test of their own.
+    - Every report template will be tested with the same function.
+  - **FR-30, `emailProvesSite(email, siteUrl)`:** `{ ok: true }` or a reason (`INVALID_EMAIL`, `INVALID_SITE`, `FREE_MAIL`, `DOMAIN_MISMATCH`). The email's domain, in IDNA form, must equal the site's host or be the host without `www.`. Free-mail domains never count, not even for their own site. IP-address sites are refused.
+- **Context:** D-041 (ownership option B, wording rules); CLAUDE.md honesty rule; addendum 2.1.
+- **Options:**
+  - Ownership: (A) exact host or `www.`; (B) any subdomain of the email's registrable domain.
+  - Claims: (1) check rendered text only; (2) also refuse claims in proposals at the schema.
+- **Chosen:** A and 2.
+  - B needs the Public Suffix List. Without it, a `@github.io` or `@vercel.app` address would prove every customer site on that host (tested). B can come with that dependency, once you approve adding it.
+  - The schema is the one gate all agent text passes through.
+- **Consequences:**
+  - A pilot whose site is on a subdomain (`shop.acme.com`) proves it with FR-04a for now, not with their email.
+  - Verifying the email itself (sending a link, recording the proof on the site) belongs to sign-in (FR-01), which is GitHub-only in the addendum (2.6). Report-tier prospects may not have GitHub, so sign-in needs an email-link option. That is a decision to make with FR-01.
+  - A model answer with a claim now fails schema validation. Its fix job errors, is retried once, then fails (D-037), and the finding stays in the report without a suggestion. The fixer prompt already forbids claims, so this should be rare. If evals show otherwise, drop the claim phrase and retry.
+  - The phrase list is a first cut. Wording reviews add to it; nothing is removed without a decision.
