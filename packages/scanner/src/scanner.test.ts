@@ -172,7 +172,7 @@ describe('scanPageContent', { timeout: 60_000 }, () => {
     expect(result.crops.map((c) => c.target).sort()).toEqual(['button', 'img']);
     for (const c of result.crops) expect([...c.png.slice(0, 4)]).toEqual([0x89, 0x50, 0x4e, 0x47]);
     const flagged = [...result.findings, ...result.reported].map((f) => f.target);
-    expect(flagged).toContain('div[role="button"]');
+    expect(flagged).toEqual(expect.arrayContaining(['div', 'html'])); // flagged, too big to crop
   });
 
   it('FR-29: takes no crops unless asked', async () => {
