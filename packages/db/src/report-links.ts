@@ -64,10 +64,31 @@ export type ReportRows = {
   }[];
 };
 
-export function loadReportInput(_tx: TransactionSql, _runId: string): Promise<ReportRows> {
-  return Promise.reject(new Error('not implemented'));
+/** A run as the report reads it, under the caller's org (asApp with the link's org). */
+export async function loadReportInput(tx: TransactionSql, runId: string): Promise<ReportRows> {
+  const [run] = await tx<{ base_url: string; scanned_at: Date }[]>`
+    select s.base_url, coalesce(r.started_at, r.created_at) as scanned_at
+    from scan_runs r join sites s on s.id = r.site_id where r.id = ${runId}`;
+  if (!run) throw new Error(`no run ${runId}`);
+  const pages = await tx<{ url: string; error: string | null }[]>`
+    select url, scan_error as error from pages where run_id = ${runId} order by url`;
+  const issues = await tx<ReportRows['issues']>`
+    select p.url as "pageUrl", f.rule_id as "ruleId", f.actionable, f.impact, f.selector,
+      f.html_snippet as html, f.help, f.tags, f.evidence->>'crop' as crop
+    from findings f join pages p on p.id = f.page_id
+    where f.run_id = ${runId} order by p.url, f.selector, f.rule_id`;
+  return {
+    siteUrl: run.base_url,
+    scannedAt: run.scanned_at.toISOString(),
+    pages: [...pages],
+    issues: [...issues],
+  };
 }
 
-export function runHasCrop(_tx: TransactionSql, _runId: string, _ref: string): Promise<boolean> {
-  return Promise.reject(new Error('not implemented'));
+/** Whether a crop belongs to the run, so a link serves only its own run's crops. */
+export async function runHasCrop(tx: TransactionSql, runId: string, ref: string): Promise<boolean> {
+  const [row] = await tx<{ found: boolean }[]>`
+    select exists (select 1 from findings where run_id = ${runId} and evidence->>'crop' = ${ref})
+      as found`;
+  return row?.found ?? false;
 }
