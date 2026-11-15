@@ -61,7 +61,9 @@ it('FR-05: scanning a run stores each page as served, queues a job per finding a
   const pages = await db.sql`
     select url, served_html from pages where run_id = ${runId} order by url`;
   expect(pages).toEqual(Object.entries(PAGES).map(([url, html]) => ({ url, served_html: html })));
-  const findings = await db.sql`select rule_id, selector from findings where run_id = ${runId}`;
+  // Fixable findings only; reported issues are covered by the FR-29 test below.
+  const findings = await db.sql`
+    select rule_id, selector from findings where run_id = ${runId} and actionable`;
   expect(findings).toEqual([{ rule_id: 'image-alt', selector: 'img' }]);
   const jobs = await db.sql`select status from fix_jobs where run_id = ${runId}`;
   expect(jobs).toEqual([{ status: 'queued' }]);
