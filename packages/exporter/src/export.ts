@@ -1,5 +1,12 @@
 // The exporter (v1.0 §7.3, addendum 1.5, 2.6): approved proposals become one branch and one PR.
-import { DomainError, type GitProvider, type Proposal, type PullRequest } from '@beacon/core';
+import {
+  DomainError,
+  guard,
+  type GitProvider,
+  type GuardReason,
+  type Proposal,
+  type PullRequest,
+} from '@beacon/core';
 import { createHash } from 'node:crypto';
 
 export type ExportDeps = {
@@ -11,7 +18,7 @@ export type ExportInput = { runId: string; proposals: Proposal[] };
 export type ExportResult =
   | { status: 'pr_open'; branch: string; pr: PullRequest }
   | { status: 'apply_failed'; proposalIds: string[] }
-  | { status: 'blocked'; proposalId: string; reasons: string[] }
+  | { status: 'blocked'; proposalId: string; reasons: GuardReason[] }
   | { status: 'verification_failed' };
 
 /** The changed lines of a one-hunk diff: at 0-based `line`, `remove` becomes `add`. */
@@ -76,6 +83,8 @@ const prBody = (proposals: Proposal[]) =>
     'Each commit carries a `Beacon-Proposal` trailer. Automated checks cannot find every barrier, so please test the pages with real users and assistive technology.',
   ].join('\n');
 
+const sha256 = (s: string) => `sha256:${createHash('sha256').update(s).digest('hex')}`;
+
 type Step = { proposal: Proposal; path: string; content: string };
 
 // Two changes conflict when their changed lines touch; an insertion occupies its own line.
@@ -90,7 +99,10 @@ async function planBatch(
   git: GitProvider,
   head: string,
   proposals: Proposal[],
-): Promise<{ steps: Step[]; files: Map<string, string[]>; failed: string[] }> {
+): Promise<
+  | { steps: Step[]; files: Map<string, string[]>; failed: string[] }
+  | Extract<ExportResult, { status: 'blocked' }>
+> {
   const originals = new Map<string, string | null>();
   const files = new Map<string, string[]>();
   const applied = new Map<string, Replacement[]>();
@@ -110,7 +122,16 @@ async function planBatch(
       .filter((o) => o.line < r.line)
       .reduce((n, o) => n + o.add.length - o.remove.length, 0);
     const lines = files.get(path) ?? linesOf(original);
+    const before = lines.join('');
     lines.splice(r.line + shift, r.remove.length, ...r.add);
+    // Each step is guarded on top of the earlier ones, so the combined file is checked too (FR-25).
+    const checked = guard({
+      ruleId: p.rule.id,
+      baseHash: sha256(before),
+      files: [{ path, before, after: lines.join('') }],
+    });
+    if (!checked.ok)
+      return { status: 'blocked', proposalId: p.proposal_id, reasons: checked.reasons };
     files.set(path, lines);
     applied.set(path, [...done, r]);
     steps.push({ proposal: p, path, content: lines.join('') });
@@ -126,7 +147,9 @@ async function commitBatch(
 ): Promise<string | ExportResult> {
   const head = await deps.git.headSha(base);
   if (head === null) throw new Error(`default branch ${base} has no head`);
-  const { steps, files, failed } = await planBatch(deps.git, head, proposals);
+  const plan = await planBatch(deps.git, head, proposals);
+  if ('status' in plan) return plan;
+  const { steps, files, failed } = plan;
   if (failed.length > 0) return { status: 'apply_failed', proposalIds: failed };
 
   const combined = [...files]
