@@ -1,4 +1,11 @@
-import { applyEditOps, buildProposal, type EditOp, type Proposal } from '@beacon/core';
+import {
+  applyEditOps,
+  buildProposal,
+  DomainError,
+  ERROR_CODES,
+  type EditOp,
+  type Proposal,
+} from '@beacon/core';
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { exportBatch } from './export.ts';
@@ -112,5 +119,41 @@ describe('exportBatch', () => {
         clean.file(expected.branch, 'index.html'),
       );
     }
+  });
+
+  describe('NFR-01: never writes the default branch or a non beacon/* branch', () => {
+    const refused = async (git: FakeGitProvider, runId = RUN, proposals = [altA()]) => {
+      const before = new Map(git.refs);
+      const error: unknown = await exportBatch(
+        { git, verify: verifyOk },
+        { runId, proposals: [altA()] },
+      ).catch((e: unknown) => e);
+      expect(error).toBeInstanceOf(DomainError);
+      expect((error as DomainError).code).toBe('BRANCH_NOT_ALLOWED');
+      expect(git.refs).toEqual(before);
+      expect(git.prs).toEqual([]);
+    };
+
+    it('NFR-01: has a stable error code', () => {
+      expect(ERROR_CODES).toContain('BRANCH_NOT_ALLOWED');
+    });
+
+    it('NFR-01: refuses when the live default branch is the export branch, looked up on every call', async () => {
+      const git = new FakeGitProvider({ 'index.html': INDEX });
+      const proposals = [altA()];
+      const done = await exportBatch({ git, verify: verifyOk }, { runId: RUN, proposals });
+      if (done.status !== 'pr_open') throw new Error('first export failed');
+      git.defaultName = done.branch; // renamed after the first call, so a cached name would miss it
+      git.prs.length = 0;
+
+      await refused(git, RUN, proposals);
+    });
+
+    it.each(['../../main', 'x/../../', 'MAIN0000', 'a b c d ', ''])(
+      'NFR-01: refuses a run id that would not give a beacon/<hex>/<hex> ref (%j)',
+      async (runId) => {
+        await refused(new FakeGitProvider({ 'index.html': INDEX }), runId);
+      },
+    );
   });
 });
