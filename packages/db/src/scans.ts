@@ -15,6 +15,8 @@ export type PageScan = {
   findings: (RawFinding & { engine_rule: string })[];
   /** Violations outside the fixable rules: stored for the report, never fixed (FR-29, D-041). */
   reported?: ReportedIssue[];
+  /** Blob refs of element crops by target (FR-29, D-042). */
+  crops?: Record<string, string>;
 };
 
 export type ReportedIssue = {
