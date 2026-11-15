@@ -28,7 +28,8 @@ export type ReportedIssue = {
 };
 
 /**
- * Stores one scanned page, its findings and one fix job per fingerprint. Saving the same page again
+ * Stores one scanned page, its findings and one fix job per fingerprint, plus its reported issues
+ * (no job). Saving the same page again
  * (a retried scan step) adds nothing; the same fingerprint on another page shares its job.
  */
 export async function savePageScan(tx: TransactionSql, scan: PageScan): Promise<void> {
@@ -50,6 +51,15 @@ export async function savePageScan(tx: TransactionSql, scan: PageScan): Promise<
         ${f.target}, ${f.html})
       on conflict (run_id, fingerprint, page_id) do nothing`;
     await enqueueFixJob(tx, { orgId, runId, fingerprint: fp });
+  }
+  for (const r of scan.reported ?? []) {
+    const fp = fingerprint({ ...r, rule_id: r.engine_rule });
+    await tx`
+      insert into findings (org_id, run_id, page_id, fingerprint, rule_id, engine_rule, impact,
+        selector, html_snippet, actionable, help, tags)
+      values (${orgId}, ${runId}, ${page.id}, ${fp}, ${r.engine_rule}, ${r.engine_rule}, ${r.impact},
+        ${r.target}, ${r.html}, false, ${r.help}, ${r.tags})
+      on conflict (run_id, fingerprint, page_id) do nothing`;
   }
 }
 
