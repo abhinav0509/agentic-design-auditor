@@ -1,7 +1,15 @@
 // Share links for the URL-only report (FR-27, D-044): a link names one run, expires and can be
 // revoked; only the token's hash is stored, and holding a token reveals that one link, nothing else.
+import { blobRef } from '@beacon/core';
 import { afterAll, beforeAll, expect, it } from 'vitest';
-import { createReportLink, resolveReportLink, revokeReportLink } from './report-links.ts';
+import {
+  createReportLink,
+  loadReportInput,
+  resolveReportLink,
+  revokeReportLink,
+  runHasCrop,
+} from './report-links.ts';
+import { savePageError, savePageScan } from './scans.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000c1';
@@ -72,4 +80,89 @@ it('FR-27: another org cannot revoke a link', async () => {
   await asApp(db.sql, OTHER, (tx) => revokeReportLink(tx, { id, at: NOW }));
 
   expect(await resolveReportLink(db.sql, token, NOW)).toEqual({ orgId: ORG, runId: seed['run'] });
+});
+
+it('FR-29: loads a run as report input: site, pages with errors, and every issue with its crop', async () => {
+  const runId = seed['run'] ?? '';
+  const crop = blobRef(new Uint8Array([5]), 'image/png');
+  await asApp(db.sql, ORG, async (tx) => {
+    await savePageScan(tx, {
+      orgId: ORG,
+      runId,
+      url: 'https://example.test/about',
+      served: '<html></html>',
+      text: '',
+      findings: [
+        {
+          page_url: 'https://example.test/about',
+          rule_id: 'image-alt',
+          engine_rule: 'image-alt',
+          impact: 'critical',
+          target: 'img.hero',
+          html: '<img class="hero">',
+        },
+      ],
+      reported: [
+        {
+          page_url: 'https://example.test/about',
+          engine_rule: 'link-name',
+          impact: 'serious',
+          target: 'a',
+          html: '<a></a>',
+          help: 'Links must have discernible text',
+          tags: ['wcag2a'],
+        },
+      ],
+      crops: { 'img.hero': crop },
+    });
+    await savePageError(tx, {
+      orgId: ORG,
+      runId,
+      url: 'https://example.test/admin',
+      reason: 'URL_NOT_ALLOWED',
+    });
+  });
+
+  const input = await asApp(db.sql, ORG, (tx) => loadReportInput(tx, runId));
+
+  expect(input.siteUrl).toMatch(/^https?:\/\//);
+  expect(input.scannedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+  expect(input.pages).toEqual(
+    expect.arrayContaining([
+      { url: 'https://example.test/about', error: null },
+      { url: 'https://example.test/admin', error: 'URL_NOT_ALLOWED' },
+    ]),
+  );
+  expect(input.issues).toEqual(
+    expect.arrayContaining([
+      {
+        pageUrl: 'https://example.test/about',
+        ruleId: 'image-alt',
+        actionable: true,
+        impact: 'critical',
+        selector: 'img.hero',
+        html: '<img class="hero">',
+        help: null,
+        tags: [],
+        crop,
+      },
+      {
+        pageUrl: 'https://example.test/about',
+        ruleId: 'link-name',
+        actionable: false,
+        impact: 'serious',
+        selector: 'a',
+        html: '<a></a>',
+        help: 'Links must have discernible text',
+        tags: ['wcag2a'],
+        crop: null,
+      },
+    ]),
+  );
+  expect(await asApp(db.sql, ORG, (tx) => runHasCrop(tx, runId, crop))).toBe(true);
+  expect(
+    await asApp(db.sql, ORG, (tx) =>
+      runHasCrop(tx, runId, blobRef(new Uint8Array([6]), 'image/png')),
+    ),
+  ).toBe(false);
 });

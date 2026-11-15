@@ -46,3 +46,28 @@ export async function resolveReportLink(
   });
   return row ? { orgId: row.org_id, runId: row.run_id } : null;
 }
+
+export type ReportRows = {
+  siteUrl: string;
+  scannedAt: string;
+  pages: { url: string; error: string | null }[];
+  issues: {
+    pageUrl: string;
+    ruleId: string;
+    actionable: boolean;
+    impact: string;
+    selector: string;
+    html: string;
+    help: string | null;
+    tags: string[];
+    crop: string | null;
+  }[];
+};
+
+export function loadReportInput(_tx: TransactionSql, _runId: string): Promise<ReportRows> {
+  return Promise.reject(new Error('not implemented'));
+}
+
+export function runHasCrop(_tx: TransactionSql, _runId: string, _ref: string): Promise<boolean> {
+  return Promise.reject(new Error('not implemented'));
+}
