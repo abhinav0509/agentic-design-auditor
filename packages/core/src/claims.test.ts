@@ -5,13 +5,13 @@ describe('complianceClaims', () => {
   it.each([
     ['Your site is now WCAG compliant.', 'compliant'],
     ['This page passes WCAG 2.2 AA.', 'passes WCAG'],
-    ['Meets WCAG requirements', 'meets WCAG'],
-    ['Fully accessible after these fixes', 'fully accessible'],
+    ['Meets WCAG requirements', 'Meets WCAG'],
+    ['Fully accessible after these fixes', 'Fully accessible'],
     ['100% accessible', '100% accessible'],
     ['ADA-ready and EAA ready', 'ADA-ready'],
-    ['Certified by Beacon', 'certified'],
+    ['Certified by Beacon', 'Certified'],
     ['Your accessibility score: 92', 'accessibility score'],
-    ['Conformance level AA reached', 'conformance'],
+    ['Conformance level AA reached', 'Conformance'],
     ['It is legally COMPLIANT', 'COMPLIANT'],
     ['Brings the site into compliance', 'compliance'],
   ])('FR-31: flags a claim in %j', (text, phrase) => {
