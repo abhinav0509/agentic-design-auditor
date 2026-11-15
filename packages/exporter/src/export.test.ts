@@ -126,7 +126,7 @@ describe('exportBatch', () => {
       const before = new Map(git.refs);
       const error: unknown = await exportBatch(
         { git, verify: verifyOk },
-        { runId, proposals: [altA()] },
+        { runId, proposals },
       ).catch((e: unknown) => e);
       expect(error).toBeInstanceOf(DomainError);
       expect((error as DomainError).code).toBe('BRANCH_NOT_ALLOWED');

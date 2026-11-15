@@ -1,5 +1,5 @@
 // The exporter (v1.0 §7.3, addendum 1.5, 2.6): approved proposals become one branch and one PR.
-import type { GitProvider, Proposal, PullRequest } from '@beacon/core';
+import { DomainError, type GitProvider, type Proposal, type PullRequest } from '@beacon/core';
 import { createHash } from 'node:crypto';
 
 export type ExportDeps = {
@@ -59,6 +59,9 @@ function replacementOf(source: string, diff: string): Replacement | null {
 const branchName = (runId: string, ids: string[]) =>
   `beacon/${runId.slice(0, 8)}/${createHash('sha256').update(ids.join('\n')).digest('hex').slice(0, 12)}`;
 
+// NFR-01 is enforced here, not by GitHub: contents:write cannot be limited to some branches.
+const ALLOWED_BRANCH = /^beacon\/[0-9a-f]{8}\/[0-9a-f]{12}$/;
+
 const commitMessage = (p: Proposal) =>
   `${p.title}\n\n${p.rationale}\n\nBeacon-Proposal: ${p.proposal_id}\n`;
 
@@ -103,11 +106,14 @@ export async function exportBatch(deps: ExportDeps, input: ExportInput): Promise
   const proposals = [...input.proposals].sort((a, b) =>
     a.proposal_id < b.proposal_id ? -1 : a.proposal_id > b.proposal_id ? 1 : 0,
   );
-  const base = await git.defaultBranch();
   const branch = branchName(
     input.runId,
     proposals.map((p) => p.proposal_id),
   );
+  const base = await git.defaultBranch(); // live on every call, never cached (addendum 2.6)
+  if (!ALLOWED_BRANCH.test(branch) || branch === base) {
+    throw new DomainError('BRANCH_NOT_ALLOWED', `refusing to write ${branch}`);
+  }
 
   // The branch is created last, pointing at the finished commits, so it exists only when complete
   // and a retry after any crash just opens the PR (NFR-03).
