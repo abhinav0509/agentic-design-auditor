@@ -31,8 +31,24 @@ export async function scanPage(context: BrowserContext, rawUrl: string): Promise
   return (await scanPageContent(context, rawUrl)).findings;
 }
 
+/** An axe violation outside the rules Beacon fixes: reported only, never a proposal (FR-29). */
+export type ReportedIssue = {
+  page_url: string;
+  engine_rule: string;
+  impact: string;
+  target: string;
+  html: string;
+  help: string;
+  tags: string[];
+};
+
 /** A scanned page: the HTML as served (for the mapper), its rendered visible text and its findings. */
-export type PageContent = { served: string; text: string; findings: Finding[] };
+export type PageContent = {
+  served: string;
+  text: string;
+  findings: Finding[];
+  reported: ReportedIssue[];
+};
 
 export async function scanPageContent(
   context: BrowserContext,
@@ -71,7 +87,7 @@ export async function scanPageContent(
       }));
     });
     const text = await page.evaluate(() => document.body.innerText);
-    return { served, text, findings };
+    return { served, text, findings, reported: [] };
   } finally {
     await page.close();
   }
