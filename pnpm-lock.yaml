@@ -103,6 +103,12 @@ importers:
         specifier: 8.0.1
         version: 8.0.1
 
+  packages/exporter:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
+
   packages/mapper:
     dependencies:
       '@beacon/core':
