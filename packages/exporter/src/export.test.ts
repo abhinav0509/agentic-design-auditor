@@ -1,6 +1,7 @@
 import {
   applyEditOps,
   buildProposal,
+  complianceClaims,
   DomainError,
   ERROR_CODES,
   type EditOp,
@@ -233,6 +234,23 @@ describe('exportBatch', () => {
     });
     expect(verified).toBe(0);
     expect([...git.refs.keys()]).toEqual(['main']);
+  });
+
+  it('FR-31: the PR title, description and commit messages make no compliance claim', async () => {
+    const git = new FakeGitProvider({ 'index.html': INDEX, 'about.html': ABOUT });
+
+    const result = await exportBatch(
+      { git, verify: verifyOk },
+      { runId: RUN, proposals: [altA(), altB(), langAbout()] },
+    );
+
+    if (result.status !== 'pr_open') throw new Error('export failed');
+    const texts = [
+      git.prs[0]?.title ?? '',
+      git.prs[0]?.body ?? '',
+      ...git.log(result.branch, 'main').map((c) => c.message),
+    ];
+    expect(texts.flatMap(complianceClaims)).toEqual([]);
   });
 
   describe('NFR-01: never writes the default branch or a non beacon/* branch', () => {

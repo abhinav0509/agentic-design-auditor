@@ -1,5 +1,6 @@
 // The Proposal contract (v1.0 §8.1). Strict everywhere: agent output is untrusted input.
 import { z } from 'zod';
+import { complianceClaims } from './claims.ts';
 
 const Target = z
   .strictObject({
@@ -101,7 +102,15 @@ export const ProposalSchema = z
   .refine((p) => Date.parse(p.expires_at) > Date.parse(p.created_at), {
     message: 'expires_at must be after created_at',
     path: ['expires_at'],
-  });
+  })
+  // Agent text reaches PRs and reports, so it is held to the honesty rule too (FR-31).
+  .refine(
+    (p) =>
+      [p.title, p.rationale, p.question?.text ?? '', ...(p.question?.options ?? [])].every(
+        (t) => complianceClaims(t).length === 0,
+      ),
+    { message: 'agent text must not claim compliance', path: ['rationale'] },
+  );
 
 export type Proposal = z.infer<typeof ProposalSchema>;
 
