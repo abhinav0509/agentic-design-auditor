@@ -25,7 +25,7 @@ requirements:
   - { id: FR-14, phase: 1, text: 'Export approved proposals as PR on a new branch' }
   - { id: FR-15, phase: 1, text: 'Undo an applied proposal' }
   - { id: FR-16, phase: 1, text: 'Append-only audit log for every state change' }
-  - { id: FR-17, phase: 2, text: 'Plain-language report with checked / needs a human' }
+  - { id: FR-17, phase: 1, text: 'Plain-language report with checked / needs a human' }
   - { id: FR-18, phase: 2, text: 'Colour contrast and heading rules with own risk handling' }
   - { id: FR-19, phase: 2, text: 'Batched email/Slack notifications' }
   - { id: FR-20, phase: 2, text: 'Per-rule autonomy settings' }
@@ -35,8 +35,19 @@ requirements:
   - { id: FR-24, phase: 1, text: 'Reviewer edits re-run guard, verifier and risk' }
   - { id: FR-25, phase: 1, text: 'Batch verified as a whole; one commit per proposal' }
   - { id: FR-26, phase: 3, text: 'Audit log export with verifiable hash chain' }
-  - { id: FR-27, phase: 2, text: 'Shareable report links are expiring and revocable' }
+  - { id: FR-27, phase: 1, text: 'Shareable report links are expiring and revocable' }
   - { id: FR-28, phase: 1, text: 'Org-level kill switch pauses all agent activity' }
+  - {
+      id: FR-29,
+      phase: 1,
+      text: 'URL-only report: all findings, flagged issues, untested suggestions',
+    }
+  - { id: FR-30, phase: 1, text: 'Report-tier ownership by verified email on the site domain' }
+  - {
+      id: FR-31,
+      phase: 1,
+      text: 'User-facing report text never claims compliance (banned-phrase test)',
+    }
 
   - { id: NFR-01, phase: 1, text: 'Never write to a repo default branch' }
   - { id: NFR-02, phase: 1, text: 'Resistant to prompt injection in page content' }

@@ -1,0 +1,40 @@
+# D-041: A URL-only report before repo access
+
+- **Status:** Accepted 2026-11-15 (ownership B, agent review 2)
+- **Date:** 2026-11-15
+- **Decision:** add a **report tier** that needs only a site URL. Pilots get a shareable report of possible accessibility gaps. Repo-based fixes (scan → map → fix → verify → PR) become the paid tier, offered once the client grants a repo.
+  - **Input:** a base URL and up to 10 pages (hand-picked, or the first 10 same-origin URLs from the sitemap). Public pages only: no login, no form submission, no clicks that change state. The same scanner sandbox, egress proxy and URL-safety checks as today (NFR-09).
+  - **Automated findings:** every axe rule, not only the three Beacon fixes. Today the scanner keeps `image-alt`, `label` and `html-has-lang` only; the report keeps the rest as findings without proposals. Each finding has the element, the page, a screenshot crop and the WCAG reference (a reference only).
+  - **Agent review:** a bounded, read-only agent pass per page over the rendered DOM and screenshot. It flags what rules cannot decide: alt text that is present but useless, link text that says nothing out of context ("click here"), a heading outline that does not match the visual layout, and form fields whose purpose is only visual. Every agent flag is labelled **"Likely issue, needs a human to confirm"** and never counted as a finding. Same untrusted-content rules as the fixer (NFR-02): page text is data, output is a strict zod schema, and there is a token and step budget per report with cost recorded (NFR-05).
+  - **Suggested fixes:** per issue, a suggested change in HTML terms (for example, add `alt="…"` to this `<img>`), produced from the DOM. Marked **"Suggestion, not tested on your site"**. It names the element, never a source file. Tested fixes and PRs are the paid tier.
+  - **Coverage section (FR-17):** what was checked, what was not (keyboard use, focus order, screen-reader flow, video and audio, PDFs, pages behind login), and the plain statement that automated and AI checks find only part of the barriers on a site, so a human audit and testing with disabled users are still needed.
+  - **Sharing (FR-27):** a read-only link that expires (default 14 days) and can be revoked, plus a print-friendly page. No account is needed to view it.
+  - **Wording:** never "compliant", "passes", "certified", "ADA/EAA ready" or a single accessibility score. Counts are given by impact (critical, serious, …) and by page. A unit test scans report templates for banned phrases (the CLAUDE.md honesty rule).
+- **Ownership (the open choice, see Options):** a report scan still needs proof (FR-04a), with one added low-friction method for the report tier only: a verified email address on the site's domain.
+- **Context:** pilots may not grant repo access before they see value. v1.0 §3.1 assumes a repo from the start; §3.3 non-goals (no replacing human audits, no compliance claims) still hold. This pulls FR-17 and FR-27 forward from Phase 2. Contrast and heading findings are reported under FR-29; fixing them (FR-18) stays in Phase 2.
+- **Options:**
+  - **Ownership.**
+    - (A) Keep FR-04a only (DNS TXT, meta tag or well-known file). Safest, but it asks a prospect to change their site before they have seen any value.
+    - (B) FR-04a, **or** a verified email on the site's registrable domain (`jo@acme.com` for `www.acme.com`). Free-mail domains never qualify. This proves affiliation, not control, so it unlocks the capped report scan only, never fixes, scheduled scans or more than 10 pages.
+    - (C) No proof for a capped public scan. Lowest friction, but anyone could point Beacon at any site. That brings legal, abuse and reputational risk, and it weakens the rule the addendum added on purpose (addendum §0, item 5).
+  - **Agent review.** (1) Ship it in the first report. (2) Ship automated findings first and add the agent pass once its eval gate is met.
+- **Chosen (recommended):** ownership **B**; agent review **2**, behind a flag until its eval gate is met:
+  - flag precision of at least 80% (Wilson lower bound) on the hard-case set (D-030) plus new cases for each flag type
+  - 0 successful injections on the injection set
+  - a cost per report under a budget set when we price the tier
+- **Consequences:**
+  - New requirements, IDs added and never renumbered:
+    - FR-29: a URL-only report with findings, flags and suggestions.
+    - FR-30: report ownership by verified email domain (option B).
+    - FR-31: a banned-phrase check on every user-facing report template.
+  - FR-17 and FR-27 move to Phase 1 in `requirements.yaml`; addendum §2.1 notes FR-30.
+  - The scanner keeps every axe rule's results (a schema change on `findings`, with an `actionable` flag for the three fixable rules) and stores screenshot crops, so a BlobStore is now needed.
+  - **Phase plan change:**
+    - Phase 1 builds report → share link first, then the GitHub App and review UI for the paid tier.
+    - The exporter (D-040) stays as built and merged.
+    - Undo (FR-15) and the export wiring wait until the first pilot grants a repo.
+  - **Exit criteria added to Phase 1:** reports delivered to 3 prospects; how many go on to grant a repo; agent-flag precision as rated by the prospects.
+  - **Risks:**
+    - A report can be read as an audit. The coverage section, the wording test and the "needs a human" labels are the mitigation.
+    - Option B can be gamed by anyone with a company email. The 10-page cap, rate limits per domain and an audit log entry per report limit the harm.
+- **Revisit:** after 3 pilot reports, or if a prospect asks for more than 10 pages or for pages behind login (that needs credentials handling, its own decision).
