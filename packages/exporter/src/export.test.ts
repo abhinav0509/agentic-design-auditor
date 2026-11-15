@@ -62,6 +62,18 @@ const altA = () =>
   approved('index.html', INDEX, [
     { op: 'set_attr', at: at(INDEX, '<img src="a'), name: 'alt', value: 'A' },
   ]);
+const altB = () =>
+  approved('index.html', INDEX, [
+    { op: 'set_attr', at: at(INDEX, '<img src="b'), name: 'alt', value: 'B' },
+  ]);
+const ABOUT = '<html>\n<body><p>About</p></body>\n</html>\n';
+const langAbout = () =>
+  approved(
+    'about.html',
+    ABOUT,
+    [{ op: 'set_attr', at: 0, name: 'lang', value: 'en' }],
+    'html-has-lang',
+  );
 const verifyOk = () => Promise.resolve({ ok: true });
 
 describe('exportBatch', () => {
@@ -119,6 +131,40 @@ describe('exportBatch', () => {
         clean.file(expected.branch, 'index.html'),
       );
     }
+  });
+
+  it('FR-25: verifies the batch as a whole once, with one commit per proposal in a stable order', async () => {
+    const git = new FakeGitProvider({ 'index.html': INDEX, 'about.html': ABOUT });
+    const proposals = [langAbout(), altB(), altA()]; // a and b are on adjacent lines
+    const verified: { path: string; content: string }[][] = [];
+    const verify = (files: { path: string; content: string }[]) => {
+      verified.push(files);
+      return Promise.resolve({ ok: true });
+    };
+
+    const result = await exportBatch({ git, verify }, { runId: RUN, proposals });
+    const again = await exportBatch(
+      { git: new FakeGitProvider({ 'index.html': INDEX, 'about.html': ABOUT }), verify: verifyOk },
+      { runId: RUN, proposals: [...proposals].reverse() },
+    );
+
+    expect(result.status).toBe('pr_open');
+    if (result.status !== 'pr_open') return;
+    expect(again).toMatchObject({ branch: result.branch });
+    const index = INDEX.replace('a.jpg"', 'a.jpg" alt="A"').replace('b.jpg"', 'b.jpg" alt="B"');
+    const about = ABOUT.replace('<html>', '<html lang="en">');
+    expect(verified).toEqual([
+      [
+        { path: 'about.html', content: about },
+        { path: 'index.html', content: index },
+      ],
+    ]);
+    const trailers = git
+      .log(result.branch, 'main')
+      .map((c) => /Beacon-Proposal: (\S+)/.exec(c.message)?.[1]);
+    expect(trailers).toEqual(proposals.map((p) => p.proposal_id).sort());
+    expect(git.file(result.branch, 'index.html')).toBe(index);
+    expect(git.file(result.branch, 'about.html')).toBe(about);
   });
 
   describe('NFR-01: never writes the default branch or a non beacon/* branch', () => {
