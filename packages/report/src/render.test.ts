@@ -98,11 +98,11 @@ describe('renderReport', () => {
     expect(html).toContain('&lt;a href=&quot;javascript:alert(1)&quot;&gt;');
   });
 
-  it(
-    'NFR-06: the report page itself has no axe violations, best practice included',
+  it.each(['light', 'dark'] as const)(
+    'NFR-06: the report page itself has no axe violations, best practice included (%s)',
     { timeout: 60_000 },
-    async () => {
-      const context = await browser.newContext();
+    async (colorScheme) => {
+      const context = await browser.newContext({ colorScheme });
       try {
         const url = 'https://report.test/r/tok';
         const html = render();
