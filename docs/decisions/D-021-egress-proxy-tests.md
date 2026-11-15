@@ -6,4 +6,5 @@
 - **Launch options:** `proxy.server` plus `--force-webrtc-ip-handling-policy=disable_non_proxied_udp`. No explicit `<-loopback>` bypass rule: Playwright already sends loopback through the proxy, and a test pins that.
 - **Findings that changed D-017:** `fdaa::/16` needs no extra `--deny-range`; Smokescreen's built-in private class covers `fc00::/7`.
 - **Not covered here (still the Fly spike, D-017):** nftables lock for the `scanner` user, raw sockets that skip the proxy, `.internal` names on Fly's real private network, cold start and render timings. Ports are not restricted by Smokescreen; the 80/443 rule is the network layer's job and the in-app check's.
+- **CI cache (2026-11-10):** the `unit` job caches `.cache/smokescreen` keyed on a hash of `install.ts`, after GitHub release downloads returned 504 to Actions runners across four attempts on 2026-11-08 (PR #27) while the same URL worked from a laptop. The SHA-256 check runs whenever the binary is downloaded; a cache hit reuses a binary that passed it.
 - **Revisit:** when upgrading Smokescreen (bump version and four hashes together) or Playwright (the loopback pin may break).
