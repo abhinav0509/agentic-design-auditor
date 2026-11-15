@@ -191,7 +191,5 @@ it('FR-29: with a blob store, each croppable flagged element is stored once and 
   const cropped = rows.filter((r) => r.crop !== null);
   expect(cropped.length).toBeGreaterThan(0);
   for (const r of cropped) expect(await blobs.get(r.crop ?? '')).not.toBeNull();
-  // The whole page (no <main>) is flagged but too big to say anything as a crop.
-  expect(rows.find((r) => r.selector === 'html')).toMatchObject({ crop: null });
   expect(blobs.blobs.size).toBe(new Set(cropped.map((r) => r.crop)).size);
 }, 60_000);

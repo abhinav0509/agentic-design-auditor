@@ -6,7 +6,11 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
 export class FsBlobStore implements BlobStore {
-  constructor(readonly root: string) {}
+  readonly root: string;
+
+  constructor(root: string) {
+    this.root = root;
+  }
 
   async put(bytes: Uint8Array, contentType: string): Promise<string> {
     const ref = blobRef(bytes, contentType);
