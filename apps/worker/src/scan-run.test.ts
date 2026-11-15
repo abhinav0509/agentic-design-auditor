@@ -61,7 +61,9 @@ it('FR-05: scanning a run stores each page as served, queues a job per finding a
   const pages = await db.sql`
     select url, served_html from pages where run_id = ${runId} order by url`;
   expect(pages).toEqual(Object.entries(PAGES).map(([url, html]) => ({ url, served_html: html })));
-  const findings = await db.sql`select rule_id, selector from findings where run_id = ${runId}`;
+  // Fixable findings only; reported issues are covered by the FR-29 test below.
+  const findings = await db.sql`
+    select rule_id, selector from findings where run_id = ${runId} and actionable`;
   expect(findings).toEqual([{ rule_id: 'image-alt', selector: 'img' }]);
   const jobs = await db.sql`select status from fix_jobs where run_id = ${runId}`;
   expect(jobs).toEqual([{ status: 'queued' }]);
@@ -144,4 +146,30 @@ it('FR-05: a page that cannot be scanned is stored with its reason and the run g
   ]);
   const [status] = await db.sql`select status from scan_runs where id = ${runId}`;
   expect(status).toEqual({ status: 'fixing' });
+}, 60_000);
+
+it('FR-29: issues outside the fixable rules reach the database for the report, without fix jobs', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+
+  await scanRun({ sql: db.sql, context }, { orgId: ORG, runId, urls: [`${ORIGIN}/`] });
+
+  // The home page has no <main>: axe's best-practice rule, reported but never fixed.
+  const reported = await db.sql`
+    select rule_id, help, 'best-practice' = any(tags) as best_practice from findings
+    where run_id = ${runId} and not actionable and rule_id = 'landmark-one-main'`;
+  expect(reported).toEqual([
+    {
+      rule_id: 'landmark-one-main',
+      help: 'Document should have one main landmark',
+      best_practice: true,
+    },
+  ]);
+  const [jobs] = await db.sql<{ n: number }[]>`
+    select count(*)::int as n from fix_jobs where run_id = ${runId}`;
+  expect(jobs?.n).toBe(0);
 }, 60_000);

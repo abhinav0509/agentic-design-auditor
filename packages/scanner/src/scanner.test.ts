@@ -134,4 +134,29 @@ describe('scanPageContent', { timeout: 60_000 }, () => {
     expect(result.text).toBe('Hello\n\nAdded'); // rendered: the script's text is what a visitor sees
     expect(result.findings).toMatchObject([{ rule_id: 'image-alt', target: 'img' }]);
   });
+
+  it('FR-29: keeps every other axe violation for the report, with help text and WCAG tags', async () => {
+    const result = await scanPageContent(context, url('other-problems'));
+
+    expect(result.findings).toEqual([]);
+    const rules = new Set(result.reported.map((r) => r.engine_rule));
+    for (const rule of ['color-contrast', 'empty-heading', 'link-name'])
+      expect(rules).toContain(rule);
+    expect(result.reported.find((r) => r.engine_rule === 'link-name')).toEqual({
+      page_url: url('other-problems'),
+      engine_rule: 'link-name',
+      impact: 'serious',
+      target: 'a',
+      html: '<a href="/x"></a>',
+      help: 'Links must have discernible text',
+      tags: expect.arrayContaining(['wcag2a', 'wcag244']) as string[],
+    });
+  });
+
+  it('FR-29: an MVP rule is a finding, never also a reported item', async () => {
+    const result = await scanPageContent(context, url('two-images'));
+
+    expect(result.findings).toHaveLength(2);
+    expect(result.reported.filter((r) => r.engine_rule === 'image-alt')).toEqual([]);
+  });
 });

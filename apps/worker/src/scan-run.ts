@@ -36,9 +36,9 @@ export async function scanRun(
       await asApp(deps.sql, orgId, (tx) => savePageError(tx, { orgId, runId, url, reason }));
       continue;
     }
-    const { served, text, findings } = page;
+    const { served, text, findings, reported } = page;
     await asApp(deps.sql, orgId, (tx) =>
-      savePageScan(tx, { orgId, runId, url, served, text, findings }),
+      savePageScan(tx, { orgId, runId, url, served, text, findings, reported }),
     );
   }
   await asApp(
