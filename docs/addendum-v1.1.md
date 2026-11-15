@@ -84,6 +84,8 @@ The alt text and label text must be written in the document's language. For page
 
 **FR-04a:** before the first scan, the user proves control of the **URL** with one of: a DNS TXT record (`beacon-verify=<token>`), a `<meta name="beacon-verification">` tag, or `/.well-known/beacon-verification.txt`. Re-check every 30 days and before scheduled scans. The repo connection proves control of the repo, which is a separate fact.
 
+**FR-30 (D-041):** for the URL-only report tier only, a verified email on the site's registrable domain (never a free-mail domain) also counts. It unlocks a capped report scan (10 public pages), never fixes, scheduled scans or larger crawls.
+
 ### 2.2 SSRF: enforce at the network layer, not just in app code
 
 Playwright loads sub-resources, redirects, iframes and websockets that an app-level URL check never sees.

@@ -1,6 +1,6 @@
 # D-041: A URL-only report before repo access
 
-- **Status:** Proposed (needs approval before any code)
+- **Status:** Accepted 2026-11-15 (ownership B, agent review 2)
 - **Date:** 2026-11-15
 - **Decision:** add a **report tier** that needs only a site URL. Pilots get a shareable report of possible accessibility gaps. Repo-based fixes (scan → map → fix → verify → PR) become the paid tier, offered once the client grants a repo.
   - **Input:** a base URL and up to 10 pages (hand-picked, or the first 10 same-origin URLs from the sitemap). Public pages only: no login, no form submission, no clicks that change state. The same scanner sandbox, egress proxy and URL-safety checks as today (NFR-09).
@@ -11,7 +11,7 @@
   - **Sharing (FR-27):** a read-only link that expires (default 14 days) and can be revoked, plus a print-friendly page. No account is needed to view it.
   - **Wording:** never "compliant", "passes", "certified", "ADA/EAA ready" or a single accessibility score. Counts are given by impact (critical, serious, …) and by page. A unit test scans report templates for banned phrases (the CLAUDE.md honesty rule).
 - **Ownership (the open choice, see Options):** a report scan still needs proof (FR-04a), with one added low-friction method for the report tier only: a verified email address on the site's domain.
-- **Context:** pilots may not grant repo access before they see value. v1.0 §3.1 assumes a repo from the start; §3.3 non-goals (no replacing human audits, no compliance claims) still hold. This pulls FR-17, FR-27 and part of FR-18 (contrast and heading findings, reported only, not fixed) forward from Phase 2.
+- **Context:** pilots may not grant repo access before they see value. v1.0 §3.1 assumes a repo from the start; §3.3 non-goals (no replacing human audits, no compliance claims) still hold. This pulls FR-17 and FR-27 forward from Phase 2. Contrast and heading findings are reported under FR-29; fixing them (FR-18) stays in Phase 2.
 - **Options:**
   - **Ownership.**
     - (A) Keep FR-04a only (DNS TXT, meta tag or well-known file). Safest, but it asks a prospect to change their site before they have seen any value.
@@ -27,7 +27,7 @@
     - FR-29: a URL-only report with findings, flags and suggestions.
     - FR-30: report ownership by verified email domain (option B).
     - FR-31: a banned-phrase check on every user-facing report template.
-  - FR-17, FR-27 and a "report only" part of FR-18 move to Phase 1.
+  - FR-17 and FR-27 move to Phase 1 in `requirements.yaml`; addendum §2.1 notes FR-30.
   - The scanner keeps every axe rule's results (a schema change on `findings`, with an `actionable` flag for the three fixable rules) and stores screenshot crops, so a BlobStore is now needed.
   - **Phase plan change:**
     - Phase 1 builds report → share link first, then the GitHub App and review UI for the paid tier.
