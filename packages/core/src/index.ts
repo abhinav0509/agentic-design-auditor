@@ -8,6 +8,7 @@ export * from './errors.ts';
 export * from './fingerprint.ts';
 export * from './guard.ts';
 export * from './html.ts';
+export * from './ownership.ts';
 export * from './ports.ts';
 export * from './proposal.ts';
 export * from './revision.ts';
