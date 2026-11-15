@@ -9,10 +9,7 @@ describe('decisions', () => {
 });
 
 describe('exporter', () => {
-  it.todo('FR-14: creates branch and PR once for repeated calls');
-  it.todo('NFR-01: never targets the default branch (live lookup) or non beacon/* branches');
   it.todo('FR-15: revert creates a revert change');
-  it.todo('FR-25: batch verified as a whole; one commit per proposal');
 });
 
 describe('review kit', () => {
