@@ -77,4 +77,40 @@ describe('exportBatch', () => {
     expect(git.prs[0]?.body).toContain(p.title);
     expect(git.file('main', 'index.html')).toBe(INDEX);
   });
+
+  it('FR-14: repeated calls create the branch and PR once', async () => {
+    const git = new FakeGitProvider({ 'index.html': INDEX });
+    const input = { runId: RUN, proposals: [altA()] };
+
+    const first = await exportBatch({ git, verify: verifyOk }, input);
+    const second = await exportBatch({ git, verify: verifyOk }, input);
+
+    expect(second).toEqual(first);
+    expect(git.prs).toHaveLength(1);
+    expect([...git.refs.keys()].filter((r) => r.startsWith('beacon/'))).toHaveLength(1);
+  });
+
+  it('NFR-03: a crash at any write, then a retry, still gives one branch, one PR and the same tree', async () => {
+    const proposals = [altA()];
+    const clean = new FakeGitProvider({ 'index.html': INDEX });
+    const expected = await exportBatch({ git: clean, verify: verifyOk }, { runId: RUN, proposals });
+    if (expected.status !== 'pr_open') throw new Error('clean export failed');
+    const writes = 3; // one commit, the branch, the PR
+
+    for (let n = 1; n <= writes; n++) {
+      const git = new FakeGitProvider({ 'index.html': INDEX });
+      git.crashOnWrite = n;
+      await expect(
+        exportBatch({ git, verify: verifyOk }, { runId: RUN, proposals }),
+      ).rejects.toThrow(/crash/);
+
+      const retry = await exportBatch({ git, verify: verifyOk }, { runId: RUN, proposals });
+
+      expect(retry, `crash at write ${String(n)}`).toEqual(expected);
+      expect(git.prs).toHaveLength(1);
+      expect(git.file(expected.branch, 'index.html')).toBe(
+        clean.file(expected.branch, 'index.html'),
+      );
+    }
+  });
 });
