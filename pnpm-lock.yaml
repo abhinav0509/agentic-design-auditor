@@ -133,6 +133,13 @@ importers:
       '@beacon/core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../scanner
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
 
   packages/scanner:
     dependencies:
