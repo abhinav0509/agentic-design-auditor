@@ -1,21 +1,48 @@
+// Share links for the URL-only report (FR-27, D-044). Callers of create and revoke pass a
+// transaction that already runs as the app role with app.org_id set.
+import { createHash } from 'node:crypto';
 import type { Sql, TransactionSql } from 'postgres';
+import { asApp } from './session.ts';
 
-export function createReportLink(
-  _tx: TransactionSql,
-  _input: { orgId: string; runId: string; token: string; expiresAt: Date },
+const hashOf = (token: string) => createHash('sha256').update(token).digest('hex');
+
+export async function createReportLink(
+  tx: TransactionSql,
+  {
+    orgId,
+    runId,
+    token,
+    expiresAt,
+  }: { orgId: string; runId: string; token: string; expiresAt: Date },
 ): Promise<{ id: string }> {
-  return Promise.reject(new Error('not implemented'));
+  const [row] = await tx<{ id: string }[]>`
+    insert into report_links (org_id, run_id, token_hash, expires_at)
+    values (${orgId}, ${runId}, decode(${hashOf(token)}, 'hex'), ${expiresAt})
+    returning id`;
+  if (!row) throw new Error('report link not created');
+  return row;
 }
-export function revokeReportLink(
-  _tx: TransactionSql,
-  _input: { id: string; at: Date },
+
+/** Revokes a link of the current org; a link of another org is not visible, so nothing changes. */
+export async function revokeReportLink(
+  tx: TransactionSql,
+  { id, at }: { id: string; at: Date },
 ): Promise<void> {
-  return Promise.reject(new Error('not implemented'));
+  await tx`update report_links set revoked_at = ${at} where id = ${id} and revoked_at is null`;
 }
-export function resolveReportLink(
-  _sql: Sql,
-  _token: string,
-  _at: Date,
+
+/** The org and run a token opens at `at`, or null when it is unknown, expired or revoked. */
+export async function resolveReportLink(
+  sql: Sql,
+  token: string,
+  at: Date,
 ): Promise<{ orgId: string; runId: string } | null> {
-  return Promise.reject(new Error('not implemented'));
+  if (token === '') return null;
+  const [row] = await asApp(sql, null, async (tx) => {
+    await tx`select set_config('app.report_token_hash', ${hashOf(token)}, true)`;
+    return tx<{ org_id: string; run_id: string }[]>`
+      select org_id, run_id from report_links
+      where revoked_at is null and expires_at > ${at}`;
+  });
+  return row ? { orgId: row.org_id, runId: row.run_id } : null;
 }
