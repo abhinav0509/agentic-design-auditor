@@ -112,3 +112,65 @@ it('FR-05: the same finding on two pages is stored for each page and fixed by on
            (select count(*)::int from fix_jobs where run_id = ${runId}) as jobs`;
   expect(counts).toEqual({ findings: 2, jobs: 1 });
 });
+
+it('FR-29: issues outside the fixable rules are stored for the report, once, without a fix job', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'scanning', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const link = {
+    page_url: URL_,
+    engine_rule: 'link-name',
+    impact: 'serious',
+    target: 'a',
+    html: '<a href="/x"></a>',
+    help: 'Links must have discernible text',
+    tags: ['wcag2a', 'wcag244'],
+  };
+  const save = () =>
+    asApp(db.sql, ORG, (tx) =>
+      savePageScan(tx, {
+        orgId: ORG,
+        runId,
+        url: URL_,
+        served: SERVED,
+        text: '',
+        findings: [finding('image-alt', 'img', '<img src="a.jpg">')],
+        reported: [link],
+      }),
+    );
+
+  await save();
+  await save(); // the scan step retried after a crash
+
+  const stored = await db.sql`
+    select rule_id, engine_rule, actionable, impact, selector, html_snippet, help, tags
+    from findings where run_id = ${runId} order by rule_id`;
+  expect(stored).toEqual([
+    {
+      rule_id: 'image-alt',
+      engine_rule: 'image-alt',
+      actionable: true,
+      impact: 'critical',
+      selector: 'img',
+      html_snippet: '<img src="a.jpg">',
+      help: null,
+      tags: [],
+    },
+    {
+      rule_id: 'link-name',
+      engine_rule: 'link-name',
+      actionable: false,
+      impact: 'serious',
+      selector: 'a',
+      html_snippet: '<a href="/x"></a>',
+      help: 'Links must have discernible text',
+      tags: ['wcag2a', 'wcag244'],
+    },
+  ]);
+  const [jobs] = await db.sql<{ n: number }[]>`
+    select count(*)::int as n from fix_jobs where run_id = ${runId}`;
+  expect(jobs?.n).toBe(1);
+});

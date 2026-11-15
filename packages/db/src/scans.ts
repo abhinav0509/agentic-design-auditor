@@ -13,6 +13,18 @@ export type PageScan = {
   text: string;
   /** As the scanner reports them, with the engine's own rule id (the verifier needs it). */
   findings: (RawFinding & { engine_rule: string })[];
+  /** Violations outside the fixable rules: stored for the report, never fixed (FR-29, D-041). */
+  reported?: ReportedIssue[];
+};
+
+export type ReportedIssue = {
+  page_url: string;
+  engine_rule: string;
+  impact: string;
+  target: string;
+  html: string;
+  help: string;
+  tags: string[];
 };
 
 /**
