@@ -72,12 +72,18 @@ export type PageContent = {
   reported: ReportedIssue[];
   /** PNG crops of flagged elements by target, when asked for (FR-29). */
   crops: { target: string; png: Uint8Array }[];
+  /** What the review agent may judge, when asked for (FR-29, D-046). */
+  review: { candidates: ReviewCandidate[]; images: { id: string; png: Uint8Array }[] };
 };
+
+export type ReviewCandidate =
+  | { id: string; kind: 'image'; selector: string; alt: string; context: string }
+  | { id: string; kind: 'link'; selector: string; text: string; href: string; context: string };
 
 export async function scanPageContent(
   context: BrowserContext,
   rawUrl: string,
-  options: { crops?: boolean } = {},
+  options: { crops?: boolean; review?: boolean } = {},
 ): Promise<PageContent> {
   const { url } = await checkUrl(rawUrl, guardResolver(context));
   const page = await context.newPage();
@@ -112,7 +118,7 @@ export async function scanPageContent(
     const text = await page.evaluate(() => document.body.innerText);
     const targets = [...new Set([...findings, ...reported].map((f) => f.target))];
     const crops = options.crops ? await cropsOf(page, targets) : [];
-    return { served, text, findings, reported, crops };
+    return { served, text, findings, reported, crops, review: { candidates: [], images: [] } };
   } finally {
     await page.close();
   }
