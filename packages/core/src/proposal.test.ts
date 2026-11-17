@@ -125,6 +125,25 @@ describe('proposal kinds', () => {
 
 describe('proposalJsonSchema', () => {
   // A changed snapshot is a contract change: review it, and bump schema_version if it breaks consumers.
+  it.each([
+    ['title', { title: 'Make the page WCAG compliant' }],
+    ['rationale', { rationale: 'After this the page passes WCAG 2.2 AA.' }],
+    [
+      'question',
+      {
+        kind: 'needs_input',
+        change: null,
+        verification: null,
+        question: {
+          text: 'Is this image decorative?',
+          options: ['Yes, fully accessible as is', 'No'],
+        },
+      },
+    ],
+  ])('FR-31: rejects agent text that claims compliance (%s)', (_field, overrides) => {
+    expect(() => parseProposal({ ...valid(), ...overrides })).toThrow(/compliance/);
+  });
+
   it('matches the committed contract snapshot', async () => {
     await expect(JSON.stringify(proposalJsonSchema(), null, 2) + '\n').toMatchFileSnapshot(
       './__snapshots__/proposal.schema.json',

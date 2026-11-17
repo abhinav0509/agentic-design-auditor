@@ -111,6 +111,11 @@ export async function seedOrg(sql: Sql, org: string): Promise<Record<string, str
     `insert into outbox (org_id, topic, payload, dedupe_key) values ($1, 'export', '{}', 'k1')`,
     [org],
   );
+  await sql.unsafe(
+    `insert into report_links (org_id, run_id, token_hash, expires_at)
+     values ($1, $2, sha256($3::bytea), now() + interval '14 days')`,
+    [org, run, `${org}-seed`],
+  );
   await sql.unsafe(`insert into fix_jobs (org_id, run_id, fingerprint) values ($1, $2, 'fp')`, [
     org,
     run,

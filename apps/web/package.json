@@ -1,0 +1,13 @@
+{
+  "name": "@beacon/web",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@beacon/core": "workspace:*",
+    "@beacon/db": "workspace:*",
+    "@beacon/report": "workspace:*"
+  }
+}

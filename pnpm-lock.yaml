@@ -36,6 +36,18 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
 
+  apps/web:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@beacon/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@beacon/report':
+        specifier: workspace:*
+        version: link:../../packages/report
+
   apps/worker:
     dependencies:
       '@beacon/agent':
@@ -128,6 +140,19 @@ importers:
         specifier: 1.64.1
         version: 1.64.1
 
+  packages/report:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../scanner
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+
   packages/scanner:
     dependencies:
       '@beacon/core':
@@ -197,6 +222,33 @@ importers:
       playwright:
         specifier: 1.64.1
         version: 1.64.1
+
+  tools/report:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@beacon/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../../packages/scanner
+      '@beacon/web':
+        specifier: workspace:*
+        version: link:../../apps/web
+      '@beacon/worker':
+        specifier: workspace:*
+        version: link:../../apps/worker
+      axe-core:
+        specifier: 4.14.0
+        version: 4.14.0
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+      postgres:
+        specifier: 3.4.9
+        version: 3.4.9
 
   tools/smokescreen: {}
 

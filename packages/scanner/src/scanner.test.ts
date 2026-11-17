@@ -29,6 +29,15 @@ const extra: Record<string, { html: string; headers?: Record<string, string> }> 
         '<div role="button" style="width:3000px;height:3000px"></div>',
     ),
   },
+  review: {
+    html: doc(
+      '<main><p>Our studio opened in 2019.<img src="a.png" alt="IMG_0042.jpg" width="60" height="40"></p>' +
+        '<img src="b.png" alt="" width="60" height="40">' +
+        '<p>To see prices, <a href="/pricing">click here</a>.</p>' +
+        '<p><a href="/guide">Read our pricing guide for small teams</a></p>' +
+        '<a href="/hidden" style="display:none">here</a></main>',
+    ),
+  },
   scripted: {
     html: doc('<p>Hello</p><img src="x.png"><script>document.body.append("Added")</script>'),
   },
@@ -177,5 +186,48 @@ describe('scanPageContent', { timeout: 60_000 }, () => {
 
   it('FR-29: takes no crops unless asked', async () => {
     expect((await scanPageContent(context, url('crops'))).crops).toEqual([]);
+  });
+
+  it('FR-29: with review on, lists images with alt text and short links as candidates, with image crops', async () => {
+    const result = await scanPageContent(context, url('review'), { review: true });
+
+    expect(result.review.candidates).toEqual([
+      {
+        id: 'c1',
+        kind: 'image',
+        selector: expect.any(String) as string,
+        alt: 'IMG_0042.jpg',
+        context: 'Our studio opened in 2019.',
+      },
+      {
+        id: 'c2',
+        kind: 'link',
+        selector: expect.any(String) as string,
+        text: 'click here',
+        href: `${ORIGIN}/pricing`,
+        context: 'To see prices, click here.',
+      },
+    ]);
+    expect(result.review.images.map((i) => i.id)).toEqual(['c1']);
+    expect([...(result.review.images[0]?.png.slice(0, 4) ?? [])]).toEqual([0x89, 0x50, 0x4e, 0x47]);
+  });
+
+  it('FR-29: candidate selectors find their element again', async () => {
+    const result = await scanPageContent(context, url('review'), { review: true });
+    const page = await context.newPage();
+    try {
+      await page.goto(url('review'));
+      for (const c of result.review.candidates)
+        expect(await page.locator(`css=${c.selector}`).count()).toBe(1);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('FR-29: lists no candidates unless asked', async () => {
+    expect((await scanPageContent(context, url('review'))).review).toEqual({
+      candidates: [],
+      images: [],
+    });
   });
 });
