@@ -156,7 +156,7 @@ export const promptHash = () =>
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
-function withTimeout<T>(p: Promise<T>, ms: number, name: string): Promise<T> {
+export function withTimeout<T>(p: Promise<T>, ms: number, name: string): Promise<T> {
   let timer: NodeJS.Timeout | undefined;
   const timeout = new Promise<never>((_, reject) => {
     timer = setTimeout(() => {

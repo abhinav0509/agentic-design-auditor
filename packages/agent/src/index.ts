@@ -5,3 +5,4 @@ export * from './llm.ts';
 export * from './models.ts';
 export * from './prompt.ts';
 export * from './recording.ts';
+export * from './reviewer.ts';
