@@ -223,6 +223,27 @@ importers:
         specifier: 1.64.1
         version: 1.64.1
 
+  tools/report:
+    dependencies:
+      '@beacon/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@beacon/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@beacon/scanner':
+        specifier: workspace:*
+        version: link:../../packages/scanner
+      '@beacon/web':
+        specifier: workspace:*
+        version: link:../../apps/web
+      '@beacon/worker':
+        specifier: workspace:*
+        version: link:../../apps/worker
+      playwright:
+        specifier: 1.64.1
+        version: 1.64.1
+
   tools/smokescreen: {}
 
   tools/trace: {}

@@ -1,0 +1,13 @@
+{
+  "name": "@beacon/report-cli",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@beacon/core": "workspace:*",
+    "@beacon/db": "workspace:*",
+    "@beacon/scanner": "workspace:*",
+    "@beacon/web": "workspace:*",
+    "@beacon/worker": "workspace:*",
+    "playwright": "1.64.1"
+  }
+}
