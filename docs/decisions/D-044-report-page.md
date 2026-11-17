@@ -1,0 +1,30 @@
+# D-044: The report page and its share links
+
+- **Date:** 2026-11-16
+- **Decision:** the URL-only report (FR-17, FR-27, FR-29; D-041) is one static HTML page behind an expiring link.
+  - **Links (`@beacon/db`, migration `0010`):** `report_links` stores `sha256(token)`, never the token, plus `expires_at` and `revoked_at`.
+    - Tenant isolation is as usual. A second, read-only policy `by_token` shows a viewer (who has no org) the one row whose hash matches `app.report_token_hash`.
+    - `resolveReportLink(sql, token, now)` returns the org and run, or null. Every other read runs as that org under RLS.
+    - The default lifetime is 14 days (D-041), chosen by the caller.
+  - **Model (`@beacon/report`, `buildReport`):** issues grouped by rule, most severe first, each with its pages, elements and crops.
+    - axe tags become references ("WCAG 2.4.4"), never claims.
+    - `best-practice` rules are labelled "Best practice, not a WCAG requirement".
+    - The three fixable rules use Beacon's own plain titles.
+    - The report also has totals by impact, unscanned pages with plain reasons, and a fixed "checked / not checked" section.
+  - **Page (`renderReport`):** no script. Landmarks, a strict heading order, element lists in `<details>`, AA colours in light and dark. All page content is escaped, and only `http(s)` URLs become links. Tests run axe on the rendered page in both colour schemes (all rules, best practice included, zero violations) and check the text with `complianceClaims`.
+  - **Route (`apps/web`, `handleReportRequest(deps, path)`):** framework-free, returning `{ status, headers, body }`.
+    - `/r/<token>` serves the page. `/r/<token>/crops/sha256/<hex>.png` serves a crop only when that run has it (`runHasCrop`), so a link cannot read another run's crops from a shared store.
+    - Unknown, expired, revoked and malformed requests all get the same 404.
+    - Headers: a CSP with `default-src 'none'`, no scripts and `img-src 'self'`; `Referrer-Policy: no-referrer` (the token is in the URL); `X-Robots-Tag: noindex`; `Cache-Control: private, no-store`; `nosniff`.
+- **Context:** D-041, D-042 (crops by ref), D-043 (honesty check); NFR-06 (Beacon's own pages meet WCAG 2.2 AA); NFR-16 (RLS).
+- **Options:**
+  - Link lookup: (A) a `security definer` function; (B) a second RLS policy keyed on the token hash.
+  - Hosting: (1) choose the web framework now; (2) a plain handler any server can mount.
+- **Chosen:** B and 2.
+  - With forced RLS, a definer function runs under the policies anyway, unless its owner bypasses RLS, which differs between hosts. B keeps the whole path under RLS.
+  - The review UI's framework (D-010: Radix + Tailwind) is not needed for one static page. The handler drops into whichever framework that UI picks.
+- **Consequences:**
+  - **Making a link** needs an authenticated owner (FR-01). Until sign-in exists, links are created by an operator script.
+  - **Suggested fixes** (D-041) arrive with the agent review (step 5). The page has a place for them in each element.
+  - **Styles** use `'unsafe-inline'`, since the page has one inline stylesheet and no script can run. A hash-based `style-src` is a later tightening.
+  - **No pagination:** a site with thousands of flagged elements gives a long page. Up to 10 pages and 50 crops per page keeps it bounded.
