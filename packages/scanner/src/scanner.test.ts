@@ -23,6 +23,12 @@ const extra: Record<string, { html: string; headers?: Record<string, string> }> 
       '<h3></h3><p style="color:#eee;background:#fff">faint</p><a href="/x"></a><div id="d"></div><div id="d"></div>',
     ),
   },
+  crops: {
+    html: doc(
+      '<img src="x.png" width="40" height="30"><button style="width:80px;height:30px"></button>' +
+        '<div role="button" style="width:3000px;height:3000px"></div>',
+    ),
+  },
   scripted: {
     html: doc('<p>Hello</p><img src="x.png"><script>document.body.append("Added")</script>'),
   },
@@ -158,5 +164,18 @@ describe('scanPageContent', { timeout: 60_000 }, () => {
 
     expect(result.findings).toHaveLength(2);
     expect(result.reported.filter((r) => r.engine_rule === 'image-alt')).toEqual([]);
+  });
+
+  it('FR-29: with crops on, returns a PNG of each flagged element once, skipping any larger than the viewport', async () => {
+    const result = await scanPageContent(context, url('crops'), { crops: true });
+
+    expect(result.crops.map((c) => c.target).sort()).toEqual(['button', 'img']);
+    for (const c of result.crops) expect([...c.png.slice(0, 4)]).toEqual([0x89, 0x50, 0x4e, 0x47]);
+    const flagged = [...result.findings, ...result.reported].map((f) => f.target);
+    expect(flagged).toEqual(expect.arrayContaining(['div', 'html'])); // flagged, too big to crop
+  });
+
+  it('FR-29: takes no crops unless asked', async () => {
+    expect((await scanPageContent(context, url('crops'))).crops).toEqual([]);
   });
 });

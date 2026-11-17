@@ -4,7 +4,7 @@
 // The caller owns the BrowserContext, so sandbox and egress-proxy settings (D-017) live there; it must
 // carry the in-app egress guard (guardContext) too.
 import axe from 'axe-core';
-import type { BrowserContext } from 'playwright';
+import type { BrowserContext, Page } from 'playwright';
 import { checkUrl, guardResolver } from './url-safety.ts';
 
 export type RuleId = 'html-has-lang' | 'image-alt' | 'label';
@@ -27,6 +27,27 @@ export type Finding = {
 };
 
 const NAVIGATION_TIMEOUT_MS = 30_000;
+// shortcut: at most 50 crops a page (contrast alone can flag hundreds of nodes); raise it if reports need more.
+const MAX_CROPS = 50;
+
+/**
+ * A PNG of each target that is visible and fits in the viewport. Bigger ones (the whole page for a
+ * missing lang, a landmark wrapping everything) say nothing as a crop and are skipped.
+ */
+async function cropsOf(page: Page, targets: string[]): Promise<PageContent['crops']> {
+  const viewport = page.viewportSize();
+  const crops: PageContent['crops'] = [];
+  for (const target of targets) {
+    if (crops.length >= MAX_CROPS) break;
+    const el = page.locator(`css=${target}`).first();
+    const box = await el.boundingBox().catch(() => null);
+    if (!box || box.width < 1 || box.height < 1) continue;
+    if (viewport && (box.width > viewport.width || box.height > viewport.height)) continue;
+    const png = await el.screenshot({ animations: 'disabled', timeout: 5_000 }).catch(() => null);
+    if (png) crops.push({ target, png: new Uint8Array(png) });
+  }
+  return crops;
+}
 
 export async function scanPage(context: BrowserContext, rawUrl: string): Promise<Finding[]> {
   return (await scanPageContent(context, rawUrl)).findings;
@@ -49,11 +70,14 @@ export type PageContent = {
   text: string;
   findings: Finding[];
   reported: ReportedIssue[];
+  /** PNG crops of flagged elements by target, when asked for (FR-29). */
+  crops: { target: string; png: Uint8Array }[];
 };
 
 export async function scanPageContent(
   context: BrowserContext,
   rawUrl: string,
+  options: { crops?: boolean } = {},
 ): Promise<PageContent> {
   const { url } = await checkUrl(rawUrl, guardResolver(context));
   const page = await context.newPage();
@@ -86,7 +110,9 @@ export async function scanPageContent(
       else reported.push(...nodesOf(v).map((n) => ({ ...n, help: v.help, tags: v.tags })));
     }
     const text = await page.evaluate(() => document.body.innerText);
-    return { served, text, findings, reported };
+    const targets = [...new Set([...findings, ...reported].map((f) => f.target))];
+    const crops = options.crops ? await cropsOf(page, targets) : [];
+    return { served, text, findings, reported, crops };
   } finally {
     await page.close();
   }

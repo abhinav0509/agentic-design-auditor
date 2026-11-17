@@ -1,7 +1,7 @@
 // Storing a run's scanned pages (v1.0 §9.1 steps 1-4 and 6, FR-05, NFR-03, D-038): the page as
 // served and its visible text, its findings with their fingerprints, and one fix job per fingerprint,
 // so a crashed run resumes from the database without scanning again.
-import { fingerprint, type RawFinding } from '@beacon/core';
+import { blobRef, fingerprint, type DomainError, type RawFinding } from '@beacon/core';
 import { afterAll, beforeAll, expect, it } from 'vitest';
 import { savePageScan } from './scans.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
@@ -173,4 +173,65 @@ it('FR-29: issues outside the fixable rules are stored for the report, once, wit
   const [jobs] = await db.sql<{ n: number }[]>`
     select count(*)::int as n from fix_jobs where run_id = ${runId}`;
   expect(jobs?.n).toBe(1);
+});
+
+it('FR-29: each finding and reported issue keeps the ref of its element crop as evidence', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'scanning', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const imgCrop = blobRef(new Uint8Array([1]), 'image/png');
+  const linkCrop = blobRef(new Uint8Array([2]), 'image/png');
+
+  await asApp(db.sql, ORG, (tx) =>
+    savePageScan(tx, {
+      orgId: ORG,
+      runId,
+      url: URL_,
+      served: SERVED,
+      text: '',
+      findings: [
+        finding('image-alt', 'img', '<img src="a.jpg">'),
+        finding('label', '#q', '<input id="q">'),
+      ],
+      reported: [
+        {
+          page_url: URL_,
+          engine_rule: 'link-name',
+          impact: 'serious',
+          target: 'a',
+          html: '<a href="/x"></a>',
+          help: 'Links must have discernible text',
+          tags: [],
+        },
+      ],
+      crops: { img: imgCrop, a: linkCrop },
+    }),
+  );
+
+  const stored = await db.sql`
+    select rule_id, evidence from findings where run_id = ${runId} order by rule_id`;
+  expect(stored).toEqual([
+    { rule_id: 'image-alt', evidence: { crop: imgCrop } },
+    { rule_id: 'label', evidence: {} },
+    { rule_id: 'link-name', evidence: { crop: linkCrop } },
+  ]);
+});
+
+it('FR-29: refuses a crop ref that is not a blob ref', async () => {
+  const error: unknown = await asApp(db.sql, ORG, (tx) =>
+    savePageScan(tx, {
+      orgId: ORG,
+      runId: '00000000-0000-4000-8000-000000000000',
+      url: URL_,
+      served: SERVED,
+      text: '',
+      findings: [],
+      crops: { img: 'file:///etc/passwd' },
+    }),
+  ).catch((e: unknown) => e);
+
+  expect((error as DomainError).code).toBe('INVALID_BLOB_REF');
 });

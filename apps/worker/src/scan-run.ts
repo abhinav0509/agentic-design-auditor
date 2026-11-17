@@ -1,7 +1,7 @@
 // The scan step of a run (v1.0 §9.1 steps 1-4 and 6, FR-05, D-038): each page through the guarded
 // browser into Postgres, then the run moves on to fixing. The caller owns the BrowserContext, so the
 // sandbox, egress proxy and in-app guard (D-017, D-020) are set up there.
-import { DomainError } from '@beacon/core';
+import { DomainError, type BlobStore } from '@beacon/core';
 import { asApp, savePageError, savePageScan, type Sql } from '@beacon/db';
 import { scanPageContent } from '@beacon/scanner';
 import type { BrowserContext } from 'playwright';
@@ -10,7 +10,8 @@ import type { BrowserContext } from 'playwright';
 const MAX_PAGES = 10;
 
 export async function scanRun(
-  deps: { sql: Sql; context: BrowserContext },
+  /** Without a blob store, no element crops are taken. */
+  deps: { sql: Sql; context: BrowserContext; blobs?: BlobStore },
   { orgId, runId, urls }: { orgId: string; runId: string; urls: string[] },
 ): Promise<void> {
   if (urls.length > MAX_PAGES)
@@ -29,7 +30,7 @@ export async function scanRun(
   for (const url of urls.filter((u) => !stored.has(u))) {
     let page;
     try {
-      page = await scanPageContent(deps.context, url);
+      page = await scanPageContent(deps.context, url, { crops: deps.blobs !== undefined });
     } catch (e) {
       // v1.0 §12.3: the page is listed as not scanned with its reason; the run goes on.
       const reason = e instanceof DomainError ? e.code : 'SCAN_FAILED';
@@ -37,8 +38,13 @@ export async function scanRun(
       continue;
     }
     const { served, text, findings, reported } = page;
+    // Crops go to the store before the rows that point at them, so a stored ref always resolves.
+    const crops: Record<string, string> = {};
+    for (const c of page.crops) {
+      if (deps.blobs) crops[c.target] = await deps.blobs.put(c.png, 'image/png');
+    }
     await asApp(deps.sql, orgId, (tx) =>
-      savePageScan(tx, { orgId, runId, url, served, text, findings, reported }),
+      savePageScan(tx, { orgId, runId, url, served, text, findings, reported, crops }),
     );
   }
   await asApp(
