@@ -80,6 +80,75 @@ export type ReviewCandidate =
   | { id: string; kind: 'image'; selector: string; alt: string; context: string }
   | { id: string; kind: 'link'; selector: string; text: string; href: string; context: string };
 
+// shortcut: first 20 images and 30 links in document order; raise them if pilots' pages need more.
+const MAX_REVIEW_IMAGES = 20;
+const MAX_REVIEW_LINKS = 30;
+const MAX_LINK_WORDS = 4; // vague link text is short; longer text says where it goes
+
+/**
+ * Images with alt text and links with short text: what rules cannot judge and the review agent may
+ * (D-046). Code picks them, so the model only ever judges elements it was given.
+ */
+async function reviewOf(page: Page): Promise<PageContent['review']> {
+  const raw = await page.evaluate(
+    ({ maxImages, maxLinks, maxWords }) => {
+      const visible = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        const s = getComputedStyle(el);
+        return r.width >= 1 && r.height >= 1 && s.visibility !== 'hidden';
+      };
+      const path = (el: Element): string => {
+        const parts: string[] = [];
+        for (let e: Element | null = el; e && e !== document.documentElement; e = e.parentElement) {
+          const tag = e.tagName;
+          const same = e.parentElement
+            ? Array.from(e.parentElement.children).filter((x) => x.tagName === tag)
+            : [e];
+          parts.unshift(`${tag.toLowerCase()}:nth-of-type(${String(same.indexOf(e) + 1)})`);
+        }
+        return `html > ${parts.join(' > ')}`;
+      };
+      const tidy = (t: string, max: number) => t.replace(/\s+/g, ' ').trim().slice(0, max);
+      const near = (el: Element) => {
+        const block = el.closest('p, li, figure, td, th, dd, blockquote, h1, h2, h3, h4, h5, h6');
+        return block instanceof HTMLElement ? tidy(block.innerText, 200) : '';
+      };
+      const images = Array.from(document.querySelectorAll('img[alt]'))
+        .filter((img) => (img.getAttribute('alt') ?? '').trim() !== '' && visible(img))
+        .slice(0, maxImages)
+        .map((img) => ({
+          kind: 'image' as const,
+          selector: path(img),
+          alt: tidy(img.getAttribute('alt') ?? '', 300),
+          context: near(img),
+        }));
+      const links = Array.from(document.querySelectorAll('a[href]'))
+        .filter((a): a is HTMLAnchorElement => a instanceof HTMLAnchorElement && visible(a))
+        .map((a) => ({ a, text: tidy(a.getAttribute('aria-label') ?? a.innerText, 200) }))
+        .filter(({ text }) => text !== '' && text.split(' ').length <= maxWords)
+        .slice(0, maxLinks)
+        .map(({ a, text }) => ({
+          kind: 'link' as const,
+          selector: path(a),
+          text,
+          href: a.href,
+          context: near(a),
+        }));
+      return [...images, ...links];
+    },
+    { maxImages: MAX_REVIEW_IMAGES, maxLinks: MAX_REVIEW_LINKS, maxWords: MAX_LINK_WORDS },
+  );
+  const candidates = raw.map((c, i) => ({ ...c, id: `c${String(i + 1)}` }));
+  const imageIds = new Map(
+    candidates.filter((c) => c.kind === 'image').map((c) => [c.selector, c.id]),
+  );
+  const images = (await cropsOf(page, [...imageIds.keys()])).flatMap((c) => {
+    const id = imageIds.get(c.target);
+    return id === undefined ? [] : [{ id, png: c.png }];
+  });
+  return { candidates, images };
+}
+
 export async function scanPageContent(
   context: BrowserContext,
   rawUrl: string,
@@ -118,7 +187,8 @@ export async function scanPageContent(
     const text = await page.evaluate(() => document.body.innerText);
     const targets = [...new Set([...findings, ...reported].map((f) => f.target))];
     const crops = options.crops ? await cropsOf(page, targets) : [];
-    return { served, text, findings, reported, crops, review: { candidates: [], images: [] } };
+    const review = options.review ? await reviewOf(page) : { candidates: [], images: [] };
+    return { served, text, findings, reported, crops, review };
   } finally {
     await page.close();
   }
