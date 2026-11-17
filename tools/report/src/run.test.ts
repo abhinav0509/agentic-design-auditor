@@ -54,9 +54,10 @@ it(
     const again = await runReport({ ...deps, token: () => `${TOKEN}x` }, planned.plan);
 
     expect(first).toEqual({ path: `/r/${TOKEN}`, expiresAt: new Date('2026-12-01T09:00:00Z') });
-    const [run] = await db.sql<{ status: string; n: number }[]>`
-    select status, (select count(*)::int from scan_runs) as n from scan_runs order by created_at limit 1`;
-    expect(run).toEqual({ status: 'ready', n: 2 });
+    const [run] = await db.sql<{ status: string; requested_by: string; n: number }[]>`
+    select status, requested_by, (select count(*)::int from scan_runs) as n
+    from scan_runs order by created_at limit 1`;
+    expect(run).toEqual({ status: 'ready', requested_by: 'jo@acme.test', n: 2 });
     const [orgs] = await db.sql<{ orgs: number; sites: number }[]>`
     select (select count(*)::int from organizations) as orgs, (select count(*)::int from sites) as sites`;
     expect(orgs).toEqual({ orgs: 1, sites: 1 }); // a second report for the site reuses its org and site
