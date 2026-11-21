@@ -47,7 +47,7 @@ it('FR-29: a preview is saved once per finding and listed in the report input wi
       savePreview(tx, {
         orgId: ORG,
         runId: seed['run'] ?? '',
-        findingId: seed['finding'] ?? '',
+        findingId,
         preview: PREVIEW,
       }),
     );

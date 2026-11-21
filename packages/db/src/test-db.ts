@@ -122,6 +122,12 @@ export async function seedOrg(sql: Sql, org: string): Promise<Record<string, str
      values ($1, $2, $3, 'link', 'vague_link', 'a', 'here', 'Vague.', 'See prices')`,
     [org, run, page],
   );
+  await sql.unsafe(
+    `insert into fix_previews (org_id, run_id, finding_id, rule_id, title, rationale, before_html,
+       after_html, verified)
+     values ($1, $2, $3, 'image-alt', 'Add alt', 'Why', '<img>', '<img alt="x">', true)`,
+    [org, run, finding],
+  );
   await sql.unsafe(`insert into fix_jobs (org_id, run_id, fingerprint) values ($1, $2, 'fp')`, [
     org,
     run,
