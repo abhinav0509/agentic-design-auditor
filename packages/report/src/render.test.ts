@@ -393,7 +393,7 @@ describe('renderReport: fix previews (URL only)', () => {
     announcedBefore: '- img',
     announcedAfter: '- img "Potter shaping a bowl on a wheel"',
     verified: true,
-    crop: CROP,
+    crop: CROP as string | null,
   };
   const withPreviews = (previews = [PREVIEW]) => sample({ previews });
 
