@@ -1,4 +1,4 @@
-import type { ReviewCandidate, ReviewResult } from '@beacon/agent';
+import type { ReviewCandidate, ReviewFlag, ReviewResult } from '@beacon/agent';
 import { REVIEW_PAYLOAD, reviewCases, type ReviewEvalCase } from '@beacon/evals';
 import { describe, expect, it } from 'vitest';
 import {
@@ -28,18 +28,18 @@ const candidatesOf = (c: ReviewEvalCase): ReviewCandidate[] => [
     context: '',
   })),
 ];
-const done = (
-  flags: ReviewResult extends infer R
-    ? R extends { kind: 'done'; flags: infer F }
-      ? F
-      : never
-    : never,
-): ReviewResult => ({ kind: 'done', flags, steps: 3, usage: USAGE, trace: [] });
+const done = (flags: ReviewFlag[]): ReviewResult => ({
+  kind: 'done',
+  flags,
+  steps: 3,
+  usage: USAGE,
+  trace: [],
+});
 
 /** A perfect review of `c`: flags exactly the bad ones, with suggestions that name the subject. */
 function perfect(c: ReviewEvalCase) {
   const candidates = candidatesOf(c);
-  const flags = candidates.flatMap((cand) => {
+  const flags = candidates.flatMap((cand): ReviewFlag[] => {
     if (cand.kind === 'image' && c.truth.images[cand.alt] === 'flag')
       return [
         {

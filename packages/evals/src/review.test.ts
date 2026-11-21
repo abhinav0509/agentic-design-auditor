@@ -26,7 +26,7 @@ describe('reviewCases', () => {
     const subjects = (src: string) => IMAGE_MANIFEST[src]?.subject ?? [];
     for (const c of plain)
       for (const [src, alt] of [...c.html.matchAll(/<img src="([^"]+)" [^>]*alt="([^"]*)"/g)].map(
-        (m) => [m[1] ?? '', m[2] ?? ''],
+        (m): [string, string] => [m[1] ?? '', m[2] ?? ''],
       )) {
         if (c.truth.images[alt] !== 'flag') continue;
         const generic = /^(image|photo|picture|graphic|img)$/i.test(alt);
