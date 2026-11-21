@@ -1,6 +1,7 @@
 // The scan step of a run (v1.0 §9.1 steps 1-4 and 6, FR-05, D-038): each page through the guarded
 // browser into Postgres, then the run moves on to fixing. The caller owns the BrowserContext, so the
 // sandbox, egress proxy and in-app guard (D-017, D-020) are set up there.
+import type { LlmClient } from '@beacon/agent';
 import { DomainError, type BlobStore } from '@beacon/core';
 import { asApp, savePageError, savePageScan, type Sql } from '@beacon/db';
 import { scanPageContent } from '@beacon/scanner';
@@ -11,7 +12,7 @@ const MAX_PAGES = 10;
 
 export async function scanRun(
   /** Without a blob store, no element crops are taken. */
-  deps: { sql: Sql; context: BrowserContext; blobs?: BlobStore },
+  deps: { sql: Sql; context: BrowserContext; blobs?: BlobStore; reviewer?: { llm: LlmClient } },
   { orgId, runId, urls }: { orgId: string; runId: string; urls: string[] },
 ): Promise<void> {
   if (urls.length > MAX_PAGES)
