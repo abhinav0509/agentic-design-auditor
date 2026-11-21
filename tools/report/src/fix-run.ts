@@ -66,3 +66,10 @@ export async function exportFixes(
   const { orgId, runId } = await runOf(deps.sql, token, deps.clock.now());
   return exportRun(deps, { orgId, runId });
 }
+
+export function createReviewLink(
+  _deps: { sql: Sql; clock: Clock },
+  _i: { shareToken: string; token: string },
+): Promise<string> {
+  return Promise.reject(new Error('not implemented'));
+}

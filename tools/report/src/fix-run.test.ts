@@ -11,7 +11,8 @@ import { handleReportRequest } from '@beacon/web';
 import { readFileSync } from 'node:fs';
 import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, expect, it } from 'vitest';
-import { approveFixes, exportFixes } from './fix-run.ts';
+import { approveFixes, createReviewLink, exportFixes } from './fix-run.ts';
+import { resolveReviewLink } from '@beacon/db';
 import { planFixRun } from './fix-plan.ts';
 import { runReport } from './run.ts';
 
@@ -116,3 +117,14 @@ it(
     expect(await page(path)).toContain('In pull request #1');
   },
 );
+
+it('FR-11: a reviewer link for a run comes from its share link, and only it opens the reviewer page', async () => {
+  const review = 'Reviewlinkreviewlinkreviewlinkreviewlink123';
+  const clock = { now: () => NOW };
+
+  const path = await createReviewLink({ sql: db.sql, clock }, { shareToken: TOKEN, token: review });
+
+  expect(path).toBe(`/review/${review}`);
+  expect(await resolveReviewLink(db.sql, review, NOW)).not.toBeNull();
+  expect(await resolveReviewLink(db.sql, TOKEN, NOW)).toBeNull();
+});
