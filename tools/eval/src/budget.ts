@@ -7,6 +7,10 @@ const dollars = (micros: number) => `$${(micros / 1e6).toFixed(2)}`;
 export const estimateCaseMicros = (price: { inputPerMTok: number; outputPerMTok: number }) =>
   8000 * price.inputPerMTok + 1500 * price.outputPerMTok;
 
+/** A review page: several turns (images in tool results), about 20k input and 2k output tokens. */
+export const estimateReviewPageMicros = (price: { inputPerMTok: number; outputPerMTok: number }) =>
+  20000 * price.inputPerMTok + 2000 * price.outputPerMTok;
+
 export function checkBudget(cases: number, perCaseMicros: number, budgetMicros: number): void {
   const estimate = cases * perCaseMicros;
   if (estimate > budgetMicros)

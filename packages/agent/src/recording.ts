@@ -15,8 +15,9 @@ type Recording = {
   turns: { requestHash: string; turn: LlmTurn }[];
 };
 
-export const recordingPath = (dir: string, scenario: string) =>
-  join(dir, `${scenario}.prompt-v${PROMPT_VERSION}.json`);
+/** The fixer's prompt version unless another agent (the reviewer) names its own. */
+export const recordingPath = (dir: string, scenario: string, promptVersion = PROMPT_VERSION) =>
+  join(dir, `${scenario}.prompt-v${promptVersion}.json`);
 
 // Scrubbed before hashing, so recording (raw turns) and replay (scrubbed turns) hash the same.
 const hashRequest = (r: LlmRequest) =>
@@ -28,9 +29,14 @@ export class RecordingLlm implements LlmClient {
   private readonly inner: LlmClient;
   private readonly recording: Recording;
 
-  constructor(inner: LlmClient, meta: { scenario: string; model: string }) {
+  constructor(inner: LlmClient, meta: { scenario: string; model: string; promptVersion?: string }) {
     this.inner = inner;
-    this.recording = { ...meta, promptVersion: PROMPT_VERSION, turns: [] };
+    this.recording = {
+      scenario: meta.scenario,
+      model: meta.model,
+      promptVersion: meta.promptVersion ?? PROMPT_VERSION,
+      turns: [],
+    };
   }
 
   async complete(request: LlmRequest): Promise<LlmTurn> {
@@ -43,7 +49,10 @@ export class RecordingLlm implements LlmClient {
   save(dir: string): void {
     mkdirSync(dir, { recursive: true });
     const json = scrubSecrets(JSON.stringify(this.recording, null, 2));
-    writeFileSync(recordingPath(dir, this.recording.scenario), `${json}\n`);
+    writeFileSync(
+      recordingPath(dir, this.recording.scenario, this.recording.promptVersion),
+      `${json}\n`,
+    );
   }
 }
 
@@ -55,11 +64,11 @@ export class ReplayLlm implements LlmClient {
     this.recording = recording;
   }
 
-  static load(dir: string, scenario: string): ReplayLlm {
-    const path = recordingPath(dir, scenario);
+  static load(dir: string, scenario: string, promptVersion = PROMPT_VERSION): ReplayLlm {
+    const path = recordingPath(dir, scenario, promptVersion);
     if (!existsSync(path))
       throw new Error(
-        `no recording for ${scenario} at prompt v${PROMPT_VERSION} (${path}); record it with a real run`,
+        `no recording for ${scenario} at prompt v${promptVersion} (${path}); record it with a real run`,
       );
     return new ReplayLlm(JSON.parse(readFileSync(path, 'utf8')) as Recording);
   }

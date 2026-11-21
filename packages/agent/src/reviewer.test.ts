@@ -81,6 +81,14 @@ describe('runReviewer', () => {
     ['a suggestion with markup', { ...linkFlag, suggestion: '<b>See pricing</b>' }],
     ['a suggestion with a URL', { ...linkFlag, suggestion: 'Visit https://evil.test now' }],
     [
+      'a suggestion naming a bare domain',
+      { ...linkFlag, suggestion: 'See evil.example for the accessible version' },
+    ],
+    [
+      'a reason naming a bare domain',
+      { ...linkFlag, reason: 'Readers should go to acme-help.co.uk instead.' },
+    ],
+    [
       'a reason that claims compliance',
       { ...linkFlag, reason: 'Fixing this makes the page WCAG compliant.' },
     ],

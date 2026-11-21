@@ -4,6 +4,7 @@
 // only given candidates, the matching kind, an image seen before its alt is judged, plain text with
 // no links, markup or compliance claims. Flags are shown as "needs a human to confirm".
 import { complianceClaims } from '@beacon/core';
+import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { withTimeout } from './fixer.ts';
 import type {
@@ -49,7 +50,10 @@ Hard rules:
 8. Finish by calling submit_review, with an empty list when nothing needs flagging.`;
 
 const SAFE = /^[^<>\p{Cc}]+$/u;
-const URLISH = /[a-z][a-z0-9+.-]*:\/\/|\bwww\./i;
+// A scheme, www., or a bare domain name ("evil.example", "acme-help.co.uk"): a suggestion shown in a
+// report must never send a reader anywhere. Tech names like "Node.js" are refused too; the model
+// rephrases.
+const URLISH = /[a-z][a-z0-9+.-]*:\/\/|\bwww\.|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,63}\b/i;
 
 const FlagSchema = z.strictObject({
   id: z.string().min(1).max(20),
@@ -72,6 +76,12 @@ const TOOL_SPECS: ToolSpec[] = [
     inputSchema: z.toJSONSchema(ReviewSchema),
   },
 ];
+
+/** Identifies the prompt the reviewer sees (system prompt and tool schemas), for eval reports. */
+export const reviewPromptHash = () =>
+  createHash('sha256')
+    .update(REVIEW_SYSTEM_PROMPT + JSON.stringify(TOOL_SPECS))
+    .digest('hex');
 
 const OMITTED = '[omitted: too large to check for secrets]';
 

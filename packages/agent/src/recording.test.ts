@@ -1,6 +1,6 @@
 // Recorded responses (v1.0 §16.6): record real model turns once per scenario, replay them in tests.
 // A changed prompt makes a recording stale, and the test fails until it is re-recorded on purpose.
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -37,6 +37,23 @@ describe('recordings', () => {
     expect(recordingPath('/rec', 'image-alt-basic')).toBe(
       `/rec/image-alt-basic.prompt-v${PROMPT_VERSION}.json`,
     );
+  });
+
+  it('FR-29: another agent records under its own prompt version, and replays only that', async () => {
+    expect(recordingPath('/rec', 'review--page-1', '7')).toBe('/rec/review--page-1.prompt-v7.json');
+    const into = dir();
+    const recorder = new RecordingLlm(new FakeLlm([textOnly('hello')]), {
+      scenario: 'review--x',
+      model: 'm',
+      promptVersion: '7',
+    });
+    await recorder.complete({ system: 's', messages: [], tools: [] });
+    recorder.save(into);
+
+    expect(existsSync(recordingPath(into, 'review--x', '7'))).toBe(true);
+    const replay = ReplayLlm.load(into, 'review--x', '7');
+    expect((await replay.complete({ system: 's', messages: [], tools: [] })).text).toBe('hello');
+    expect(() => ReplayLlm.load(into, 'review--x')).toThrow(/no recording/);
   });
 
   it('replays a recorded run without calling the model, with the same result', async () => {
