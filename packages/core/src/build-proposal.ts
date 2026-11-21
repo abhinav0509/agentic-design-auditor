@@ -1,6 +1,7 @@
 // The proposal builder (v1.0 §7.2, §8.1, D-032): turns the fixer's answer and the verifier's outcome
 // into a schema-valid proposal and its initial status. Guard-blocked and failed fixer runs, and
 // findings that do not reproduce locally, are not proposals: they stay in the trace or the report.
+import { parseBlobRef } from './blob.ts';
 import type { EditOp } from './edit-ops.ts';
 import { changedLines } from './guard.ts';
 import type { Clock, IdGen } from './ports.ts';
@@ -82,6 +83,13 @@ function unifiedDiff(path: string, before: string, after: string) {
   };
 }
 
+/** A screenshot is a blob ref (D-042) or nothing. */
+function shot(ref: string | null | undefined): string | null {
+  if (ref === null || ref === undefined) return null;
+  parseBlobRef(ref); // throws INVALID_BLOB_REF for anything else
+  return ref;
+}
+
 export function buildProposal(
   input: BuildInput,
   deps: { clock: Clock; ids: IdGen },
@@ -124,9 +132,8 @@ export function buildProposal(
         : null,
     confidence: r.confidence,
     evidence: {
-      // shortcut: screenshots are stored once a BlobStore exists; null until then.
-      before_screenshot: null,
-      after_screenshot: null,
+      before_screenshot: shot(input.screenshots?.before),
+      after_screenshot: shot(input.screenshots?.after),
       agent_trace_id: deps.ids.uuid(),
     },
     base: { commit_sha: file.commitSha, content_hash: file.baseHash },
