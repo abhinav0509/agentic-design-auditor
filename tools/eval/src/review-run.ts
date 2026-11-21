@@ -12,6 +12,8 @@ import {
 } from '@beacon/agent';
 import { imageFor, type ReviewEvalCase } from '@beacon/evals';
 import { guardContext, scanPageContent } from '@beacon/scanner';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import type { Browser } from 'playwright';
 import { Budget } from './budget.ts';
 import { scoreReviewCase, type ReviewCaseScore } from './review-score.ts';
@@ -112,5 +114,11 @@ export async function runReviewEval(input: {
     scores.push(score);
     input.onCase?.(score);
   }
+  // The run's scores beside its recordings, so a replay test can hold real output to them.
+  if (input.record)
+    writeFileSync(
+      join(input.record.dir, 'review-run.json'),
+      `${JSON.stringify({ model: input.record.model, promptVersion: REVIEW_PROMPT_VERSION, scores }, null, 2)}\n`,
+    );
   return { scores, skipped, spentMicros: budget.spentMicros };
 }
