@@ -8,6 +8,8 @@ export type SaveProposalInput = {
   findingId: string;
   proposal: Proposal;
   status: Status;
+  /** What assistive technology announces for the element before and after the fix (FR-10). */
+  announced?: { before: string; after: string };
 };
 
 /**
