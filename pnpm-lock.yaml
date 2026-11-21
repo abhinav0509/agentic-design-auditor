@@ -59,6 +59,9 @@ importers:
       '@beacon/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@beacon/exporter':
+        specifier: workspace:*
+        version: link:../../packages/exporter
       '@beacon/mapper':
         specifier: workspace:*
         version: link:../../packages/mapper
