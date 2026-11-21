@@ -51,8 +51,11 @@ export async function runReport(
     return run.id;
   });
 
+  const reviewer = plan.agentReview ? deps.reviewer : undefined;
+  if (plan.agentReview && !reviewer)
+    throw new Error('the plan asks for the agent review but no model was given');
   await scanRun(
-    { sql, context: deps.context, blobs: deps.blobs },
+    { sql, context: deps.context, blobs: deps.blobs, ...(reviewer ? { reviewer } : {}) },
     { orgId, runId, urls: plan.urls },
   );
 

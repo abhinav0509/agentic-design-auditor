@@ -56,7 +56,7 @@ describe('planReport', () => {
     const on = planReport(['--agent-review', '--requested-by', 'jo@acme.com', 'https://acme.com/']);
     const off = planReport(['--requested-by', 'jo@acme.com', 'https://acme.com/']);
     expect(on.ok && on.plan.agentReview).toBe(true);
-    expect(off.ok && off.plan.agentReview).toBe(false);
+    expect(off.ok && off.plan.agentReview).toBeUndefined();
     expect(on.ok && on.plan.urls).toEqual(['https://acme.com/']);
   });
 });
