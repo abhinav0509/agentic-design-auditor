@@ -39,14 +39,18 @@ export type FixJobResult =
     };
 
 const SEARCH_LIMIT = 20;
-// The vision input accepts these; anything else (SVG included) counts as not loadable.
-const IMAGE_TYPES: Record<string, string> = {
-  jpg: 'image/jpeg',
-  jpeg: 'image/jpeg',
-  png: 'image/png',
-  gif: 'image/gif',
-  webp: 'image/webp',
-};
+/**
+ * The image type from its first bytes: the vision input accepts these four. A file's extension can
+ * lie (a crop of the live page is a PNG whatever the src says); SVG and anything else are refused.
+ */
+function imageType(b: Uint8Array): string | undefined {
+  const at = (i: number, ...bytes: number[]) => bytes.every((v, k) => b[i + k] === v);
+  if (at(0, 0x89, 0x50, 0x4e, 0x47)) return 'image/png';
+  if (at(0, 0xff, 0xd8, 0xff)) return 'image/jpeg';
+  if (at(0, 0x47, 0x49, 0x46, 0x38)) return 'image/gif';
+  if (at(0, 0x52, 0x49, 0x46, 0x46) && at(8, 0x57, 0x45, 0x42, 0x50)) return 'image/webp';
+  return undefined;
+}
 
 const sha = (s: string) => `sha256:${createHash('sha256').update(s).digest('hex')}`;
 
@@ -97,7 +101,7 @@ export function siteTools(
         const path =
           src === undefined ? undefined : repoPathOf(new URL(src, finding.pageUrl), siteUrl);
         const data = path === undefined ? undefined : files[path];
-        const mediaType = IMAGE_TYPES[path?.split('.').pop()?.toLowerCase() ?? ''];
+        const mediaType = data instanceof Uint8Array ? imageType(data) : undefined;
         if (!(data instanceof Uint8Array) || !mediaType)
           throw new Error('the image could not be loaded');
         return { mediaType, data: Buffer.from(data).toString('base64') };
