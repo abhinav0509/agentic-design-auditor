@@ -13,21 +13,28 @@ export type MapResult =
   | { mapped: false; reason: UnmappedReason };
 
 /**
- * The repo file a static host serves for this URL: /, /x, /x/, /x.html, under the site's base path
- * (a project site serves the repo root at /<repo>/). A URL outside the site maps to no file.
+ * A URL's path relative to the repo root, the way a static host serves the repo: under the site's
+ * base path when the site is served under one (a project site serves the repo root at /<repo>/).
+ * Undefined for a URL outside the site.
  */
-function fileFor(files: Record<string, string | Uint8Array>, pageUrl: string, siteUrl?: string) {
-  const page = new URL(pageUrl);
-  let path = decodeURIComponent(page.pathname);
+export function repoPathOf(url: URL, siteUrl?: string): string | undefined {
+  let path = decodeURIComponent(url.pathname);
   if (siteUrl !== undefined) {
     const site = new URL(siteUrl);
     const base = decodeURIComponent(site.pathname).replace(/\/+$/, '');
-    if (page.origin !== site.origin) return undefined;
+    if (url.origin !== site.origin) return undefined;
     if (path === base) path = '/';
     else if (path.startsWith(`${base}/`)) path = path.slice(base.length);
     else return undefined;
   }
-  path = path.replace(/^\/+/, '');
+  return path.replace(/^\/+/, '');
+}
+
+/** The repo file a static host serves for this URL: /, /x, /x/, /x.html, under the site's base path. */
+function fileFor(files: Record<string, string | Uint8Array>, pageUrl: string, siteUrl?: string) {
+  const path = repoPathOf(new URL(pageUrl), siteUrl);
+  if (path === undefined) return undefined;
+
   const candidates =
     path === '' || path.endsWith('/')
       ? [`${path}index.html`]
