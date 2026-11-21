@@ -8,7 +8,7 @@ import {
   type ReviewCandidate,
 } from '@beacon/agent';
 import { REVIEW_PAYLOAD, reviewCases, type ReviewEvalCase } from '@beacon/evals';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, type Browser } from 'playwright';
@@ -137,5 +137,11 @@ describe('runReviewEval', { timeout: 300_000 }, () => {
     expect(replay.scores.map((s) => ({ ...s, models: [] }))).toEqual(
       live.scores.map((s) => ({ ...s, models: [] })),
     );
+    const summary = JSON.parse(readFileSync(join(dir, 'review-run.json'), 'utf8')) as {
+      promptVersion: string;
+      scores: unknown[];
+    };
+    expect(summary).toMatchObject({ model: 'scripted', promptVersion: REVIEW_PROMPT_VERSION });
+    expect(summary.scores).toEqual(JSON.parse(JSON.stringify(live.scores)));
   });
 });
