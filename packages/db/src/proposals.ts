@@ -18,14 +18,16 @@ export type SaveProposalInput = {
  */
 export async function saveProposal(
   tx: TransactionSql,
-  { orgId, findingId, proposal: p, status }: SaveProposalInput,
+  { orgId, findingId, proposal: p, status, announced }: SaveProposalInput,
 ): Promise<{ id: string; created: boolean }> {
   const inserted = await tx<{ id: string }[]>`
     insert into proposals (id, org_id, run_id, finding_id, kind, status, schema_version, payload,
-      risk_level, confidence, base_commit_sha, base_content_hash, target_file_hash, expires_at)
+      risk_level, confidence, base_commit_sha, base_content_hash, target_file_hash, expires_at,
+      announced_before, announced_after)
     values (${p.proposal_id}, ${orgId}, ${p.run_id}, ${findingId}, ${p.kind}, ${status},
       ${p.schema_version}, ${tx.json(p)}, ${p.risk?.level ?? null}, ${p.confidence},
-      ${p.base.commit_sha}, ${p.base.content_hash}, ${p.base.content_hash}, ${p.expires_at})
+      ${p.base.commit_sha}, ${p.base.content_hash}, ${p.base.content_hash}, ${p.expires_at},
+      ${announced?.before ?? null}, ${announced?.after ?? null})
     on conflict (run_id, finding_id, attempt) do nothing
     returning id`;
   const id = inserted[0]?.id;
