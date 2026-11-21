@@ -11,9 +11,12 @@ export type FixPlan = {
   orgId: string;
   requestedBy: string;
   agentReview?: true;
+  /** The prospect stage on a site we control (D-056): previews only, the checkout is not used. */
+  previewOnly?: true;
 };
 
-const USAGE = 'usage: pnpm fix scan [--agent-review] --repo <owner/repo> [page path ...]';
+const USAGE =
+  'usage: pnpm fix scan [--agent-review] [--preview-only] --repo <owner/repo> [page path ...]';
 const REPO = /^([A-Za-z0-9-]{1,39})\/([A-Za-z0-9_.-]{1,100})$/;
 const PAGE = /^(?:[A-Za-z0-9_-][A-Za-z0-9_.-]*\/)*(?:[A-Za-z0-9_-][A-Za-z0-9_.-]*)?$/;
 const MAX_PAGES = 10;
@@ -22,7 +25,8 @@ export function planFixRun(
   argv: string[],
 ): { ok: true; plan: FixPlan } | { ok: false; error: string } {
   const agentReview = argv.includes('--agent-review');
-  const args = argv.filter((a) => a !== '--agent-review');
+  const previewOnly = argv.includes('--preview-only');
+  const args = argv.filter((a) => a !== '--agent-review' && a !== '--preview-only');
   if (args.length === 0) return { ok: false, error: USAGE };
   const at = args.indexOf('--repo');
   const full = at === -1 ? undefined : args[at + 1];
@@ -47,6 +51,7 @@ export function planFixRun(
       orgId: orgIdFor(`github:${owner.toLowerCase()}/${repo.toLowerCase()}`),
       requestedBy: `github:${owner}/${repo}`,
       ...(agentReview ? { agentReview: true as const } : {}),
+      ...(previewOnly ? { previewOnly: true as const } : {}),
     },
   };
 }

@@ -5,10 +5,10 @@ import type { LlmClient } from '@beacon/agent';
 import { migrate } from '@beacon/db';
 import { chromiumLaunchOptions, guardContext, systemResolver } from '@beacon/scanner';
 import { FsBlobStore } from '@beacon/worker';
-import { randomBytes } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
-import { reviewerBehindGate, startProxy } from './operator.ts';
+import { liveModel, reviewerBehindGate, startProxy } from './operator.ts';
 import { planReport } from './plan.ts';
 import { runReport } from './run.ts';
 
@@ -52,6 +52,9 @@ try {
       clock: { now: () => new Date() },
       token: () => randomBytes(32).toString('base64url'),
       ...(reviewer ? { reviewer } : {}),
+      ...(planned.plan.previewFixes
+        ? { preview: { llm: liveModel('Fix previews').llm, ids: { uuid: () => randomUUID() } } }
+        : {}),
     },
     planned.plan,
   );
