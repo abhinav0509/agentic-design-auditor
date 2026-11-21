@@ -294,9 +294,9 @@ describe('renderReport: proposed fixes', () => {
         await guardContext(context, () => Promise.resolve(['93.184.215.14']));
         const page = await context.newPage();
         await page.goto(url);
-        await page.evaluate(() =>
-          document.querySelectorAll('details').forEach((d) => (d.open = true)),
-        );
+        await page.evaluate(() => {
+          document.querySelectorAll('details').forEach((d) => (d.open = true));
+        });
         const { findings, reported } = await scanPageContent(context, url);
         expect([...findings, ...reported].map((f) => `${f.engine_rule} ${f.target}`)).toEqual([]);
       } finally {

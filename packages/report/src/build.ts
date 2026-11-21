@@ -61,6 +61,21 @@ export type Report = {
   };
   notScanned: { url: string; reason: string }[];
   coverage: { summary: string; checked: string[]; notChecked: string[] };
+  fixes: {
+    id: string;
+    title: string;
+    status: string;
+    /** What the status means to the reader; a fix in a PR names it. */
+    statusLabel: string;
+    pr: { number: number; url: string } | null;
+    riskLabel: string | null;
+    rationale: string;
+    pageUrl: string;
+    file: string;
+    diff: string | null;
+    announced: { before: string; after: string } | null;
+    crop: string | null;
+  }[];
   review: {
     reviewedPages: number;
     notReviewed: string[];
@@ -122,6 +137,51 @@ const REVIEW_KINDS = {
   unhelpful_alt: { title: 'Alt text that does not describe the image', label: 'Alt text' },
   vague_link: { title: 'Link text that does not say where it goes', label: 'Link text' },
 } as const;
+
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'Waiting for approval',
+  approved: 'Approved, not yet in a pull request',
+  rejected: 'Rejected',
+  failed_verification: 'Did not pass verification',
+  apply_failed: 'No longer applies to the site',
+  stale: 'Out of date',
+  expired: 'Expired',
+  merged: 'Merged',
+  reverted: 'Reverted',
+  blocked: 'Blocked by the safety guard',
+};
+const RISK_LABELS: Record<string, string> = {
+  low: 'Low risk',
+  medium: 'Medium risk',
+  high: 'High risk',
+};
+
+function fixesOf(input: ReportInput): Report['fixes'] {
+  const prs = input.pullRequests ?? [];
+  return (input.fixes ?? []).map((f) => {
+    const pr = prs.find((p) => p.proposalIds.includes(f.id));
+    return {
+      id: f.id,
+      title: f.title,
+      status: f.status,
+      statusLabel:
+        f.status === 'applied' && pr
+          ? `In pull request #${String(pr.number)}`
+          : (STATUS_LABELS[f.status] ?? f.status),
+      pr: pr ? { number: pr.number, url: pr.url } : null,
+      riskLabel: f.risk ? (RISK_LABELS[f.risk] ?? null) : null,
+      rationale: f.rationale,
+      pageUrl: f.pageUrl,
+      file: f.file,
+      diff: f.diff ?? null,
+      announced:
+        f.announcedBefore !== null && f.announcedAfter !== null
+          ? { before: f.announcedBefore, after: f.announcedAfter }
+          : null,
+      crop: f.crop,
+    };
+  });
+}
 
 /** The agent review (D-048): null when none ran. */
 function reviewOf(input: ReportInput): Report['review'] {
@@ -189,6 +249,7 @@ export function buildReport(input: ReportInput): Report {
       reason: REASONS[p.error ?? ''] ?? 'The page could not be scanned.',
     })),
     coverage: COVERAGE,
+    fixes: fixesOf(input),
     review: reviewOf(input),
   };
 }
