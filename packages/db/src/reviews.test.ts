@@ -3,7 +3,7 @@
 // charges twice.
 import { blobRef, type DomainError } from '@beacon/core';
 import { afterAll, beforeAll, expect, it } from 'vitest';
-import { loadReportInput } from './report-links.ts';
+import { loadReportInput, runHasCrop } from './report-links.ts';
 import { savePageReview, type ReviewFlagRow } from './reviews.ts';
 import { savePageScan } from './scans.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
@@ -109,4 +109,8 @@ it('FR-29: refuses a crop that is not a blob ref, before writing anything', asyn
   ).catch((e: unknown) => e);
 
   expect((error as DomainError).code).toBe('INVALID_BLOB_REF');
+});
+
+it('FR-27: a review flag’s crop belongs to its run, so the report link may serve it', async () => {
+  expect(await asApp(db.sql, ORG, (tx) => runHasCrop(tx, runId, crop))).toBe(true);
 });
