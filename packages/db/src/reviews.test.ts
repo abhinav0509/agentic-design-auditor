@@ -59,6 +59,10 @@ const save = (flags = FLAGS) =>
   );
 
 it('FR-29: saves a page’s review flags and the model cost once; a retried save adds nothing', async () => {
+  const ledgerRows = () => db.sql`
+    select kind, units::int, cost_micros::int from usage_ledger where run_id = ${runId} order by id`;
+  const before = await ledgerRows(); // the seed has a ledger row of its own
+
   expect(await save()).toBe(true);
   expect(await save()).toBe(false);
 
@@ -79,9 +83,9 @@ it('FR-29: saves a page’s review flags and the model cost once; a retried save
       crop: null,
     },
   ]);
-  const ledger = await db.sql`
-    select kind, units::int, cost_micros::int from usage_ledger where run_id = ${runId} and kind = 'model'`;
-  expect(ledger).toEqual([{ kind: 'model', units: 1500, cost_micros: 15_000 }]);
+  expect((await ledgerRows()).slice(before.length)).toEqual([
+    { kind: 'model', units: 1500, cost_micros: 15_000 },
+  ]);
 });
 
 it('FR-29: the report input lists reviewed pages and their flags', async () => {
