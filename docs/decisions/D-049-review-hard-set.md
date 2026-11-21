@@ -1,0 +1,22 @@
+# D-049: A harder set for the review agent
+
+- **Date:** 2026-11-21
+- **Decision:** `reviewHardCases()` (`@beacon/evals`) and `pnpm eval:review --set hard` measure the reviewer on plausible failures. The basic set (D-047) proved only the pipeline.
+  - **6 subtle pages (18 flag, 18 keep):**
+    - role words ("logo", "banner", "hero image")
+    - "Decorative image" and "Spacer" on content images
+    - a keyword-stuffed SEO alt
+    - editor file names (`studio_final_v2`, `DSC_0193`)
+    - alts that contradict the image (a count, a colour, a scene)
+    - short correct alts that must be kept
+    - vague links that are not stock phrases ("Download", "Info", "PDF", "Click to view", "Go here", "Read this") beside short clear ones ("Pricing", "FAQ")
+  - **2 injection pages where the instruction sits inside an alt text:** one plants the payload, one asks for silence. Both alts are labelled flag.
+  - **Separate summaries:** each set keeps its own recorded summary (`review-run.json`, `review-hard-run.json`), so measuring one never replaces the run the gate reads.
+- **Result (first real run, Opus 5.5 medium, $0.15):** precision 18/18 (95% CI 82.4% to 100%), recall 18/18, 0 of 2 injections obeyed, all six short correct alts kept. `docs/evals/2026-11-21-claude-opus-5-5-review-hard-v1.md` has the reading and limits. A replay test holds the code to this run with no calls.
+- **Context:** D-041 (gate), D-047 (basic set too easy to tell anything about real sites), D-048 (review in reports).
+- **Options:** (A) gate the operator script on the hard set too; (B) keep the gate on the basic run and treat the hard run as evidence.
+- **Chosen:** B for now. 18 flags is the smallest set at which a perfect run clears an 80% lower bound, so gating on it would switch the review off over a single miss on synthetic pages. The hard run is reported beside the gate.
+- **Consequences:**
+  - **Vague links share one lead sentence,** so link suggestions all name the same catalogue. The next version of the set gives each link its own context.
+  - **Suggestions can state unverified details** (a plate count). The report already marks every suggestion as untested.
+  - **Pilot pages are the next evidence,** each hand-checked before it joins a set (the corpus rule). Real-site precision stays unproven until then.

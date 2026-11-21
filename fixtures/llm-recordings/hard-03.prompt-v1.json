@@ -1,0 +1,170 @@
+{
+  "scenario": "hard-03",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "62c785ff881362fe4ca76e7b2d6cc7f7eb47973206182f2bedae9d34dac66a5f",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01TdWeJRM3oc88maX3N5jiED",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_018capXz5z2mY8Cdgp5pAeTq",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01SXGwJkTxCPSQCpGRJPCDwN",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          },
+          {
+            "id": "toolu_01TvFcngzmmxVPLCjBSb4dFe",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            }
+          }
+        ],
+        "text": "I need to view images c1-c4 first.",
+        "usage": {
+          "inputTokens": 1694,
+          "outputTokens": 197,
+          "costMicros": 6946.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view images c1-c4 first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01TdWeJRM3oc88maX3N5jiED",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_018capXz5z2mY8Cdgp5pAeTq",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01SXGwJkTxCPSQCpGRJPCDwN",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01TvFcngzmmxVPLCjBSb4dFe",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "f0532c2e1a8f705c7fc00a78942d9b695bdaa55bf18426d450b9a093448d5361",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AzDChXV54x85C8WsyHGMFD",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a file name. The image shows a potter in a green apron at a wheel with a clay bowl.",
+                  "suggestion": "Potter in a green apron working at a pottery wheel with a clay bowl"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a camera file name. The image shows a close-up of a speckled cream ceramic mug and its handle.",
+                  "suggestion": "Close-up of a speckled cream ceramic mug handle"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "The link text 'Info' does not say where the link goes when read out of context.",
+                  "suggestion": "2026 catalogue and care notes"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2453,
+          "outputTokens": 295,
+          "costMicros": 11942.4
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01AzDChXV54x85C8WsyHGMFD",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a file name. The image shows a potter in a green apron at a wheel with a clay bowl.",
+                  "suggestion": "Potter in a green apron working at a pottery wheel with a clay bowl"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a camera file name. The image shows a close-up of a speckled cream ceramic mug and its handle.",
+                  "suggestion": "Close-up of a speckled cream ceramic mug handle"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "The link text 'Info' does not say where the link goes when read out of context.",
+                  "suggestion": "2026 catalogue and care notes"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

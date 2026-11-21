@@ -1,0 +1,175 @@
+{
+  "scenario": "hard-05",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "cd4c5c170e08425b328a21ba2c43ba0e5e4999b3a5a06d2b641285d45a95fc41",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_015SLjeMZWWGnEDZ3JpMFfZ9",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_017kEdwBWZXjFJgt5HFE2WAk",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01MYmUz6WPNXVDA4L4N3P7cW",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          },
+          {
+            "id": "toolu_01GT3fn4b7rTV3yvmpmJFDdR",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            }
+          }
+        ],
+        "text": "I need to view the images first.",
+        "usage": {
+          "inputTokens": 1717,
+          "outputTokens": 192,
+          "costMicros": 6938.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view the images first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_015SLjeMZWWGnEDZ3JpMFfZ9",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_017kEdwBWZXjFJgt5HFE2WAk",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01MYmUz6WPNXVDA4L4N3P7cW",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01GT3fn4b7rTV3yvmpmJFDdR",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "6ec3218efbbb5a734db6ae00e96f924da2229480b6cfa4f07cb23efe1e2ca9d4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01LqGSYrRyUmPkVuqChHZf4L",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is generic. The image shows a product, a tall cream vase with a speckled glaze, among other catalogue items.",
+                  "suggestion": "Tall cream ceramic vase with a speckled glaze"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text says the rim is red, but the image shows a cream bowl with a dark blue rim holding red, yellow and green fruit.",
+                  "suggestion": "Large cream fruit bowl with a dark blue rim, holding fruit"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "'Go here' does not say where the link goes when read out of context.",
+                  "suggestion": "View our 2026 catalogue and care notes"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2471,
+          "outputTokens": 403,
+          "costMicros": 14174.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS3AYKEAgUGAI4AUIIdGhpbmtpbmcSDEeewLwBvFKQcdNAGxoMXJ9P/FkKdKCeNmFVIjCTkoTnve/jhgEOge47B1ePeC1I9Kz0GMOBmLyCVuugb2xr+hMvHEMmLkeiQMu+C40q+QVy/Iru9c9K/Im+8gDPMmXixCPog548WEyIkXEiWGs2D6905XxWBUXEejtrzi5fmFOFgAoTCEgtQKibkmWiMY0fxe5209vWQpuRsqSFHtsU8vmYE/cN9YSZhdEbbt62aSGxQTg+zm6jP+f44hJk8D5flmVjKyOMf88+ef/skHq/vwkyHNc1+5RvWgFz3fMyURo2hX5UyGFkz+e/0EGD/QFnG9y3uoCsNIYtmmiGCalW9909obZ7MmipYWFgEXkjOKdUhSQArY6A0woQnld9m6zbUUvoS0mRVKacUI/BVrp4mgsqzNW8tva0/RxC3CJmcAnz2iDNJcqGfFdSH6RJX1fRMKw2BeFyJK1xssusJg6VXrkLmhM0zYK3QEU1fTkmIywMrrmv+WHdPMJiJQmCBrcN3rcUga1GGIAoQcW9P6rhX6TqGN02/QimbP3PBz0J+rKy+IuM/WN/H+8MLDRu6S2vbvPmjLUuOGsNF5a0VsEbVYr+ve00D3rBovECtgW/xDuQWOOvOp0F9R3Op8MGoQkU4nJca55eZuBzjTMGwZGQ4FizgVA8aPrwGat5wjKI5zbMDBx7P+qcRVlZgdQT55A/7xV7QzvSgiX9r2qP+rVhYQlMs8u13T7xqj8F2oS16Kj3GDRzFHDJ9iDdoqzK++gwGwd1U13sJ46fSxY3l3++IlOU9DjDpahClHwQWovNAZI3+5KeG4jp5otigC1kWwtYawz3PrJwntMdsgx85vM9mrIJQq+MLdznQ1ZzLsRno1eR+Twc9UeM147Ajy2D9MjzFkVmnSeri+1rzp1L441RQFYuCL+O/HDgVcQ+CckPp9NXtgqzZ5t0tym38Fh1xcyC2sopWPYMRa+QXuSSrhQhw3ty/f3iQzl17JCGRdj+npu9+RHQBodd1tkGqNZQt13fwLwZoasFib9Q48KO5wA1pcxC3gYO1Z0+IpVntNkcpSM+MWKW3BRYekwbiyG8SiQN0qXVa6gvsg6oFX+oNQoZTW2J33S87zY52RgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01LqGSYrRyUmPkVuqChHZf4L",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is generic. The image shows a product, a tall cream vase with a speckled glaze, among other catalogue items.",
+                  "suggestion": "Tall cream ceramic vase with a speckled glaze"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text says the rim is red, but the image shows a cream bowl with a dark blue rim holding red, yellow and green fruit.",
+                  "suggestion": "Large cream fruit bowl with a dark blue rim, holding fruit"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "'Go here' does not say where the link goes when read out of context.",
+                  "suggestion": "View our 2026 catalogue and care notes"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
