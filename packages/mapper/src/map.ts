@@ -49,6 +49,8 @@ export function mapFinding(input: {
   /** The repo checkout: path relative to the root -> contents. */
   files: Record<string, string | Uint8Array>;
   pageUrl: string;
+  /** The site's base URL; a path in it (a project site) is where the repo root is served. */
+  siteUrl?: string;
   /** The HTML the URL served, as fetched. */
   served: string;
   finding: { target: string; html: string };
