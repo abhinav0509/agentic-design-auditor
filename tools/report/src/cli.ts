@@ -1,16 +1,18 @@
-// pnpm report --requested-by <work email> <url> [url ...]   (D-045)
+// pnpm report [--agent-review] --requested-by <work email> <url> [url ...]   (D-045, D-048)
 // Scans up to 10 pages of one site in the full sandbox (Smokescreen egress proxy + in-app guard,
 // D-017, D-020), stores crops on disk and prints a 14-day share link to the report.
+import { anthropicFromEnv, fixerModel, REVIEW_PROMPT_VERSION, type LlmClient } from '@beacon/agent';
 import { migrate } from '@beacon/db';
 import { chromiumLaunchOptions, guardContext, systemResolver } from '@beacon/scanner';
 import { FsBlobStore } from '@beacon/worker';
 import { spawn } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
+import { checkReviewGate, type RecordedReviewRun } from './gate.ts';
 import { planReport } from './plan.ts';
 import { runReport } from './run.ts';
 
@@ -61,6 +63,47 @@ if (!dbUrl) {
   process.exit(2);
 }
 
+// The agent review runs only behind its eval gate (D-041), on the model the gate measured.
+let reviewer: { llm: LlmClient } | undefined;
+if (planned.plan.agentReview) {
+  const recorded = JSON.parse(
+    readFileSync(
+      new URL('../../../fixtures/llm-recordings/review-run.json', import.meta.url),
+      'utf8',
+    ),
+  ) as RecordedReviewRun;
+  const gate = checkReviewGate(recorded, REVIEW_PROMPT_VERSION);
+  if (!gate.ok) {
+    console.error(`agent review is off: ${gate.error}`);
+    process.exit(2);
+  }
+  const model = fixerModel(process.env);
+  if (model.id !== gate.model) {
+    console.error(
+      `agent review is off: the gate measured ${gate.model}, the configured model is ${model.id}`,
+    );
+    process.exit(2);
+  }
+  if (!process.env['ANTHROPIC_API_KEY'] && !process.env['ANTHROPIC_AUTH_TOKEN']) {
+    console.error('agent review needs ANTHROPIC_API_KEY (in .env.local or the shell)');
+    process.exit(2);
+  }
+  const live = anthropicFromEnv(model);
+  let spent = 0;
+  reviewer = {
+    llm: {
+      complete: async (r) => {
+        const turn = await live.complete(r);
+        spent += turn.usage.costMicros;
+        return turn;
+      },
+    },
+  };
+  process.on('exit', () => {
+    console.log(`Agent review cost: $${(spent / 1e6).toFixed(4)} on ${model.id}.`);
+  });
+}
+
 const sql = postgres(dbUrl, { onnotice: () => undefined });
 const proxy = await startProxy();
 const browser = await chromium.launch(chromiumLaunchOptions(proxy.url));
@@ -78,6 +121,7 @@ try {
       blobs: new FsBlobStore(process.env['BEACON_BLOB_DIR'] ?? '.data/blobs'),
       clock: { now: () => new Date() },
       token: () => randomBytes(32).toString('base64url'),
+      ...(reviewer ? { reviewer } : {}),
     },
     planned.plan,
   );

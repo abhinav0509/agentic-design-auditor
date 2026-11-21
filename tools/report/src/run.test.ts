@@ -1,5 +1,6 @@
 // The operator report end to end (D-045): org, site and run under RLS, the scan with crops, a ready
 // run and a 14-day link that the report route serves. Pages come from Playwright routing.
+import { FakeLlm, toolUse } from '@beacon/agent/testing';
 import { InMemoryBlobStore } from '@beacon/core/testing';
 import { createTestDb, type TestDb } from '@beacon/db/testing';
 import { guardContext } from '@beacon/scanner';
@@ -71,5 +72,38 @@ it(
     expect(String(page.body)).toContain('Images need a text alternative');
     expect(String(page.body)).toContain('Links must have discernible text');
     expect(blobs.blobs.size).toBeGreaterThan(0);
+  },
+);
+
+it(
+  'FR-29: with a reviewer, the served report shows the agent’s likely issues',
+  { timeout: 120_000 },
+  async () => {
+    const planned = planReport([
+      '--agent-review',
+      '--requested-by',
+      'jo@acme.test',
+      'https://acme.test/contact',
+    ]);
+    if (!planned.ok) throw new Error(planned.error);
+    const blobs = new InMemoryBlobStore();
+    const llm = new FakeLlm([toolUse(['submit_review', { flags: [] }])]);
+    const token = 'Reviewedreviewedreviewedreviewedreviewed12';
+
+    const { path } = await runReport(
+      {
+        sql: db.sql,
+        context,
+        blobs,
+        clock: { now: () => NOW },
+        token: () => token,
+        reviewer: { llm },
+      },
+      planned.plan,
+    );
+
+    const page = await handleReportRequest({ sql: db.sql, blobs, clock: { now: () => NOW } }, path);
+    expect(String(page.body)).toContain('Likely issues the agent noticed');
+    expect(String(page.body)).toContain('The agent flagged nothing on the pages it reviewed.');
   },
 );

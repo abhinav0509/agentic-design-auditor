@@ -1,5 +1,6 @@
 // The operator report run (D-045): the prospect's org, site and run under RLS, the scan step with
 // crops, the run marked ready, and a 14-day share link (FR-27, FR-29, D-041).
+import type { LlmClient } from '@beacon/agent';
 import type { BlobStore, Clock } from '@beacon/core';
 import { asApp, createReportLink, type Sql } from '@beacon/db';
 import { scanRun } from '@beacon/worker';
@@ -14,6 +15,8 @@ export type RunReportDeps = {
   clock: Clock;
   /** A new unguessable link token (32+ URL-safe characters). */
   token: () => string;
+  /** The agent review (D-048), when the plan asks for it. */
+  reviewer?: { llm: LlmClient };
 };
 
 const LINK_DAYS = 14;
@@ -48,8 +51,11 @@ export async function runReport(
     return run.id;
   });
 
+  const reviewer = plan.agentReview ? deps.reviewer : undefined;
+  if (plan.agentReview && !reviewer)
+    throw new Error('the plan asks for the agent review but no model was given');
   await scanRun(
-    { sql, context: deps.context, blobs: deps.blobs },
+    { sql, context: deps.context, blobs: deps.blobs, ...(reviewer ? { reviewer } : {}) },
     { orgId, runId, urls: plan.urls },
   );
 

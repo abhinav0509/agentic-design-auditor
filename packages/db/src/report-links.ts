@@ -2,6 +2,7 @@
 // transaction that already runs as the app role with app.org_id set.
 import { createHash } from 'node:crypto';
 import type { Sql, TransactionSql } from 'postgres';
+import type { ReviewFlagRow } from './reviews.ts';
 import { asApp } from './session.ts';
 
 const hashOf = (token: string) => createHash('sha256').update(token).digest('hex');
@@ -62,6 +63,9 @@ export type ReportRows = {
     tags: string[];
     crop: string | null;
   }[];
+  /** Pages the agent reviewed (D-048); a page missing here had no review or it did not finish. */
+  reviewedPages: string[];
+  reviewFlags: (ReviewFlagRow & { pageUrl: string })[];
 };
 
 /** A run as the report reads it, under the caller's org (asApp with the link's org). */
@@ -77,11 +81,20 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
       f.html_snippet as html, f.help, f.tags, f.evidence->>'crop' as crop
     from findings f join pages p on p.id = f.page_id
     where f.run_id = ${runId} order by p.url, f.selector, f.rule_id`;
+  const reviewed = await tx<{ url: string }[]>`
+    select url from pages where run_id = ${runId} and reviewed_at is not null order by url`;
+  const flags = await tx<(ReviewFlagRow & { pageUrl: string })[]>`
+    select p.url as "pageUrl", r.candidate, r.kind, r.selector, r.current_text as text, r.reason,
+      r.suggestion, r.crop
+    from review_flags r join pages p on p.id = r.page_id
+    where r.run_id = ${runId} order by p.url, r.selector`;
   return {
     siteUrl: run.base_url,
     scannedAt: run.scanned_at.toISOString(),
     pages: [...pages],
     issues: [...issues],
+    reviewedPages: reviewed.map((r) => r.url),
+    reviewFlags: [...flags],
   };
 }
 
@@ -89,6 +102,6 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
 export async function runHasCrop(tx: TransactionSql, runId: string, ref: string): Promise<boolean> {
   const [row] = await tx<{ found: boolean }[]>`
     select exists (select 1 from findings where run_id = ${runId} and evidence->>'crop' = ${ref})
-      as found`;
+      or exists (select 1 from review_flags where run_id = ${runId} and crop = ${ref}) as found`;
   return row?.found ?? false;
 }

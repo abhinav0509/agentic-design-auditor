@@ -7,6 +7,7 @@ import { chromium, type Browser, type BrowserContext } from 'playwright';
 import { afterAll, beforeAll, expect, it } from 'vitest';
 import { savePageScan } from '@beacon/db';
 import { asApp } from '@beacon/db/testing';
+import { FakeLlm, textOnly, toolUse } from '@beacon/agent/testing';
 import { InMemoryBlobStore } from '@beacon/core/testing';
 import { scanRun } from './scan-run.ts';
 
@@ -192,4 +193,76 @@ it('FR-29: with a blob store, each croppable flagged element is stored once and 
   expect(cropped.length).toBeGreaterThan(0);
   for (const r of cropped) expect(await blobs.get(r.crop ?? '')).not.toBeNull();
   expect(blobs.blobs.size).toBe(new Set(cropped.map((r) => r.crop)).size);
+}, 60_000);
+
+it('FR-29: with a reviewer, each page’s flags are saved with their crops and the model cost is recorded', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const url = `${ORIGIN}/reviewed`;
+  PAGES[url] = doc(
+    '<main><p><img src="/a.png" alt="IMG_1.jpg" width="60" height="40"></p><p>Prices: <a href="/p">click here</a></p></main>',
+  );
+  const blobs = new InMemoryBlobStore();
+  const llm = new FakeLlm([
+    toolUse(['get_image', { id: 'c1' }]),
+    toolUse([
+      'submit_review',
+      {
+        flags: [
+          {
+            id: 'c1',
+            kind: 'unhelpful_alt',
+            reason: 'A file name.',
+            suggestion: 'Potter at the wheel',
+          },
+          { id: 'c2', kind: 'vague_link', reason: 'Vague.', suggestion: 'See workshop prices' },
+        ],
+      },
+    ]),
+  ]);
+
+  await scanRun(
+    { sql: db.sql, context, blobs, reviewer: { llm } },
+    { orgId: ORG, runId, urls: [url] },
+  );
+
+  const flags = await db.sql<{ kind: string; current_text: string; crop: string | null }[]>`
+    select kind, current_text, crop from review_flags where run_id = ${runId} order by kind`;
+  expect(flags.map((f) => [f.kind, f.current_text])).toEqual([
+    ['unhelpful_alt', 'IMG_1.jpg'],
+    ['vague_link', 'click here'],
+  ]);
+  expect(await blobs.get(flags[0]?.crop ?? '')).not.toBeNull();
+  expect(flags[1]?.crop).toBeNull();
+  const [cost] = await db.sql<{ cost: number }[]>`
+    select sum(cost_micros)::int as cost from usage_ledger where run_id = ${runId}`;
+  expect(cost?.cost).toBe(100); // two FakeLlm turns at 50 micros each
+}, 60_000);
+
+it('FR-29: a review that fails leaves the page stored and unreviewed, with its cost recorded', async () => {
+  const [run] = await db.sql<{ id: string }[]>`
+    insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
+      model_name, budget, engine_version)
+    values (${ORG}, ${seed['site'] ?? ''}, 'queued', 'abc', 'a1', 'p1', 'm1', '{}', 'axe-4.14.0')
+    returning id`;
+  const runId = run?.id ?? '';
+  const url = `${ORIGIN}/review-fails`;
+  PAGES[url] = doc('<main><p>Prices: <a href="/p">click here</a></p></main>');
+  const llm = new FakeLlm([textOnly('thinking'), new Error('overloaded')]);
+
+  await scanRun({ sql: db.sql, context, reviewer: { llm } }, { orgId: ORG, runId, urls: [url] });
+
+  const [page] = await db.sql`select reviewed_at from pages where run_id = ${runId}`;
+  expect(page).toEqual({ reviewed_at: null });
+  const [flags] = await db.sql<
+    { n: number }[]
+  >`select count(*)::int as n from review_flags where run_id = ${runId}`;
+  expect(flags?.n).toBe(0);
+  const [cost] = await db.sql<{ cost: number }[]>`
+    select sum(cost_micros)::int as cost from usage_ledger where run_id = ${runId}`;
+  expect(cost?.cost).toBe(50);
 }, 60_000);

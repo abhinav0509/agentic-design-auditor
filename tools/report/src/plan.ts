@@ -3,9 +3,16 @@
 import { emailProvesSite } from '@beacon/core';
 import { createHash } from 'node:crypto';
 
-export type ReportPlan = { requestedBy: string; siteUrl: string; urls: string[]; orgId: string };
+export type ReportPlan = {
+  requestedBy: string;
+  siteUrl: string;
+  urls: string[];
+  orgId: string;
+  /** Present, and true, only when --agent-review asks for the agent review (D-048). */
+  agentReview?: true;
+};
 
-const USAGE = 'usage: pnpm report --requested-by <work email> <url> [url ...]';
+const USAGE = 'usage: pnpm report [--agent-review] --requested-by <work email> <url> [url ...]';
 const MAX_PAGES = 10;
 
 /** One org per site host, derived so a re-run for the same site reuses its org and history. */
@@ -18,6 +25,8 @@ function orgIdFor(host: string): string {
 export function planReport(
   argv: string[],
 ): { ok: true; plan: ReportPlan } | { ok: false; error: string } {
+  const agentReview = argv.includes('--agent-review');
+  argv = argv.filter((a) => a !== '--agent-review');
   if (argv.length === 0) return { ok: false, error: USAGE };
   const at = argv.indexOf('--requested-by');
   const requestedBy = at === -1 ? undefined : argv[at + 1];
@@ -50,6 +59,7 @@ export function planReport(
       siteUrl: `${site.protocol}//${site.host}/`,
       urls,
       orgId: orgIdFor(site.host.replace(/^www\./, '')),
+      ...(agentReview ? { agentReview: true as const } : {}),
     },
   };
 }

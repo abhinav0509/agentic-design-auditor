@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@beacon/agent": "workspace:*",
     "@beacon/core": "workspace:*",
     "@beacon/db": "workspace:*",
+    "@beacon/eval": "workspace:*",
     "@beacon/scanner": "workspace:*",
     "@beacon/web": "workspace:*",
     "@beacon/worker": "workspace:*",

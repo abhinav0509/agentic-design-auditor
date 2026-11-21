@@ -2,6 +2,7 @@
 export * from './migrate.ts';
 export * from './proposals.ts';
 export * from './report-links.ts';
+export * from './reviews.ts';
 export * from './jobs.ts';
 export * from './scans.ts';
 export * from './session.ts';

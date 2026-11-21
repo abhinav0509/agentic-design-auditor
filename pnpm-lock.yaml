@@ -225,12 +225,18 @@ importers:
 
   tools/report:
     dependencies:
+      '@beacon/agent':
+        specifier: workspace:*
+        version: link:../../packages/agent
       '@beacon/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@beacon/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@beacon/eval':
+        specifier: workspace:*
+        version: link:../eval
       '@beacon/scanner':
         specifier: workspace:*
         version: link:../../packages/scanner
