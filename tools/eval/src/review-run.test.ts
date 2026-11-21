@@ -118,6 +118,21 @@ describe('runReviewEval', { timeout: 300_000 }, () => {
     expect(report.gate.pass).toBe(false);
   });
 
+  it('FR-29: a recorded run can name its summary file, so each case set keeps its own', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'review-rec-'));
+    await runReviewEval({
+      browser,
+      cases: all.slice(0, 1),
+      llmFor: (c, cands) => oracle(c, cands),
+      budget,
+      record: { dir, model: 'scripted', summary: 'review-hard-run.json' },
+    });
+
+    expect(JSON.parse(readFileSync(join(dir, 'review-hard-run.json'), 'utf8'))).toMatchObject({
+      model: 'scripted',
+    });
+  });
+
   it('NFR-05: pages that could cross the budget are skipped, not started', async () => {
     const { scores, skipped } = await runReviewEval({
       browser,
