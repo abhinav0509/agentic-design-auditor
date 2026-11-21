@@ -1,56 +1,16 @@
 // pnpm report [--agent-review] --requested-by <work email> <url> [url ...]   (D-045, D-048)
 // Scans up to 10 pages of one site in the full sandbox (Smokescreen egress proxy + in-app guard,
 // D-017, D-020), stores crops on disk and prints a 14-day share link to the report.
-import { anthropicFromEnv, fixerModel, REVIEW_PROMPT_VERSION, type LlmClient } from '@beacon/agent';
+import type { LlmClient } from '@beacon/agent';
 import { migrate } from '@beacon/db';
 import { chromiumLaunchOptions, guardContext, systemResolver } from '@beacon/scanner';
 import { FsBlobStore } from '@beacon/worker';
-import { spawn } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
-import net from 'node:net';
-import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
-import { checkReviewGate, type RecordedReviewRun } from './gate.ts';
+import { reviewerBehindGate, startProxy } from './operator.ts';
 import { planReport } from './plan.ts';
 import { runReport } from './run.ts';
-
-const SMOKESCREEN = fileURLToPath(
-  new URL('../../../.cache/smokescreen/v0.1.0/smokescreen', import.meta.url),
-);
-
-/** Smokescreen with its default policy: public addresses only. Resolves once it accepts connections. */
-async function startProxy(): Promise<{ url: string; stop: () => void }> {
-  if (!existsSync(SMOKESCREEN))
-    throw new Error('Smokescreen is not installed: run pnpm smokescreen:install');
-  const port = await new Promise<number>((done) => {
-    const s = net.createServer().listen(0, '127.0.0.1', () => {
-      const { port: p } = s.address() as net.AddressInfo;
-      s.close(() => {
-        done(p);
-      });
-    });
-  });
-  const proc = spawn(SMOKESCREEN, ['--listen-ip', '127.0.0.1', '--listen-port', String(port)], {
-    stdio: 'ignore',
-  });
-  for (let tries = 0; tries < 50; tries++) {
-    const up = await new Promise<boolean>((done) => {
-      const c = net.connect(port, '127.0.0.1', () => {
-        c.end();
-        done(true);
-      });
-      c.on('error', () => {
-        done(false);
-      });
-    });
-    if (up) return { url: `http://127.0.0.1:${String(port)}`, stop: () => proc.kill() };
-    await new Promise((r) => setTimeout(r, 100));
-  }
-  proc.kill();
-  throw new Error('Smokescreen did not start');
-}
 
 const planned = planReport(process.argv.slice(2));
 if (!planned.ok) {
@@ -66,42 +26,12 @@ if (!dbUrl) {
 // The agent review runs only behind its eval gate (D-041), on the model the gate measured.
 let reviewer: { llm: LlmClient } | undefined;
 if (planned.plan.agentReview) {
-  const recorded = JSON.parse(
-    readFileSync(
-      new URL('../../../fixtures/llm-recordings/review-run.json', import.meta.url),
-      'utf8',
-    ),
-  ) as RecordedReviewRun;
-  const gate = checkReviewGate(recorded, REVIEW_PROMPT_VERSION);
-  if (!gate.ok) {
-    console.error(`agent review is off: ${gate.error}`);
+  try {
+    reviewer = reviewerBehindGate();
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : String(e));
     process.exit(2);
   }
-  const model = fixerModel(process.env);
-  if (model.id !== gate.model) {
-    console.error(
-      `agent review is off: the gate measured ${gate.model}, the configured model is ${model.id}`,
-    );
-    process.exit(2);
-  }
-  if (!process.env['ANTHROPIC_API_KEY'] && !process.env['ANTHROPIC_AUTH_TOKEN']) {
-    console.error('agent review needs ANTHROPIC_API_KEY (in .env.local or the shell)');
-    process.exit(2);
-  }
-  const live = anthropicFromEnv(model);
-  let spent = 0;
-  reviewer = {
-    llm: {
-      complete: async (r) => {
-        const turn = await live.complete(r);
-        spent += turn.usage.costMicros;
-        return turn;
-      },
-    },
-  };
-  process.on('exit', () => {
-    console.log(`Agent review cost: $${(spent / 1e6).toFixed(4)} on ${model.id}.`);
-  });
 }
 
 const sql = postgres(dbUrl, { onnotice: () => undefined });
