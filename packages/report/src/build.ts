@@ -31,6 +31,19 @@ export type ReportInput = {
     crop: string | null;
   }[];
   pullRequests?: { number: number; url: string; branch: string; proposalIds: string[] }[];
+  /** Fixes Beacon would make, checked on a copy of the live page (URL-only report, D-056). */
+  previews?: {
+    pageUrl: string;
+    ruleId: string;
+    title: string;
+    rationale: string;
+    before: string;
+    after: string;
+    announcedBefore: string | null;
+    announcedAfter: string | null;
+    verified: boolean;
+    crop: string | null;
+  }[];
   reviewFlags?: {
     pageUrl: string;
     candidate: 'image' | 'link';
