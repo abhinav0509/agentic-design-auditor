@@ -12,9 +12,22 @@ export type MapResult =
   | { mapped: true; file: string; at: number; line: number }
   | { mapped: false; reason: UnmappedReason };
 
-/** The repo file a static host serves for this URL: /, /x, /x/, /x.html. */
-function fileFor(files: Record<string, string | Uint8Array>, pageUrl: string) {
-  const path = decodeURIComponent(new URL(pageUrl).pathname).replace(/^\/+/, '');
+/**
+ * The repo file a static host serves for this URL: /, /x, /x/, /x.html, under the site's base path
+ * (a project site serves the repo root at /<repo>/). A URL outside the site maps to no file.
+ */
+function fileFor(files: Record<string, string | Uint8Array>, pageUrl: string, siteUrl?: string) {
+  const page = new URL(pageUrl);
+  let path = decodeURIComponent(page.pathname);
+  if (siteUrl !== undefined) {
+    const site = new URL(siteUrl);
+    const base = decodeURIComponent(site.pathname).replace(/\/+$/, '');
+    if (page.origin !== site.origin) return undefined;
+    if (path === base) path = '/';
+    else if (path.startsWith(`${base}/`)) path = path.slice(base.length);
+    else return undefined;
+  }
+  path = path.replace(/^\/+/, '');
   const candidates =
     path === '' || path.endsWith('/')
       ? [`${path}index.html`]
@@ -55,7 +68,7 @@ export function mapFinding(input: {
   served: string;
   finding: { target: string; html: string };
 }): MapResult {
-  const file = fileFor(input.files, input.pageUrl);
+  const file = fileFor(input.files, input.pageUrl, input.siteUrl);
   const source = file === undefined ? undefined : input.files[file];
   if (file === undefined || typeof source !== 'string') return { mapped: false, reason: 'no_file' };
   if (serialize(parse(input.served)) !== serialize(parse(source)))
