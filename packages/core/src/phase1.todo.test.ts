@@ -4,7 +4,6 @@ import { describe, it } from 'vitest';
 
 describe('decisions', () => {
   it.todo('answering a needs_input proposal spawns a superseding attempt');
-  it.todo('two concurrent approvals against Postgres: exactly one wins (UPDATE ... WHERE version)');
   it.todo('FR-24: an edited revision re-runs guard, verifier and risk');
 });
 
