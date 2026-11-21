@@ -18,6 +18,7 @@
     "smokescreen:install": "node tools/smokescreen/src/install.ts",
     "demo": "node tools/demo/src/server.ts",
     "eval": "node tools/eval/src/cli.ts",
+    "eval:review": "node tools/eval/src/review-cli.ts",
     "corpus:images": "node tools/corpus-images/src/render.ts",
     "report": "node tools/report/src/cli.ts",
     "report:serve": "node tools/report/src/serve.ts"
