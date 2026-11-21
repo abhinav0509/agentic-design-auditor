@@ -51,4 +51,12 @@ describe('planReport', () => {
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error).toMatch(error);
   });
+
+  it('FR-29: --agent-review asks for the agent review; it is off by default', () => {
+    const on = planReport(['--agent-review', '--requested-by', 'jo@acme.com', 'https://acme.com/']);
+    const off = planReport(['--requested-by', 'jo@acme.com', 'https://acme.com/']);
+    expect(on.ok && on.plan.agentReview).toBe(true);
+    expect(off.ok && off.plan.agentReview).toBe(false);
+    expect(on.ok && on.plan.urls).toEqual(['https://acme.com/']);
+  });
 });

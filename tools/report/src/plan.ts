@@ -3,7 +3,13 @@
 import { emailProvesSite } from '@beacon/core';
 import { createHash } from 'node:crypto';
 
-export type ReportPlan = { requestedBy: string; siteUrl: string; urls: string[]; orgId: string };
+export type ReportPlan = {
+  requestedBy: string;
+  siteUrl: string;
+  urls: string[];
+  orgId: string;
+  agentReview: boolean;
+};
 
 const USAGE = 'usage: pnpm report --requested-by <work email> <url> [url ...]';
 const MAX_PAGES = 10;
