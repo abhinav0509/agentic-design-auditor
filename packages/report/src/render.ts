@@ -45,9 +45,9 @@ const IMPACT_LABEL: Record<string, string> = {
 };
 
 const CSS = `
-:root{color-scheme:light dark;--bg:#f5f6f8;--surface:#fff;--ink:#16181d;--ink-2:#454a54;--line:#dfe2e7;--accent:#3b2fd0;
+:root{color-scheme:light dark;--bg:#f5f6f8;--surface:#fff;--ink:#16181d;--ink-2:#454a54;--line:#dfe2e7;--accent:#3b2fd0;--on-accent:#fff;
 --crit-bg:#fde8e8;--crit:#8a1c1c;--seri-bg:#fff0de;--seri:#7a3d00;--mode-bg:#fff7d1;--mode:#614a00;--mino-bg:#eceef2;--mino:#3a404a}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--surface:#171a20;--ink:#eceef2;--ink-2:#b8bdc7;--line:#2c313a;--accent:#a99fff;
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--surface:#171a20;--ink:#eceef2;--ink-2:#b8bdc7;--line:#2c313a;--accent:#a99fff;--on-accent:#120c33;
 --crit-bg:#3b1515;--crit:#ffb4b4;--seri-bg:#3a250f;--seri:#ffc98f;--mode-bg:#353010;--mode:#f3dc7a;--mino-bg:#262a31;--mino:#c9ced7}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -75,6 +75,15 @@ q{font-style:italic}
 .announced caption{text-align:left;font-weight:600;padding-bottom:4px}
 .announced th,.announced td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
 pre.diff{overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.actions form,.export{margin:0}
+.export{margin:12px 0 16px}
+.button{font:inherit;font-weight:600;border-radius:10px;padding:8px 16px;cursor:pointer;border:2px solid var(--accent)}
+.button.primary{background:var(--accent);color:var(--on-accent)}
+.button.secondary{background:transparent;color:var(--accent)}
+.button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.notice{padding:10px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--accent);font-weight:600}
+.reviewer-note{margin:0 0 12px;font-size:.875rem;color:var(--ink-2)}
 .issues{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
 .chip{display:inline-block;font-size:.8125rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--mino-bg);color:var(--mino)}
@@ -122,7 +131,14 @@ ${elements}
 }
 
 /** The fixes Beacon proposes (FR-10, D-054): what changes for a screen reader, the diff, the status. */
-function fixesSection(fixes: Report['fixes'], cropUrl: (ref: string) => string): string {
+function fixesSection(
+  fixes: Report['fixes'],
+  cropUrl: (ref: string) => string,
+  review?: RenderOptions['review'],
+): string {
+  // Reviewer controls (D-055): plain forms, no script. Only the reviewer page passes `review`.
+  const act = (path: string, label: string, title: string, kind: 'primary' | 'secondary') =>
+    `<form method="post" action="${esc(`${review?.actionBase ?? ''}/${path}`)}"><button type="submit" class="button ${kind}">${label}<span class="visually-hidden">: ${esc(title)}</span></button></form>`;
   const items = fixes
     .map((f, i) => {
       const announced = f.announced
@@ -141,6 +157,11 @@ ${f.crop ? `<img src="${esc(cropUrl(f.crop))}" alt="Screenshot of the element th
 ${announced}
 <p>${esc(f.rationale)}</p>
 ${
+  review && f.status === 'pending'
+    ? `<div class="actions">${act(`approve/${f.id}`, 'Approve', f.title, 'primary')}${act(`reject/${f.id}`, 'Reject', f.title, 'secondary')}</div>`
+    : ''
+}
+${
   f.diff
     ? `<details><summary>Show the change<span class="visually-hidden"> for ${esc(f.title)}</span></summary>
 <pre class="diff" tabindex="0" aria-label="The change to ${esc(f.file)}"><code>${esc(f.diff)}</code></pre></details>`
@@ -152,10 +173,18 @@ ${
   return `<section aria-labelledby="fixes">
 <h2 id="fixes">Fixes Beacon proposes</h2>
 <p class="note">Beacon tests each fix in a copy of the site before proposing it: the issue must be gone and nothing new may appear. A person approves each fix before it reaches the code.</p>
+${exportForm(fixes, review)}
 <ol class="issues">
 ${items}
 </ol>
 </section>`;
+}
+
+/** On the reviewer page, one button to open a pull request with every approved fix. */
+function exportForm(fixes: Report['fixes'], review?: RenderOptions['review']): string {
+  const approved = fixes.filter((f) => f.status === 'approved').length;
+  if (!review || approved === 0) return '';
+  return `<form method="post" action="${esc(`${review.actionBase}/export`)}" class="export"><button type="submit" class="button primary">Open a pull request with ${plural(approved, 'approved fix', 'approved fixes')}</button></form>`;
 }
 
 /** The agent's likely issues (D-048): each needs a human, and every suggestion is untested. */
@@ -218,7 +247,13 @@ export function renderReport(report: Report, options: RenderOptions): string {
 <body>
 <header class="top"><div class="wrap"><p>Beacon</p></div></header>
 <main class="wrap">
+${
+  options.review
+    ? '<p class="reviewer-note">Reviewer view, on this computer only. Nothing changes until you press a button.</p>'
+    : ''
+}
 <h1>Possible accessibility barriers on ${esc(site)}</h1>
+${options.review?.notice ? `<p class="notice" role="status">${esc(options.review.notice)}</p>` : ''}
 <p class="meta">Scanned ${day(options.scannedAt)}, ${plural(t.pagesScanned, 'page')}. This link expires on ${day(options.expiresAt)}.</p>
 
 <section aria-labelledby="summary">
@@ -232,7 +267,7 @@ export function renderReport(report: Report, options: RenderOptions): string {
 <p class="note">${esc(report.coverage.summary)}</p>
 </section>
 
-${report.fixes.length ? fixesSection(report.fixes, options.cropUrl) : ''}
+${report.fixes.length ? fixesSection(report.fixes, options.cropUrl, options.review) : ''}
 
 <section aria-labelledby="found">
 <h2 id="found">What the checks found</h2>
