@@ -69,6 +69,10 @@ h3{font-size:1.05rem;margin:0}
 .suggestion{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
 .suggestion-label{font-weight:600}
 q{font-style:italic}
+.announced{border-collapse:collapse;margin:12px 0;font-size:.875rem}
+.announced caption{text-align:left;font-weight:600;padding-bottom:4px}
+.announced th,.announced td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+pre.diff{overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
 .issues{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
 .chip{display:inline-block;font-size:.8125rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--mino-bg);color:var(--mino)}
@@ -113,6 +117,43 @@ ${elements}
 </ol>
 </details>
 </li>`;
+}
+
+/** The fixes Beacon proposes (FR-10, D-054): what changes for a screen reader, the diff, the status. */
+function fixesSection(fixes: Report['fixes'], cropUrl: (ref: string) => string): string {
+  const items = fixes
+    .map((f, i) => {
+      const announced = f.announced
+        ? `<table class="announced"><caption>What a screen reader announces</caption>
+<tr><th scope="row">Before</th><td><code>${esc(f.announced.before)}</code></td></tr>
+<tr><th scope="row">After</th><td><code>${esc(f.announced.after)}</code></td></tr>
+</table>`
+        : '';
+      return `<li class="card">
+<h3 id="fix${String(i)}">${esc(f.title)}</h3>
+<ul class="chips" aria-label="Status and risk"><li class="chip">${esc(f.statusLabel)}</li>${f.riskLabel ? `<li class="chip">${esc(f.riskLabel)}</li>` : ''}</ul>
+<p class="small">On ${pageLink(f.pageUrl)}, in <code>${esc(f.file)}</code>.${
+        f.pr ? ` <a href="${esc(f.pr.url)}">View pull request #${String(f.pr.number)}</a>` : ''
+      }</p>
+${f.crop ? `<img src="${esc(cropUrl(f.crop))}" alt="Screenshot of the element this fix changes" loading="lazy">` : ''}
+${announced}
+<p>${esc(f.rationale)}</p>
+${
+  f.diff
+    ? `<details><summary>Show the change<span class="visually-hidden"> for ${esc(f.title)}</span></summary>
+<pre class="diff" tabindex="0" aria-label="The change to ${esc(f.file)}"><code>${esc(f.diff)}</code></pre></details>`
+    : ''
+}
+</li>`;
+    })
+    .join('\n');
+  return `<section aria-labelledby="fixes">
+<h2 id="fixes">Fixes Beacon proposes</h2>
+<p class="note">Beacon tests each fix in a copy of the site before proposing it: the issue must be gone and nothing new may appear. A person approves each fix before it reaches the code.</p>
+<ol class="issues">
+${items}
+</ol>
+</section>`;
 }
 
 /** The agent's likely issues (D-048): each needs a human, and every suggestion is untested. */
@@ -188,6 +229,8 @@ export function renderReport(report: Report, options: RenderOptions): string {
 <dl class="stats">${stats}</dl>
 <p class="note">${esc(report.coverage.summary)}</p>
 </section>
+
+${report.fixes.length ? fixesSection(report.fixes, options.cropUrl) : ''}
 
 <section aria-labelledby="found">
 <h2 id="found">What the checks found</h2>

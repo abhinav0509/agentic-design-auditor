@@ -30,7 +30,11 @@ export async function runFixJobs(
     orgId,
     runId,
     site,
-  }: { orgId: string; runId: string; site: { files: SiteFiles; commitSha: string } },
+  }: {
+    orgId: string;
+    runId: string;
+    site: { files: SiteFiles; commitSha: string; url?: string };
+  },
 ): Promise<void> {
   const app = <T>(fn: Parameters<typeof asApp<T>>[2]) => asApp(deps.sql, orgId, fn);
   for (;;) {

@@ -51,6 +51,19 @@ describe('mapFinding', () => {
     expect(fileFor('https://example.com/shop?x=1#top')).toBe('no_file');
   });
 
+  it('FR-06: a site served under a path (a GitHub Pages project site) maps from that path', () => {
+    const files = { 'index.html': ABOUT, 'about.html': ABOUT };
+    const fileFor = (pageUrl: string) => {
+      const m = map({ files, pageUrl, siteUrl: 'https://jo.github.io/shop/' });
+      return m.mapped ? m.file : m.reason;
+    };
+    expect(fileFor('https://jo.github.io/shop/')).toBe('index.html');
+    expect(fileFor('https://jo.github.io/shop/about.html')).toBe('about.html');
+    expect(fileFor('https://jo.github.io/shop')).toBe('index.html');
+    expect(fileFor('https://jo.github.io/other/about.html')).toBe('no_file');
+    expect(fileFor('https://elsewhere.test/shop/about.html')).toBe('no_file');
+  });
+
   it('FR-06: ambiguous match returns unmapped, never a guess', () => {
     const twice = ABOUT.replace('<p>', '<img src="/img/studio.jpg">\n<p>');
     expect(map({ files: { 'about.html': twice }, served: twice })).toEqual({

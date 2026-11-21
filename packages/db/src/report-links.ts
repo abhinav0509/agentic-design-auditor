@@ -2,6 +2,7 @@
 // transaction that already runs as the app role with app.org_id set.
 import { createHash } from 'node:crypto';
 import type { Sql, TransactionSql } from 'postgres';
+import { ProposalSchema } from '@beacon/core';
 import type { ReviewFlagRow } from './reviews.ts';
 import { asApp } from './session.ts';
 
@@ -66,6 +67,22 @@ export type ReportRows = {
   /** Pages the agent reviewed (D-048); a page missing here had no review or it did not finish. */
   reviewedPages: string[];
   reviewFlags: (ReviewFlagRow & { pageUrl: string })[];
+  /** The run's proposed fixes, for the reviewer (FR-10, D-054). */
+  fixes: {
+    id: string;
+    status: string;
+    title: string;
+    rationale: string;
+    ruleId: string;
+    pageUrl: string;
+    file: string;
+    diff: string | undefined;
+    risk: string | undefined;
+    announcedBefore: string | null;
+    announcedAfter: string | null;
+    crop: string | null;
+  }[];
+  pullRequests: { number: number; url: string; branch: string; proposalIds: string[] }[];
 };
 
 /** A run as the report reads it, under the caller's org (asApp with the link's org). */
@@ -88,6 +105,28 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
       r.suggestion, r.crop
     from review_flags r join pages p on p.id = r.page_id
     where r.run_id = ${runId} order by p.url, r.selector`;
+  const proposals = await tx<
+    {
+      id: string;
+      status: string;
+      payload: unknown;
+      announced_before: string | null;
+      announced_after: string | null;
+    }[]
+  >`
+    select id, status, payload, announced_before, announced_after from proposals
+    where run_id = ${runId} and kind = 'patch' order by id`;
+  // The payload is checked against the contract, so the report never renders a malformed one.
+  const valid = proposals.flatMap((p) => {
+    const parsed = ProposalSchema.safeParse(p.payload);
+    return parsed.success ? [{ ...p, payload: parsed.data }] : [];
+  });
+  const prs = await tx<
+    { pr_number: number; pr_url: string; branch: string; proposal_ids: string[] }[]
+  >`
+    select e.pr_number, e.pr_url, e.branch, e.proposal_ids from exports e
+    where e.status = 'pr_open' and e.proposal_ids && (select coalesce(array_agg(id), '{}') from proposals where run_id = ${runId})
+    order by e.created_at`;
   return {
     siteUrl: run.base_url,
     scannedAt: run.scanned_at.toISOString(),
@@ -95,6 +134,26 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
     issues: [...issues],
     reviewedPages: reviewed.map((r) => r.url),
     reviewFlags: [...flags],
+    fixes: valid.map((p) => ({
+      id: p.id,
+      status: p.status,
+      title: p.payload.title,
+      rationale: p.payload.rationale,
+      ruleId: p.payload.rule.id,
+      pageUrl: p.payload.target.page_url,
+      file: p.payload.target.file,
+      diff: p.payload.change?.diff,
+      risk: p.payload.risk?.level,
+      announcedBefore: p.announced_before,
+      announcedAfter: p.announced_after,
+      crop: p.payload.evidence.after_screenshot,
+    })),
+    pullRequests: prs.map((e) => ({
+      number: e.pr_number,
+      url: e.pr_url,
+      branch: e.branch,
+      proposalIds: e.proposal_ids,
+    })),
   };
 }
 
@@ -102,6 +161,8 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
 export async function runHasCrop(tx: TransactionSql, runId: string, ref: string): Promise<boolean> {
   const [row] = await tx<{ found: boolean }[]>`
     select exists (select 1 from findings where run_id = ${runId} and evidence->>'crop' = ${ref})
-      or exists (select 1 from review_flags where run_id = ${runId} and crop = ${ref}) as found`;
+      or exists (select 1 from review_flags where run_id = ${runId} and crop = ${ref})
+      or exists (select 1 from proposals where run_id = ${runId}
+        and payload->'evidence'->>'after_screenshot' = ${ref}) as found`;
   return row?.found ?? false;
 }

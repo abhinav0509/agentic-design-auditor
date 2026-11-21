@@ -16,7 +16,7 @@ const USAGE = 'usage: pnpm report [--agent-review] --requested-by <work email> <
 const MAX_PAGES = 10;
 
 /** One org per site host, derived so a re-run for the same site reuses its org and history. */
-function orgIdFor(host: string): string {
+export function orgIdFor(host: string): string {
   const h = createHash('sha256').update(`beacon-report-org:${host}`).digest('hex');
   const variant = ((parseInt(h.charAt(16), 16) & 0x3) | 0x8).toString(16);
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;

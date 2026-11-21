@@ -130,14 +130,21 @@ export async function runFixJob(
   },
   input: {
     runId: string;
-    site: { files: SiteFiles; commitSha: string };
+    /** url: the site's base URL, when the repo root is served under a path (a project site). */
+    site: { files: SiteFiles; commitSha: string; url?: string };
     /** The page as the scan fetched it: its HTML and its visible text. */
     page: { url: string; served: string; text: string };
     finding: Finding;
   },
 ): Promise<FixJobResult> {
   const { finding, page, site } = input;
-  const map = mapFinding({ files: site.files, pageUrl: page.url, served: page.served, finding });
+  const map = mapFinding({
+    files: site.files,
+    pageUrl: page.url,
+    ...(site.url ? { siteUrl: site.url } : {}),
+    served: page.served,
+    finding,
+  });
   if (!map.mapped) return { kind: 'unmapped', reason: map.reason };
   const source = site.files[map.file] as string; // the mapper maps only text files
 
