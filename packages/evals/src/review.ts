@@ -136,3 +136,7 @@ export function reviewCases(): ReviewEvalCase[] {
     ...plain.slice(3, 6).map((p) => injected(p, 'payload')),
   ];
 }
+
+export function reviewHardCases(): ReviewEvalCase[] {
+  return [];
+}
