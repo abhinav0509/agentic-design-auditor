@@ -130,3 +130,70 @@ describe('buildReport', () => {
     expect(r.coverage.summary).toMatch(/human/i);
   });
 });
+
+describe('buildReport: agent review', () => {
+  const flag = (o: Partial<NonNullable<ReportInput['reviewFlags']>[number]> = {}) => ({
+    pageUrl: SITE,
+    candidate: 'link' as const,
+    kind: 'vague_link' as const,
+    selector: 'a',
+    text: 'click here',
+    reason: 'It does not say where it goes.',
+    suggestion: 'See workshop prices',
+    crop: null,
+    ...o,
+  });
+
+  it('FR-29: lists each flag with a plain title, the text as found, the reason and the suggestion', () => {
+    const r = buildReport(
+      input({
+        reviewedPages: [SITE, 'https://acme.test/about'],
+        reviewFlags: [
+          flag(),
+          flag({
+            candidate: 'image',
+            kind: 'unhelpful_alt',
+            selector: 'img',
+            text: 'IMG_1.jpg',
+            suggestion: 'Potter at the wheel',
+            crop: `blob://sha256/${'c'.repeat(64)}.png`,
+          }),
+        ],
+      }),
+    );
+
+    expect(r.review).toEqual({
+      reviewedPages: 2,
+      notReviewed: [],
+      flags: [
+        {
+          pageUrl: SITE,
+          title: 'Link text that does not say where it goes',
+          label: 'Link text',
+          current: 'click here',
+          reason: 'It does not say where it goes.',
+          suggestion: 'See workshop prices',
+          crop: null,
+        },
+        {
+          pageUrl: SITE,
+          title: 'Alt text that does not describe the image',
+          label: 'Alt text',
+          current: 'IMG_1.jpg',
+          reason: 'It does not say where it goes.',
+          suggestion: 'Potter at the wheel',
+          crop: `blob://sha256/${'c'.repeat(64)}.png`,
+        },
+      ],
+    });
+  });
+
+  it('FR-29: names scanned pages the review did not finish on, and is absent when no review ran', () => {
+    expect(buildReport(input({ reviewedPages: [SITE], reviewFlags: [] })).review).toEqual({
+      reviewedPages: 1,
+      notReviewed: ['https://acme.test/about'],
+      flags: [],
+    });
+    expect(buildReport(input()).review).toBeNull();
+  });
+});

@@ -13,6 +13,18 @@ export type ReportInput = {
     tags: string[];
     crop: string | null;
   }[];
+  /** Pages the agent reviewed (D-048); absent or empty when no review ran. */
+  reviewedPages?: string[];
+  reviewFlags?: {
+    pageUrl: string;
+    candidate: 'image' | 'link';
+    kind: 'unhelpful_alt' | 'vague_link';
+    selector: string;
+    text: string;
+    reason: string;
+    suggestion: string;
+    crop: string | null;
+  }[];
 };
 export type Report = {
   groups: {
@@ -33,6 +45,19 @@ export type Report = {
   };
   notScanned: { url: string; reason: string }[];
   coverage: { summary: string; checked: string[]; notChecked: string[] };
+  review: {
+    reviewedPages: number;
+    notReviewed: string[];
+    flags: {
+      pageUrl: string;
+      title: string;
+      label: string;
+      current: string;
+      reason: string;
+      suggestion: string;
+      crop: string | null;
+    }[];
+  } | null;
 };
 
 const IMPACTS = ['critical', 'serious', 'moderate', 'minor'] as const;
@@ -121,5 +146,6 @@ export function buildReport(input: ReportInput): Report {
       reason: REASONS[p.error ?? ''] ?? 'The page could not be scanned.',
     })),
     coverage: COVERAGE,
+    review: null,
   };
 }

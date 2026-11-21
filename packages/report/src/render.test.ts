@@ -120,3 +120,84 @@ describe('renderReport', () => {
     },
   );
 });
+
+describe('renderReport: agent review', () => {
+  const withReview = (flags: NonNullable<ReportInput['reviewFlags']>) =>
+    sample({
+      reviewedPages: [SITE],
+      reviewFlags: flags,
+    });
+  const FLAG = {
+    pageUrl: SITE,
+    candidate: 'image' as const,
+    kind: 'unhelpful_alt' as const,
+    selector: 'img',
+    text: 'IMG_0042.jpg',
+    reason: 'The alt text is a camera file name.',
+    suggestion: 'Potter shaping a bowl at the wheel',
+    crop: CROP,
+  };
+
+  it('FR-29: shows each likely issue as needing a human, with the suggestion marked as untested', () => {
+    const html = render(withReview([FLAG]));
+
+    expect(html).toContain('Likely issues');
+    expect(html).toContain('Needs a human to confirm');
+    expect(html).toContain('Suggestion, not tested on your site');
+    expect(html).toContain('Potter shaping a bowl at the wheel');
+    expect(html).toContain('IMG_0042.jpg');
+    expect(complianceClaims(html)).toEqual([]);
+  });
+
+  it('NFR-02: agent and page text in the review section is shown as text, never as markup', () => {
+    const html = render(
+      withReview([
+        {
+          ...FLAG,
+          text: '<img src=x onerror=alert(1)>',
+          reason: '<b>r</b>',
+          suggestion: '<script>s</script>',
+        },
+      ]),
+    );
+
+    expect(html).not.toContain('<img src=x');
+    expect(html).not.toContain('<b>r</b>');
+    expect(html).not.toContain('<script>s');
+  });
+
+  it.each(['light', 'dark'] as const)(
+    'NFR-06: the report with a review section has no axe violations (%s)',
+    { timeout: 60_000 },
+    async (colorScheme) => {
+      const context = await browser.newContext({ colorScheme });
+      try {
+        const url = 'https://report.test/r/tok';
+        const html = render(
+          withReview([
+            FLAG,
+            {
+              ...FLAG,
+              candidate: 'link',
+              kind: 'vague_link',
+              selector: 'a',
+              text: 'click here',
+              suggestion: 'See workshop prices',
+              crop: null,
+            },
+          ]),
+        );
+        await context.route('**/*', (route) =>
+          route.request().url() === url
+            ? route.fulfill({ contentType: 'text/html', body: html })
+            : route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) }),
+        );
+        await guardContext(context, () => Promise.resolve(['93.184.215.14']));
+        const { findings, reported } = await scanPageContent(context, url);
+        expect([...findings, ...reported].map((f) => `${f.engine_rule} ${f.target}`)).toEqual([]);
+      } finally {
+        await context.close();
+      }
+    },
+  );
+});
