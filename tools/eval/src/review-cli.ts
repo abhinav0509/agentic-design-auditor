@@ -1,4 +1,4 @@
-// `pnpm eval:review [--record | --replay] [--limit N]`: the review agent eval (D-047) against the
+// `pnpm eval:review [--set basic|hard] [--record | --replay] [--limit N]`: the review agent eval (D-047) against the
 // configured real model, or against the recordings (no calls, no cost). Refuses to start over
 // budget. Prints the D-041 gate verdict; the API key comes from the shell and is never read here.
 import {
@@ -8,7 +8,7 @@ import {
   REVIEW_PROMPT_VERSION,
   reviewPromptHash,
 } from '@beacon/agent';
-import { reviewCases } from '@beacon/evals';
+import { reviewCases, reviewHardCases } from '@beacon/evals';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -24,12 +24,15 @@ const { values: args } = parseArgs({
     record: { type: 'boolean', default: false },
     replay: { type: 'boolean', default: false },
     limit: { type: 'string' },
+    set: { type: 'string', default: 'basic' },
   },
 });
+if (args.set !== 'basic' && args.set !== 'hard') throw new Error('--set is basic or hard');
+const hard = args.set === 'hard';
 
 const model = fixerModel(process.env);
 const budgetMicros = Number(process.env['BEACON_EVAL_BUDGET_USD'] ?? '5') * 1e6;
-let cases = reviewCases();
+let cases = hard ? reviewHardCases() : reviewCases();
 if (args.limit) cases = cases.slice(0, Number(args.limit));
 const perPage = estimateReviewPageMicros(model);
 checkBudget(cases.length, perPage, budgetMicros);
@@ -42,7 +45,7 @@ const git = (...a: string[]) => execFileSync('git', a, { cwd: root, encoding: 'u
 const engineVersion = `${git('rev-parse', '--short', 'HEAD')}${git('status', '--porcelain') ? '-dirty' : ''}`;
 const startedAt = new Date().toISOString();
 console.log(
-  `eval:review: ${String(cases.length)} pages on ${model.id} (${model.effort}), estimate $${((cases.length * perPage) / 1e6).toFixed(2)}, budget $${(budgetMicros / 1e6).toFixed(2)}`,
+  `eval:review (${args.set}): ${String(cases.length)} pages on ${model.id} (${model.effort}), estimate $${((cases.length * perPage) / 1e6).toFixed(2)}, budget $${(budgetMicros / 1e6).toFixed(2)}`,
 );
 
 const llm = args.replay ? undefined : anthropicFromEnv(model);
@@ -53,7 +56,15 @@ try {
     cases,
     llmFor: (c) => llm ?? ReplayLlm.load(recordings, c.id, REVIEW_PROMPT_VERSION),
     budget: { totalMicros: budgetMicros, perCaseEstimateMicros: perPage },
-    ...(args.record ? { record: { dir: recordings, model: model.id } } : {}),
+    ...(args.record
+      ? {
+          record: {
+            dir: recordings,
+            model: model.id,
+            summary: hard ? 'review-hard-run.json' : 'review-run.json',
+          },
+        }
+      : {}),
     onCase: (s) => {
       const { tp, fp, fn } = s.counts;
       console.log(
@@ -77,7 +88,7 @@ try {
   );
   const dir = new URL('reports/evals/', root);
   mkdirSync(dir, { recursive: true });
-  const name = `${startedAt.replace(/[:.]/g, '-')}-review-${model.id}${args.replay ? '-replay' : ''}`;
+  const name = `${startedAt.replace(/[:.]/g, '-')}-review${hard ? '-hard' : ''}-${model.id}${args.replay ? '-replay' : ''}`;
   writeFileSync(new URL(`${name}.json`, dir), `${JSON.stringify(report, null, 2)}\n`);
   writeFileSync(new URL(`${name}.md`, dir), renderReviewMarkdown(report));
   console.log(`\ngate: ${report.gate.pass ? 'pass' : `fail (${report.gate.reasons.join('; ')})`}`);

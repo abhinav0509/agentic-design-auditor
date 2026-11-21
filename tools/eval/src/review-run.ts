@@ -63,7 +63,8 @@ export async function runReviewEval(input: {
   cases: ReviewEvalCase[];
   llmFor: (c: ReviewEvalCase, candidates: ReviewCandidate[]) => LlmClient;
   budget: { totalMicros: number; perCaseEstimateMicros: number };
-  record?: { dir: string; model: string };
+  /** summary: the file the run's scores go to beside the recordings (default review-run.json). */
+  record?: { dir: string; model: string; summary?: string };
   onCase?: (s: ReviewCaseScore) => void;
 }): Promise<{ scores: ReviewCaseScore[]; skipped: string[]; spentMicros: number }> {
   const budget = new Budget(input.budget.totalMicros, input.budget.perCaseEstimateMicros);
@@ -117,7 +118,7 @@ export async function runReviewEval(input: {
   // The run's scores beside its recordings, so a replay test can hold real output to them.
   if (input.record)
     writeFileSync(
-      join(input.record.dir, 'review-run.json'),
+      join(input.record.dir, input.record.summary ?? 'review-run.json'),
       `${JSON.stringify({ model: input.record.model, promptVersion: REVIEW_PROMPT_VERSION, scores }, null, 2)}\n`,
     );
   return { scores, skipped, spentMicros: budget.spentMicros };
