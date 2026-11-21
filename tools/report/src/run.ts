@@ -4,7 +4,7 @@ import type { LlmClient } from '@beacon/agent';
 import type { BlobStore, Clock, IdGen } from '@beacon/core';
 import type { SiteFiles } from '@beacon/verifier';
 import { asApp, createReportLink, type Sql } from '@beacon/db';
-import { scanRun } from '@beacon/worker';
+import { runFixJobs, scanRun } from '@beacon/worker';
 import axe from 'axe-core';
 import type { BrowserContext } from 'playwright';
 import type { ReportPlan } from './plan.ts';
@@ -37,7 +37,7 @@ export async function runReport(
 ): Promise<{ path: string; expiresAt: Date }> {
   const { sql } = deps;
   const orgId = plan.orgId;
-  const runId = await asApp(sql, orgId, async (tx) => {
+  const { runId, siteId } = await asApp(sql, orgId, async (tx) => {
     await tx`
       insert into organizations (id, name) values (${orgId}, ${new URL(plan.siteUrl).host})
       on conflict (id) do nothing`;
@@ -54,11 +54,11 @@ export async function runReport(
     const [run] = await tx<{ id: string }[]>`
       insert into scan_runs (org_id, site_id, status, base_commit_sha, agent_version, prompt_version,
         model_name, budget, engine_version, started_at, requested_by)
-      values (${orgId}, ${siteId}, 'scanning', 'none', 'none', 'none', 'none', '{}',
+      values (${orgId}, ${siteId}, 'scanning', ${deps.fix?.commitSha ?? 'none'}, 'none', 'none', 'none', '{}',
         ${`axe-core-${axe.version}`}, ${deps.clock.now()}, ${plan.requestedBy})
       returning id`;
     if (!run) throw new Error('run not created');
-    return run.id;
+    return { runId: run.id, siteId };
   });
 
   const reviewer = plan.agentReview ? deps.reviewer : undefined;
@@ -68,6 +68,26 @@ export async function runReport(
     { sql, context: deps.context, blobs: deps.blobs, ...(reviewer ? { reviewer } : {}) },
     { orgId, runId, urls: plan.urls },
   );
+
+  if (deps.fix) {
+    const { fix } = deps;
+    const browser = deps.context.browser();
+    if (!browser) throw new Error('the fix step needs the browser behind the context');
+    // The repo that serves the site (D-054); a reference to where the token lives, never the token.
+    await asApp(sql, orgId, async (tx) => {
+      const [known] = await tx`select 1 from site_connections where site_id = ${siteId}`;
+      if (!known)
+        await tx`
+          insert into site_connections (org_id, site_id, provider, installation_ref, repo_full_name,
+            default_branch)
+          values (${orgId}, ${siteId}, 'github', 'env:GITHUB_TOKEN', ${fix.repoFullName},
+            ${fix.defaultBranch})`;
+    });
+    await runFixJobs(
+      { sql, browser, llm: fix.llm, clock: deps.clock, ids: fix.ids, blobs: deps.blobs },
+      { orgId, runId, site: { files: fix.files, commitSha: fix.commitSha, url: plan.siteUrl } },
+    );
+  }
 
   const now = deps.clock.now();
   const expiresAt = new Date(now.getTime() + LINK_DAYS * 24 * 60 * 60 * 1000);
