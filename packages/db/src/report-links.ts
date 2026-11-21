@@ -66,6 +66,22 @@ export type ReportRows = {
   /** Pages the agent reviewed (D-048); a page missing here had no review or it did not finish. */
   reviewedPages: string[];
   reviewFlags: (ReviewFlagRow & { pageUrl: string })[];
+  /** The run's proposed fixes, for the reviewer (FR-10, D-054). */
+  fixes: {
+    id: string;
+    status: string;
+    title: string;
+    rationale: string;
+    ruleId: string;
+    pageUrl: string;
+    file: string;
+    diff: string | undefined;
+    risk: string | undefined;
+    announcedBefore: string | null;
+    announcedAfter: string | null;
+    crop: string | null;
+  }[];
+  pullRequests: { number: number; url: string; branch: string; proposalIds: string[] }[];
 };
 
 /** A run as the report reads it, under the caller's org (asApp with the link's org). */
