@@ -43,7 +43,8 @@ const REFERENCE: [src: string, alt: string][] = [
   ['/img/workshop.jpg', 'Four people at pottery wheels during an evening class'],
 ];
 
-const VAGUE = [
+/** Link texts that say nothing out of context; a good suggestion is none of these. */
+export const VAGUE_LINK_TEXTS = [
   'click here', 'read more', 'here', 'learn more', 'more', 'this page',
   'continue', 'details', 'link', 'go', 'find out more', 'see more',
 ]; // prettier-ignore
@@ -92,7 +93,7 @@ function plainPage(k: number): ReviewEvalCase {
     subjects[alt] = subjectsOf(src);
     return `<p><img src="${src}" width="320" height="240" alt="${esc(alt)}"></p>`;
   });
-  const vague = VAGUE[k] ?? 'here';
+  const vague = VAGUE_LINK_TEXTS[k] ?? 'here';
   const clear = CLEAR[k] ?? 'Contact the studio';
   truth.links[vague] = 'flag';
   truth.links[clear] = 'keep';
