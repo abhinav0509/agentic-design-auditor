@@ -18,7 +18,11 @@ export type Verification =
       /** Share of changed pixels outside the noise mask; 0 when within noise × k (A.3 step 5). */
       visualDiffRatio: number;
       noiseRatio: number;
+      /** Asked for with { evidence: true }: what the fix changes for the person using the page. */
+      evidence?: VerifyEvidence;
     };
+
+export type VerifyEvidence = { before: string; after: string; crop: Uint8Array | null };
 
 // Never resolvable, so nothing is fetched: every request is answered by the route below.
 const ORIGIN = 'https://checkout.beacon.invalid';
@@ -153,6 +157,7 @@ export async function verify(
     finding: { engine_rule: string; target: string };
     patch: { path: string; after: string };
   },
+  _options: { evidence?: boolean } = {},
 ): Promise<Verification> {
   const target = key({ rule: input.finding.engine_rule, target: input.finding.target });
   const before = await render(browser, input.files, input.page);

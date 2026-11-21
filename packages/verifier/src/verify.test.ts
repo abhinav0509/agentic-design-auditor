@@ -151,3 +151,57 @@ describe('verifier', { timeout: 60_000 }, () => {
     }
   });
 });
+
+describe('verifier evidence', { timeout: 60_000 }, () => {
+  const withEvidence = (
+    finding: { engine_rule: string; target: string },
+    index: string,
+    after: string,
+  ) =>
+    verify(
+      browser,
+      { files: files(index), page: 'index.html', finding, patch: { path: 'index.html', after } },
+      { evidence: true },
+    );
+
+  it('FR-10: shows what assistive technology announces for the element before and after, with a crop of it', async () => {
+    const v = await withEvidence(finding, BEFORE, fixed(BEFORE));
+
+    expect(v).toMatchObject({
+      status: 'passed',
+      evidence: { before: '- img', after: '- img "Potter shaping a bowl"' },
+    });
+    if (v.status === 'unmapped') throw new Error('unreachable');
+    expect([...(v.evidence?.crop?.slice(0, 4) ?? [])]).toEqual([0x89, 0x50, 0x4e, 0x47]);
+  });
+
+  it('FR-10: for a form field, the announced name appears once it is labelled', async () => {
+    const field = page('<main><h1>Join</h1><input type="email"></main>');
+    const v = await withEvidence(
+      { engine_rule: 'label', target: 'input' },
+      field,
+      field.replace('<input type="email">', '<input type="email" aria-label="Email address">'),
+    );
+
+    expect(v).toMatchObject({
+      evidence: { before: '- textbox', after: '- textbox "Email address"' },
+    });
+  });
+
+  it('FR-10: for the page language, the evidence is the language a screen reader is told to use', async () => {
+    const noLang = page(BODY, '<html>');
+    const v = await withEvidence(
+      { engine_rule: 'html-has-lang', target: 'html' },
+      noLang,
+      page(BODY),
+    );
+
+    expect(v).toMatchObject({
+      evidence: { before: 'Page language: not set', after: 'Page language: en', crop: null },
+    });
+  });
+
+  it('keeps the plain result unless evidence is asked for', async () => {
+    expect(await run(fixed(BEFORE))).not.toHaveProperty('evidence');
+  });
+});
