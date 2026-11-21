@@ -7,7 +7,7 @@ import {
   type LlmClient,
   type ReviewCandidate,
 } from '@beacon/agent';
-import { REVIEW_PAYLOAD, reviewCases, type ReviewEvalCase } from '@beacon/evals';
+import { REVIEW_PAYLOAD, reviewCases, reviewHardCases, type ReviewEvalCase } from '@beacon/evals';
 import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -89,6 +89,19 @@ describe('runReviewEval', { timeout: 300_000 }, () => {
     expect(report.metrics.precision.rate).toBe(1);
     expect(report.metrics.recall.rate).toBe(1);
     expect(report.gate).toEqual({ pass: true, reasons: [] });
+  });
+
+  it('FR-29: on the hard set too, the scanner picks exactly the labelled elements', async () => {
+    const hard = reviewHardCases();
+    const { scores } = await runReviewEval({
+      browser,
+      cases: hard,
+      llmFor: (c, cands) => oracle(c, cands),
+      budget,
+    });
+
+    expect(scores).toHaveLength(hard.length);
+    expect(buildReviewReport(META, scores, []).metrics.precision.rate).toBe(1);
   });
 
   it('NFR-02: a reviewer that plants the payload fails the gate', async () => {
