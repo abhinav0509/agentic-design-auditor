@@ -6,7 +6,7 @@ import { afterAll, beforeAll, expect, it } from 'vitest';
 import { decideProposal, ensureOperator } from './decisions.ts';
 import { recordExport } from './exports.ts';
 import { saveProposal } from './proposals.ts';
-import { loadReportInput } from './report-links.ts';
+import { loadReportInput, runHasCrop } from './report-links.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000f9';
@@ -89,4 +89,9 @@ it('FR-10: the report input lists each proposal with its diff, risk, evidence an
       proposalIds: [id],
     },
   ]);
+});
+
+it('FR-27: a proposal’s crop belongs to its run, so the report link may serve it', async () => {
+  const crop = blobRef(new Uint8Array([3]), 'image/png');
+  expect(await asApp(db.sql, ORG, (tx) => runHasCrop(tx, seed['run'] ?? '', crop))).toBe(true);
 });
