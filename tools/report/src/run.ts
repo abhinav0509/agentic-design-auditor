@@ -1,7 +1,8 @@
 // The operator report run (D-045): the prospect's org, site and run under RLS, the scan step with
 // crops, the run marked ready, and a 14-day share link (FR-27, FR-29, D-041).
 import type { LlmClient } from '@beacon/agent';
-import type { BlobStore, Clock } from '@beacon/core';
+import type { BlobStore, Clock, IdGen } from '@beacon/core';
+import type { SiteFiles } from '@beacon/verifier';
 import { asApp, createReportLink, type Sql } from '@beacon/db';
 import { scanRun } from '@beacon/worker';
 import axe from 'axe-core';
@@ -17,6 +18,15 @@ export type RunReportDeps = {
   token: () => string;
   /** The agent review (D-048), when the plan asks for it. */
   reviewer?: { llm: LlmClient };
+  /** The fix step (D-054): the fixer on the checkout of the repo that serves the site. */
+  fix?: {
+    llm: LlmClient;
+    ids: IdGen;
+    files: SiteFiles;
+    commitSha: string;
+    repoFullName: string;
+    defaultBranch: string;
+  };
 };
 
 const LINK_DAYS = 14;

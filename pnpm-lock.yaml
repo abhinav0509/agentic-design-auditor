@@ -240,9 +240,15 @@ importers:
       '@beacon/eval':
         specifier: workspace:*
         version: link:../eval
+      '@beacon/exporter':
+        specifier: workspace:*
+        version: link:../../packages/exporter
       '@beacon/scanner':
         specifier: workspace:*
         version: link:../../packages/scanner
+      '@beacon/verifier':
+        specifier: workspace:*
+        version: link:../../packages/verifier
       '@beacon/web':
         specifier: workspace:*
         version: link:../../apps/web
@@ -258,6 +264,10 @@ importers:
       postgres:
         specifier: 3.4.9
         version: 3.4.9
+    devDependencies:
+      '@beacon/evals':
+        specifier: workspace:*
+        version: link:../../packages/evals
 
   tools/smokescreen: {}
 
