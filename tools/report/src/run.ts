@@ -18,6 +18,8 @@ export type RunReportDeps = {
   token: () => string;
   /** The agent review (D-048), when the plan asks for it. */
   reviewer?: { llm: LlmClient };
+  /** The fix preview step (D-056): the fixes Beacon would make, from the URL alone. */
+  preview?: { llm: LlmClient; ids: IdGen };
   /** The fix step (D-054): the fixer on the checkout of the repo that serves the site. */
   fix?: {
     llm: LlmClient;
