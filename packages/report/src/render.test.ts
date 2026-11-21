@@ -202,3 +202,106 @@ describe('renderReport: agent review', () => {
     },
   );
 });
+
+describe('renderReport: proposed fixes', () => {
+  const ID = '00000000-0000-4000-8000-000000000a01';
+  const FIX = {
+    id: ID,
+    status: 'applied',
+    title: 'Add alt text to the studio photo',
+    rationale: 'The photo shows the studio at work.',
+    ruleId: 'image-alt',
+    pageUrl: 'https://acme.test/about.html',
+    file: 'about.html',
+    diff: '--- a/about.html\n+++ b/about.html\n@@ -7 +7 @@\n-<img src="img/studio.jpg">\n+<img src="img/studio.jpg" alt="Potter shaping a bowl on a wheel">\n',
+    risk: 'low',
+    announcedBefore: '- img',
+    announcedAfter: '- img "Potter shaping a bowl on a wheel"',
+    crop: CROP,
+  };
+  const withFixes = (
+    fixes = [FIX],
+    pullRequests = [
+      {
+        number: 4,
+        url: 'https://github.com/jo/shop/pull/4',
+        branch: 'beacon/x/y',
+        proposalIds: [ID],
+      },
+    ],
+  ) => sample({ fixes, pullRequests });
+
+  it('FR-10: shows each fix with its status, risk, what a screen reader announces before and after, and the change', () => {
+    const html = render(
+      withFixes(
+        [
+          FIX,
+          { ...FIX, id: 'p2', status: 'pending', title: 'Label the name field', risk: 'medium' },
+        ],
+        [],
+      ),
+    );
+
+    expect(html).toContain('Fixes Beacon proposes');
+    expect(html).toContain('Waiting for approval');
+    expect(html).toContain('Medium risk');
+    expect(html).toContain('What a screen reader announces');
+    expect(html).toContain('Potter shaping a bowl on a wheel');
+    expect(html).toContain('Show the change');
+    expect(complianceClaims(html)).toEqual([]);
+  });
+
+  it('FR-14: an applied fix links to the pull request it is in', () => {
+    const html = render(withFixes());
+
+    expect(html).toContain('In pull request #4');
+    expect(html).toContain('href="https://github.com/jo/shop/pull/4"');
+  });
+
+  it('NFR-02: the diff and the announced text are shown as text, never as markup', () => {
+    const html = render(
+      withFixes(
+        [
+          {
+            ...FIX,
+            diff: '+<script>alert(1)</script>\n',
+            announcedAfter: '<img src=x onerror=alert(1)>',
+          },
+        ],
+        [],
+      ),
+    );
+
+    expect(html).not.toContain('<script>alert(1)');
+    expect(html).not.toContain('<img src=x');
+  });
+
+  it.each(['light', 'dark'] as const)(
+    'NFR-06: the report with fixes has no axe violations (%s)',
+    { timeout: 60_000 },
+    async (colorScheme) => {
+      const context = await browser.newContext({ colorScheme });
+      try {
+        const url = 'https://report.test/r/tok';
+        const html = render(
+          withFixes([FIX, { ...FIX, id: 'p2', status: 'failed_verification', risk: 'high' }]),
+        );
+        await context.route('**/*', (route) =>
+          route.request().url() === url
+            ? route.fulfill({ contentType: 'text/html', body: html })
+            : route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) }),
+        );
+        await guardContext(context, () => Promise.resolve(['93.184.215.14']));
+        const page = await context.newPage();
+        await page.goto(url);
+        await page.evaluate(() =>
+          document.querySelectorAll('details').forEach((d) => (d.open = true)),
+        );
+        const { findings, reported } = await scanPageContent(context, url);
+        expect([...findings, ...reported].map((f) => `${f.engine_rule} ${f.target}`)).toEqual([]);
+      } finally {
+        await context.close();
+      }
+    },
+  );
+});

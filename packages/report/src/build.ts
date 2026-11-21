@@ -15,6 +15,22 @@ export type ReportInput = {
   }[];
   /** Pages the agent reviewed (D-048); absent or empty when no review ran. */
   reviewedPages?: string[];
+  /** The run's proposed fixes and the PRs they went into (FR-10, D-054). */
+  fixes?: {
+    id: string;
+    status: string;
+    title: string;
+    rationale: string;
+    ruleId: string;
+    pageUrl: string;
+    file: string;
+    diff: string | undefined;
+    risk: string | undefined;
+    announcedBefore: string | null;
+    announcedAfter: string | null;
+    crop: string | null;
+  }[];
+  pullRequests?: { number: number; url: string; branch: string; proposalIds: string[] }[];
   reviewFlags?: {
     pageUrl: string;
     candidate: 'image' | 'link';
