@@ -1,0 +1,25 @@
+# D-048: The agent review in reports, behind its gate
+
+- **Date:** 2026-11-21
+- **Decision:** the review agent's flags (D-046) reach URL-only reports, gated by its eval (D-047).
+  - **Storage (`@beacon/db`, migration `0012`):**
+    - `review_flags` keeps one row per flag: candidate kind, flag kind, selector, the text as found, reason, untested suggestion and crop ref. Tenant-isolated, in the seed and the RLS matrix.
+    - `pages.reviewed_at` marks a page whose review is saved. `savePageReview` writes flags and cost only when it sets that mark, so a retried step neither duplicates flags nor charges twice.
+    - `recordModelUsage` writes the first rows of `usage_ledger` (kind `model`; tokens and cost, NFR-05). A review that did not finish still records its cost.
+  - **Scan step (`scanRun`, with `reviewer: { llm }`):**
+    - Asks the scanner for candidates, runs the reviewer per page, and puts each flagged image's crop in the blob store.
+    - Saves the page, its flags and its cost in one transaction. A review that does not finish leaves the page stored and unreviewed.
+  - **Report (`@beacon/report`):**
+    - A "Likely issues the agent noticed" section. Each flag reads "Needs a human to confirm" and shows the page, the alt or link text as found, the crop and the reason, plus "Suggestion, not tested on your site:" and the suggestion.
+    - Pages the review did not finish on are named. The summary counts the agent's flags apart from the automated ones.
+    - axe still reports zero violations in light and dark, all text is escaped, and the claims check passes.
+    - `runHasCrop` now also owns review-flag crops, so the share link serves them and nothing else.
+  - **Operator (`pnpm report --agent-review …`):** the review runs only when the committed real run (`fixtures/llm-recordings/review-run.json`) was measured at the current review prompt, on the configured model, and passes the gate. Otherwise the script stops and says why. The key comes from `.env.local`, and the script prints the review's cost.
+- **Context:** D-041 (review behind its gate; labels "needs a human to confirm" and "suggestion, not tested on your site"), D-046, D-047 (first real run passed: precision 30/30, 0 injections).
+- **Options:** (A) gate as a manual flag the operator sets after reading an eval; (B) the script checks the recorded run itself.
+- **Chosen:** B. A prompt change switches the review off until it is measured again, so a report can never carry flags from an unmeasured reviewer.
+- **Consequences:**
+  - **First real use (example.com, $0.0089):** the agent flagged "Learn more" as vague link text and suggested "Learn more about example domains".
+  - **Unmeasured models:** only the model the gate measured can run the review. Trying another model means a new eval run.
+  - **No setting stored:** "no reviewed page" reads as "no review ran". A run whose every review failed looks the same until runs store their review setting.
+  - **Real-site precision is unproven:** the eval set is synthetic and easy (D-047), so a harder set comes before the review is offered to pilots by default.
