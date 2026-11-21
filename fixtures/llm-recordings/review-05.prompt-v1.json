@@ -1,0 +1,140 @@
+{
+  "scenario": "review-05",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "2f1e81a38aa853ed1fdb685a079fdb9a4205423d0143abe198f8a0eac3e4fd82",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01XecY6STKKx3Qk8HA7FzRu3",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01Bx1pyioZx22PFTaMGkqsyx",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01MQwsiZgas2RpRtxLx4vecY",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          }
+        ],
+        "text": "I need to view the images before judging them.",
+        "usage": {
+          "inputTokens": 1631,
+          "outputTokens": 150,
+          "costMicros": 5754.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view the images before judging them."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XecY6STKKx3Qk8HA7FzRu3",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Bx1pyioZx22PFTaMGkqsyx",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01MQwsiZgas2RpRtxLx4vecY",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "2232723b3f658be7e35ce5d95ad03c511d911f69df51892c6c74af5fef36ebd4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01W9r7vXk4xRyWkzDasFzrxF",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text 'graphic' is generic and does not describe the image, a close-up of a speckled cream mug's handle.",
+                  "suggestion": "Close-up of the handle of a speckled cream mug"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "Link text 'more' does not say where the link goes when read out of context.",
+                  "suggestion": "More about visiting the studio on Saturdays"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2204,
+          "outputTokens": 204,
+          "costMicros": 9126.4
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01W9r7vXk4xRyWkzDasFzrxF",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text 'graphic' is generic and does not describe the image, a close-up of a speckled cream mug's handle.",
+                  "suggestion": "Close-up of the handle of a speckled cream mug"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "Link text 'more' does not say where the link goes when read out of context.",
+                  "suggestion": "More about visiting the studio on Saturdays"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

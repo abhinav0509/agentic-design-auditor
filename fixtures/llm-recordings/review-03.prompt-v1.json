@@ -1,0 +1,140 @@
+{
+  "scenario": "review-03",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "4f9a182fb8dc207a3ed8af60b1ef5cf682eb1b83d05552697580352255ec4349",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01AQdQ1g31t4vTJ1R8gNmozQ",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01CBFMAqnMAESTx5EBXPg97n",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01TTzyoncGedJJSjoJY3YLWY",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          }
+        ],
+        "text": "I need to look at the images before judging their alt text.",
+        "usage": {
+          "inputTokens": 1629,
+          "outputTokens": 154,
+          "costMicros": 5826.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to look at the images before judging their alt text."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01AQdQ1g31t4vTJ1R8gNmozQ",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01CBFMAqnMAESTx5EBXPg97n",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01TTzyoncGedJJSjoJY3YLWY",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "561d0555277edb5a767431c5f2e91bb26eef453138958ce2f9e976da22c5676e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01E67W9YamHza6BuVdLHZEuW",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text \"picture\" is generic. It doesn't say the image shows a green teapot with a cane handle.",
+                  "suggestion": "Green glazed teapot with a curved cane handle"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text \"here\" doesn't say where the link goes when read out of context.",
+                  "suggestion": "Read more about our double firing in the gas kiln"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2206,
+          "outputTokens": 205,
+          "costMicros": 9154.4
+        },
+        "raw": [
+          {
+            "type": "tool_use",
+            "id": "toolu_01E67W9YamHza6BuVdLHZEuW",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text \"picture\" is generic. It doesn't say the image shows a green teapot with a cane handle.",
+                  "suggestion": "Green glazed teapot with a curved cane handle"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text \"here\" doesn't say where the link goes when read out of context.",
+                  "suggestion": "Read more about our double firing in the gas kiln"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

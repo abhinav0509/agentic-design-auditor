@@ -1,0 +1,157 @@
+{
+  "scenario": "review-04",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "f4d55f564e946c8171075d4f72142fcd0e243bbf3e0cd67e7834bbaf207cdf5e",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KHGCjaVzgK24VjCeMXjtQ7",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01XTFDmee7FEQ1tcw8sVHZoF",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_011WnWUa4oytZYMx1LaT7iWM",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          }
+        ],
+        "text": "I need to view images c1, c2, c3 first.",
+        "usage": {
+          "inputTokens": 1624,
+          "outputTokens": 155,
+          "costMicros": 5826.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view images c1, c2, c3 first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KHGCjaVzgK24VjCeMXjtQ7",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01XTFDmee7FEQ1tcw8sVHZoF",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_011WnWUa4oytZYMx1LaT7iWM",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "30844b34cac925313a78981ac2069c8765afea3342a2d42cb0c47083f208fb93",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_013H5ahUNHdkiAkLUooLjdHX",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is a camera file name. It doesn't describe the image, which shows three speckled cream mugs with brown rims on a wooden shelf.",
+                  "suggestion": "Three speckled cream mugs with brown rims on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text describes a mug, but the image is a map showing where the studio is, on Kiln Lane near the station.",
+                  "suggestion": "Map showing the studio on Kiln Lane, north of Mill Street and the station"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text 'learn more' doesn't say where the link goes when read on its own.",
+                  "suggestion": "Learn more about our recycled paper packaging"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2202,
+          "outputTokens": 378,
+          "costMicros": 12598.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSiQYKEAgUGAI4AUIIdGhpbmtpbmcSDCds1x3eftK1M9iMPhoMcm87IB0AQFXBA7vHIjARmk1vj7xjwGE2voq8qrJKxnBEceshwX3HDQzjUXpS/nLmgTxZwoYenvrgo4xenl0qpgUPKRZwxcWd1lyk7Fd+gu4mIjKcjv0J78pwbB+BbbsGRnrLNY1Zb32q+iylFg3PXqOTlaL1wVrXbKHXxFf+NnakuYhSkRe9Cq7raNK1/lHriELwA3u4Ukm5d6CgfZs47cUKDQ3QWpTM26jjm4hMkVyMfeBouW5bHy2besYll1nNSn7lFf5blZqGjzEyWIYL54QOVaVNZUYjL+Y8LSF76VziAOwbmNG4B/YsglmTDWGkPcW6hJJJLYyvixX0LwWk1B0di0Tktc1ql7xvAIrPHrBivDC3YwoFD3/nhiz4C47BwZ54JV0RBuewCW5319TejBdCywcnHGsEzyuKT474D5/kCMJDXQ4IkNMCMBZkI+orGKxqfjykxbSyK6HVpdTE4eikM3PCf2Mefdjp4h660Dvzfb7JtA16PLs3xnNTiPq7wvwuZv8LLtUyfwVQqz5ApGyK4aYLcWEu/77s7/5eqeeLski0iTLiZLnkyP65OGBp5zm79CMQ40Mt6/8HGqpB2aBGfr1knFDPeRh+JJnCbNS6F+zpR9bqNMkOnirMlRDpBVnjeEoDZYvtEu81oiFlPwBdnQyySS2DBXh7fAvkeO49XVlwPUx1ebaiYuwrF/epkcEwlM4z5Pknm+qVk0HC1PTThXpHWlrme0mzHNEM0h0AWwfNmfaUR6PzC0jmUURgs1L52dzRfzAfNJeSdRAwmHPHjr7NxTDAEpep9M+q98uWxjKfHd8BFJVwVhrZ2LS8yHb5k+p1fntYzqfBr24Lbv5e5roO+aTDBmiDnlUwwdMCnf4CzYqbYIkA3RZ5iKAsevQzmAzVwm6Vw5AMZhJnl8ler2Gwp1+HmdQpAOe8ezTX0eZzgUEmPmsZjXk7uV/77CKAj1494kd9g+OmIibcrRuf9mOzSywYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_013H5ahUNHdkiAkLUooLjdHX",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is a camera file name. It doesn't describe the image, which shows three speckled cream mugs with brown rims on a wooden shelf.",
+                  "suggestion": "Three speckled cream mugs with brown rims on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text describes a mug, but the image is a map showing where the studio is, on Kiln Lane near the station.",
+                  "suggestion": "Map showing the studio on Kiln Lane, north of Mill Street and the station"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text 'learn more' doesn't say where the link goes when read on its own.",
+                  "suggestion": "Learn more about our recycled paper packaging"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

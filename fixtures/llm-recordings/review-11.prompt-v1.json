@@ -1,0 +1,157 @@
+{
+  "scenario": "review-11",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "5e2c833cc6d0bf32bfa0b2e3489ee6eaa385de7464e037c52656042c6b09d87d",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BfTTsx7S5FY6WXwTW3UJ7y",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01NcZ7S7VRj6R36YmcPuqxZP",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01X3qhKNimqDwDdUt14aN4Ta",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          }
+        ],
+        "text": "I need to view images c1, c2, c3.",
+        "usage": {
+          "inputTokens": 1644,
+          "outputTokens": 153,
+          "costMicros": 5866.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view images c1, c2, c3."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BfTTsx7S5FY6WXwTW3UJ7y",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01NcZ7S7VRj6R36YmcPuqxZP",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01X3qhKNimqDwDdUt14aN4Ta",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "37f65a404925ce43db507b9a011018a3524f85a3204b74883f98d94b56063505",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KPuHsa41AVZjYw1xFPk9cb",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a camera file name and does not describe the image, which shows a speckled cream mug with a brown rim.",
+                  "suggestion": "Speckled cream mug with a brown rim on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text says a potter is shaping a bowl on a wheel, but the image shows an open cardboard box holding three paper-wrapped round items. The alt text contradicts the image.",
+                  "suggestion": "Open cardboard box holding three pottery pieces wrapped in paper"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text 'find out more' does not say where the link goes when read out of context.",
+                  "suggestion": "Find out more about Saturday studio visits"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2220,
+          "outputTokens": 383,
+          "costMicros": 12770.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSkwYKEAgUGAI4AUIIdGhpbmtpbmcSDLgO8nnBiG9TmbY7ohoMM8pBRzaZ2gjQvkwBIjADJDrjaYkj1rxBVIBlUPFUl3hl/1Mt17KCQo7aoPP59PiPYepuzldtHkPnGYM6BmwqsAUBD2c6kZCP7wk8dj/TFNl1sdrP1bnXOoNtSDC3dkMjjRaojGC5ND8dNcYlDBz9fvFSq+oLEzlhRzYAoiKNrLcEx/STYSatZGIzDB3WbUZuB+lOa+6TEFgBA0R8dOiDmfG6ODYJnIqzHZvbDfJQqvlG2lUlG8cLcHWxoJ/r9dJTb2HTc3Gp17GOaa3cgcs0gx6j1PNpXS31sbZifRf7e1iOTiE6b1iF2n3WmbHDYjB2WqZRVKLulE+jSBXhdUqTbIEeDKLLhPvjovF8bSTGEn9tr0YUgZsDeZlVF/OBf/Z/MpJyKN1J+bKTqQW/HKeWkrCDB8u+RoUH9brs1TFFDh4rm89DrIQ26Wz6qLLBamXCoFsIsqJr82XR62R1vhWHHAb7/a9lAg3rGqESgemGyjtlBtUnctuVsSIPTgIgyNHzlAZRGADM4TlH9bPVSmF7tX5GOpYvO4dqUwcdca4/8rGTOSpgc/sxtm8NgADNAy+S2oVAeYuW1plSCbpPhuedplq7zrvpHjXVcHJQBSMgJ2r+cy6Jn7Wie05PW54680fxkR9sIbBNUwsuuMvP47cOonWZp0yOZBHV112wh7jYcjCmjcgddfM+63GSpMjya3ByWbIJ0LxH0Ke+GaH4ZFeZxbd1y2dU97Ul31kc50hIfqVOZM49+WDt6wPCy/WLVBqdXUHFaan6ITVlfFLmv8gPBikywRFWYRW0BsWgspClpI6eqLwpnHQFpy21qRK/MgfJLDAr94zZstKOcoQhGukNBgvFewbfHX+pEuKmH+IahprbinVwY9xbLReSFPUzZkNEYt8g1k5SPYI6tP39yMDAwvEzup+4AyfbZylHDzyngVtzc8HrjGGTL8ShecYGZo3Jg6gHvUFklcVHp8DuAkJ+ddLgc2MweV4uWi3krYsU+Y05GAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KPuHsa41AVZjYw1xFPk9cb",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is a camera file name and does not describe the image, which shows a speckled cream mug with a brown rim.",
+                  "suggestion": "Speckled cream mug with a brown rim on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text says a potter is shaping a bowl on a wheel, but the image shows an open cardboard box holding three paper-wrapped round items. The alt text contradicts the image.",
+                  "suggestion": "Open cardboard box holding three pottery pieces wrapped in paper"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "The link text 'find out more' does not say where the link goes when read out of context.",
+                  "suggestion": "Find out more about Saturday studio visits"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "scenario": "review-02",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "76a4418530c4892770b8e4a37abd47234c8c9480c4243f2b8614183d19b6e570",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01BNK935JodGDan35Hnfxjet",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01M68TF55G1FdGi976ahpdSz",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_019W4wDrnB2mvGPnmpWQPRTC",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          }
+        ],
+        "text": "I need to view images c1, c2, c3 before judging.",
+        "usage": {
+          "inputTokens": 1619,
+          "outputTokens": 157,
+          "costMicros": 5846.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view images c1, c2, c3 before judging."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01BNK935JodGDan35Hnfxjet",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01M68TF55G1FdGi976ahpdSz",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_019W4wDrnB2mvGPnmpWQPRTC",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "36b6d508adedd5c83aa5098a4e6d08b35320f089e14bdfd8510aa589d19055c4",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01PLWsX8m1krTmrJkfD7Ub41",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is a file name and doesn't describe the image, which shows a tall textured vase on a wooden shelf.",
+                  "suggestion": "Tall pale vase with a fine crackle texture on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text contradicts the image. There is no jug or milk, just a cream bowl with a navy rim holding three colored fruits.",
+                  "suggestion": "Cream bowl with a navy rim holding a red, a yellow and a green fruit"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "'read more' doesn't say where the link goes when read out of context.",
+                  "suggestion": "Read more about evening classes starting in March"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2199,
+          "outputTokens": 388,
+          "costMicros": 12786.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSwwYKEAgUGAI4AUIIdGhpbmtpbmcSDN65tSSOLVHMgdnaRhoMn///1I9IDcROfbc4IjDl1x8A40/U1CTOjW+91+ZaiL0Tf5NM2YVyPV3/y9n+b7oYCVJXajO7C+ac/rmfEtcq4AXFGIL9WwwvuZR+9/NrimON852mhgbET4MqdF3KXbOJBfiDJ5zJYQRN4YxhLP8oTidBQzRytf3TMaNtc+fmD6+aZggwTH6YnFwpAzVVegdMs0Uj7S7iLSh2GtvvBmUhumrDPFD8hB0Ie7sxe/akxi5ONPYGrU/yCEnwHSw8h/Z4xvNjabdafmKb+6OZ5tJde8UjFIIB9/b+unjQJ5XIjeotiAXNGhKGqGFxOTtmCjHkF0CFXkKJOZn9S1ycyLTDZWzgDU9Je/Wwn//uR/Vt/N4NBlICEc99hlyUj7hWYLxtU/+8whlcTUX5VrPwx5jWPjsJUueE0jRuACS7C2wNlRGgg5tsXL+QxBY7iPC3TsxXHtbOJOk2Bjlqhi4jMNYhwT2QebQ7D4WBYBQEzTJcPMooz8+sL5fHsLWFwwx6Vvmf5WHPeN4ByOYzApKSqa3xVIOn4GKVA2lSyJkRgxQ7589Inuxra9+VrLwF1GL1sXK9xE3sZ37tNVqrwI+iq4h208GjOlJpnbH78EoYerohj77ZOR03q6IzYYFJN9pdc+Dm6BRLQs5sbICNFywCK2qJ0yej5Lva9JViUA5RgqfnYj5jpYKskR22DzU4SVCRqBXpzOo1v9fd1K/GxcpJhXhNuPidAReAEIXVLgAfmthkYKWI4vJ0MVOg/16PLVubIEQWmdulRj9lWpRQ+5JWo86XDpMqXJDOZSKcpidhe/0huchCXfwXYs5+0m67hN3BYAScOIvo1l9RHuODqIs3E5yuqT6l9awSZw9mKo0bCqrZpFm+fzw38Zn2hkQamijv7Uhgk9Qis8iRgzrzcLpucle9uftd2KEO0HnHaFEBeERM+dsZKUYYT9as25nCvRCj1qAtnkXl8oe4FH2VYvVB0/0pZPYXvmOzH3nnGzEWth7NpLFLTt+8Xf8ejm7kuDYqS/eXDZpPYV+igAT+OEJlSdBrcLXNaYqYr6LReOh5kyTRAsqwGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01PLWsX8m1krTmrJkfD7Ub41",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text is a file name and doesn't describe the image, which shows a tall textured vase on a wooden shelf.",
+                  "suggestion": "Tall pale vase with a fine crackle texture on a wooden shelf"
+                },
+                {
+                  "id": "c3",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text contradicts the image. There is no jug or milk, just a cream bowl with a navy rim holding three colored fruits.",
+                  "suggestion": "Cream bowl with a navy rim holding a red, a yellow and a green fruit"
+                },
+                {
+                  "id": "c4",
+                  "kind": "vague_link",
+                  "reason": "'read more' doesn't say where the link goes when read out of context.",
+                  "suggestion": "Read more about evening classes starting in March"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}
