@@ -81,7 +81,9 @@ it(
 
     await expect
       .poll(
-        async () => (await db.sql`select status from proposals where id = ${ID}`)[0]?.['status'],
+        async () =>
+          (await db.sql<{ status: string }[]>`select status from proposals where id = ${ID}`)[0]
+            ?.status,
       )
       .toBe('approved');
     expect(await page.getByRole('status').textContent()).toContain('Fix approved');
