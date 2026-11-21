@@ -8,6 +8,8 @@ export type RenderOptions = {
   expiresAt: string;
   /** Where the page loads a crop from; the route checks the crop belongs to the link's run. */
   cropUrl: (ref: string) => string;
+  /** The reviewer page (D-055): forms post to `${actionBase}/approve/<id>` and so on. */
+  review?: { actionBase: string; notice?: string };
 };
 
 const esc = (s: string) =>
