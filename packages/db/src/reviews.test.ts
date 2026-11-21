@@ -9,7 +9,7 @@ import { savePageScan } from './scans.ts';
 import { asApp, createTestDb, seedOrg, type TestDb } from './test-db.ts';
 
 const ORG = '00000000-0000-4000-8000-0000000000e1';
-const URL_ = 'https://example.test/';
+const URL_ = 'https://example.test/reviewed'; // not the seed's page, which has a seeded flag
 let db: TestDb;
 let runId: string;
 
@@ -62,8 +62,9 @@ it('FR-29: saves a page’s review flags and the model cost once; a retried save
   expect(await save()).toBe(true);
   expect(await save()).toBe(false);
 
-  const flags =
-    await db.sql`select kind, current_text, suggestion, crop from review_flags order by kind`;
+  const flags = await db.sql`
+    select r.kind, r.current_text, r.suggestion, r.crop from review_flags r
+    join pages p on p.id = r.page_id where p.url = ${URL_} order by r.kind`;
   expect(flags).toEqual([
     {
       kind: 'unhelpful_alt',
@@ -87,7 +88,7 @@ it('FR-29: the report input lists reviewed pages and their flags', async () => {
   const input = await asApp(db.sql, ORG, (tx) => loadReportInput(tx, runId));
 
   expect(input.reviewedPages).toEqual([URL_]);
-  expect(input.reviewFlags).toEqual(
+  expect(input.reviewFlags.filter((f) => f.pageUrl === URL_)).toEqual(
     FLAGS.map((f) => ({ pageUrl: URL_, ...f })).sort((a, b) => (a.selector < b.selector ? -1 : 1)),
   );
 });

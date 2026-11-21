@@ -116,6 +116,12 @@ export async function seedOrg(sql: Sql, org: string): Promise<Record<string, str
      values ($1, $2, sha256($3::bytea), now() + interval '14 days')`,
     [org, run, `${org}-seed`],
   );
+  await sql.unsafe(
+    `insert into review_flags (org_id, run_id, page_id, candidate, kind, selector, current_text,
+       reason, suggestion)
+     values ($1, $2, $3, 'link', 'vague_link', 'a', 'here', 'Vague.', 'See prices')`,
+    [org, run, page],
+  );
   await sql.unsafe(`insert into fix_jobs (org_id, run_id, fingerprint) values ($1, $2, 'fp')`, [
     org,
     run,
