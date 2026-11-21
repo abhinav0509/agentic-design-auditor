@@ -15,7 +15,14 @@ export async function createReportLink(
     runId,
     token,
     expiresAt,
-  }: { orgId: string; runId: string; token: string; expiresAt: Date },
+  }: {
+    orgId: string;
+    runId: string;
+    token: string;
+    expiresAt: Date;
+    /** A reviewer link (D-055) may approve, reject and export; a share link only shows. */
+    canReview?: boolean;
+  },
 ): Promise<{ id: string }> {
   const [row] = await tx<{ id: string }[]>`
     insert into report_links (org_id, run_id, token_hash, expires_at)
@@ -165,4 +172,12 @@ export async function runHasCrop(tx: TransactionSql, runId: string, ref: string)
       or exists (select 1 from proposals where run_id = ${runId}
         and payload->'evidence'->>'after_screenshot' = ${ref}) as found`;
   return row?.found ?? false;
+}
+
+export function resolveReviewLink(
+  _sql: Sql,
+  _token: string,
+  _at: Date,
+): Promise<{ orgId: string; runId: string } | null> {
+  return Promise.reject(new Error('not implemented'));
 }
