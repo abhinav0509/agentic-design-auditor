@@ -94,7 +94,8 @@ describe('handleReviewRequest', () => {
     );
     expect(res.headers['content-security-policy']).toContain("form-action 'self'");
     expect(res.headers['content-security-policy']).not.toContain('script-src');
-    expect(res.headers['referrer-policy']).toBe('no-referrer');
+    // same-origin, not no-referrer: under no-referrer browsers send Origin: null on the form posts.
+    expect(res.headers['referrer-policy']).toBe('same-origin');
   });
 
   it('FR-11: a share link cannot open the reviewer page', async () => {

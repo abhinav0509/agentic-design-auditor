@@ -96,6 +96,10 @@ export async function reportPage(
     headers: {
       ...PRIVATE,
       'content-security-policy': csp,
+      // The reviewer page's forms need the browser to send its real Origin (CSRF check); under
+      // no-referrer it sends "null". same-origin still sends nothing to other sites, so the token
+      // in the URL never leaks through a link.
+      ...(review ? { 'referrer-policy': 'same-origin' } : {}),
       'content-type': 'text/html; charset=utf-8',
     },
     body: html,
