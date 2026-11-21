@@ -11,12 +11,13 @@ import { randomBytes, randomUUID } from 'node:crypto';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
 import { planFixRun } from './fix-plan.ts';
-import { approveFixes, exportFixes } from './fix-run.ts';
+import { approveFixes, createReviewLink, exportFixes } from './fix-run.ts';
 import { liveModel, reviewerBehindGate, startProxy } from './operator.ts';
 import { runReport } from './run.ts';
 
 const USAGE = `usage:
   pnpm fix scan [--agent-review] --repo <owner/repo> [page path ...]
+  pnpm fix review-link <report link>         a reviewer page (this computer only) for the run
   pnpm fix approve <report link> (all | 1 2 ...)
   pnpm fix export <report link>`;
 
@@ -113,11 +114,22 @@ try {
       );
       console.log('Fixes:');
       await listFixes(sql, path.split('/').pop() ?? '');
-      console.log(`\nApprove with: pnpm fix approve ${publicUrl}${path} all`);
+      const review = await createReviewLink(
+        { sql, clock },
+        { shareToken: path.split('/').pop() ?? '', token: randomBytes(32).toString('base64url') },
+      );
+      console.log(`\nReview and approve (this computer only): http://127.0.0.1:4180${review}`);
+      console.log('Start the pages with: pnpm report:serve');
     } finally {
       await browser.close();
       proxy.stop();
     }
+  } else if (command === 'review-link') {
+    const review = await createReviewLink(
+      { sql, clock },
+      { shareToken: tokenOf(args[0]), token: randomBytes(32).toString('base64url') },
+    );
+    console.log(`Review and approve (this computer only): http://127.0.0.1:4180${review}`);
   } else if (command === 'approve') {
     const token = tokenOf(args[0]);
     const which =
