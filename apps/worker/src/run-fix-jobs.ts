@@ -2,7 +2,7 @@
 // run the fix job on the stored page and the checkout, save its proposal and finish the job, then mark
 // the run ready. The model runs outside any transaction; saving and finishing share one.
 import type { FixerLimits, LlmClient } from '@beacon/agent';
-import type { Clock, IdGen } from '@beacon/core';
+import type { BlobStore, Clock, IdGen } from '@beacon/core';
 import { asApp, claimFixJob, finishFixJob, loadFixJob, saveProposal, type Sql } from '@beacon/db';
 import type { Finding } from '@beacon/scanner';
 import type { SiteFiles } from '@beacon/verifier';
@@ -16,6 +16,8 @@ export type FixRunDeps = {
   clock: Clock;
   ids: IdGen;
   limits?: FixerLimits;
+  /** Where the verifier's crops go (FR-10); without it proposals carry no screenshot. */
+  blobs?: BlobStore;
 };
 
 /** A model error is transient (v1.0 §9.2: one retry); every other outcome is a finished job. */
@@ -50,6 +52,7 @@ export async function runFixJobs(
             findingId: input.findingId,
             proposal: result.proposal,
             status: result.status,
+            ...(result.announced ? { announced: result.announced } : {}),
           });
         // false: the lease ran out and another worker holds the job; the save above is idempotent.
         await finishFixJob(tx, {

@@ -3,7 +3,7 @@
 // never a build or a repo script, D-008), reproduces the finding, applies the patch, re-runs every
 // axe rule and diffs screenshots against the noise floor of two unpatched renders.
 import axe from 'axe-core';
-import type { Browser } from 'playwright';
+import type { Browser, Page } from 'playwright';
 
 /** The checkout: path relative to the site root (no leading slash) -> file contents. */
 export type SiteFiles = Record<string, string | Uint8Array>;
@@ -18,7 +18,11 @@ export type Verification =
       /** Share of changed pixels outside the noise mask; 0 when within noise × k (A.3 step 5). */
       visualDiffRatio: number;
       noiseRatio: number;
+      /** Asked for with { evidence: true }: what the fix changes for the person using the page. */
+      evidence?: VerifyEvidence;
     };
+
+export type VerifyEvidence = { before: string; after: string; crop: Uint8Array | null };
 
 // Never resolvable, so nothing is fetched: every request is answered by the route below.
 const ORIGIN = 'https://checkout.beacon.invalid';
@@ -43,7 +47,29 @@ const TYPES: Record<string, string> = {
 
 type Violation = { rule: string; target: string };
 
-async function render(browser: Browser, files: SiteFiles, page: string) {
+/**
+ * What assistive technology gets from the element: its accessibility-tree entry (role and name), or
+ * for the document itself the language it declares. A crop shows which element it is.
+ */
+async function evidenceOf(p: Page, target: string) {
+  if (target === 'html') {
+    const lang = await p.evaluate(() => document.documentElement.lang);
+    return { announced: `Page language: ${lang || 'not set'}`, crop: null };
+  }
+  const el = p.locator(`css=${target}`).first();
+  // A finding that does not reproduce has no element here; verify() reports it as unmapped.
+  if ((await el.count()) === 0) return undefined;
+  const announced = (await el.ariaSnapshot({ timeout: 5_000 })).trim();
+  const box = await el.boundingBox();
+  const small =
+    box !== null && box.width >= 1 && box.height >= 1 && box.width <= 1280 && box.height <= 800;
+  const crop = small
+    ? new Uint8Array(await el.screenshot({ animations: 'disabled', timeout: 5_000 }))
+    : null;
+  return { announced, crop };
+}
+
+async function render(browser: Browser, files: SiteFiles, page: string, target?: string) {
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
     reducedMotion: 'reduce',
@@ -72,7 +98,8 @@ async function render(browser: Browser, files: SiteFiles, page: string) {
       v.nodes.map((n) => ({ rule: v.id, target: String(n.target[0]) })),
     );
     const png = await p.screenshot({ fullPage: true, animations: 'disabled' });
-    return { violations, png };
+    const evidence = target === undefined ? undefined : await evidenceOf(p, target);
+    return { violations, png, evidence };
   } finally {
     await context.close();
   }
@@ -153,9 +180,11 @@ export async function verify(
     finding: { engine_rule: string; target: string };
     patch: { path: string; after: string };
   },
+  options: { evidence?: boolean } = {},
 ): Promise<Verification> {
   const target = key({ rule: input.finding.engine_rule, target: input.finding.target });
-  const before = await render(browser, input.files, input.page);
+  const shows = options.evidence ? input.finding.target : undefined;
+  const before = await render(browser, input.files, input.page, shows);
   if (!before.violations.some((v) => key(v) === target))
     return { status: 'unmapped', code: 'UNMAPPED_LOCAL_MISMATCH' };
   const again = await render(browser, input.files, input.page);
@@ -163,6 +192,7 @@ export async function verify(
     browser,
     { ...input.files, [input.patch.path]: input.patch.after },
     input.page,
+    shows,
   );
 
   const violationResolved = !after.violations.some((v) => key(v) === target);
@@ -184,5 +214,14 @@ export async function verify(
     newViolations,
     visualDiffRatio,
     noiseRatio,
+    ...(before.evidence && after.evidence
+      ? {
+          evidence: {
+            before: before.evidence.announced,
+            after: after.evidence.announced,
+            crop: after.evidence.crop,
+          },
+        }
+      : {}),
   };
 }

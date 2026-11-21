@@ -56,3 +56,25 @@ it('NFR-03: a retried job stores one proposal and one event for its finding, not
     select from_status, to_status, actor_type from proposal_events where proposal_id = ${FIRST}`;
   expect(events).toEqual([{ from_status: null, to_status: 'pending', actor_type: 'agent' }]);
 });
+
+it('FR-10: a proposal keeps what assistive technology announces for the element before and after', async () => {
+  const findingId = await newFinding('fp-announced');
+  const proposalId = '00000000-0000-4000-8000-000000000103';
+
+  await asApp(db.sql, ORG, (tx) =>
+    saveProposal(tx, {
+      orgId: ORG,
+      findingId,
+      proposal: makeProposal({ proposal_id: proposalId, run_id: seed['run'] }),
+      status: 'pending',
+      announced: { before: '- img', after: '- img "Potter shaping a bowl"' },
+    }),
+  );
+
+  const [row] = await db.sql`
+    select announced_before, announced_after from proposals where id = ${proposalId}`;
+  expect(row).toEqual({
+    announced_before: '- img',
+    announced_after: '- img "Potter shaping a bowl"',
+  });
+});

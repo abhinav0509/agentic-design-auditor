@@ -14,6 +14,7 @@ import {
   buildProposal,
   parseNodes,
   type BuildInput,
+  type BlobStore,
   type Clock,
   type IdGen,
   type Proposal,
@@ -28,7 +29,14 @@ import type { Browser } from 'playwright';
 export type FixJobResult =
   | { kind: 'unmapped'; reason: UnmappedReason | 'UNMAPPED_LOCAL_MISMATCH' }
   | { kind: 'no_proposal'; fixer: FixerResult }
-  | { kind: 'proposal'; proposal: Proposal; status: Status; fixer: FixerResult };
+  | {
+      kind: 'proposal';
+      proposal: Proposal;
+      status: Status;
+      fixer: FixerResult;
+      /** What assistive technology announces before and after, when the verifier rendered it. */
+      announced?: { before: string; after: string };
+    };
 
 const SEARCH_LIMIT = 20;
 // The vision input accepts these; anything else (SVG included) counts as not loadable.
@@ -112,7 +120,14 @@ function insideForm(source: string, at: number) {
 }
 
 export async function runFixJob(
-  deps: { browser: Browser; llm: LlmClient; clock: Clock; ids: IdGen; limits?: FixerLimits },
+  deps: {
+    browser: Browser;
+    llm: LlmClient;
+    clock: Clock;
+    ids: IdGen;
+    limits?: FixerLimits;
+    blobs?: BlobStore;
+  },
   input: {
     runId: string;
     site: { files: SiteFiles; commitSha: string };
@@ -153,16 +168,21 @@ export async function runFixJob(
   if (fixer.kind === 'blocked' || fixer.kind === 'failed') return { kind: 'no_proposal', fixer };
 
   let result: BuildInput['result'];
+  let announced: { before: string; after: string } | undefined;
+  let crop: string | null = null;
   if (fixer.kind === 'patch') {
     // shortcut: reproduction is checked after the model run, so a finding that does not reproduce
     // locally still costs one fixer run; check it first if that shows up in cost reports.
-    const v = await verify(deps.browser, {
-      files: site.files,
-      page: map.file,
-      finding,
-      patch: { path: map.file, after: fixer.after },
-    });
+    const v = await verify(
+      deps.browser,
+      { files: site.files, page: map.file, finding, patch: { path: map.file, after: fixer.after } },
+      { evidence: true },
+    );
     if (v.status === 'unmapped') return { kind: 'unmapped', reason: v.code };
+    if (v.evidence) {
+      announced = { before: v.evidence.before, after: v.evidence.after };
+      if (v.evidence.crop && deps.blobs) crop = await deps.blobs.put(v.evidence.crop, 'image/png');
+    }
     const { title, rationale, confidence, ops, after } = fixer;
     result = { kind: 'patch', title, rationale, confidence, ops, after, verification: v };
   } else result = fixer;
@@ -179,9 +199,10 @@ export async function runFixJob(
       },
       file: { ...job.file, commitSha: site.commitSha },
       context: job.context,
+      screenshots: { before: null, after: crop },
       result,
     },
     deps,
   );
-  return { kind: 'proposal', ...built, fixer };
+  return { kind: 'proposal', ...built, fixer, ...(announced ? { announced } : {}) };
 }

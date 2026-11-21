@@ -2,6 +2,7 @@
 // job, run the fix job on the stored page and the checkout, save its proposal and finish the job.
 // One run end to end, scan to stored proposal. No real model: FakeLlm scripts every turn.
 import { FakeLlm, toolUse } from '@beacon/agent/testing';
+import { InMemoryBlobStore } from '@beacon/core/testing';
 import { createTestDb, seedOrg, type TestDb } from '@beacon/db/testing';
 import { IMAGES_DIR } from '@beacon/evals';
 import { guardContext } from '@beacon/scanner';
@@ -108,4 +109,32 @@ it('NFR-03: a model error is retried once, and the retry saves the proposal', as
   expect(proposals).toEqual([{ status: 'pending' }]);
   const jobs = await db.sql`select status, attempts from fix_jobs where run_id = ${runId}`;
   expect(jobs).toEqual([{ status: 'done', attempts: 2 }]);
+}, 60_000);
+
+it('FR-10: with a blob store, a proposal keeps the crop of the fixed element and what a screen reader announces before and after', async () => {
+  const runId = await scannedRun();
+  const blobs = new InMemoryBlobStore();
+
+  await runFixJobs(
+    {
+      sql: db.sql,
+      browser,
+      llm: new FakeLlm([toolUse(['get_image', {}]), patchTurn]),
+      clock,
+      ids,
+      blobs,
+    },
+    { orgId: ORG, runId, site: SITE },
+  );
+
+  const [row] = await db.sql<
+    { shot: string | null; announced_before: string; announced_after: string }[]
+  >`
+    select payload->'evidence'->>'after_screenshot' as shot, announced_before, announced_after
+    from proposals where run_id = ${runId}`;
+  expect(row).toMatchObject({
+    announced_before: '- img',
+    announced_after: '- img "Potter shaping a bowl on a wheel"',
+  });
+  expect(await blobs.get(row?.shot ?? '')).not.toBeNull();
 }, 60_000);
