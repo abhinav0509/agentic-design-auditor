@@ -102,6 +102,33 @@ const COVERAGE = {
   ],
 };
 
+const REVIEW_KINDS = {
+  unhelpful_alt: { title: 'Alt text that does not describe the image', label: 'Alt text' },
+  vague_link: { title: 'Link text that does not say where it goes', label: 'Link text' },
+} as const;
+
+/** The agent review (D-048): null when none ran. */
+function reviewOf(input: ReportInput): Report['review'] {
+  const reviewed = input.reviewedPages ?? [];
+  const flags = input.reviewFlags ?? [];
+  // shortcut: no reviewed page reads as "no review ran"; a run whose every review failed looks the
+  // same. Store the run's review setting when that needs telling apart.
+  if (reviewed.length === 0 && flags.length === 0) return null;
+  const done = new Set(reviewed);
+  return {
+    reviewedPages: reviewed.length,
+    notReviewed: input.pages.filter((p) => p.error === null && !done.has(p.url)).map((p) => p.url),
+    flags: flags.map((f) => ({
+      pageUrl: f.pageUrl,
+      ...REVIEW_KINDS[f.kind],
+      current: f.text,
+      reason: f.reason,
+      suggestion: f.suggestion,
+      crop: f.crop,
+    })),
+  };
+}
+
 export function buildReport(input: ReportInput): Report {
   const groups = new Map<string, Report['groups'][number]>();
   for (const i of input.issues) {
@@ -146,6 +173,6 @@ export function buildReport(input: ReportInput): Report {
       reason: REASONS[p.error ?? ''] ?? 'The page could not be scanned.',
     })),
     coverage: COVERAGE,
-    review: null,
+    review: reviewOf(input),
   };
 }

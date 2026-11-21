@@ -142,6 +142,7 @@ describe('renderReport: agent review', () => {
     const html = render(withReview([FLAG]));
 
     expect(html).toContain('Likely issues');
+    expect(html).toContain('An AI agent also noticed 1 likely issue for a human to confirm.');
     expect(html).toContain('Needs a human to confirm');
     expect(html).toContain('Suggestion, not tested on your site');
     expect(html).toContain('Potter shaping a bowl at the wheel');

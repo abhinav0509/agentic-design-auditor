@@ -65,6 +65,10 @@ h3{font-size:1.05rem;margin:0}
 .stats div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .stats dt{color:var(--ink-2);font-size:.875rem}
 .stats dd{margin:2px 0 0;font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums}
+.card img{display:block;max-width:100%;height:auto;margin:8px 0;border:1px solid var(--line);border-radius:8px}
+.suggestion{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.suggestion-label{font-weight:600}
+q{font-style:italic}
 .issues{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
 .chip{display:inline-block;font-size:.8125rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--mino-bg);color:var(--mino)}
@@ -111,6 +115,38 @@ ${elements}
 </li>`;
 }
 
+/** The agent's likely issues (D-048): each needs a human, and every suggestion is untested. */
+function reviewSection(
+  review: NonNullable<Report['review']>,
+  cropUrl: (ref: string) => string,
+): string {
+  const items = review.flags
+    .map(
+      (f) => `<li class="card">
+<h3>${esc(f.title)}</h3>
+<ul class="chips" aria-label="Status"><li class="chip">Needs a human to confirm</li></ul>
+<p class="small">On ${pageLink(f.pageUrl)}. ${esc(f.label)} now: <q>${esc(f.current)}</q></p>
+${f.crop ? `<img src="${esc(cropUrl(f.crop))}" alt="Screenshot of the image on the page" loading="lazy">` : ''}
+<p>${esc(f.reason)}</p>
+<p class="suggestion"><span class="suggestion-label">Suggestion, not tested on your site:</span> ${esc(f.suggestion)}</p>
+</li>`,
+    )
+    .join('\n');
+  const notReviewed = review.notReviewed.length
+    ? `<p class="small">The agent review did not finish on ${plural(review.notReviewed.length, 'page')}: ${review.notReviewed.map(pageLink).join(', ')}.</p>`
+    : '';
+  return `<section aria-labelledby="likely">
+<h2 id="likely">Likely issues the agent noticed</h2>
+<p class="note">An AI agent looked at images and links that automated rules cannot judge, on ${plural(review.reviewedPages, 'page')}. Each item needs a human to confirm it, and each suggestion is untested on your site.</p>
+${
+  review.flags.length
+    ? `<ol class="issues">\n${items}\n</ol>`
+    : '<p>The agent flagged nothing on the pages it reviewed.</p>'
+}
+${notReviewed}
+</section>`;
+}
+
 export function renderReport(report: Report, options: RenderOptions): string {
   const site = host(options.siteUrl);
   const t = report.totals;
@@ -144,7 +180,11 @@ export function renderReport(report: Report, options: RenderOptions): string {
 
 <section aria-labelledby="summary">
 <h2 id="summary">Summary</h2>
-<p>Automated checks flagged ${plural(t.issues, 'element')} in ${plural(report.groups.length, 'kind', 'kinds')} of issue.</p>
+<p>Automated checks flagged ${plural(t.issues, 'element')} in ${plural(report.groups.length, 'kind', 'kinds')} of issue.</p>${
+    report.review
+      ? `\n<p>An AI agent also noticed ${plural(report.review.flags.length, 'likely issue')} for a human to confirm.</p>`
+      : ''
+  }
 <dl class="stats">${stats}</dl>
 <p class="note">${esc(report.coverage.summary)}</p>
 </section>
@@ -153,6 +193,8 @@ export function renderReport(report: Report, options: RenderOptions): string {
 <h2 id="found">What the checks found</h2>
 ${issues}
 </section>
+
+${report.review ? reviewSection(report.review, options.cropUrl) : ''}
 
 <section aria-labelledby="coverage">
 <h2 id="coverage">What this report covers</h2>
