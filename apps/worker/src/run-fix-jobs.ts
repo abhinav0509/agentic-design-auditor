@@ -52,6 +52,7 @@ export async function runFixJobs(
             findingId: input.findingId,
             proposal: result.proposal,
             status: result.status,
+            ...(result.announced ? { announced: result.announced } : {}),
           });
         // false: the lease ran out and another worker holds the job; the save above is idempotent.
         await finishFixJob(tx, {

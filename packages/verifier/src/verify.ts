@@ -57,6 +57,8 @@ async function evidenceOf(p: Page, target: string) {
     return { announced: `Page language: ${lang || 'not set'}`, crop: null };
   }
   const el = p.locator(`css=${target}`).first();
+  // A finding that does not reproduce has no element here; verify() reports it as unmapped.
+  if ((await el.count()) === 0) return undefined;
   const announced = (await el.ariaSnapshot({ timeout: 5_000 })).trim();
   const box = await el.boundingBox();
   const small =

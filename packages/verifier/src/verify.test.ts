@@ -204,4 +204,21 @@ describe('verifier evidence', { timeout: 60_000 }, () => {
   it('keeps the plain result unless evidence is asked for', async () => {
     expect(await run(fixed(BEFORE))).not.toHaveProperty('evidence');
   });
+
+  it('FR-08: a finding that does not reproduce is still unmapped, without waiting for its element', async () => {
+    const started = Date.now();
+    const v = await verify(
+      browser,
+      {
+        files: files(BEFORE),
+        page: 'index.html',
+        finding: { engine_rule: 'image-alt', target: 'img.not-on-this-page' },
+        patch: { path: 'index.html', after: fixed(BEFORE) },
+      },
+      { evidence: true },
+    );
+
+    expect(v).toEqual({ status: 'unmapped', code: 'UNMAPPED_LOCAL_MISMATCH' });
+    expect(Date.now() - started).toBeLessThan(4_000);
+  });
 });
