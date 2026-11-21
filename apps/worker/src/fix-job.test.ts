@@ -169,6 +169,24 @@ describe('siteTools: read-only tools over the checkout', () => {
     await expect(missing.getImage()).rejects.toThrow('the image could not be loaded');
   });
 
+  it('FR-08: on a site served under a path (a GitHub Pages project site), a relative image src still finds its file', async () => {
+    const project = siteTools(
+      FILES,
+      { pageUrl: 'https://jo.github.io/shop/about.html', snippet: '<img src="img/studio.jpg">' },
+      'https://jo.github.io/shop/',
+    );
+    expect(await project.getImage()).toEqual({
+      mediaType: 'image/jpeg',
+      data: STUDIO.toString('base64'),
+    });
+    const outside = siteTools(
+      FILES,
+      { pageUrl: 'https://jo.github.io/shop/about.html', snippet: '<img src="/img/studio.jpg">' },
+      'https://jo.github.io/shop/',
+    );
+    await expect(outside.getImage()).rejects.toThrow('the image could not be loaded');
+  });
+
   it('the DOM snippet is the scanned element', async () => {
     expect(await tools.getDomSnippet()).toBe('<img src="/img/studio.jpg">');
   });

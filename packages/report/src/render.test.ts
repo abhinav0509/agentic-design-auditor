@@ -305,3 +305,79 @@ describe('renderReport: proposed fixes', () => {
     },
   );
 });
+
+describe('renderReport: reviewer controls', () => {
+  const fix = (id: string, status: string, title: string) => ({
+    id,
+    status,
+    title,
+    rationale: 'Why.',
+    ruleId: 'image-alt',
+    pageUrl: 'https://acme.test/about.html',
+    file: 'about.html',
+    diff: '-a\n+b\n',
+    risk: 'low',
+    announcedBefore: '- img',
+    announcedAfter: '- img "A potter"',
+    crop: null,
+  });
+  const input = sample({
+    fixes: [
+      fix('p1', 'pending', 'Add alt text'),
+      fix('p2', 'approved', 'Add lang'),
+      fix('p3', 'approved', 'Label the field'),
+    ],
+    pullRequests: [],
+  });
+  const reviewer = (notice?: string) =>
+    renderReport(buildReport(input), {
+      siteUrl: SITE,
+      scannedAt: input.scannedAt,
+      expiresAt: '2026-11-29T10:00:00.000Z',
+      cropUrl: (ref) => ref,
+      review: { actionBase: '/review/tok', ...(notice ? { notice } : {}) },
+    });
+
+  it('FR-11: the share page has no controls at all', () => {
+    expect(render(input)).not.toContain('<form');
+  });
+
+  it('FR-11: a waiting fix has Approve and Reject; approved fixes can go into one pull request', () => {
+    const html = reviewer();
+
+    expect(html).toContain('action="/review/tok/approve/p1"');
+    expect(html).toContain('action="/review/tok/reject/p1"');
+    expect(html).not.toContain('action="/review/tok/approve/p2"');
+    expect(html).toContain('action="/review/tok/export"');
+    expect(html).toContain('Open a pull request with 2 approved fixes');
+    expect(html).toContain('method="post"');
+  });
+
+  it('FR-11: shows the outcome of the last action as a status message', () => {
+    expect(reviewer('Approved “Add alt text”.')).toMatch(
+      /role="status"[^>]*>[^<]*Approved “Add alt text”\./,
+    );
+  });
+
+  it.each(['light', 'dark'] as const)(
+    'NFR-06: the reviewer page has no axe violations (%s)',
+    { timeout: 60_000 },
+    async (colorScheme) => {
+      const context = await browser.newContext({ colorScheme });
+      try {
+        const url = 'https://report.test/review/tok';
+        const html = reviewer('Approved “Add alt text”.');
+        await context.route('**/*', (route) =>
+          route.request().url() === url
+            ? route.fulfill({ contentType: 'text/html', body: html })
+            : route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) }),
+        );
+        await guardContext(context, () => Promise.resolve(['93.184.215.14']));
+        const { findings, reported } = await scanPageContent(context, url);
+        expect([...findings, ...reported].map((f) => `${f.engine_rule} ${f.target}`)).toEqual([]);
+      } finally {
+        await context.close();
+      }
+    },
+  );
+});

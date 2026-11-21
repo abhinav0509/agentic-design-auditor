@@ -21,7 +21,7 @@
     "eval:review": "node --env-file-if-exists=.env.local tools/eval/src/review-cli.ts",
     "corpus:images": "node tools/corpus-images/src/render.ts",
     "report": "node --env-file-if-exists=.env.local tools/report/src/cli.ts",
-    "report:serve": "node tools/report/src/serve.ts",
+    "report:serve": "node --env-file-if-exists=.env.local tools/report/src/serve.ts",
     "fix": "node --env-file-if-exists=.env.local tools/report/src/fix-cli.ts"
   },
   "devDependencies": {

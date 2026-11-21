@@ -1,0 +1,23 @@
+# D-055: The reviewer page
+
+- **Date:** 2026-11-22
+- **Decision:** reviewers approve, reject and export from the report itself, on a reviewer page served beside the share page.
+  - **Reviewer links:** `report_links.can_review` (migration `0014`). A reviewer link is its own random token: `createReviewLink` (made by `pnpm fix scan`, or later with `pnpm fix review-link <report link>`) and `resolveReviewLink`. A share link never resolves for review (tested), so sharing a report never shares the right to act.
+  - **Page (`GET /review/<token>`):** the same report rendered with `review: { actionBase, notice }`.
+    - Each waiting fix has Approve and Reject forms. Once fixes are approved, "Open a pull request with N approved fixes" appears.
+    - A status message reports the last action, from a fixed list of codes. No query text is ever echoed.
+    - The share page has no forms (tested), and its CSP still says `form-action 'none'`. The reviewer page allows `'self'` only.
+  - **Actions (`POST /review/<token>/approve|reject/<id>`, `/export`):**
+    - refused with 403 unless `Origin` is the page's own origin (CSRF)
+    - decisions go through `decideProposal` as the operator, with one key per proposal version, so a double-submitted form replays
+    - export goes through `exportRun` with the repo recorded for the run
+    - every action answers 303 back to the page (post/redirect/get)
+  - **Server:** `report:serve` routes `/review/…` only when bound to loopback and given `BEACON_OPERATOR_EMAIL`. It loads `.env.local` for the GitHub token.
+  - **No JavaScript:** plain HTML forms. axe reports zero violations in light and dark with the controls present.
+- **Context:** the owner could not see how to approve in the UI (2026-11-22). D-051, D-053, D-054. FR-01 (sign-in) is not built.
+- **Options:** (A) buttons on the share page; (B) a separate reviewer page with its own token, local only.
+- **Chosen:** B. A share link is meant to be forwarded, so it must not be able to change code. Until sign-in exists, the reviewer is the operator at this computer.
+- **Consequences:**
+  - **Local only for now:** sign-in (FR-01) replaces loopback-only with real reviewers, and the page and actions stay as they are.
+  - **No reject reason:** reject takes no reason in the form yet (FR-11 allows an optional one).
+  - **No editing:** edit-then-approve (FR-24) is not on the page.

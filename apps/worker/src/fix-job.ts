@@ -20,7 +20,7 @@ import {
   type Proposal,
   type Status,
 } from '@beacon/core';
-import { mapFinding, type UnmappedReason } from '@beacon/mapper';
+import { mapFinding, repoPathOf, type UnmappedReason } from '@beacon/mapper';
 import type { Finding } from '@beacon/scanner';
 import { verify, type SiteFiles } from '@beacon/verifier';
 import { createHash } from 'node:crypto';
@@ -54,6 +54,8 @@ const sha = (s: string) => `sha256:${createHash('sha256').update(s).digest('hex'
 export function siteTools(
   files: SiteFiles,
   finding: { pageUrl: string; snippet: string },
+  /** The site's base URL, when the repo root is served under a path (a project site). */
+  siteUrl?: string,
 ): FixerTools {
   const text = (path: string) => {
     const f = files[path];
@@ -93,9 +95,7 @@ export function siteTools(
         // shortcut: reads src from the engine's outerHTML snippet, which always double-quotes; only &amp; is decoded.
         const src = /\ssrc="([^"]*)"/.exec(finding.snippet)?.[1]?.replaceAll('&amp;', '&');
         const path =
-          src === undefined
-            ? undefined
-            : decodeURIComponent(new URL(src, finding.pageUrl).pathname).replace(/^\/+/, '');
+          src === undefined ? undefined : repoPathOf(new URL(src, finding.pageUrl), siteUrl);
         const data = path === undefined ? undefined : files[path];
         const mediaType = IMAGE_TYPES[path?.split('.').pop()?.toLowerCase() ?? ''];
         if (!(data instanceof Uint8Array) || !mediaType)
@@ -169,7 +169,7 @@ export async function runFixJob(
   const fixer = await runFixer({
     llm: deps.llm,
     job,
-    tools: siteTools(site.files, { pageUrl: page.url, snippet: finding.html }),
+    tools: siteTools(site.files, { pageUrl: page.url, snippet: finding.html }, site.url),
     ...(deps.limits ? { limits: deps.limits } : {}),
   });
   if (fixer.kind === 'blocked' || fixer.kind === 'failed') return { kind: 'no_proposal', fixer };

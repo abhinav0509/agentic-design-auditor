@@ -6,6 +6,7 @@ import {
   createReportLink,
   loadReportInput,
   resolveReportLink,
+  resolveReviewLink,
   revokeReportLink,
   runHasCrop,
 } from './report-links.ts';
@@ -165,4 +166,28 @@ it('FR-29: loads a run as report input: site, pages with errors, and every issue
       runHasCrop(tx, runId, blobRef(new Uint8Array([6]), 'image/png')),
     ),
   ).toBe(false);
+});
+
+it('FR-11: a reviewer link resolves for review; a plain share link never does', async () => {
+  const reviewer = 'tok_reviewer_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+  await asApp(db.sql, ORG, (tx) =>
+    createReportLink(tx, {
+      orgId: ORG,
+      runId: seed['run'] ?? '',
+      token: reviewer,
+      expiresAt: LATER,
+      canReview: true,
+    }),
+  );
+
+  expect(await resolveReviewLink(db.sql, reviewer, NOW)).toEqual({
+    orgId: ORG,
+    runId: seed['run'],
+  });
+  expect(await resolveReviewLink(db.sql, TOKEN, NOW)).toBeNull();
+  expect(await resolveReviewLink(db.sql, reviewer, LATER)).toBeNull();
+  expect(await resolveReportLink(db.sql, reviewer, NOW)).toEqual({
+    orgId: ORG,
+    runId: seed['run'],
+  });
 });

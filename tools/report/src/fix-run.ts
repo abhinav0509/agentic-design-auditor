@@ -2,7 +2,14 @@
 // link. Approval goes through decideProposal (D-051) as the operator user; the export through
 // exportRun (D-053). Both are safe to repeat: approvals replay by key, exports find nothing to move.
 import type { Clock, GitProvider } from '@beacon/core';
-import { asApp, decideProposal, ensureOperator, resolveReportLink, type Sql } from '@beacon/db';
+import {
+  asApp,
+  createReportLink,
+  decideProposal,
+  ensureOperator,
+  resolveReportLink,
+  type Sql,
+} from '@beacon/db';
 import type { SiteFiles } from '@beacon/verifier';
 import { exportRun } from '@beacon/worker';
 import type { Browser } from 'playwright';
@@ -65,4 +72,25 @@ export async function exportFixes(
 ) {
   const { orgId, runId } = await runOf(deps.sql, token, deps.clock.now());
   return exportRun(deps, { orgId, runId });
+}
+
+const REVIEW_DAYS = 14;
+
+/** A reviewer link (D-055) for the run a share link shows; the share link itself never reviews. */
+export async function createReviewLink(
+  deps: { sql: Sql; clock: Clock },
+  { shareToken, token }: { shareToken: string; token: string },
+): Promise<string> {
+  const now = deps.clock.now();
+  const { orgId, runId } = await runOf(deps.sql, shareToken, now);
+  await asApp(deps.sql, orgId, (tx) =>
+    createReportLink(tx, {
+      orgId,
+      runId,
+      token,
+      expiresAt: new Date(now.getTime() + REVIEW_DAYS * 24 * 60 * 60 * 1000),
+      canReview: true,
+    }),
+  );
+  return `/review/${token}`;
 }

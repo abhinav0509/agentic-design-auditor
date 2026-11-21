@@ -15,11 +15,19 @@ export async function createReportLink(
     runId,
     token,
     expiresAt,
-  }: { orgId: string; runId: string; token: string; expiresAt: Date },
+    canReview = false,
+  }: {
+    orgId: string;
+    runId: string;
+    token: string;
+    expiresAt: Date;
+    /** A reviewer link (D-055) may approve, reject and export; a share link only shows. */
+    canReview?: boolean;
+  },
 ): Promise<{ id: string }> {
   const [row] = await tx<{ id: string }[]>`
-    insert into report_links (org_id, run_id, token_hash, expires_at)
-    values (${orgId}, ${runId}, decode(${hashOf(token)}, 'hex'), ${expiresAt})
+    insert into report_links (org_id, run_id, token_hash, expires_at, can_review)
+    values (${orgId}, ${runId}, decode(${hashOf(token)}, 'hex'), ${expiresAt}, ${canReview})
     returning id`;
   if (!row) throw new Error('report link not created');
   return row;
@@ -165,4 +173,20 @@ export async function runHasCrop(tx: TransactionSql, runId: string, ref: string)
       or exists (select 1 from proposals where run_id = ${runId}
         and payload->'evidence'->>'after_screenshot' = ${ref}) as found`;
   return row?.found ?? false;
+}
+
+/** The org and run a reviewer token may act on at `at`; null for share links and anything else. */
+export async function resolveReviewLink(
+  sql: Sql,
+  token: string,
+  at: Date,
+): Promise<{ orgId: string; runId: string } | null> {
+  if (token === '') return null;
+  const [row] = await asApp(sql, null, async (tx) => {
+    await tx`select set_config('app.report_token_hash', ${hashOf(token)}, true)`;
+    return tx<{ org_id: string; run_id: string }[]>`
+      select org_id, run_id from report_links
+      where can_review and revoked_at is null and expires_at > ${at}`;
+  });
+  return row ? { orgId: row.org_id, runId: row.run_id } : null;
 }

@@ -18,7 +18,7 @@ const CROP = new RegExp(`^/r/(${TOKEN})/crops/(sha256/[0-9a-f]{64}\\.png)$`);
 
 // No script may run; styles are inline; images only from this origin. The token is in the URL, so
 // it must never leak through a Referer, a search index or a shared cache.
-const PRIVATE = {
+export const PRIVATE = {
   'content-security-policy':
     "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
   'referrer-policy': 'no-referrer',
@@ -34,7 +34,7 @@ const GONE_PAGE = `<!doctype html>
 <p>The link may have expired or been revoked. Ask the person who shared it for a new one.</p></main></body></html>
 `;
 
-const notFound = (): WebResponse => ({
+export const notFound = (): WebResponse => ({
   status: 404,
   headers: { ...PRIVATE, 'content-type': 'text/html; charset=utf-8' },
   body: GONE_PAGE,
@@ -60,7 +60,21 @@ export async function handleReportRequest(
     return { status: 200, headers: { ...PRIVATE, 'content-type': 'image/png' }, body: png };
   }
 
-  const [input, expiresAt] = await asApp(deps.sql, link.orgId, async (tx) => {
+  return reportPage(deps.sql, link, token, now);
+}
+
+/**
+ * A run's report page for a token (share or reviewer). With `review`, it carries the reviewer's
+ * controls and a CSP that lets its forms post back to this origin only.
+ */
+export async function reportPage(
+  sql: Sql,
+  link: { orgId: string; runId: string },
+  token: string,
+  now: Date,
+  review?: { actionBase: string; notice?: string },
+): Promise<WebResponse> {
+  const [input, expiresAt] = await asApp(sql, link.orgId, async (tx) => {
     const rows = await loadReportInput(tx, link.runId);
     const [l] = await tx<{ expires_at: Date }[]>`
       select expires_at from report_links where run_id = ${link.runId}
@@ -72,10 +86,18 @@ export async function handleReportRequest(
     scannedAt: input.scannedAt,
     expiresAt: expiresAt.toISOString(),
     cropUrl: (ref) => `/r/${token}/crops/${ref.slice('blob://'.length)}`,
+    ...(review ? { review } : {}),
   });
+  const csp = review
+    ? PRIVATE['content-security-policy'].replace("form-action 'none'", "form-action 'self'")
+    : PRIVATE['content-security-policy'];
   return {
     status: 200,
-    headers: { ...PRIVATE, 'content-type': 'text/html; charset=utf-8' },
+    headers: {
+      ...PRIVATE,
+      'content-security-policy': csp,
+      'content-type': 'text/html; charset=utf-8',
+    },
     body: html,
   };
 }
