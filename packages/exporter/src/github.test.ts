@@ -16,7 +16,7 @@ function fakeFetch(routes: Record<string, [number, unknown]>) {
     calls.push({
       method,
       url: u.pathname + u.search,
-      body: init?.body ? JSON.parse(String(init.body)) : null,
+      body: init?.body ? JSON.parse(init.body as string) : null,
       auth: headers.get('authorization'),
     });
     const hit = routes[`${method} ${u.pathname}${u.search}`] ?? routes[`${method} ${u.pathname}`];
