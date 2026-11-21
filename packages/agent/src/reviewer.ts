@@ -49,7 +49,10 @@ Hard rules:
 8. Finish by calling submit_review, with an empty list when nothing needs flagging.`;
 
 const SAFE = /^[^<>\p{Cc}]+$/u;
-const URLISH = /[a-z][a-z0-9+.-]*:\/\/|\bwww\./i;
+// A scheme, www., or a bare domain name ("evil.example", "acme-help.co.uk"): a suggestion shown in a
+// report must never send a reader anywhere. Tech names like "Node.js" are refused too; the model
+// rephrases.
+const URLISH = /[a-z][a-z0-9+.-]*:\/\/|\bwww\.|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,63}\b/i;
 
 const FlagSchema = z.strictObject({
   id: z.string().min(1).max(20),
