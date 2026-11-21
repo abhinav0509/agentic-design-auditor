@@ -44,8 +44,26 @@ export async function savePageReview(
         ${f.reason}, ${f.suggestion}, ${f.crop})
       on conflict (page_id, selector, kind) do nothing`;
   }
+  await recordModelUsage(tx, { orgId, runId, usage });
+  return true;
+}
+
+/** Records model tokens and cost against a run (NFR-05); a call that used nothing records nothing. */
+export async function recordModelUsage(
+  tx: TransactionSql,
+  {
+    orgId,
+    runId,
+    usage,
+  }: {
+    orgId: string;
+    runId: string;
+    usage: { inputTokens: number; outputTokens: number; costMicros: number };
+  },
+): Promise<void> {
+  const units = usage.inputTokens + usage.outputTokens;
+  if (units === 0 && usage.costMicros === 0) return;
   await tx`
     insert into usage_ledger (org_id, run_id, kind, units, cost_micros)
-    values (${orgId}, ${runId}, 'model', ${usage.inputTokens + usage.outputTokens}, ${usage.costMicros})`;
-  return true;
+    values (${orgId}, ${runId}, 'model', ${units}, ${usage.costMicros})`;
 }
