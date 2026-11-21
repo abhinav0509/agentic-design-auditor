@@ -23,6 +23,8 @@ export type BuildInput = {
   finding: { ruleId: string; impact: string; selector: string; pageUrl: string };
   file: { path: string; source: string; baseHash: string; commitSha: string };
   context: RiskContext;
+  /** Blob refs of the verifier's crops of the element (FR-10, D-050); null where there is none. */
+  screenshots?: { before: string | null; after: string | null };
   result:
     | (Common & { kind: 'patch'; ops: EditOp[]; after: string; verification: VerificationOutcome })
     | (Common & { kind: 'needs_input'; question: { text: string; options: string[] } })

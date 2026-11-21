@@ -204,4 +204,23 @@ describe('buildProposal', () => {
     const bad = input({ finding: { ...input().finding, impact: 'unknown' } });
     expect(catchError(() => buildProposal(bad, { clock, ids }))).toBeInstanceOf(Error);
   });
+
+  it('FR-10: a verified patch carries the crop of the fixed element as its after screenshot', () => {
+    const crop = `blob://sha256/${'d'.repeat(64)}.png`;
+    const { proposal } = buildProposal(input({ screenshots: { before: null, after: crop } }), {
+      clock,
+      ids,
+    });
+
+    expect(proposal.evidence).toMatchObject({ before_screenshot: null, after_screenshot: crop });
+  });
+
+  it('FR-10: screenshots must be blob refs', () => {
+    expect(() =>
+      buildProposal(input({ screenshots: { before: null, after: 'file:///etc/passwd' } }), {
+        clock,
+        ids,
+      }),
+    ).toThrow(/blob ref/i);
+  });
 });
