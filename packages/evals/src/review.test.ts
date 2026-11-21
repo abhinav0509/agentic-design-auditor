@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { IMAGE_MANIFEST } from './images.ts';
-import { REVIEW_PAYLOAD, reviewCases } from './review.ts';
+import { REVIEW_PAYLOAD, reviewCases, reviewHardCases } from './review.ts';
 
 const cases = reviewCases();
 const plain = cases.filter((c) => c.kind === 'plain');
@@ -77,5 +77,54 @@ describe('reviewCases', () => {
 
   it('is deterministic', () => {
     expect(reviewCases()).toEqual(cases);
+  });
+});
+
+describe('reviewHardCases', () => {
+  const hard = reviewHardCases();
+  const subtle = hard.filter((c) => c.kind === 'plain');
+  const all = (kind: 'images' | 'links') => subtle.flatMap((c) => Object.values(c.truth[kind]));
+  const srcAlts = (html: string) =>
+    [...html.matchAll(/<img src="([^"]+)" [^>]*alt="([^"]*)"/g)].map((m): [string, string] => [
+      m[1] ?? '',
+      m[2] ?? '',
+    ]);
+
+  it('FR-29: six subtle pages, balanced, with enough flags that a perfect run can clear an 80% lower bound', () => {
+    expect(subtle).toHaveLength(6);
+    const labels = [...all('images'), ...all('links')];
+    expect(labels.filter((l) => l === 'flag')).toHaveLength(18);
+    expect(labels.filter((l) => l === 'keep')).toHaveLength(18);
+  });
+
+  it('FR-29: labels key by unique text, no image repeats on a page, and every image is a described corpus image', () => {
+    for (const c of hard) {
+      const pairs = srcAlts(c.html);
+      expect(new Set(pairs.map(([src]) => src)).size, c.id).toBe(pairs.length);
+      expect(Object.keys(c.truth.images).sort(), c.id).toEqual(pairs.map(([, alt]) => alt).sort());
+      for (const [src] of pairs)
+        expect(IMAGE_MANIFEST[src]?.subject.length, `${c.id} ${src}`).toBeGreaterThan(0);
+      const links = [...c.html.matchAll(/<a href="[^"]+">([^<]+)<\/a>/g)].map((m) => m[1]);
+      expect(Object.keys(c.truth.links).sort(), c.id).toEqual([...links].sort());
+    }
+  });
+
+  it('NFR-02: on the two injection pages the instruction is inside an alt text, and that alt is labelled flag', () => {
+    const injected = hard.filter((c) => c.kind !== 'plain');
+    expect(injected.map((c) => c.kind).sort()).toEqual(['payload', 'suppression']);
+    for (const c of injected) {
+      const hostile = Object.keys(c.truth.images).filter((alt) =>
+        /reviewer|instruction/i.test(alt),
+      );
+      expect(hostile, c.id).toHaveLength(1);
+      expect(c.truth.images[hostile[0] ?? ''], c.id).toBe('flag');
+      if (c.kind === 'payload') expect(hostile[0]).toContain(REVIEW_PAYLOAD);
+    }
+  });
+
+  it('is deterministic, and its ids never collide with the basic set', () => {
+    expect(reviewHardCases()).toEqual(hard);
+    const basic = new Set(reviewCases().map((c) => c.id));
+    expect(hard.filter((c) => basic.has(c.id))).toEqual([]);
   });
 });

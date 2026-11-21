@@ -1,0 +1,175 @@
+{
+  "scenario": "hard-04",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "44c89acc87932343a5bff24d7a6d9724e9529239d8a99a2ec868b161e46c0cde",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01HRo33dwsE6bgTM7ZKuFbt9",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01KcPAjNexPASr3hzQ5JABtx",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01RABta5GaiJvUnJyUNiMguB",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          },
+          {
+            "id": "toolu_012kmT8hkMaMhmj8oRwGZGL6",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 1704,
+          "outputTokens": 205,
+          "costMicros": 7146.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSowUKEAgUGAI4AUIIdGhpbmtpbmcSDPJgL96mmRreh897eBoM/YpU5xGPFkZfAjpmIjB+7x8XAGJi/AOdZlE9DV5Y7ydzLqSK/2lmXkG/g4OHTeipNf1bb7dp22Tg9whaiTkqwATRDrqhJvndyYn/lOspD9GW7glUCSfluJZiLk5N3hI9HxYnOhoUDN3pvdLlgJGbhfoYsf/AAIYuum0fn3xUi8mvtX58xM1I+1DKCrtOnswC2+d6NRQQIbssba0T3GcHYh1GK9Z8U1Vc70PAQMwjaFFCql/+6ZyEicM/I1XQ7FHAeBaExrjdbNJyOTPbpBvUucuJDsQXjDAE3AC/c9XbSF6V+IxC9zF/PHa/V195HnDWrVY8Gu4c3iQXl6DkbhJ6JSh3faDJeJI245Q0mvYy64De9D8fjhKMqueHmawAIXuOKFtb4tf7I+HLvdh58kIhWb7/Gg8XB4eMicvIKUUcpK9qPgAhGkMcjUMyCaU8T/FAi4xlGH/CDFkv7C92BNwR4C0IZAPmuPoZiw/CuJ1N/gXje2f7ZkTRoaCLKEaTx0TM+sN03oFmZtYRxZ9qplTiFfxBBRIdzij90O36dY9feWebC9NYhcY119EizSVU6UT8W8Ah624g+XfwDMfL8bpvIbs62/J2d37Q30L7gA69KxYf5XrmhrNfv2OJULP4QzHR14NKLndiJZABba1KJHcIOjeCR/eNMEjqcXsiU3CYWRVaXmomLGBzCB4VB1XibHn6tqtDHaC91CmfBQd0Z55LlDFxVp+F6Bmx6j8Fx3oOAyWAhRdL+aMoYOkIUoayQ8JFtbE9q9nB9ysHPWGjlVAuZObwkBC7DsXoZ29tDb7RR7i+RQ9/p7e6RMV+0wUJDMady+GER0BgKAEBjNT02Lj6qaYYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01HRo33dwsE6bgTM7ZKuFbt9",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KcPAjNexPASr3hzQ5JABtx",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01RABta5GaiJvUnJyUNiMguB",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_012kmT8hkMaMhmj8oRwGZGL6",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "527d39d107c988ca4c89c6466bf482d9e840a2d30fd391d49aaf80c313dfab24",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01Q5TZPpeJDnr88NWScDbRpL",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text contradicts the image: it shows two dark mugs on saucers, not five espresso cups.",
+                  "suggestion": "Two dark mugs on saucers on a wooden table"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text 'Map' alone does not give the location details the map shows.",
+                  "suggestion": "Map showing the studio on Kiln Lane, north of Mill Street, a short walk from the station"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "The link text 'PDF' does not say which document it opens when read out of context.",
+                  "suggestion": "Download the 2026 catalogue and care notes (PDF)"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2471,
+          "outputTokens": 381,
+          "costMicros": 13734.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSggcKEAgUGAI4AUIIdGhpbmtpbmcSDOD1Vjn1cB2KSbgbzxoMWjUE0ZuKIgER8P17IjCxEq3W4KeXrnJrXzQAl4BjJrFMqZj6WTQm8AB+8IN1oH8/VyboPjQSJEbeIAjt5KEqnwZr4nInmNr1sFxgExaSjGErBCXspULIeHSBAh8CepzgmY9mkxwgywmYBgC7LFfVvajXvVoyAEHcCqlbmjKcNJo+emTMkc60gjzNTAPR8amr3aNdATVMGLl5ij+0awnxLW4qX18C02iXtOrDPe1TPIAL4FplsVKhJ0MziXNzLcnbhMXGs7WjMy/PE5vJI+gYJlF9qWuXahN+/3gzhDG+whvql7gJy3qNV+DHnZ0XzCQXoqrscCD1sZce41HMFIHZmkoSQV+jvSCs8/eGX8ULr+nzorSGda4WER0YvnttGogNnNYr4aJluXrCm/DaZJ3aV1JMAHnDwy8HpOcFk8gNufvxWg/B5Vd7c4DCY0ThBArUIVeb/IOPac4hMuMckNBsKtXig/KYlP0goPocH8Rw/9dpKtDJERssrlc7SDB3oVJaOlTgBFnzkkLQPEYinRuunMn0OrWk01zEV8Rqh6BAHhoMzH5Qs50hFOqH/Tk5R01O5q5Z2MuIXoCaOJ55m5/KFEXiH0fBxOOsrD2PDfgm2ulNA103qKl6LsbZ4O3L+h4iaDc4GO7j6y77TY9fudbu5nCYrAFH/ShMYL9cYVHae9EFeJ3flYX1qjgsqPNeDjR43yKHFtEHx8wvmYRmiR462V5cdE9dWzjPRkAd7APftojHgDTerOxFYMuvbEPuycqtkWoFGkpJGcRUya13op53bO396EKSwmt4ltX7jWWc4m8a/5rBIyeJwiHLe2Dm5nT/eU53kFUbOdY/M8n72PYjyafj0y4jem+fXGcN6Pqd1wOshGwl32Qt3mfkotSMbIN0L+9DE6JX8LfGN3GUq3em2ZqM3VwDbAugkFHuf1cWn+1j+TW4j8+L3lZu2gD78JrDN+WsNeIlFHVnNKOIzc59rc70pNjZ6uxkBcAb+xSAHJdYmkJu2YVkBDAkLdwBreODfiQvcv4SBcMKYN8O1lxvwibFZRN6LA+RNimG2jUv4Yx/i4Sj/MiSxj2JYhM3GXHjEsD83ldAcRvM7tHcw1mHinV4msydvgjiMqUfp7ECo+SELiAY6tS8TnLa30MNo9qHGAE="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Q5TZPpeJDnr88NWScDbRpL",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text contradicts the image: it shows two dark mugs on saucers, not five espresso cups.",
+                  "suggestion": "Two dark mugs on saucers on a wooden table"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text 'Map' alone does not give the location details the map shows.",
+                  "suggestion": "Map showing the studio on Kiln Lane, north of Mill Street, a short walk from the station"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "The link text 'PDF' does not say which document it opens when read out of context.",
+                  "suggestion": "Download the 2026 catalogue and care notes (PDF)"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "scenario": "hard-01",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "fe4994abf436fc979d4229b95b7aa8aa30801b1a51a34abdb61320cbb82ae384",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_017Kyq1Lj9hbPAx4KRftdGst",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_012dMBcBqJip1GcbAtrmEGTq",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01RGQ9nevXLDQ4gztf4YakM5",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          },
+          {
+            "id": "toolu_01Lm1ioy6CVuDJtmGSiLorJn",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            }
+          }
+        ],
+        "text": "I need to look at the images first.",
+        "usage": {
+          "inputTokens": 1687,
+          "outputTokens": 193,
+          "costMicros": 11600
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to look at the images first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_017Kyq1Lj9hbPAx4KRftdGst",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_012dMBcBqJip1GcbAtrmEGTq",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01RGQ9nevXLDQ4gztf4YakM5",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Lm1ioy6CVuDJtmGSiLorJn",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "e17ba07481fdca8ad8f1b393cc55c0661c63d16df4d740fe23c05c3983f39fe1",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01JAuwEUPiJowbr9eGHzquZd",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is just 'logo'. The image is the Fern & Clay logo with a fern frond, and the alt text does not give the name.",
+                  "suggestion": "Fern & Clay"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "'hero image' is a generic placeholder. It does not say what the image shows: a teal mug held up in raised hands.",
+                  "suggestion": "Hands raising a teal ceramic mug"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "'Download' alone does not say what file you get. The nearby text shows it is the 2026 catalogue and care notes.",
+                  "suggestion": "Download the 2026 catalogue and care notes"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2442,
+          "outputTokens": 397,
+          "costMicros": 13938.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQS5gYKEAgUGAI4AUIIdGhpbmtpbmcSDFjcB0RApVUGw5DB6hoMSWv7A5ci1AXhelA1IjAta5tU/GdiKfTYj9iN3UZ22kMhKYFhl76OR8eCMILmJOd/Yce4gvtOeBAttvC7tNIqgwYX9ISRcGLgk7/mx78GlPpqoKmDR4K15VAjI46LdU7twRATNDxH+o9UfmKRba+L0cTstS3eQTu24wGROnKxsR8RDgUe4AgUpMtKhj5V8/4100fvDl+vM35Y9GsUxtgpgx4fiYHmYV4UGqG7DaVtZ38FwWoV+5ftaWRqloOpPCtmbjYLAsMgZUhRqSV/ECsjf31y7zHC/gRbXfl+PE/DL+H+4XaQj3OGDAZBLXqApAaAPJnHqBlDkdEGg90wHX+CXSEllziuNRisc/38lVAKbpU7C4huawBYJfR4NJnwzWL3qxnjBL4dNoMnzRRwZwFkqFfCR40gAzqDssgEvxBrV2mxSN7L3+H5+ghyGltCL7aVm2mkIPfgHVTitRN/Tnpi8nVDxsquNKRildTAfCzzEAF5RDWrNzbb7ysrd+ypY3e3g4x9GBojPjQlLHb+Xh43wLNL2Uhqan1oJDV4TpuB561IpgkL7uf9ts1RqJbQn0Frl2skKlx3keL0frJRaQtASX7z8mtT6a0X1yE3qQxAq4I04qGuBhstSv8QhAg/H8PUgyXfhcEw6w+8jIAWjf5Qn7xJ8ckUjb1Xa7NbaMG55bXpJcjwt/LML1wG2OOzhfGpzBe/z47F/iDyH1rGmivwjsPZBPhxfHjHNDYmrumMo82O/LXTeOMps5Fnxn4W3vItUt2PNT5if67MjT1TbJXADm1G0Pd3l/5fzZpA/Qsz8NEZUcZgp5vVhEhGieVmvf62NlC4Cm2qdQRal7i+zUYwTqyzlviFx424mkgQWL6u6qK7HAbkH8nfWtzIV1sY+Di81ezgyDz4l9ja9oqTR3hU3FG5Uy2TF49xLheXM55bxQg7GzVDOrXVQbHfvFlpAqV+hOud/202SBZ5JEV7sCxbZc3nKzUNiucXrp1Gmnjagb6GTlThRPzkbeoPX+M4YdDK4KE+jjJ/Sr6vUjhAHHG799LMSA2pidQuUyTBGqwr3Ws8VnV/SNjquVA9UCgKuc5ivGVc7kNLY3u5FIXzXQ7BbLDVqqwYAQ=="
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01JAuwEUPiJowbr9eGHzquZd",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "Alt text is just 'logo'. The image is the Fern & Clay logo with a fern frond, and the alt text does not give the name.",
+                  "suggestion": "Fern & Clay"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "'hero image' is a generic placeholder. It does not say what the image shows: a teal mug held up in raised hands.",
+                  "suggestion": "Hands raising a teal ceramic mug"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "'Download' alone does not say what file you get. The nearby text shows it is the 2026 catalogue and care notes.",
+                  "suggestion": "Download the 2026 catalogue and care notes"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

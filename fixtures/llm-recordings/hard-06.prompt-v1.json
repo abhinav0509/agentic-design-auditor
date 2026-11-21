@@ -1,0 +1,175 @@
+{
+  "scenario": "hard-06",
+  "model": "claude-opus-5-5",
+  "promptVersion": "1",
+  "turns": [
+    {
+      "requestHash": "860731c28807482840dd1e197920c7cf1a8531e840746800b22994f33cd23aba",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01KzD51ixaXYWiYkFfbwhgyy",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            }
+          },
+          {
+            "id": "toolu_01VVz1H5ic78xv4TDZEt2RqY",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            }
+          },
+          {
+            "id": "toolu_01Cokh8pR4uvqcW1FDeNrifB",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            }
+          },
+          {
+            "id": "toolu_015FoyY8a33rP1qfBFmUKwAc",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            }
+          }
+        ],
+        "text": "I need to view images c1-c4 first.",
+        "usage": {
+          "inputTokens": 1707,
+          "outputTokens": 197,
+          "costMicros": 6998.4
+        },
+        "raw": [
+          {
+            "type": "text",
+            "text": "I need to view images c1-c4 first."
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01KzD51ixaXYWiYkFfbwhgyy",
+            "name": "get_image",
+            "input": {
+              "id": "c1"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01VVz1H5ic78xv4TDZEt2RqY",
+            "name": "get_image",
+            "input": {
+              "id": "c2"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01Cokh8pR4uvqcW1FDeNrifB",
+            "name": "get_image",
+            "input": {
+              "id": "c3"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_015FoyY8a33rP1qfBFmUKwAc",
+            "name": "get_image",
+            "input": {
+              "id": "c4"
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    },
+    {
+      "requestHash": "a74a6258d2ef61ea4752906993d88a02da54b268bbfc4c805d9b29952b7f9813",
+      "turn": {
+        "toolCalls": [
+          {
+            "id": "toolu_01EChnxx7sYQKku4kL9oVpo3",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The image shows three wrapped items packed in an open cardboard box, not mugs on a shelf. The alt text contradicts the image.",
+                  "suggestion": "Three wrapped mugs packed in an open cardboard box"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text says Spacer, but the image has content: four potters in different colored tops, each sitting at a pottery wheel.",
+                  "suggestion": "Four potters sitting side by side at pottery wheels"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "Read this does not say where the link goes when read out of context.",
+                  "suggestion": "Read our 2026 catalogue and care notes"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "inputTokens": 2466,
+          "outputTokens": 371,
+          "costMicros": 13514.4
+        },
+        "raw": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "CAQSrAYKEAgUGAI4AUIIdGhpbmtpbmcSDAVTg0SxLsqdTBumfRoMjf1eGHyOCEu30a5IIjCLc0W0u8mWgGj++8VvTOXzyDHI2oCtgCk9d+03SyXASP02XBtxfIiJilzkdD/di3kqyQVuK3p/dKAH9JpxMI4FQITROk/YvKQ0YwhA550QRnb77+gdnZQe2xKa190+tpdRGcye8vNEZDLu6p/GKqKutgzvppcKnhpY6kmtaq+Ti9PRQHNjylnEHh2KSLosEGotMOChqk8vUHeQJ7l3JzVhTFAi2NLCsrGFnOiNHwPnVVDpY7GyW/hz5eEtvZSCBf7RgEXFGf70XYXfQGRUA3iRwJRuXt9fl3yplb9VzaFVWuyDvaaWDg6dR0dt3TDwBhriWr90cf8NX1p9TM3VQuYlNZUTQ3BbgjvNogmm6MLjkUq4ow12npQExLndYq4szSg09IYL2uETfpQSEROXF39+PvTvEvUvAU5+cIgePF7vEP22aG22Q3MsVnhO/Om5mwfLvzEKT6btRsTP50PIbmlz191iCndG/0NLjl8ShdIwr2/+MgA1CtF9iwJ4GQFb1kNlgjktFRb3Twwf1T7uBLeSbfzQ2sQAmxAVSxYxdnSsjZAtCrQLwlG7m44MT6lNOraxq9BqjP7dkVhENftEImcnAPJZ39q7y9ms2xP9AAG9dHLe72f6yzXgN5d3+xCA2Mj2b0KtCyGvj1bbApVwa0EucuEPEhFy2V46hUWR7OxIRxKL3i+jGEQ3NXgQITysj4UNigSO+HsRXE2Ykm01tjkKVCJ4WEBczTvRFiCWL1zx7FUz+Qt1Tl8a2ee4JjvgsqCSBqQzKlI8L5xkgCIIpHkj18DtCjHBO5ix2Wqyf7F1IOkHXVZ86+FlosC0djK/TtFe+pXCfoBEgg4cvXH8IvHmexJ5Hhc30qM3KACNZWpxrYJLdX9tn0NAap9t0sqNLyDCNegw1NLlBOdG9oIesvX+bo7RnSS2U4FC+T1nztXzxTcfZHjCxy34JXI6UPIfvK++XZaWvV7YW0/bCzMV7kzpENGOD0ajpbAFuY+SAAVprr0yQjFq9ord7gZiVRgB"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_01EChnxx7sYQKku4kL9oVpo3",
+            "name": "submit_review",
+            "input": {
+              "flags": [
+                {
+                  "id": "c1",
+                  "kind": "unhelpful_alt",
+                  "reason": "The image shows three wrapped items packed in an open cardboard box, not mugs on a shelf. The alt text contradicts the image.",
+                  "suggestion": "Three wrapped mugs packed in an open cardboard box"
+                },
+                {
+                  "id": "c2",
+                  "kind": "unhelpful_alt",
+                  "reason": "The alt text says Spacer, but the image has content: four potters in different colored tops, each sitting at a pottery wheel.",
+                  "suggestion": "Four potters sitting side by side at pottery wheels"
+                },
+                {
+                  "id": "c5",
+                  "kind": "vague_link",
+                  "reason": "Read this does not say where the link goes when read out of context.",
+                  "suggestion": "Read our 2026 catalogue and care notes"
+                }
+              ]
+            },
+            "caller": {
+              "type": "direct"
+            }
+          }
+        ],
+        "model": "claude-opus-5-5"
+      }
+    }
+  ]
+}

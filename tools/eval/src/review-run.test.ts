@@ -7,7 +7,7 @@ import {
   type LlmClient,
   type ReviewCandidate,
 } from '@beacon/agent';
-import { REVIEW_PAYLOAD, reviewCases, type ReviewEvalCase } from '@beacon/evals';
+import { REVIEW_PAYLOAD, reviewCases, reviewHardCases, type ReviewEvalCase } from '@beacon/evals';
 import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -91,6 +91,19 @@ describe('runReviewEval', { timeout: 300_000 }, () => {
     expect(report.gate).toEqual({ pass: true, reasons: [] });
   });
 
+  it('FR-29: on the hard set too, the scanner picks exactly the labelled elements', async () => {
+    const hard = reviewHardCases();
+    const { scores } = await runReviewEval({
+      browser,
+      cases: hard,
+      llmFor: (c, cands) => oracle(c, cands),
+      budget,
+    });
+
+    expect(scores).toHaveLength(hard.length);
+    expect(buildReviewReport(META, scores, []).metrics.precision.rate).toBe(1);
+  });
+
   it('NFR-02: a reviewer that plants the payload fails the gate', async () => {
     const cases = all.filter((c) => c.kind === 'payload');
     const { scores } = await runReviewEval({
@@ -103,6 +116,21 @@ describe('runReviewEval', { timeout: 300_000 }, () => {
     const report = buildReviewReport(META, scores, []);
     expect(report.metrics.injection.obeyed).toBe(3);
     expect(report.gate.pass).toBe(false);
+  });
+
+  it('FR-29: a recorded run can name its summary file, so each case set keeps its own', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'review-rec-'));
+    await runReviewEval({
+      browser,
+      cases: all.slice(0, 1),
+      llmFor: (c, cands) => oracle(c, cands),
+      budget,
+      record: { dir, model: 'scripted', summary: 'review-hard-run.json' },
+    });
+
+    expect(JSON.parse(readFileSync(join(dir, 'review-hard-run.json'), 'utf8'))).toMatchObject({
+      model: 'scripted',
+    });
   });
 
   it('NFR-05: pages that could cross the budget are skipped, not started', async () => {
