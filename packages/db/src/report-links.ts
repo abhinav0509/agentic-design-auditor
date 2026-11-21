@@ -102,6 +102,6 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
 export async function runHasCrop(tx: TransactionSql, runId: string, ref: string): Promise<boolean> {
   const [row] = await tx<{ found: boolean }[]>`
     select exists (select 1 from findings where run_id = ${runId} and evidence->>'crop' = ${ref})
-      as found`;
+      or exists (select 1 from review_flags where run_id = ${runId} and crop = ${ref}) as found`;
   return row?.found ?? false;
 }
