@@ -22,7 +22,7 @@ function chain(n: number): AuditEvent[] {
       data: {},
       created_at: '2026-11-22T10:00:00',
     });
-    const hash = createHash('sha256')
+    const hash: string = createHash('sha256')
       .update(
         Buffer.concat([
           prev ? Buffer.from(prev, 'hex') : Buffer.alloc(0),
