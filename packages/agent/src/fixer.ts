@@ -2,6 +2,7 @@
 // only via submit_proposal; its draft goes through the core edit ops, guard and risk classifier, so
 // nothing the model says can skip a safety check or lower the risk.
 import {
+  complianceClaims,
   DomainError,
   reviseEdit,
   type EditOp,
@@ -234,7 +235,20 @@ export async function runFixer(input: {
       return fail(z.prettifyError(parsed.error));
     }
     if (!tool.run) {
-      const outcome = finish(parsed.data as Draft);
+      // FR-31: the proposal contract refuses claim phrases; tell the model which, so it can rephrase.
+      const draft = parsed.data as Draft;
+      const claims = [
+        draft.title,
+        draft.rationale,
+        draft.question?.text ?? '',
+        ...(draft.question?.options ?? []),
+      ].flatMap(complianceClaims);
+      if (claims.length > 0) {
+        if (invalidLeft-- === 0)
+          return { finished: done({ kind: 'failed', reason: 'INVALID_PROPOSAL' }) };
+        return fail(`never claim compliance; rephrase without: ${[...new Set(claims)].join(', ')}`);
+      }
+      const outcome = finish(draft);
       if (outcome !== 'invalid') {
         trace.push({ step: steps, tool: c.name });
         return outcome;
