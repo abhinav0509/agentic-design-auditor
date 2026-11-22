@@ -59,4 +59,17 @@ describe('planReport', () => {
     expect(off.ok && off.plan.agentReview).toBeUndefined();
     expect(on.ok && on.plan.urls).toEqual(['https://acme.com/']);
   });
+
+  it('FR-04: --site-proven replaces the email rule with the site’s own proof; the requester is still recorded', () => {
+    const r = planReport([
+      '--site-proven',
+      '--requested-by',
+      'jo@gmail.com',
+      'https://shop.acme.com/',
+    ]);
+
+    expect(r.ok && r.plan.siteProven).toBe(true);
+    expect(r.ok && r.plan.requestedBy).toBe('jo@gmail.com');
+    expect(planReport(['--requested-by', 'jo@gmail.com', 'https://shop.acme.com/']).ok).toBe(false);
+  });
 });
