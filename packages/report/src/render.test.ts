@@ -363,6 +363,36 @@ describe('renderReport: reviewer controls', () => {
     );
   });
 
+  it('FR-15: a fix that is in a pull request can be undone from the reviewer page', () => {
+    const html = renderReport(
+      buildReport(
+        sample({
+          fixes: [fix('p5', 'applied', 'Add lang')],
+          pullRequests: [
+            {
+              number: 3,
+              url: 'https://github.com/jo/shop/pull/3',
+              branch: 'beacon/x/y',
+              proposalIds: ['p5'],
+            },
+          ],
+        }),
+      ),
+      {
+        siteUrl: SITE,
+        scannedAt: '2026-11-15T10:00:00.000Z',
+        expiresAt: '2026-11-29T10:00:00.000Z',
+        cropUrl: (ref) => ref,
+        review: { actionBase: '/review/tok' },
+      },
+    );
+
+    expect(html).toContain('action="/review/tok/undo/p5"');
+    expect(
+      render(sample({ fixes: [fix('p5', 'applied', 'Add lang')], pullRequests: [] })),
+    ).not.toContain('/undo/');
+  });
+
   it('FR-12: medium and high risk fixes are never in the bulk button', () => {
     const only = (risk: string) =>
       renderReport(

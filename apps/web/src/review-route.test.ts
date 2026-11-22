@@ -17,6 +17,7 @@ const ORIGIN = `http://${HOST}`;
 let db: TestDb;
 let runId: string;
 const exported: string[] = [];
+const undone: string[] = [];
 let deps: ReviewDeps;
 
 beforeAll(async () => {
@@ -60,6 +61,10 @@ beforeAll(async () => {
     });
   });
   deps = {
+    undoFix: (link, proposalId) => {
+      undone.push(proposalId);
+      return Promise.resolve({ status: 'reverted_on_branch' });
+    },
     sql: db.sql,
     blobs: new InMemoryBlobStore(),
     clock: { now: () => NOW },
@@ -188,6 +193,19 @@ describe('handleReviewRequest', () => {
     expect(String((await get(`/review/${REVIEW}?done=paused`)).body)).toContain(
       'Agent work is paused',
     );
+  });
+
+  it('FR-15: Undo reverts the fix through the injected undo and says so', async () => {
+    const id = '00000000-0000-4000-8000-000000000b01';
+
+    const res = await post(`/review/${REVIEW}/undo/${id}`);
+
+    expect(res).toMatchObject({
+      status: 303,
+      headers: { location: `/review/${REVIEW}?done=undone` },
+    });
+    expect(undone).toEqual([id]);
+    expect(String((await get(`/review/${REVIEW}?done=undone`)).body)).toContain('Fix undone');
   });
 
   it('FR-11: a form post from another site, or with no origin, is refused and changes nothing', async () => {
