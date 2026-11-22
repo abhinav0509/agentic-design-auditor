@@ -122,6 +122,33 @@ describe('handleReviewRequest', () => {
     expect(String((await get(`/review/${REVIEW}?done=approved`)).body)).toContain('role="status"');
   });
 
+  it('FR-11: Approve all approves every waiting fix of the run in one go', async () => {
+    const id = '00000000-0000-4000-8000-000000000b03';
+    const [finding] = await db.sql<{ id: string }[]>`
+      insert into findings (org_id, run_id, page_id, fingerprint, rule_id, impact, selector, html_snippet)
+      select ${ORG}, ${runId}, page_id, 'fp-review-3', 'image-alt', 'critical', 'img.c', '<img>'
+      from findings where run_id = ${runId} limit 1 returning id`;
+    await asApp(db.sql, ORG, (tx) =>
+      saveProposal(tx, {
+        orgId: ORG,
+        findingId: finding?.id ?? '',
+        proposal: makeProposal({ proposal_id: id, run_id: runId, title: 'Fix 3' }),
+        status: 'pending',
+      }),
+    );
+
+    const res = await post(`/review/${REVIEW}/approve-all`);
+
+    expect(res).toMatchObject({
+      status: 303,
+      headers: { location: `/review/${REVIEW}?done=approved_all` },
+    });
+    expect(await statusOf(id)).toBe('approved');
+    expect(String((await get(`/review/${REVIEW}?done=approved_all`)).body)).toContain(
+      'All waiting fixes approved',
+    );
+  });
+
   it('FR-14: Open pull request exports the run and comes back with the outcome', async () => {
     const res = await post(`/review/${REVIEW}/export`);
 

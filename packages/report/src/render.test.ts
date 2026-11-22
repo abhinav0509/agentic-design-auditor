@@ -353,6 +353,16 @@ describe('renderReport: reviewer controls', () => {
     expect(html).toContain('method="post"');
   });
 
+  it('FR-11: waiting fixes can be approved at once, and the PR button warns while some still wait', () => {
+    const html = reviewer();
+
+    expect(html).toContain('action="/review/tok/approve-all"');
+    expect(html).toContain('Approve all 1 waiting fix');
+    expect(html).toContain(
+      '1 fix is still waiting. Decide it first to keep everything in one pull request.',
+    );
+  });
+
   it('FR-11: shows the outcome of the last action as a status message', () => {
     expect(reviewer('Approved “Add alt text”.')).toMatch(
       /role="status"[^>]*>[^<]*Approved “Add alt text”\./,
