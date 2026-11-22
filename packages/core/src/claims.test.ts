@@ -35,6 +35,7 @@ describe('complianceClaims', () => {
     "This doesn't confirm the page is compliant.",
     'Never a compliance claim.',
     'Beacon makes no compliance claim about the site.',
+    "It fixes the html-has-lang finding but doesn't on its own make the page compliant.",
   ])('FR-31: an honest disclaimer that denies a claim is not a claim (%j)', (text) => {
     expect(complianceClaims(text)).toEqual([]);
   });
