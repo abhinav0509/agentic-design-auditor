@@ -56,8 +56,13 @@ it('FR-26: the export holds only this org’s events, in chain order, and verifi
   expect(verifyAuditChain(log.events)).toEqual({ ok: true, events: log.events.length });
 });
 
-it('FR-26: an event changed in the database afterwards no longer verifies', async () => {
-  await db.sql`update proposal_events set reason = 'Approved after all' where proposal_id = ${proposalId} and to_status = 'rejected'`;
+it('FR-26: an event changed in the database afterwards, past the append-only trigger, no longer verifies', async () => {
+  // Even a superuser is stopped by the append-only trigger; an admin who turns triggers off for their
+  // session can still edit a row, and the chain is what catches that.
+  await db.sql.begin(async (tx) => {
+    await tx`set local session_replication_role = replica`;
+    await tx`update proposal_events set reason = 'Approved after all' where proposal_id = ${proposalId} and to_status = 'rejected'`;
+  });
 
   const log = await asApp(db.sql, ORG, (tx) => exportAuditLog(tx));
   const check = verifyAuditChain(log.events);

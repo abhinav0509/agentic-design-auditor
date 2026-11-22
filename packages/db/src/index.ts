@@ -1,4 +1,5 @@
 // Public API of @beacon/db. Test helpers are deliberately not exported.
+export * from './audit-export.ts';
 export * from './decisions.ts';
 export * from './exports.ts';
 export * from './kill-switch.ts';
