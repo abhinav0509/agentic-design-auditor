@@ -80,7 +80,7 @@ async function applied(): Promise<{ git: FakeGitProvider; proposal: Proposal; pr
     {
       clock: { now: () => new Date('2026-10-29T00:00:00Z') },
       ids: {
-        uuid: () => `00000000-0000-4000-8000-${String(700 + n * 2 + (++n % 1)).padStart(12, '0')}`,
+        uuid: () => crypto.randomUUID(),
       },
     },
   ).proposal;
