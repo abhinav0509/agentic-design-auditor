@@ -91,6 +91,8 @@ export type Report = {
     /** What the status means to the reader; a fix in a PR names it. */
     statusLabel: string;
     pr: { number: number; url: string } | null;
+    /** low, medium or high: only low-risk fixes may be approved in bulk (FR-12). */
+    risk: string | null;
     riskLabel: string | null;
     rationale: string;
     pageUrl: string;
@@ -192,6 +194,7 @@ function fixesOf(input: ReportInput): Report['fixes'] {
           ? `In pull request #${String(pr.number)}`
           : (STATUS_LABELS[f.status] ?? f.status),
       pr: pr ? { number: pr.number, url: pr.url } : null,
+      risk: f.risk ?? null,
       riskLabel: f.risk ? (RISK_LABELS[f.risk] ?? null) : null,
       rationale: f.rationale,
       pageUrl: f.pageUrl,

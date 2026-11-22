@@ -122,30 +122,42 @@ describe('handleReviewRequest', () => {
     expect(String((await get(`/review/${REVIEW}?done=approved`)).body)).toContain('role="status"');
   });
 
-  it('FR-11: Approve all approves every waiting fix of the run in one go', async () => {
-    const id = '00000000-0000-4000-8000-000000000b03';
-    const [finding] = await db.sql<{ id: string }[]>`
-      insert into findings (org_id, run_id, page_id, fingerprint, rule_id, impact, selector, html_snippet)
-      select ${ORG}, ${runId}, page_id, 'fp-review-3', 'image-alt', 'critical', 'img.c', '<img>'
-      from findings where run_id = ${runId} limit 1 returning id`;
-    await asApp(db.sql, ORG, (tx) =>
-      saveProposal(tx, {
-        orgId: ORG,
-        findingId: finding?.id ?? '',
-        proposal: makeProposal({ proposal_id: id, run_id: runId, title: 'Fix 3' }),
-        status: 'pending',
-      }),
-    );
+  it('FR-12: bulk approve approves only low-risk waiting fixes; medium and high risk wait for one-by-one approval', async () => {
+    const low = '00000000-0000-4000-8000-000000000b03';
+    const medium = '00000000-0000-4000-8000-000000000b04';
+    for (const [id, level, fp] of [
+      [low, 'low', 'fp-review-3'],
+      [medium, 'medium', 'fp-review-4'],
+    ] as const) {
+      const [finding] = await db.sql<{ id: string }[]>`
+        insert into findings (org_id, run_id, page_id, fingerprint, rule_id, impact, selector, html_snippet)
+        select ${ORG}, ${runId}, page_id, ${fp}, 'image-alt', 'critical', ${`img.${fp}`}, '<img>'
+        from findings where run_id = ${runId} limit 1 returning id`;
+      await asApp(db.sql, ORG, (tx) =>
+        saveProposal(tx, {
+          orgId: ORG,
+          findingId: finding?.id ?? '',
+          proposal: makeProposal({
+            proposal_id: id,
+            run_id: runId,
+            title: `Fix ${level}`,
+            risk: { level, reasons: [], reversible: true },
+          }),
+          status: 'pending',
+        }),
+      );
+    }
 
     const res = await post(`/review/${REVIEW}/approve-all`);
 
     expect(res).toMatchObject({
       status: 303,
-      headers: { location: `/review/${REVIEW}?done=approved_all` },
+      headers: { location: `/review/${REVIEW}?done=approved_low` },
     });
-    expect(await statusOf(id)).toBe('approved');
-    expect(String((await get(`/review/${REVIEW}?done=approved_all`)).body)).toContain(
-      'All waiting fixes approved',
+    expect(await statusOf(low)).toBe('approved');
+    expect(await statusOf(medium)).toBe('pending');
+    expect(String((await get(`/review/${REVIEW}?done=approved_low`)).body)).toContain(
+      'Low-risk fixes approved',
     );
   });
 
@@ -157,6 +169,25 @@ describe('handleReviewRequest', () => {
       headers: { location: `/review/${REVIEW}?done=exported` },
     });
     expect(exported).toEqual([runId]);
+  });
+
+  it('FR-28: an export refused because agent work is paused says so', async () => {
+    const paused = { ...deps, exportRun: () => Promise.resolve({ status: 'paused' }) };
+
+    const res = await handleReviewRequest(paused, {
+      method: 'POST',
+      path: `/review/${REVIEW}/export`,
+      origin: ORIGIN,
+      host: HOST,
+    });
+
+    expect(res).toMatchObject({
+      status: 303,
+      headers: { location: `/review/${REVIEW}?done=paused` },
+    });
+    expect(String((await get(`/review/${REVIEW}?done=paused`)).body)).toContain(
+      'Agent work is paused',
+    );
   });
 
   it('FR-11: a form post from another site, or with no origin, is refused and changes nothing', async () => {
