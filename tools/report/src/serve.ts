@@ -3,11 +3,10 @@
 // Binds to 127.0.0.1 unless HOST says otherwise; put it behind HTTPS before sharing a link outside.
 import { asApp, type Sql } from '@beacon/db';
 import { checkout, GitHubProvider } from '@beacon/exporter';
-import { handleReportRequest, handleReviewRequest } from '@beacon/web';
 import { exportRun, FsBlobStore } from '@beacon/worker';
-import http from 'node:http';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
+import { createReportServer } from './server.ts';
 
 const dbUrl = process.env['BEACON_DATABASE_URL'];
 if (!dbUrl) {
@@ -50,74 +49,17 @@ async function exportForLink(link: { orgId: string; runId: string }) {
   }
 }
 
-function body(req: http.IncomingMessage): Promise<void> {
-  // Forms carry nothing the routes read (the action is in the path); drain and cap the body.
-  return new Promise((done, fail) => {
-    let size = 0;
-    req.on('data', (chunk: Buffer) => {
-      size += chunk.length;
-      if (size > 16 * 1024) req.destroy(new Error('request body too large'));
-    });
-    req.on('end', done);
-    req.on('error', fail);
-  });
-}
-
-http
-  .createServer((req, res) => {
-    const url = new URL(req.url ?? '/', 'http://report.local');
-    const send = (r: {
-      status: number;
-      headers: Record<string, string>;
-      body: string | Uint8Array;
-    }) => {
-      res.writeHead(r.status, r.headers);
-      res.end(req.method === 'HEAD' ? undefined : r.body);
-    };
-    const fail = (e: unknown) => {
-      console.error(e); // details stay in the log, never in the response
-      res
-        .writeHead(500, { 'content-type': 'text/plain; charset=utf-8' })
-        .end('Something went wrong.');
-    };
-
-    if (url.pathname.startsWith('/review/')) {
-      if (!reviewOn || !operatorEmail) {
-        res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }).end('Not found.');
-        return;
-      }
-      if (req.method !== 'GET' && req.method !== 'POST') {
-        res.writeHead(405, { allow: 'GET, POST' }).end();
-        return;
-      }
-      body(req)
-        .then(() =>
-          handleReviewRequest(
-            { sql, blobs, clock, operatorEmail, exportRun: exportForLink },
-            {
-              method: req.method ?? 'GET',
-              path: `${url.pathname}${url.search}`,
-              origin: req.headers.origin ?? null,
-              host: req.headers.host ?? '',
-            },
-          ),
-        )
-        .then(send, fail);
-      return;
-    }
-
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      res.writeHead(405, { allow: 'GET, HEAD' }).end();
-      return;
-    }
-    handleReportRequest({ sql, blobs, clock }, url.pathname).then(send, fail);
-  })
-  .listen(port, host, () => {
-    console.log(`Reports on http://${host}:${String(port)}/r/<token>`);
-    if (reviewOn && operatorEmail)
-      console.log(`Reviewer pages on http://${host}:${String(port)}/review/<token>`);
-    else
-      console.log(
-        'Reviewer pages are off (they need HOST on this computer and BEACON_OPERATOR_EMAIL).',
-      );
-  });
+createReportServer({
+  sql,
+  blobs,
+  clock,
+  ...(reviewOn && operatorEmail ? { review: { operatorEmail, exportRun: exportForLink } } : {}),
+}).listen(port, host, () => {
+  console.log(`Reports on http://${host}:${String(port)}/r/<token>`);
+  if (reviewOn && operatorEmail)
+    console.log(`Reviewer pages on http://${host}:${String(port)}/review/<token>`);
+  else
+    console.log(
+      'Reviewer pages are off (they need HOST on this computer and BEACON_OPERATOR_EMAIL).',
+    );
+});
