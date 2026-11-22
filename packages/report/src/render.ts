@@ -218,11 +218,27 @@ ${items}
 </section>`;
 }
 
-/** On the reviewer page, one button to open a pull request with every approved fix. */
+/**
+ * On the reviewer page: approve every waiting fix at once, and one button for a pull request with
+ * every approved fix. While fixes still wait, the page says so, so one review ends in one PR.
+ */
 function exportForm(fixes: Report['fixes'], review?: RenderOptions['review']): string {
+  if (!review) return '';
   const approved = fixes.filter((f) => f.status === 'approved').length;
-  if (!review || approved === 0) return '';
-  return `<form method="post" action="${esc(`${review.actionBase}/export`)}" class="export"><button type="submit" class="button primary">Open a pull request with ${plural(approved, 'approved fix', 'approved fixes')}</button></form>`;
+  const waiting = fixes.filter((f) => f.status === 'pending').length;
+  const approveAll = waiting
+    ? `<form method="post" action="${esc(`${review.actionBase}/approve-all`)}"><button type="submit" class="button secondary">Approve all ${plural(waiting, 'waiting fix', 'waiting fixes')}</button></form>`
+    : '';
+  const pr = approved
+    ? `<form method="post" action="${esc(`${review.actionBase}/export`)}"><button type="submit" class="button primary">Open a pull request with ${plural(approved, 'approved fix', 'approved fixes')}</button></form>`
+    : '';
+  const wait =
+    approved && waiting
+      ? `<p class="small">${waiting === 1 ? '1 fix is still waiting. Decide it' : `${String(waiting)} fixes are still waiting. Decide them`} first to keep everything in one pull request.</p>`
+      : '';
+  return approveAll || pr
+    ? `<div class="export"><div class="actions">${approveAll}${pr}</div>${wait}</div>`
+    : '';
 }
 
 /** The agent's likely issues (D-048): each needs a human, and every suggestion is untested. */

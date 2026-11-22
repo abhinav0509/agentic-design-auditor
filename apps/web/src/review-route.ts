@@ -22,11 +22,14 @@ export type ReviewDeps = {
 
 const TOKEN = '[A-Za-z0-9_-]{32,128}';
 const PAGE = new RegExp(`^/review/(${TOKEN})$`);
-const ACTION = new RegExp(`^/review/(${TOKEN})/(?:(approve|reject)/([0-9a-f-]{36})|(export))$`);
+const ACTION = new RegExp(
+  `^/review/(${TOKEN})/(?:(approve|reject)/([0-9a-f-]{36})|(export)|(approve-all))$`,
+);
 
 /** The only notices the page shows; a code outside this list shows nothing. */
 const NOTICES: Record<string, string> = {
   approved: 'Fix approved. Open a pull request when you are ready.',
+  approved_all: 'All waiting fixes approved. Open the pull request when you are ready.',
   rejected: 'Fix rejected. It will not be exported.',
   exported: 'Pull request opened. Each fix below links to it.',
   not_exported: 'No pull request was opened: nothing approved was ready to export.',
@@ -77,9 +80,29 @@ export async function handleReviewRequest(
     const result = await deps.exportRun(link);
     return redirect(token, result.status === 'pr_open' ? 'exported' : 'not_exported');
   }
+  const operator = await ensureOperator(deps.sql, { orgId: link.orgId, email: deps.operatorEmail });
+  if (m[5] === 'approve-all') {
+    await asApp(deps.sql, link.orgId, async (tx) => {
+      const waiting = await tx<{ id: string; version: number }[]>`
+        select id, version from proposals
+        where run_id = ${link.runId} and status = 'pending' and kind = 'patch' order by id`;
+      for (const p of waiting)
+        await decideProposal(tx, {
+          orgId: link.orgId,
+          proposalId: p.id,
+          userId: operator,
+          input: {
+            action: 'approve',
+            key: `review-approve-v${String(p.version)}`,
+            expectedVersion: p.version,
+          },
+          at: now.toISOString(),
+        });
+    });
+    return redirect(token, 'approved_all');
+  }
   const action = m[2] === 'approve' ? 'approve' : 'reject';
   const proposalId = m[3] ?? '';
-  const operator = await ensureOperator(deps.sql, { orgId: link.orgId, email: deps.operatorEmail });
   const decided = await asApp(deps.sql, link.orgId, async (tx) => {
     const [p] = await tx<{ status: string; version: number }[]>`
       select status, version from proposals where id = ${proposalId} and run_id = ${link.runId}`;
