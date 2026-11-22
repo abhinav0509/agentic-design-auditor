@@ -353,14 +353,37 @@ describe('renderReport: reviewer controls', () => {
     expect(html).toContain('method="post"');
   });
 
-  it('FR-11: waiting fixes can be approved at once, and the PR button warns while some still wait', () => {
+  it('FR-12: low-risk waiting fixes can be approved at once, and the PR button warns while some still wait', () => {
     const html = reviewer();
 
     expect(html).toContain('action="/review/tok/approve-all"');
-    expect(html).toContain('Approve all 1 waiting fix');
+    expect(html).toContain('Approve all 1 low-risk fix');
     expect(html).toContain(
       '1 fix is still waiting. Decide it first to keep everything in one pull request.',
     );
+  });
+
+  it('FR-12: medium and high risk fixes are never in the bulk button', () => {
+    const only = (risk: string) =>
+      renderReport(
+        buildReport(
+          sample({
+            fixes: [{ ...fix('p9', 'pending', 'Label the field'), risk }],
+            pullRequests: [],
+          }),
+        ),
+        {
+          siteUrl: SITE,
+          scannedAt: '2026-11-15T10:00:00.000Z',
+          expiresAt: '2026-11-29T10:00:00.000Z',
+          cropUrl: (ref) => ref,
+          review: { actionBase: '/review/tok' },
+        },
+      );
+
+    expect(only('medium')).not.toContain('approve-all');
+    expect(only('high')).not.toContain('approve-all');
+    expect(only('medium')).toContain('action="/review/tok/approve/p9"');
   });
 
   it('FR-11: shows the outcome of the last action as a status message', () => {
