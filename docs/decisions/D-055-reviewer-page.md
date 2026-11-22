@@ -18,6 +18,7 @@
 - **Options:** (A) buttons on the share page; (B) a separate reviewer page with its own token, local only.
 - **Chosen:** B. A share link is meant to be forwarded, so it must not be able to change code. Until sign-in exists, the reviewer is the operator at this computer.
 - **One review, one PR (2026-11-22):** the first live use opened two PRs, because "Open a pull request" was pressed after the first approval and again later. The page now has "Approve all N waiting fixes" (`POST …/approve-all`, through the same `decideProposal`). Next to the PR button it says how many fixes still wait, so a review ends in one PR.
+- **Bulk approval is low risk only (FR-12, 2026-11-22):** "Approve all" approved every waiting fix, against FR-12. It is now "Approve all N low-risk fixes". The server re-selects `risk_level = 'low'` instead of trusting the page, and medium and high risk fixes are approved one by one. The button's count is the summary of what it approves.
 - **Consequences:**
   - **Local only for now:** sign-in (FR-01) replaces loopback-only with real reviewers, and the page and actions stay as they are.
   - **No reject reason:** reject takes no reason in the form yet (FR-11 allows an optional one).

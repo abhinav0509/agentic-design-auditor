@@ -3,7 +3,15 @@
 // the run ready. The model runs outside any transaction; saving and finishing share one.
 import type { FixerLimits, LlmClient } from '@beacon/agent';
 import type { BlobStore, Clock, IdGen } from '@beacon/core';
-import { asApp, claimFixJob, finishFixJob, loadFixJob, saveProposal, type Sql } from '@beacon/db';
+import {
+  agentPaused,
+  asApp,
+  claimFixJob,
+  finishFixJob,
+  loadFixJob,
+  saveProposal,
+  type Sql,
+} from '@beacon/db';
 import type { Finding } from '@beacon/scanner';
 import type { SiteFiles } from '@beacon/verifier';
 import type { Browser } from 'playwright';
@@ -38,6 +46,8 @@ export async function runFixJobs(
 ): Promise<void> {
   const app = <T>(fn: Parameters<typeof asApp<T>>[2]) => asApp(deps.sql, orgId, fn);
   for (;;) {
+    // FR-28: a paused org claims nothing; queued jobs wait for the org to resume.
+    if (await app((tx) => agentPaused(tx))) return;
     const job = await app((tx) => claimFixJob(tx, { runId }));
     if (!job) break;
     const attempt = job.attempts;

@@ -50,6 +50,7 @@ beforeAll(async () => {
     clock: { now: () => NOW },
     review: {
       operatorEmail: 'operator@beacon.test',
+      undoFix: () => Promise.resolve({ status: 'not_applied' }),
       exportRun: (link) => {
         exported.push(link.runId);
         return Promise.resolve({

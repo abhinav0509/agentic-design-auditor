@@ -22,6 +22,7 @@
     "corpus:images": "node tools/corpus-images/src/render.ts",
     "report": "node --env-file-if-exists=.env.local tools/report/src/cli.ts",
     "report:serve": "node --env-file-if-exists=.env.local tools/report/src/serve.ts",
+    "audit:verify": "node tools/report/src/audit-verify.ts",
     "fix": "node --env-file-if-exists=.env.local tools/report/src/fix-cli.ts"
   },
   "devDependencies": {

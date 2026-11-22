@@ -1,4 +1,5 @@
 // Public API of @beacon/core. Test helpers are deliberately not exported.
+export * from './audit-chain.ts';
 export * from './blob.ts';
 export * from './build-proposal.ts';
 export * from './claims.ts';
