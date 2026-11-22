@@ -197,7 +197,9 @@ ${announced}
 ${
   review && f.status === 'pending'
     ? `<div class="actions">${act(`approve/${f.id}`, 'Approve', f.title, 'primary')}${act(`reject/${f.id}`, 'Reject', f.title, 'secondary')}</div>`
-    : ''
+    : review && f.pr && (f.status === 'applied' || f.status === 'merged')
+      ? `<div class="actions">${act(`undo/${f.id}`, 'Undo this fix', f.title, 'secondary')}</div>`
+      : ''
 }
 ${
   f.diff
