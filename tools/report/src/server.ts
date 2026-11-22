@@ -11,7 +11,11 @@ export type ReportServerOptions = {
   blobs: BlobStore;
   clock: Clock;
   /** Reviewer pages on: only for a server bound to loopback, with an operator to decide as. */
-  review?: { operatorEmail: string; exportRun: ReviewDeps['exportRun'] };
+  review?: {
+    operatorEmail: string;
+    exportRun: ReviewDeps['exportRun'];
+    undoFix: ReviewDeps['undoFix'];
+  };
 };
 
 function drain(req: http.IncomingMessage): Promise<void> {

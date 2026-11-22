@@ -30,6 +30,13 @@ export type GitProvider = {
   }): Promise<string>;
   /** Creates a new branch at `sha`. Fails if the branch exists. */
   createBranch(name: string, sha: string): Promise<void>;
+  /**
+   * Moves an existing branch forward to `sha`, only if it is still at `expected` and `sha` builds on
+   * it (no force). Which branches may move is the exporter's decision (NFR-01).
+   */
+  updateBranch(name: string, sha: string, expected: string): Promise<void>;
+  /** Whether a pull request has been merged. */
+  pullRequestMerged(number: number): Promise<boolean>;
   findPullRequest(head: string): Promise<PullRequest | null>;
   openPullRequest(input: {
     head: string;

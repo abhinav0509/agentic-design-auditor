@@ -19,7 +19,9 @@ const USAGE = `usage:
   pnpm fix scan [--agent-review] --repo <owner/repo> [page path ...]
   pnpm fix review-link <report link>         a reviewer page (this computer only) for the run
   pnpm fix approve <report link> (all | 1 2 ...)
-  pnpm fix export <report link>`;
+  pnpm fix export <report link>
+  pnpm fix pause <report link> [reason]      stop all agent work for the site's organisation
+  pnpm fix resume <report link>`;
 
 function need(name: string): string {
   const v = process.env[name];
@@ -185,6 +187,24 @@ try {
     } finally {
       await browser.close();
     }
+  } else if (command === 'pause' || command === 'resume') {
+    const { resolveReportLink, asApp, setAgentPaused } = await import('@beacon/db');
+    const link =
+      (await resolveReportLink(sql, tokenOf(args[0]), clock.now())) ??
+      fail('no run for that report link');
+    const reason = args.slice(1).join(' ');
+    await asApp(sql, link.orgId, (tx) =>
+      setAgentPaused(tx, {
+        paused: command === 'pause',
+        at: clock.now(),
+        ...(reason ? { reason } : {}),
+      }),
+    );
+    console.log(
+      command === 'pause'
+        ? 'Agent work is paused for this organisation.'
+        : 'Agent work is resumed.',
+    );
   } else fail(USAGE);
 } finally {
   await sql.end();

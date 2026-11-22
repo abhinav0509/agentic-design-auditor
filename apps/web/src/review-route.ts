@@ -18,22 +18,33 @@ export type ReviewDeps = {
     orgId: string;
     runId: string;
   }) => Promise<{ status: string; pr?: { number: number; url: string } }>;
+  /** Undo a fix in a pull request (FR-15, D-058): a revert commit before merge, a revert PR after. */
+  undoFix: (
+    link: { orgId: string; runId: string },
+    proposalId: string,
+    userId: string,
+  ) => Promise<{ status: string }>;
 };
 
 const TOKEN = '[A-Za-z0-9_-]{32,128}';
 const PAGE = new RegExp(`^/review/(${TOKEN})$`);
 const ACTION = new RegExp(
-  `^/review/(${TOKEN})/(?:(approve|reject)/([0-9a-f-]{36})|(export)|(approve-all))$`,
+  `^/review/(${TOKEN})/(?:(approve|reject|undo)/([0-9a-f-]{36})|(export)|(approve-all))$`,
 );
 
 /** The only notices the page shows; a code outside this list shows nothing. */
 const NOTICES: Record<string, string> = {
   approved: 'Fix approved. Open a pull request when you are ready.',
-  approved_all: 'All waiting fixes approved. Open the pull request when you are ready.',
+  approved_low:
+    'Low-risk fixes approved. Medium and high risk fixes need approving one by one before the pull request.',
   rejected: 'Fix rejected. It will not be exported.',
   exported: 'Pull request opened. Each fix below links to it.',
   not_exported: 'No pull request was opened: nothing approved was ready to export.',
   conflict: 'That fix was already decided, so nothing changed.',
+  undone: 'Fix undone. The pull request no longer contains it, or a revert pull request is open.',
+  undo_failed: 'That fix could not be undone: it is no longer in the code as Beacon made it.',
+  paused:
+    'Agent work is paused for this organisation, so nothing was exported. Resume it to export.',
 };
 
 const redirect = (token: string, done: string): WebResponse => ({
@@ -78,14 +89,22 @@ export async function handleReviewRequest(
 
   if (m[4] === 'export') {
     const result = await deps.exportRun(link);
-    return redirect(token, result.status === 'pr_open' ? 'exported' : 'not_exported');
+    const done =
+      result.status === 'pr_open'
+        ? 'exported'
+        : result.status === 'paused'
+          ? 'paused'
+          : 'not_exported';
+    return redirect(token, done);
   }
   const operator = await ensureOperator(deps.sql, { orgId: link.orgId, email: deps.operatorEmail });
   if (m[5] === 'approve-all') {
+    // FR-12: bulk approval covers low-risk fixes only, re-checked here, not taken from the page.
     await asApp(deps.sql, link.orgId, async (tx) => {
       const waiting = await tx<{ id: string; version: number }[]>`
         select id, version from proposals
-        where run_id = ${link.runId} and status = 'pending' and kind = 'patch' order by id`;
+        where run_id = ${link.runId} and status = 'pending' and kind = 'patch' and risk_level = 'low'
+        order by id`;
       for (const p of waiting)
         await decideProposal(tx, {
           orgId: link.orgId,
@@ -99,7 +118,17 @@ export async function handleReviewRequest(
           at: now.toISOString(),
         });
     });
-    return redirect(token, 'approved_all');
+    return redirect(token, 'approved_low');
+  }
+  if (m[2] === 'undo') {
+    const r = await deps.undoFix(link, m[3] ?? '', operator);
+    const done =
+      r.status === 'reverted_on_branch' || r.status === 'revert_pr_open'
+        ? 'undone'
+        : r.status === 'paused'
+          ? 'paused'
+          : 'undo_failed';
+    return redirect(token, done);
   }
   const action = m[2] === 'approve' ? 'approve' : 'reject';
   const proposalId = m[3] ?? '';
