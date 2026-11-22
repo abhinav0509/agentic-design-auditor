@@ -21,7 +21,8 @@ const USAGE = `usage:
   pnpm fix approve <report link> (all | 1 2 ...)
   pnpm fix export <report link>
   pnpm fix pause <report link> [reason]      stop all agent work for the site's organisation
-  pnpm fix resume <report link>`;
+  pnpm fix resume <report link>
+  pnpm fix audit <report link> > audit.json    the organisation's audit log, verifiable on its own`;
 
 function need(name: string): string {
   const v = process.env[name];
@@ -205,6 +206,13 @@ try {
         ? 'Agent work is paused for this organisation.'
         : 'Agent work is resumed.',
     );
+  } else if (command === 'audit') {
+    const { resolveReportLink, asApp, exportAuditLog } = await import('@beacon/db');
+    const link =
+      (await resolveReportLink(sql, tokenOf(args[0]), clock.now())) ??
+      fail('no run for that report link');
+    const log = await asApp(sql, link.orgId, (tx) => exportAuditLog(tx));
+    console.log(JSON.stringify({ ...log, exportedAt: clock.now().toISOString() }, null, 2));
   } else fail(USAGE);
 } finally {
   await sql.end();
