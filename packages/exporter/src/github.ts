@@ -115,6 +115,24 @@ export class GitHubProvider implements GitProvider {
     await this.must('POST', '/git/refs', { ref: `refs/heads/${name}`, sha });
   }
 
+  async updateBranch(name: string, sha: string, expected: string): Promise<void> {
+    if ((await this.headSha(name)) !== expected) throw new Error(`${name} moved; not updating it`);
+    // force: false means GitHub accepts only a fast-forward.
+    await this.must(
+      'PATCH',
+      `/git/refs/heads/${name.split('/').map(encodeURIComponent).join('/')}`,
+      {
+        sha,
+        force: false,
+      },
+    );
+  }
+
+  async pullRequestMerged(number: number): Promise<boolean> {
+    const pr = await this.must<{ merged: boolean }>('GET', `/pulls/${String(number)}`);
+    return pr.merged;
+  }
+
   async findPullRequest(head: string): Promise<PullRequest | null> {
     const prs = await this.must<{ number: number; html_url: string }[]>(
       'GET',

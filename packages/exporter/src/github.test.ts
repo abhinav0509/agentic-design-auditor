@@ -101,6 +101,20 @@ describe('GitHubProvider', () => {
     expect(calls[2]?.body).toEqual({ head: 'beacon/ab/cd', base: 'main', title: 'T', body: 'B' });
   });
 
+  it('FR-15: moves a branch forward only, with force off, and only from the expected head', async () => {
+    const { fetch, calls } = fakeFetch({
+      [`GET ${R}/git/ref/heads/beacon/ab/cd`]: [200, { object: { sha: 'old' } }],
+      [`PATCH ${R}/git/refs/heads/beacon/ab/cd`]: [200, {}],
+      [`GET ${R}/pulls/7`]: [200, { merged: true }],
+    });
+    const git = gh(fetch);
+
+    await git.updateBranch('beacon/ab/cd', 'new', 'old');
+    await expect(git.updateBranch('beacon/ab/cd', 'new', 'other')).rejects.toThrow(/moved/);
+    expect(await git.pullRequestMerged(7)).toBe(true);
+    expect(calls.find((c) => c.method === 'PATCH')?.body).toEqual({ sha: 'new', force: false });
+  });
+
   it('NFR-07: an API error names the status and path, never the token', async () => {
     const { fetch } = fakeFetch({
       [`POST ${R}/git/refs`]: [422, { message: 'Reference already exists' }],

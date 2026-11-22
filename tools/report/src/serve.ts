@@ -3,7 +3,7 @@
 // Binds to 127.0.0.1 unless HOST says otherwise; put it behind HTTPS before sharing a link outside.
 import { asApp, type Sql } from '@beacon/db';
 import { checkout, GitHubProvider } from '@beacon/exporter';
-import { exportRun, FsBlobStore } from '@beacon/worker';
+import { exportRun, FsBlobStore, undoFix } from '@beacon/worker';
 import { chromium } from 'playwright';
 import postgres from 'postgres';
 import { createReportServer } from './server.ts';
@@ -21,6 +21,34 @@ const port = Number(process.env['PORT'] ?? 4180);
 // Until sign-in exists (FR-01), the reviewer page is the operator's, so it is never served off-box.
 const reviewOn = ['127.0.0.1', 'localhost', '::1'].includes(host);
 const operatorEmail = process.env['BEACON_OPERATOR_EMAIL'] ?? '';
+
+/** The GitHub repo recorded for a run's site, with the operator's token. */
+async function repoFor(link: { orgId: string; runId: string }) {
+  const token = process.env['GITHUB_TOKEN'];
+  if (!token) throw new Error('set GITHUB_TOKEN to change pull requests');
+  const [conn] = await asApp(
+    sql,
+    link.orgId,
+    (tx) =>
+      tx<{ repo_full_name: string }[]>`
+      select c.repo_full_name from site_connections c
+      join scan_runs r on r.site_id = c.site_id where r.id = ${link.runId}`,
+  );
+  if (!conn) return null;
+  const [owner = '', repo = ''] = conn.repo_full_name.split('/');
+  return new GitHubProvider({ owner, repo, token });
+}
+
+/** Undo a fix in its pull request (FR-15, D-058). */
+async function undoForLink(
+  link: { orgId: string; runId: string },
+  proposalId: string,
+  userId: string,
+) {
+  const git = await repoFor(link);
+  if (!git) return { status: 'not_applied' };
+  return undoFix({ sql, git, clock }, { orgId: link.orgId, proposalId, userId });
+}
 
 /** One verified PR with the run's approved fixes, on the repo recorded for the run's site. */
 async function exportForLink(link: { orgId: string; runId: string }) {
@@ -53,7 +81,9 @@ createReportServer({
   sql,
   blobs,
   clock,
-  ...(reviewOn && operatorEmail ? { review: { operatorEmail, exportRun: exportForLink } } : {}),
+  ...(reviewOn && operatorEmail
+    ? { review: { operatorEmail, exportRun: exportForLink, undoFix: undoForLink } }
+    : {}),
 }).listen(port, host, () => {
   console.log(`Reports on http://${host}:${String(port)}/r/<token>`);
   if (reviewOn && operatorEmail)

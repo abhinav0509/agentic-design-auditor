@@ -3,8 +3,14 @@ import type { GitProvider, PullRequest } from '@beacon/core';
 import { createHash } from 'node:crypto';
 
 type Commit = { parent: string | null; files: Map<string, string>; message: string };
-type Pr = PullRequest & { head: string; base: string; title: string; body: string };
-type Write = 'createCommit' | 'createBranch' | 'openPullRequest';
+type Pr = PullRequest & {
+  head: string;
+  base: string;
+  title: string;
+  body: string;
+  merged?: boolean;
+};
+type Write = 'createCommit' | 'createBranch' | 'updateBranch' | 'openPullRequest';
 
 export class FakeGitProvider implements GitProvider {
   readonly commits = new Map<string, Commit>();
@@ -70,6 +76,31 @@ export class FakeGitProvider implements GitProvider {
     if (!this.commits.has(sha)) throw new Error(`no commit ${sha}`);
     this.refs.set(name, sha);
     return Promise.resolve();
+  }
+
+  updateBranch(name: string, sha: string, expected: string) {
+    this.write('updateBranch');
+    if (this.refs.get(name) !== expected) throw new Error(`${name} is not at ${expected}`);
+    // Fast-forward only: `expected` must be an ancestor of `sha`.
+    for (let c: string | null = sha; c !== null; c = this.commits.get(c)?.parent ?? null)
+      if (c === expected) {
+        this.refs.set(name, sha);
+        return Promise.resolve();
+      }
+    throw new Error(`${sha} does not build on ${expected}`);
+  }
+
+  pullRequestMerged(number: number) {
+    return Promise.resolve(this.prs.find((p) => p.number === number)?.merged ?? false);
+  }
+
+  /** Test helper: merges a PR by moving the default branch to its head (a fast-forward merge). */
+  merge(number: number): void {
+    const pr = this.prs.find((p) => p.number === number);
+    const head = pr ? this.refs.get(pr.head) : undefined;
+    if (!pr || !head) throw new Error(`no PR ${String(number)}`);
+    pr.merged = true;
+    this.refs.set(this.defaultName, head);
   }
 
   findPullRequest(head: string) {

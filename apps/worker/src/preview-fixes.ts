@@ -5,7 +5,15 @@
 // applying a fix needs the site's code, which comes after the client agrees (repo access).
 import type { FixerLimits, LlmClient } from '@beacon/agent';
 import type { BlobStore, Clock, IdGen } from '@beacon/core';
-import { asApp, claimFixJob, finishFixJob, loadFixJob, savePreview, type Sql } from '@beacon/db';
+import {
+  agentPaused,
+  asApp,
+  claimFixJob,
+  finishFixJob,
+  loadFixJob,
+  savePreview,
+  type Sql,
+} from '@beacon/db';
 import { repoPathOf } from '@beacon/mapper';
 import type { Finding } from '@beacon/scanner';
 import type { SiteFiles } from '@beacon/verifier';
@@ -48,6 +56,8 @@ export async function previewFixes(
 ): Promise<void> {
   const app = <T>(fn: Parameters<typeof asApp<T>>[2]) => asApp(deps.sql, orgId, fn);
   for (;;) {
+    // FR-28: a paused org claims nothing; queued jobs wait for the org to resume.
+    if (await app((tx) => agentPaused(tx))) return;
     const job = await app((tx) => claimFixJob(tx, { runId }));
     if (!job) break;
     const attempt = job.attempts;

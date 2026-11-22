@@ -24,14 +24,19 @@ export type ExportResult =
 /** The changed lines of a one-hunk diff: at 0-based `line`, `remove` becomes `add`. */
 type Replacement = { line: number; remove: string[]; add: string[] };
 
-const linesOf = (s: string) => s.match(/[^\n]*\n|[^\n]+$/g) ?? [];
+export const linesOf = (s: string) => s.match(/[^\n]*\n|[^\n]+$/g) ?? [];
 
 /**
  * Checks a proposal's one-hunk diff against `source` (context and removed lines must match where
  * the hunk says) and returns only its changed lines, so neighbouring proposals' context never
  * conflicts. Returns null when the diff does not apply.
  */
-function replacementOf(source: string, diff: string): Replacement | null {
+export function replacementOf(
+  source: string,
+  diff: string,
+  /** 'changed': check only the changed lines, not the context (undo, where neighbours moved on). */
+  check: 'hunk' | 'changed' = 'hunk',
+): Replacement | null {
   const rows: { t: string; text: string }[] = [];
   let start = -1;
   let hunks = 0;
@@ -52,10 +57,14 @@ function replacementOf(source: string, diff: string): Replacement | null {
   const old = rows.filter((r) => r.t !== '+').map((r) => r.text);
   const first = old.length === 0 ? start : start - 1; // "-N,0" means after line N
   const lines = linesOf(source);
-  if (old.some((text, i) => lines[first + i] !== text)) return null;
-
   const pre = rows.findIndex((r) => r.t !== ' ');
   const changed = rows.slice(pre, rows.length - [...rows].reverse().findIndex((r) => r.t !== ' '));
+  if (check === 'hunk' && old.some((text, i) => lines[first + i] !== text)) return null;
+  if (
+    check === 'changed' &&
+    changed.filter((r) => r.t === '-').some((r, i) => lines[first + pre + i] !== r.text)
+  )
+    return null;
   return {
     line: first + pre,
     remove: changed.filter((r) => r.t === '-').map((r) => r.text),
@@ -63,11 +72,11 @@ function replacementOf(source: string, diff: string): Replacement | null {
   };
 }
 
-const branchName = (runId: string, ids: string[]) =>
+export const branchName = (runId: string, ids: string[]) =>
   `beacon/${runId.slice(0, 8)}/${createHash('sha256').update(ids.join('\n')).digest('hex').slice(0, 12)}`;
 
 // NFR-01 is enforced here, not by GitHub: contents:write cannot be limited to some branches.
-const ALLOWED_BRANCH = /^beacon\/[0-9a-f]{8}\/[0-9a-f]{12}$/;
+export const ALLOWED_BRANCH = /^beacon\/[0-9a-f]{8}\/[0-9a-f]{12}$/;
 
 const commitMessage = (p: Proposal) =>
   `${p.title}\n\n${p.rationale}\n\nBeacon-Proposal: ${p.proposal_id}\n`;
