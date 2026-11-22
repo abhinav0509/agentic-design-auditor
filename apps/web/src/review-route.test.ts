@@ -159,6 +159,25 @@ describe('handleReviewRequest', () => {
     expect(exported).toEqual([runId]);
   });
 
+  it('FR-28: an export refused because agent work is paused says so', async () => {
+    const paused = { ...deps, exportRun: () => Promise.resolve({ status: 'paused' }) };
+
+    const res = await handleReviewRequest(paused, {
+      method: 'POST',
+      path: `/review/${REVIEW}/export`,
+      origin: ORIGIN,
+      host: HOST,
+    });
+
+    expect(res).toMatchObject({
+      status: 303,
+      headers: { location: `/review/${REVIEW}?done=paused` },
+    });
+    expect(String((await get(`/review/${REVIEW}?done=paused`)).body)).toContain(
+      'Agent work is paused',
+    );
+  });
+
   it('FR-11: a form post from another site, or with no origin, is refused and changes nothing', async () => {
     const id = '00000000-0000-4000-8000-000000000b01';
     expect((await post(`/review/${REVIEW}/reject/${id}`, 'https://evil.test')).status).toBe(403);

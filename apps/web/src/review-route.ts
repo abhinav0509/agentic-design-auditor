@@ -34,6 +34,8 @@ const NOTICES: Record<string, string> = {
   exported: 'Pull request opened. Each fix below links to it.',
   not_exported: 'No pull request was opened: nothing approved was ready to export.',
   conflict: 'That fix was already decided, so nothing changed.',
+  paused:
+    'Agent work is paused for this organisation, so nothing was exported. Resume it to export.',
 };
 
 const redirect = (token: string, done: string): WebResponse => ({
@@ -78,7 +80,13 @@ export async function handleReviewRequest(
 
   if (m[4] === 'export') {
     const result = await deps.exportRun(link);
-    return redirect(token, result.status === 'pr_open' ? 'exported' : 'not_exported');
+    const done =
+      result.status === 'pr_open'
+        ? 'exported'
+        : result.status === 'paused'
+          ? 'paused'
+          : 'not_exported';
+    return redirect(token, done);
   }
   const operator = await ensureOperator(deps.sql, { orgId: link.orgId, email: deps.operatorEmail });
   if (m[5] === 'approve-all') {
