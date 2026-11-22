@@ -4,6 +4,7 @@
 import { runReviewer, type LlmClient, type Usage } from '@beacon/agent';
 import { DomainError, type BlobStore } from '@beacon/core';
 import {
+  agentPaused,
   asApp,
   recordModelUsage,
   savePageError,
@@ -80,12 +81,16 @@ export async function scanRun(
       )
     ).map((p) => p.url),
   );
+  // FR-28: while the org is paused, the scan runs but the agent review does not.
+  const reviewer = (await asApp(deps.sql, orgId, (tx) => agentPaused(tx)))
+    ? undefined
+    : deps.reviewer;
   for (const url of urls.filter((u) => !stored.has(u))) {
     let page;
     try {
       page = await scanPageContent(deps.context, url, {
         crops: deps.blobs !== undefined,
-        review: deps.reviewer !== undefined,
+        review: reviewer !== undefined,
       });
     } catch (e) {
       // v1.0 §12.3: the page is listed as not scanned with its reason; the run goes on.
@@ -99,9 +104,7 @@ export async function scanRun(
     for (const c of page.crops) {
       if (deps.blobs) crops[c.target] = await deps.blobs.put(c.png, 'image/png');
     }
-    const review = deps.reviewer
-      ? await reviewPage(deps.reviewer.llm, deps.blobs, url, page)
-      : null;
+    const review = reviewer ? await reviewPage(reviewer.llm, deps.blobs, url, page) : null;
     // The page, its flags and the model cost commit together, so a resumed run (which skips stored
     // pages) never reviews or charges a page twice.
     await asApp(deps.sql, orgId, async (tx) => {

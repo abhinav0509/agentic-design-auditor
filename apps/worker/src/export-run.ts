@@ -2,7 +2,7 @@
 // with every proposal's finding re-verified on the batch's combined change against a fresh checkout
 // of the default branch head, then the outcome written back through the state machine.
 import type { Clock, GitProvider } from '@beacon/core';
-import { asApp, loadApproved, recordExport, type Sql } from '@beacon/db';
+import { agentPaused, asApp, loadApproved, recordExport, type Sql } from '@beacon/db';
 import { exportBatch, type ExportResult } from '@beacon/exporter';
 import { verify, type SiteFiles } from '@beacon/verifier';
 import type { Browser } from 'playwright';
@@ -17,7 +17,9 @@ export async function exportRun(
     clock: Clock;
   },
   { orgId, runId }: { orgId: string; runId: string },
-): Promise<ExportResult | { status: 'nothing_to_export' }> {
+): Promise<ExportResult | { status: 'nothing_to_export' } | { status: 'paused' }> {
+  // FR-28: a paused org exports nothing, and GitHub is not touched.
+  if (await asApp(deps.sql, orgId, (tx) => agentPaused(tx))) return { status: 'paused' };
   const approved = await asApp(deps.sql, orgId, (tx) => loadApproved(tx, runId));
   if (approved.length === 0) return { status: 'nothing_to_export' };
 
