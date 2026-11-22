@@ -24,3 +24,4 @@ verified fix previews, the gated agent review, real-model evals, the reviewer pa
 - 2026-11-22 FR-12 bulk approve only for low risk (D-055).
 - 2026-11-22 FR-15 undo, by revert commit or revert PR (D-058).
 - 2026-11-22 NFR-11 guard against real model calls in tests; NFR-10 and FR-26 verifiable audit export (D-059).
+- 2026-11-22 FR-03, FR-04, FR-04a: site registration and ownership proofs by DNS, meta tag or file (D-060).

@@ -39,6 +39,25 @@ const proxy = await startProxy();
 const browser = await chromium.launch(chromiumLaunchOptions(proxy.url));
 try {
   await migrate(sql);
+  if (planned.plan.siteProven) {
+    // FR-04a: the site must have proved control within 30 days (pnpm site verify).
+    const { asApp, ownershipFresh, registerSite } = await import('@beacon/db');
+    const { orgId, siteUrl } = planned.plan;
+    const fresh = await asApp(sql, orgId, async (tx) => {
+      const [org] = await tx`select 1 from organizations where id = ${orgId}`;
+      if (!org) return false;
+      return ownershipFresh(tx, {
+        siteId: await registerSite(tx, { orgId, baseUrl: siteUrl }),
+        now: new Date(),
+      });
+    });
+    if (!fresh) {
+      console.error(
+        `${siteUrl} has not proved control in the last 30 days: run pnpm site add, then pnpm site verify`,
+      );
+      process.exit(2);
+    }
+  }
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   await guardContext(context, systemResolver);
   console.log(

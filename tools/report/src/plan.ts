@@ -12,10 +12,12 @@ export type ReportPlan = {
   agentReview?: true;
   /** Present, and true, only when --preview-fixes asks for fix previews (D-056). */
   previewFixes?: true;
+  /** Present, and true, when the site's own proof (FR-04a) stands in for the email rule (D-060). */
+  siteProven?: true;
 };
 
 const USAGE =
-  'usage: pnpm report [--agent-review] [--preview-fixes] --requested-by <work email> <url> [url ...]';
+  'usage: pnpm report [--agent-review] [--preview-fixes] [--site-proven] --requested-by <email> <url> [url ...]';
 const MAX_PAGES = 10;
 
 /** One org per site host, derived so a re-run for the same site reuses its org and history. */
@@ -30,7 +32,10 @@ export function planReport(
 ): { ok: true; plan: ReportPlan } | { ok: false; error: string } {
   const agentReview = argv.includes('--agent-review');
   const previewFixes = argv.includes('--preview-fixes');
-  argv = argv.filter((a) => a !== '--agent-review' && a !== '--preview-fixes');
+  const siteProven = argv.includes('--site-proven');
+  argv = argv.filter(
+    (a) => a !== '--agent-review' && a !== '--preview-fixes' && a !== '--site-proven',
+  );
   if (argv.length === 0) return { ok: false, error: USAGE };
   const at = argv.indexOf('--requested-by');
   const requestedBy = at === -1 ? undefined : argv[at + 1];
@@ -52,7 +57,9 @@ export function planReport(
   }
   if (hosts.size !== 1) return { ok: false, error: 'all URLs must be on the same host' };
 
-  const proof = emailProvesSite(requestedBy, first);
+  // FR-04: either the requester's work email proves the site (FR-30), or the site proved control
+  // itself (FR-04a), which the CLI checks against the database before scanning.
+  const proof = siteProven ? { ok: true as const } : emailProvesSite(requestedBy, first);
   if (!proof.ok)
     return { ok: false, error: `${requestedBy} does not prove ${first}: ${proof.reason}` };
   const site = new URL(first);
@@ -65,6 +72,7 @@ export function planReport(
       orgId: orgIdFor(site.host.replace(/^www\./, '')),
       ...(agentReview ? { agentReview: true as const } : {}),
       ...(previewFixes ? { previewFixes: true as const } : {}),
+      ...(siteProven ? { siteProven: true as const } : {}),
     },
   };
 }
