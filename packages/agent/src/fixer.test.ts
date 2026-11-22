@@ -183,6 +183,37 @@ describe('runFixer: invalid output', () => {
     expect(JSON.stringify(feedback)).toMatch(/rationale|ops|confidence/);
   });
 
+  it('FR-31: a draft whose text claims compliance is sent back to rephrase, then accepted', async () => {
+    const claiming = {
+      ...validDraft(),
+      rationale: 'Adding alt text brings the page into WCAG compliance.',
+    };
+    const llm = new FakeLlm([
+      toolUse(['submit_proposal', claiming]),
+      toolUse(['submit_proposal', validDraft()]),
+    ]);
+
+    const result = await runFixer({ llm, job: aJob(), tools: fakeTools() });
+
+    expect(result.kind).toBe('patch');
+    const [feedback] = toolResults(llm.calls[1]);
+    expect(feedback).toMatchObject({ isError: true });
+    expect(JSON.stringify(feedback)).toMatch(/compliance/);
+  });
+
+  it('FR-31: a second draft that claims compliance fails the run instead of throwing', async () => {
+    const claiming = toolUse([
+      'submit_proposal',
+      { ...validDraft(), title: 'Make the image fully accessible' },
+    ]);
+    const llm = new FakeLlm([claiming, claiming]);
+
+    expect(await runFixer({ llm, job: aJob(), tools: fakeTools() })).toMatchObject({
+      kind: 'failed',
+      reason: 'INVALID_PROPOSAL',
+    });
+  });
+
   it('a second invalid proposal fails the run', async () => {
     const bad = toolUse(['submit_proposal', { kind: 'patch', title: 'x' }]);
     const llm = new FakeLlm([bad, toolUse(['submit_proposal', { kind: 'nope' }]), bad]);
