@@ -17,3 +17,7 @@ are those in `requirements.yaml`; the phases come from v1.0 §17 and the addendu
 The engine end to end (scan, map, fix, verify, review, approve, PR), the URL-only report with
 verified fix previews, the gated agent review, real-model evals, the reviewer page, and the demo on
 `abhinav0509/beacon-demo-shop`. Phase 1 coverage at the start of the plan: 26 of 39 requirements.
+
+## Progress log
+
+- 2026-11-22 FR-28 kill switch (D-057).
