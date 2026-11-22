@@ -21,3 +21,4 @@ verified fix previews, the gated agent review, real-model evals, the reviewer pa
 ## Progress log
 
 - 2026-11-22 FR-28 kill switch (D-057).
+- 2026-11-22 FR-12 bulk approve only for low risk (D-055).

@@ -226,8 +226,10 @@ function exportForm(fixes: Report['fixes'], review?: RenderOptions['review']): s
   if (!review) return '';
   const approved = fixes.filter((f) => f.status === 'approved').length;
   const waiting = fixes.filter((f) => f.status === 'pending').length;
-  const approveAll = waiting
-    ? `<form method="post" action="${esc(`${review.actionBase}/approve-all`)}"><button type="submit" class="button secondary">Approve all ${plural(waiting, 'waiting fix', 'waiting fixes')}</button></form>`
+  // FR-12: only low-risk fixes may be approved in bulk; medium and high risk are decided one by one.
+  const lowWaiting = fixes.filter((f) => f.status === 'pending' && f.risk === 'low').length;
+  const approveAll = lowWaiting
+    ? `<form method="post" action="${esc(`${review.actionBase}/approve-all`)}"><button type="submit" class="button secondary">Approve all ${plural(lowWaiting, 'low-risk fix', 'low-risk fixes')}</button></form>`
     : '';
   const pr = approved
     ? `<form method="post" action="${esc(`${review.actionBase}/export`)}"><button type="submit" class="button primary">Open a pull request with ${plural(approved, 'approved fix', 'approved fixes')}</button></form>`
