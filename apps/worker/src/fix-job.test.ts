@@ -187,6 +187,23 @@ describe('siteTools: read-only tools over the checkout', () => {
     await expect(outside.getImage()).rejects.toThrow('the image could not be loaded');
   });
 
+  it('FR-08: an image’s type comes from its bytes, so a PNG crop stored under a .jpg path still loads as PNG', async () => {
+    const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1, 2, 3]);
+    const tools = siteTools(
+      { ...FILES, 'img/studio.jpg': png },
+      { pageUrl: URL_, snippet: '<img src="/img/studio.jpg">' },
+    );
+    expect(await tools.getImage()).toEqual({
+      mediaType: 'image/png',
+      data: Buffer.from(png).toString('base64'),
+    });
+    const unknown = siteTools(
+      { ...FILES, 'img/studio.jpg': new Uint8Array([1, 2, 3, 4]) },
+      { pageUrl: URL_, snippet: '<img src="/img/studio.jpg">' },
+    );
+    await expect(unknown.getImage()).rejects.toThrow('the image could not be loaded');
+  });
+
   it('the DOM snippet is the scanned element', async () => {
     expect(await tools.getDomSnippet()).toBe('<img src="/img/studio.jpg">');
   });

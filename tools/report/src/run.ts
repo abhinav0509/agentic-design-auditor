@@ -4,7 +4,7 @@ import type { LlmClient } from '@beacon/agent';
 import type { BlobStore, Clock, IdGen } from '@beacon/core';
 import type { SiteFiles } from '@beacon/verifier';
 import { asApp, createReportLink, type Sql } from '@beacon/db';
-import { runFixJobs, scanRun } from '@beacon/worker';
+import { previewFixes, runFixJobs, scanRun } from '@beacon/worker';
 import axe from 'axe-core';
 import type { BrowserContext } from 'playwright';
 import type { ReportPlan } from './plan.ts';
@@ -18,6 +18,8 @@ export type RunReportDeps = {
   token: () => string;
   /** The agent review (D-048), when the plan asks for it. */
   reviewer?: { llm: LlmClient };
+  /** The fix preview step (D-056): the fixes Beacon would make, from the URL alone. */
+  preview?: { llm: LlmClient; ids: IdGen };
   /** The fix step (D-054): the fixer on the checkout of the repo that serves the site. */
   fix?: {
     llm: LlmClient;
@@ -68,6 +70,22 @@ export async function runReport(
     { sql, context: deps.context, blobs: deps.blobs, ...(reviewer ? { reviewer } : {}) },
     { orgId, runId, urls: plan.urls },
   );
+
+  if (deps.preview) {
+    const browser = deps.context.browser();
+    if (!browser) throw new Error('the preview step needs the browser behind the context');
+    await previewFixes(
+      {
+        sql,
+        browser,
+        llm: deps.preview.llm,
+        clock: deps.clock,
+        ids: deps.preview.ids,
+        blobs: deps.blobs,
+      },
+      { orgId, runId },
+    );
+  }
 
   if (deps.fix) {
     const { fix } = deps;

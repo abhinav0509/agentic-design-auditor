@@ -3,6 +3,7 @@
 import { createHash } from 'node:crypto';
 import type { Sql, TransactionSql } from 'postgres';
 import { ProposalSchema } from '@beacon/core';
+import type { FixPreviewRow } from './previews.ts';
 import type { ReviewFlagRow } from './reviews.ts';
 import { asApp } from './session.ts';
 
@@ -91,6 +92,8 @@ export type ReportRows = {
     crop: string | null;
   }[];
   pullRequests: { number: number; url: string; branch: string; proposalIds: string[] }[];
+  /** Fixes Beacon would make, verified on a copy of the live page (URL-only report, D-056). */
+  previews: (FixPreviewRow & { pageUrl: string })[];
 };
 
 /** A run as the report reads it, under the caller's org (asApp with the link's org). */
@@ -135,7 +138,14 @@ export async function loadReportInput(tx: TransactionSql, runId: string): Promis
     select e.pr_number, e.pr_url, e.branch, e.proposal_ids from exports e
     where e.status = 'pr_open' and e.proposal_ids && (select coalesce(array_agg(id), '{}') from proposals where run_id = ${runId})
     order by e.created_at`;
+  const previews = await tx<(FixPreviewRow & { pageUrl: string })[]>`
+    select pg.url as "pageUrl", v.rule_id as "ruleId", v.title, v.rationale, v.before_html as before,
+      v.after_html as after, v.announced_before as "announcedBefore",
+      v.announced_after as "announcedAfter", v.verified, v.crop
+    from fix_previews v join findings f on f.id = v.finding_id join pages pg on pg.id = f.page_id
+    where v.run_id = ${runId} order by pg.url, v.created_at`;
   return {
+    previews: [...previews],
     siteUrl: run.base_url,
     scannedAt: run.scanned_at.toISOString(),
     pages: [...pages],
@@ -171,7 +181,8 @@ export async function runHasCrop(tx: TransactionSql, runId: string, ref: string)
     select exists (select 1 from findings where run_id = ${runId} and evidence->>'crop' = ${ref})
       or exists (select 1 from review_flags where run_id = ${runId} and crop = ${ref})
       or exists (select 1 from proposals where run_id = ${runId}
-        and payload->'evidence'->>'after_screenshot' = ${ref}) as found`;
+        and payload->'evidence'->>'after_screenshot' = ${ref})
+      or exists (select 1 from fix_previews where run_id = ${runId} and crop = ${ref}) as found`;
   return row?.found ?? false;
 }
 

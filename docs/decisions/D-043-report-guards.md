@@ -7,6 +7,7 @@
     - The exporter's PR title, description and commit messages have a test of their own.
     - Every report template will be tested with the same function.
   - **FR-30, `emailProvesSite(email, siteUrl)`:** `{ ok: true }` or a reason (`INVALID_EMAIL`, `INVALID_SITE`, `FREE_MAIL`, `DOMAIN_MISMATCH`). The email's domain, in IDNA form, must equal the site's host or be the host without `www.`. Free-mail domains never count, not even for their own site. IP-address sites are refused.
+- **Disclaimers are not claims (2026-11-22):** 6 of 30 recorded real fixer rationales end with an honest disclaimer ("it doesn't make the page compliant"), and the first version flagged them. That rejected about 1 in 5 good fixes and caused the lost page-language preview (D-056). A phrase with a negation (not, no, never, without, cannot, -n't) among the 8 words before it, in its own clause, is now a disclaimer. "This not only fixes … but makes the whole page compliant" is still a claim (tested).
 - **Context:** D-041 (ownership option B, wording rules); CLAUDE.md honesty rule; addendum 2.1.
 - **Options:**
   - Ownership: (A) exact host or `www.`; (B) any subdomain of the email's registrable domain.

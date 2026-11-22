@@ -130,6 +130,44 @@ ${elements}
 </li>`;
 }
 
+const announcedTable = (a: {
+  before: string;
+  after: string;
+}) => `<table class="announced"><caption>What a screen reader announces</caption>
+<tr><th scope="row">Before</th><td><code>${esc(a.before)}</code></td></tr>
+<tr><th scope="row">After</th><td><code>${esc(a.after)}</code></td></tr>
+</table>`;
+
+/**
+ * The fixes Beacon would make, from the URL alone (FR-29, D-056): each made and checked on a copy of
+ * the live page. Applying them needs the site's code, which is the next step, not this report.
+ */
+function previewsSection(previews: Report['previews'], cropUrl: (ref: string) => string): string {
+  const items = previews
+    .map(
+      (p) => `<li class="card">
+<h3>${esc(p.title)}</h3>
+<ul class="chips" aria-label="Check"><li class="chip">${p.verified ? 'Checked on a copy of the live page' : 'Did not pass the check'}</li></ul>
+<p class="small">On ${pageLink(p.pageUrl)}.</p>
+${p.crop ? `<img src="${esc(cropUrl(p.crop))}" alt="Screenshot of the element this fix changes" loading="lazy">` : ''}
+${p.announced ? announcedTable(p.announced) : ''}
+<p class="small">The element now:</p>
+<code class="snippet">${esc(p.before)}</code>
+<p class="small">With the fix:</p>
+<code class="snippet">${esc(p.after)}</code>
+<p>${esc(p.rationale)}</p>
+</li>`,
+    )
+    .join('\n');
+  return `<section aria-labelledby="previews">
+<h2 id="previews">Fixes Beacon would make</h2>
+<p class="note">Beacon made each fix on a copy of this page and checked it: the issue should be gone and nothing new may appear. Applying them to the site needs access to the site’s code. Beacon then turns them into reviewed changes for your developers.</p>
+<ol class="issues">
+${items}
+</ol>
+</section>`;
+}
+
 /** The fixes Beacon proposes (FR-10, D-054): what changes for a screen reader, the diff, the status. */
 function fixesSection(
   fixes: Report['fixes'],
@@ -266,6 +304,8 @@ ${options.review?.notice ? `<p class="notice" role="status">${esc(options.review
 <dl class="stats">${stats}</dl>
 <p class="note">${esc(report.coverage.summary)}</p>
 </section>
+
+${report.previews.length ? previewsSection(report.previews, options.cropUrl) : ''}
 
 ${report.fixes.length ? fixesSection(report.fixes, options.cropUrl, options.review) : ''}
 

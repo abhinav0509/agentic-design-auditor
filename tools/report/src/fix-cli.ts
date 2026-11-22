@@ -80,7 +80,7 @@ try {
       );
     const defaultBranch = await git.defaultBranch();
     const head = (await git.headSha(defaultBranch)) ?? fail(`${defaultBranch} has no commits`);
-    const files = await checkout(git, head);
+    const files = plan.previewOnly ? {} : await checkout(git, head);
     const fixer = liveModel('Fixes');
     const reviewer = plan.agentReview ? reviewerBehindGate() : undefined;
 
@@ -98,14 +98,21 @@ try {
           clock,
           token: () => randomBytes(32).toString('base64url'),
           ...(reviewer ? { reviewer } : {}),
-          fix: {
-            llm: fixer.llm,
-            ids: { uuid: () => randomUUID() },
-            files,
-            commitSha: head,
-            repoFullName: `${plan.owner}/${plan.repo}`,
-            defaultBranch,
-          },
+          ...(plan.previewOnly
+            ? { preview: { llm: fixer.llm, ids: { uuid: () => randomUUID() } } }
+            : {}),
+          ...(plan.previewOnly
+            ? {}
+            : {
+                fix: {
+                  llm: fixer.llm,
+                  ids: { uuid: () => randomUUID() },
+                  files,
+                  commitSha: head,
+                  repoFullName: `${plan.owner}/${plan.repo}`,
+                  defaultBranch,
+                },
+              }),
         },
         plan,
       );

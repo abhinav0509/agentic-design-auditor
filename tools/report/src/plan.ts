@@ -10,9 +10,12 @@ export type ReportPlan = {
   orgId: string;
   /** Present, and true, only when --agent-review asks for the agent review (D-048). */
   agentReview?: true;
+  /** Present, and true, only when --preview-fixes asks for fix previews (D-056). */
+  previewFixes?: true;
 };
 
-const USAGE = 'usage: pnpm report [--agent-review] --requested-by <work email> <url> [url ...]';
+const USAGE =
+  'usage: pnpm report [--agent-review] [--preview-fixes] --requested-by <work email> <url> [url ...]';
 const MAX_PAGES = 10;
 
 /** One org per site host, derived so a re-run for the same site reuses its org and history. */
@@ -26,7 +29,8 @@ export function planReport(
   argv: string[],
 ): { ok: true; plan: ReportPlan } | { ok: false; error: string } {
   const agentReview = argv.includes('--agent-review');
-  argv = argv.filter((a) => a !== '--agent-review');
+  const previewFixes = argv.includes('--preview-fixes');
+  argv = argv.filter((a) => a !== '--agent-review' && a !== '--preview-fixes');
   if (argv.length === 0) return { ok: false, error: USAGE };
   const at = argv.indexOf('--requested-by');
   const requestedBy = at === -1 ? undefined : argv[at + 1];
@@ -60,6 +64,7 @@ export function planReport(
       urls,
       orgId: orgIdFor(site.host.replace(/^www\./, '')),
       ...(agentReview ? { agentReview: true as const } : {}),
+      ...(previewFixes ? { previewFixes: true as const } : {}),
     },
   };
 }

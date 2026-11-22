@@ -31,6 +31,19 @@ export type ReportInput = {
     crop: string | null;
   }[];
   pullRequests?: { number: number; url: string; branch: string; proposalIds: string[] }[];
+  /** Fixes Beacon would make, checked on a copy of the live page (URL-only report, D-056). */
+  previews?: {
+    pageUrl: string;
+    ruleId: string;
+    title: string;
+    rationale: string;
+    before: string;
+    after: string;
+    announcedBefore: string | null;
+    announcedAfter: string | null;
+    verified: boolean;
+    crop: string | null;
+  }[];
   reviewFlags?: {
     pageUrl: string;
     candidate: 'image' | 'link';
@@ -61,6 +74,16 @@ export type Report = {
   };
   notScanned: { url: string; reason: string }[];
   coverage: { summary: string; checked: string[]; notChecked: string[] };
+  previews: {
+    pageUrl: string;
+    title: string;
+    rationale: string;
+    before: string;
+    after: string;
+    announced: { before: string; after: string } | null;
+    verified: boolean;
+    crop: string | null;
+  }[];
   fixes: {
     id: string;
     title: string;
@@ -249,6 +272,19 @@ export function buildReport(input: ReportInput): Report {
       reason: REASONS[p.error ?? ''] ?? 'The page could not be scanned.',
     })),
     coverage: COVERAGE,
+    previews: (input.previews ?? []).map((p) => ({
+      pageUrl: p.pageUrl,
+      title: p.title,
+      rationale: p.rationale,
+      before: p.before,
+      after: p.after,
+      announced:
+        p.announcedBefore !== null && p.announcedAfter !== null
+          ? { before: p.announcedBefore, after: p.announcedAfter }
+          : null,
+      verified: p.verified,
+      crop: p.crop,
+    })),
     fixes: fixesOf(input),
     review: reviewOf(input),
   };

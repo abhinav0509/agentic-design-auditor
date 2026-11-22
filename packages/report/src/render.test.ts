@@ -381,3 +381,73 @@ describe('renderReport: reviewer controls', () => {
     },
   );
 });
+
+describe('renderReport: fix previews (URL only)', () => {
+  const PREVIEW = {
+    pageUrl: 'https://acme.test/about.html',
+    ruleId: 'image-alt',
+    title: 'Add alt text to the studio photo',
+    rationale: 'The photo shows the studio at work.',
+    before: '<img src="img/studio.jpg">',
+    after: '<img src="img/studio.jpg" alt="Potter shaping a bowl on a wheel">',
+    announcedBefore: '- img',
+    announcedAfter: '- img "Potter shaping a bowl on a wheel"',
+    verified: true,
+    crop: CROP as string | null,
+  };
+  const withPreviews = (previews = [PREVIEW]) => sample({ previews });
+
+  it('FR-29: shows each fix Beacon would make, checked on a copy of the live page, and what applying it needs', () => {
+    const html = render(
+      withPreviews([PREVIEW, { ...PREVIEW, title: 'Label the field', verified: false }]),
+    );
+
+    expect(html).toContain('Fixes Beacon would make');
+    expect(html).toContain('Checked on a copy of the live page');
+    expect(html).toContain('Did not pass the check');
+    expect(html).toContain('What a screen reader announces');
+    expect(html).toContain('access to the site’s code');
+    expect(html).toContain(
+      '&lt;img src=&quot;img/studio.jpg&quot; alt=&quot;Potter shaping a bowl on a wheel&quot;&gt;',
+    );
+    expect(complianceClaims(html)).toEqual([]);
+  });
+
+  it('NFR-02: before and after are page content, shown as text', () => {
+    const html = render(
+      withPreviews([
+        { ...PREVIEW, before: '<script>alert(1)</script>', after: '<img src=x onerror=alert(1)>' },
+      ]),
+    );
+
+    expect(html).not.toContain('<script>alert(1)');
+    expect(html).not.toContain('<img src=x');
+  });
+
+  it.each(['light', 'dark'] as const)(
+    'NFR-06: the report with previews has no axe violations (%s)',
+    { timeout: 60_000 },
+    async (colorScheme) => {
+      const context = await browser.newContext({ colorScheme });
+      try {
+        const url = 'https://report.test/r/tok';
+        const html = render(
+          withPreviews([
+            PREVIEW,
+            { ...PREVIEW, title: 'Label the field', verified: false, crop: null },
+          ]),
+        );
+        await context.route('**/*', (route) =>
+          route.request().url() === url
+            ? route.fulfill({ contentType: 'text/html', body: html })
+            : route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) }),
+        );
+        await guardContext(context, () => Promise.resolve(['93.184.215.14']));
+        const { findings, reported } = await scanPageContent(context, url);
+        expect([...findings, ...reported].map((f) => `${f.engine_rule} ${f.target}`)).toEqual([]);
+      } finally {
+        await context.close();
+      }
+    },
+  );
+});

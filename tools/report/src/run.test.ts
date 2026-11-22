@@ -107,3 +107,57 @@ it(
     expect(String(page.body)).toContain('The agent flagged nothing on the pages it reviewed.');
   },
 );
+
+it(
+  'FR-29: with a fix preview step, the served URL-only report shows the fixes Beacon would make',
+  { timeout: 120_000 },
+  async () => {
+    const planned = planReport(['--requested-by', 'jo@acme.test', 'https://acme.test/']);
+    if (!planned.ok) throw new Error(planned.error);
+    const blobs = new InMemoryBlobStore();
+    const page = PAGES['https://acme.test/'] ?? '';
+    const llm = new FakeLlm([
+      toolUse(['get_image', {}]),
+      toolUse([
+        'submit_proposal',
+        {
+          kind: 'patch',
+          title: 'Add alt text to the hero',
+          rationale: 'The hero shows the shop.',
+          confidence: 0.9,
+          ops: [
+            {
+              op: 'set_attr',
+              at: page.indexOf('<img'),
+              name: 'alt',
+              value: 'Stoneware mugs on a shelf',
+            },
+          ],
+        },
+      ]),
+    ]);
+    const token = 'Previewpreviewpreviewpreviewpreviewpreview1';
+    let n = 0;
+
+    const { path } = await runReport(
+      {
+        sql: db.sql,
+        context,
+        blobs,
+        clock: { now: () => NOW },
+        token: () => token,
+        preview: {
+          llm,
+          ids: { uuid: () => `00000000-0000-4000-8000-${String(++n).padStart(12, '0')}` },
+        },
+      },
+      planned.plan,
+    );
+
+    const html = String(
+      (await handleReportRequest({ sql: db.sql, blobs, clock: { now: () => NOW } }, path)).body,
+    );
+    expect(html).toContain('Fixes Beacon would make');
+    expect(html).toContain('Stoneware mugs on a shelf');
+  },
+);
