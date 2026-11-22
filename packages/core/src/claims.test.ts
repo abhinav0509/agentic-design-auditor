@@ -27,4 +27,25 @@ describe('complianceClaims', () => {
   ])('FR-31: lets honest wording through (%j)', (text) => {
     expect(complianceClaims(text)).toEqual([]);
   });
+
+  it.each([
+    'This fixes one finding, but it doesn’t make the page fully compliant.',
+    "It doesn't mean the page is fully accessible.",
+    'It does not by itself make the page compliant.',
+    "This doesn't confirm the page is compliant.",
+    'Never a compliance claim.',
+    'Beacon makes no compliance claim about the site.',
+    "It fixes the html-has-lang finding but doesn't on its own make the page compliant.",
+  ])('FR-31: an honest disclaimer that denies a claim is not a claim (%j)', (text) => {
+    expect(complianceClaims(text)).toEqual([]);
+  });
+
+  it.each([
+    ['The page is now compliant.', 'compliant'],
+    ['It is not only fixed: the page is compliant.', 'compliant'],
+    ['This not only fixes the alt text but also makes the whole page compliant.', 'compliant'],
+    ['No more issues: fully accessible!', 'fully accessible'],
+  ])('FR-31: a claim is still a claim when a negation is elsewhere (%j)', (text, phrase) => {
+    expect(complianceClaims(text)).toContain(phrase);
+  });
 });
